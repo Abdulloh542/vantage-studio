@@ -1,415 +1,172 @@
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
-interface ServiceItem {
-  id: string;
+interface ServicePanel {
   number: string;
   title: string;
-  category: string;
-  tag: string;
-  headline: string;
   description: string;
-  businessImpact: string;
-  deliverables: string[];
+  bullets: string[];
   image: string;
 }
 
-const SERVICES_DATA: ServiceItem[] = [
+const SERVICES: ServicePanel[] = [
   {
-    id: 'arch-cgi',
     number: '01',
-    title: 'Architectural Visualization',
-    category: 'PHOTOREALISTIC STILLS',
-    tag: 'UP TO 16K STILLS',
-    headline: 'Museum-grade CGI capturing material physics and daylight.',
+    title: 'Architecture',
     description:
-      'Sensory exterior and interior stills capturing daylight, dusk, and natural surface reflections.',
-    businessImpact: 'Secures planning permits and anchor investor commitments.',
-    deliverables: [
-      'Daylight & Dusk Exterior CGI',
-      'Tactile Luxury Interior Stills',
-      '16K Master Print Hoarding Files',
+      'From first concept to final structure, we craft photorealistic architectural imagery and masterplans that respond to site, daylight, and material physics, balancing form, atmosphere, and commercial durability.',
+    bullets: [
+      'New building visualization & masterplanning',
+      'Site analysis & environmental daylight studies',
+      'Concept development & schematic 3D design',
+      'Structural & technical BIM CGI drawings',
+      'Permit & planning authority documentation',
     ],
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85',
+    image: 'https://framerusercontent.com/images/rIjy0DwlLemTQ2s2BTHaMSII2Fg.jpg?width=2400&height=1600',
   },
   {
-    id: 'real-estate-films',
     number: '02',
-    title: 'Real Estate Films & AI Motion',
-    category: 'CINEMATIC MOTION',
-    tag: '4K BROADCAST & AI MOTION',
-    headline: 'Cinematic films engineered to pre-sell unbuilt developments.',
+    title: 'Interior Design',
     description:
-      'Sweeping 4K drone choreography and fluid interior Steadicam paths that sell luxury spaces before groundbreaking.',
-    businessImpact: '+340% off-plan pre-sales velocity.',
-    deliverables: [
-      '4K Cinematic Launch Trailers',
-      'Virtual Architectural Walkthroughs',
-      'Spatial Audio & Drone Choreography',
+      'We shape the spaces inside a building with the same care given to its architecture, considering natural light, tactile materials, circulation flow, and how people actually live or work in the space day to day.',
+    bullets: [
+      'Space planning & bespoke layout design',
+      'Material & luxury finish curation',
+      'Custom furniture & architectural fixture design',
+      'Natural & artificial lighting choreography',
+      'Styling & museum-grade final staging',
     ],
-    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=2400&q=85',
+    image: 'https://framerusercontent.com/images/NK9CCeVqA1QfjxGwAkHn5lv7QR8.jpg?width=1920&height=2880',
   },
   {
-    id: 'ai-enhancement',
     number: '03',
-    title: 'AI Architectural Enhancement',
-    category: 'NEURAL ACCELERATION',
-    tag: 'PROPRIETARY PIPELINE',
-    headline: 'Rough sketches transformed into photoreal visuals in days.',
+    title: 'Space Planning & Consulting',
     description:
-      'Proprietary neural relighting pipeline delivering high-converting architectural imagery at 3x standard speed.',
-    businessImpact: 'Reduces visual production cycles by 60%.',
-    deliverables: [
-      'Neural Concept Variations',
-      'Atmospheric Weather Simulation',
-      'Rapid Pre-Marketing Teasers',
+      'For developers and architects who need expert visual guidance without a full design build, we help optimize unbuilt developments, solve spatial marketing challenges, and advise on key design decisions before ground is broken.',
+    bullets: [
+      'Layout & off-plan circulation assessment',
+      'Pre-construction feasibility consulting',
+      'Zoning & architectural code compliance',
+      'Spatial efficiency & unit mix optimization',
+      'Design direction & cinematic concept consulting',
     ],
-    image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2400&q=85',
+    image: 'https://framerusercontent.com/images/yznMxGotqqcgsULHwIRkmlRFPNg.jpg?width=1920&height=2880',
   },
   {
-    id: 'spatial-vr',
     number: '04',
-    title: '3D Spatial Modeling & VR',
-    category: 'INTERACTIVE SALES',
-    tag: 'REAL-TIME VR SUITE',
-    headline: 'BIM models converted into touchscreen apps and VR suites.',
+    title: 'Project Management & Renovation',
     description:
-      'Interactive real-time environments for sales gallery kiosks, web unit configurators, and VR headsets.',
-    businessImpact: 'Empowers remote international off-plan sales.',
-    deliverables: [
-      'Sales Gallery Touchscreen Apps',
-      'Web-Based 3D Unit Navigators',
-      'Unreal Engine VR Walkthroughs',
+      'We oversee the full visual journey from initial blueprint to final handover, coordinating 3D pipelines, production timelines, and marketing milestones so the vision on paper becomes a sold reality.',
+    bullets: [
+      'Production sourcing & pipeline coordination',
+      'Campaign budget & milestone delivery management',
+      'On-site drone supervision & quality control',
+      'Adaptive reuse & historical remodel oversight',
+      'Final 16K master file & cinematic film handover',
     ],
-    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85',
+    image: 'https://framerusercontent.com/images/ex3qqvYls9dRO4lkffiTeOs6hI.jpg?width=1920&height=2562',
   },
 ];
 
 export function SolumServices() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIdx, setActiveIdx] = useState(0);
-
-  // Normalized scroll progress across 280vh (balanced responsive duration without dead zones)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  // Track 4 quadrants with immediate responsive switching
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    if (latest < 0.25) {
-      setActiveIdx(0);
-    } else if (latest < 0.5) {
-      setActiveIdx(1);
-    } else if (latest < 0.75) {
-      setActiveIdx(2);
-    } else {
-      setActiveIdx(3);
-    }
-  });
-
-  const activeService = SERVICES_DATA[activeIdx];
-
-  // Manual jump by clicking indicator
-  const scrollToState = (index: number) => {
-    if (!containerRef.current) return;
-    const containerTop = containerRef.current.getBoundingClientRect().top + window.scrollY;
-    const totalScrollable = containerRef.current.offsetHeight - window.innerHeight;
-    const targetScroll = containerTop + (index / 4 + 0.03) * totalScrollable;
-    window.scrollTo({ top: targetScroll, behavior: 'smooth' });
-  };
-
   return (
-    <>
-      {/* ========================================================================= */}
-      {/* DESKTOP PINNED SCROLL SERVICE SEQUENCE (280vh wrapper + sticky 100vh stage) */}
-      {/* ========================================================================= */}
-      <section
-        ref={containerRef}
-        className="hidden md:block relative h-[280vh] bg-[#111111] text-[#F6F6F2] select-none"
-      >
-        {/* Sticky 100vh Viewport Stage */}
-        <div className="sticky top-0 h-screen w-full flex flex-col justify-between py-8 lg:py-10 px-6 md:px-12 lg:px-16 overflow-hidden bg-[#111111]">
-          {/* 4-Column Hairline Grid */}
-          <div className="absolute inset-0 pointer-events-none grid grid-cols-4 px-6 md:px-12 lg:px-16 z-0">
-            <div className="border-r border-white/[0.08] h-full" />
-            <div className="border-r border-white/[0.08] h-full" />
-            <div className="border-r border-white/[0.08] h-full" />
-            <div className="h-full" />
+    <section className="w-full bg-[#121212] text-white select-none">
+      {/* ========================================================= */}
+      {/* 1) SERVICES INTRO HEADER                                   */}
+      {/* ========================================================= */}
+      <div className="w-full py-16 md:py-24 px-8 sm:px-14 md:px-16 lg:px-24 border-b border-white/10">
+        <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="space-y-3">
+            <span className="font-mono text-xs uppercase tracking-wider text-white/50 block">
+              02 // SERVICES
+            </span>
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-[-0.04em] text-white">
+              WHAT WE DO.
+            </h2>
+            <p className="font-sans text-sm sm:text-base text-white/70 max-w-xl font-light leading-relaxed">
+              From first concept to final finish, Vantage Studio offers a full range of architecture and visual design services for unbuilt spaces.
+            </p>
           </div>
 
-          {/* Top Bar: Stationary Header in 4-Column Alignment */}
-          <div className="relative z-10 grid grid-cols-4 gap-6 items-end pb-5 border-b border-white/12">
-            <div className="col-span-2 space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-white inline-block" />
-                <span className="font-mono text-xs uppercase tracking-wider text-white/60 font-medium">
-                  02 // SERVICES &amp; DISCIPLINES
-                </span>
-              </div>
-              <h2 className="font-display text-3xl lg:text-4xl xl:text-5xl font-bold uppercase tracking-[-0.04em] text-white leading-none">
-                WHAT WE DO.
-              </h2>
-            </div>
-
-            <div className="col-span-1 hidden lg:block">
-              <p className="font-sans text-xs lg:text-sm text-white/60 font-light leading-relaxed">
-                Photorealistic CGI and cinematic marketing films that pre-sell unbuilt developments.
-              </p>
-            </div>
-
-            <div className="col-span-1 flex justify-end">
-              <Link
-                to="/contact"
-                className="solum-btn px-5 py-3 border border-white text-white text-xs font-mono uppercase tracking-wider hover:bg-white hover:text-[#111111] transition-colors duration-180"
-              >
-                <span>START A PROJECT</span>
-                <ArrowRight className="w-3.5 h-3.5 inline-block ml-2" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Center Stage: Stationary Grid with Dynamic Service Crossfade */}
-          <div className="relative z-10 my-auto py-4 grid grid-cols-12 gap-8 lg:gap-14 items-center">
-            {/* Left: Dynamic Copy State (Columns 1-5) */}
-            <div className="col-span-5 min-h-[360px] flex flex-col justify-center">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeService.id}
-                  initial={{ opacity: 0, y: 28 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -16 }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="space-y-4"
-                >
-                  <div>
-                    <span className="font-mono text-xs text-white/40 uppercase tracking-widest block mb-2">
-                      DISCIPLINE {activeService.number} &bull; {activeService.category}
-                    </span>
-                    <h3 className="font-display text-2xl lg:text-3xl xl:text-4xl font-semibold uppercase tracking-tight text-white leading-tight">
-                      {activeService.headline}
-                    </h3>
-                  </div>
-
-                  <p className="font-sans text-sm lg:text-base text-white/75 font-light leading-relaxed max-w-md">
-                    {activeService.description}
-                  </p>
-
-                  {/* Outcome Highlight */}
-                  <div className="py-2.5 px-4 bg-white/[0.04] border-l-2 border-white border-y border-r border-white/10 font-mono text-xs text-white/90 inline-block">
-                    <span className="text-white/40 mr-2">OUTCOME:</span>
-                    <span className="font-medium text-white">{activeService.businessImpact}</span>
-                  </div>
-
-                  {/* Deliverables Checklist */}
-                  <div className="pt-2 border-t border-white/10 space-y-1.5">
-                    {activeService.deliverables.map((d) => (
-                      <div key={d} className="flex items-center gap-2.5 font-mono text-xs text-white/80">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-white/40 flex-shrink-0" />
-                        <span>{d}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Commission Link */}
-                  <div className="pt-2">
-                    <Link
-                      to="/contact"
-                      className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider font-semibold text-white border-b border-white pb-1 hover:text-white/70 hover:border-white/70 transition-colors"
-                    >
-                      <span>COMMISSION THIS SERVICE</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </Link>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* Right: Clipped Media Frame with Crossfade Transition (Columns 6-12) */}
-            <div className="col-span-7">
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-black border border-white/15 shadow-2xl">
-                {SERVICES_DATA.map((srv, idx) => {
-                  const isActive = activeIdx === idx;
-                  return (
-                    <motion.div
-                      key={srv.id}
-                      initial={false}
-                      animate={{
-                        opacity: isActive ? 1 : 0,
-                        scale: isActive ? 1.0 : 1.04,
-                      }}
-                      transition={{
-                        duration: 0.65,
-                        ease: [0.22, 1, 0.36, 1],
-                      }}
-                      className="absolute inset-0 w-full h-full pointer-events-none"
-                    >
-                      <img
-                        src={srv.image}
-                        alt={srv.title}
-                        className="w-full h-full object-cover filter brightness-95 contrast-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
-                    </motion.div>
-                  );
-                })}
-
-                {/* Active Tag in Corner */}
-                <div className="absolute top-4 left-4 z-20">
-                  <span className="font-mono text-[11px] uppercase tracking-wider text-white bg-black/75 backdrop-blur-sm px-3 py-1.5 border border-white/20">
-                    {activeService.tag}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Bar: Interactive 01–04 State Indicator, Progress Line & Live Studio Metrics */}
-          <div className="relative z-10 pt-3 border-t border-white/12 space-y-3">
-            {/* Proportional Scroll Progress Line */}
-            <div className="h-[2px] w-full bg-white/10 overflow-hidden relative">
-              <motion.div
-                style={{ scaleX: scrollYProgress }}
-                className="h-full bg-white origin-left w-full"
-              />
-            </div>
-
-            {/* 4 Interactive Discipline Step Buttons */}
-            <div className="grid grid-cols-4 gap-4">
-              {SERVICES_DATA.map((srv, idx) => {
-                const isActive = activeIdx === idx;
-                return (
-                  <button
-                    key={srv.id}
-                    onClick={() => scrollToState(idx)}
-                    className="flex items-center gap-3 py-1.5 text-left cursor-pointer group transition-all"
-                  >
-                    <span
-                      className={`font-mono text-xs transition-colors duration-200 ${
-                        isActive ? 'text-white font-bold' : 'text-white/30 group-hover:text-white/60'
-                      }`}
-                    >
-                      {srv.number}
-                    </span>
-                    <span
-                      className={`font-mono text-xs uppercase tracking-wider truncate transition-colors duration-200 ${
-                        isActive ? 'text-white font-semibold' : 'text-white/30 group-hover:text-white/60'
-                      }`}
-                    >
-                      {srv.title}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Architectural Studio Live Metrics Strip (Fills the viewport gracefully) */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2.5 border-t border-white/10 font-mono text-[11px] text-white/50 uppercase tracking-wider">
-              <div>
-                <span className="text-white/35 block">DELIVERY SPRINT</span>
-                <span className="text-white/85">10–14 BUSINESS DAYS</span>
-              </div>
-              <div>
-                <span className="text-white/35 block">MAX RESOLUTION</span>
-                <span className="text-white/85">UP TO 16K MASTER STILLS</span>
-              </div>
-              <div>
-                <span className="text-white/35 block">CINEMA MOTION</span>
-                <span className="text-white/85">4K 60FPS AI DRONE CHOREOGRAPHY</span>
-              </div>
-              <div>
-                <span className="text-white/35 block">DESIGN REVISIONS</span>
-                <span className="text-white/85">100% APPROVAL GUARANTEE</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* MOBILE STACKED SERVICE PANELS (Normal stacked layout for performance)      */}
-      {/* ========================================================================= */}
-      <section className="block md:hidden w-full bg-[#111111] text-[#F6F6F2] py-16 px-6 border-b border-white/12 select-none">
-        {/* Mobile Header */}
-        <div className="pb-8 border-b border-white/12 space-y-2">
-          <span className="font-mono text-xs uppercase tracking-wider text-white/60 font-medium">
-            02 // SERVICES &amp; DISCIPLINES
-          </span>
-          <h2 className="font-display text-3xl font-bold uppercase tracking-[-0.04em] text-white">
-            WHAT WE DO.
-          </h2>
-          <p className="font-sans text-xs text-white/70 font-light leading-relaxed">
-            Photorealistic CGI and cinematic marketing films that pre-sell unbuilt developments.
-          </p>
-        </div>
-
-        {/* 4 Stacked Panels */}
-        <div className="divide-y divide-white/12">
-          {SERVICES_DATA.map((srv) => (
-            <motion.div
-              key={srv.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-10%' }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="py-10 space-y-4"
+          <div>
+            <Link
+              to="/contact"
+              className="solum-btn inline-flex items-center gap-3 px-6 py-3.5 border border-white text-white font-mono text-xs uppercase tracking-wider hover:bg-white hover:text-black transition-colors"
             >
-              {/* Media */}
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-black border border-white/15">
-                <img
-                  src={srv.image}
-                  alt={srv.title}
-                  className="w-full h-full object-cover filter brightness-95"
-                />
-                <div className="absolute top-3 left-3">
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-white bg-black/80 px-2.5 py-1 border border-white/20">
-                    {srv.tag}
-                  </span>
-                </div>
-              </div>
+              <span>START A PROJECT</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </div>
 
-              {/* Text */}
-              <div className="space-y-3">
-                <span className="font-mono text-[11px] text-white/50 uppercase tracking-widest block">
-                  {srv.number} &bull; {srv.category}
+      {/* ========================================================= */}
+      {/* 2) 4 FULL-SCREEN 50/50 SPLIT PANELS (Exact Solum Layout)  */}
+      {/* ========================================================= */}
+      <div className="w-full flex flex-col">
+        {SERVICES.map((service, index) => (
+          <div
+            key={service.number}
+            className="w-full min-h-screen flex flex-col md:flex-row border-b border-white/10"
+          >
+            {/* Left 50%: Solid Dark Canvas with Centered Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-15%' }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full md:w-1/2 min-h-[50vh] md:min-h-screen flex flex-col justify-center px-8 sm:px-14 md:px-16 lg:px-24 py-16 md:py-24 bg-[#121212] z-10"
+            >
+              <div className="max-w-xl space-y-6">
+                {/* Number */}
+                <span className="font-sans text-xl sm:text-2xl text-white/40 block font-normal">
+                  {service.number}
                 </span>
-                <h3 className="font-display text-xl font-semibold uppercase tracking-tight text-white">
-                  {srv.headline}
+
+                {/* Title */}
+                <h3 className="font-sans font-bold text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.05]">
+                  {service.title}
                 </h3>
-                <p className="font-sans text-xs text-white/75 font-light leading-relaxed">
-                  {srv.description}
+
+                {/* Paragraph */}
+                <p className="font-sans text-white/75 text-sm sm:text-base md:text-lg leading-relaxed font-light">
+                  {service.description}
                 </p>
 
-                <div className="py-2 px-3 bg-white/[0.04] border-l-2 border-white border-y border-r border-white/10 font-mono text-[11px] text-white/90">
-                  <span className="text-white/40 mr-1.5">OUTCOME:</span>
-                  <span>{srv.businessImpact}</span>
-                </div>
-
-                <div className="pt-2 space-y-1.5">
-                  {srv.deliverables.map((d) => (
-                    <div key={d} className="flex items-center gap-2 font-mono text-[11px] text-white/80">
-                      <CheckCircle2 className="w-3 h-3 text-white/40 flex-shrink-0" />
-                      <span>{d}</span>
-                    </div>
+                {/* 5 Square Bullets */}
+                <ul className="space-y-3 pt-4 border-t border-white/10">
+                  {service.bullets.map((bullet, bIdx) => (
+                    <li
+                      key={bIdx}
+                      className="flex items-center gap-3 font-sans text-sm sm:text-base text-white/85"
+                    >
+                      <span className="w-1.5 h-1.5 bg-white/40 inline-block flex-shrink-0" />
+                      <span>{bullet}</span>
+                    </li>
                   ))}
-                </div>
-
-                <div className="pt-2">
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider font-semibold text-white border-b border-white pb-0.5"
-                  >
-                    <span>COMMISSION THIS SERVICE</span>
-                    <ArrowUpRight className="w-3 h-3" />
-                  </Link>
-                </div>
+                </ul>
               </div>
             </motion.div>
-          ))}
-        </div>
-      </section>
-    </>
+
+            {/* Right 50%: Full-Bleed 100vh Image */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: '-15%' }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full md:w-1/2 h-[60vh] md:h-auto min-h-[60vh] md:min-h-screen relative overflow-hidden bg-black"
+            >
+              <img
+                src={service.image}
+                alt={service.title}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                className="w-full h-full object-cover filter brightness-95 hover:scale-[1.02] transition-transform duration-700 ease-out"
+              />
+            </motion.div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }

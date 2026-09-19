@@ -1,6 +1,5 @@
 import { SolumHero } from '../components/solum/SolumHero';
 import { SolumServices } from '../components/solum/SolumServices';
-import { StudioMarquee } from '../components/solum/StudioMarquee';
 import { SolumRecentProjects } from '../components/solum/SolumRecentProjects';
 import { SolumMediaBreak } from '../components/solum/SolumMediaBreak';
 import { SolumProcess } from '../components/solum/SolumProcess';
@@ -15,11 +14,8 @@ export function HomePage() {
       {/* 01: Signature Commercial Hero (Single Visual/Video, Selling Copy, Trust Logos) */}
       <SolumHero />
 
-      {/* 02: Commercial Services & Capabilities (What We Do & Sell - Pinned Sequence) */}
+      {/* 02: Commercial Services & Capabilities (Exact Solum 50/50 Fullscreen Sequence) */}
       <SolumServices />
-
-      {/* 02.5: Continuous Kinetic Architectural Ticker & Capacity Action Band */}
-      <StudioMarquee />
 
       {/* 03: Selected Projects Asymmetric Exhibition */}
       <SolumRecentProjects />
