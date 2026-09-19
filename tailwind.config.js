@@ -21,15 +21,8 @@ export default {
         }
       },
       fontFamily: {
-        display: ['Syne', 'Plus Jakarta Sans', 'sans-serif'],
         sans: ['Plus Jakarta Sans', 'Inter', 'Helvetica Neue', 'sans-serif'],
         editorial: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
-      },
-      borderRadius: {
-        '2xl': '16px',
-        '3xl': '24px',
-        '4xl': '32px',
-        '5xl': '40px',
       },
       letterSpacing: {
         tighter: '-0.04em',

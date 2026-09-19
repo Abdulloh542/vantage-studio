@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Building2, Compass, Key, Palette, HardHat, TrendingUp, ArrowUpRight, Sparkles } from 'lucide-react';
+import { Building2, Compass, Key, Palette, HardHat, TrendingUp, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function TargetIndustriesSection() {
@@ -43,26 +43,25 @@ export function TargetIndustriesSection() {
   ];
 
   return (
-    <section className="bg-[#090a0d] text-white py-24 md:py-36 border-t border-white/10 relative">
+    <section className="bg-[#f7f6f2] text-[#121214] py-24 md:py-36 border-t border-black/10">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-20 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-[10px] uppercase tracking-widest text-zinc-300 font-mono mb-4 border border-white/10">
-              <Sparkles className="w-3 h-3 text-amber-300" />
-              <span>08 / Target Sectors</span>
-            </div>
-            <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.05]">
-              Built for Industry Leaders
+            <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
+              Sector Specialization
+            </span>
+            <h2 className="text-4xl sm:text-6xl font-light tracking-tight text-black leading-[1.05]">
+              Built for industry leaders.
             </h2>
           </div>
-          <p className="text-zinc-300 text-sm max-w-md font-light leading-relaxed">
-            We operate as a high-velocity visual partner tailored to the commercial needs of developers, architects, and property funds worldwide.
+          <p className="text-zinc-600 text-sm max-w-md font-light leading-relaxed">
+            We operate as a high-velocity visual partner tailored to the commercial needs of developers, architects, and property funds.
           </p>
         </div>
 
-        {/* 6-Industry Grid (Rounded Glass Cards) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        {/* 6-Industry Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {industries.map((ind, idx) => {
             const Icon = ind.icon;
             return (
@@ -72,10 +71,10 @@ export function TargetIndustriesSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                className="glass-card rounded-[28px] sm:rounded-[32px] p-7 sm:p-8 border border-white/10 flex flex-col justify-between hover:border-white/25 transition-all group shadow-xl"
+                className="bg-white p-8 border border-black/10 flex flex-col justify-between hover:border-black transition-all group"
               >
                 <div>
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-amber-200 mb-6 group-hover:scale-110 transition-transform">
+                  <div className="w-10 h-10 rounded-full bg-zinc-100 flex items-center justify-center text-black mb-6 group-hover:bg-black group-hover:text-white transition-colors">
                     <Icon className="w-5 h-5" />
                   </div>
 
@@ -83,20 +82,18 @@ export function TargetIndustriesSection() {
                     {ind.need}
                   </span>
 
-                  <h3 className="font-display text-xl font-bold tracking-tight text-white mb-3 group-hover:text-amber-200 transition-colors">
+                  <h3 className="text-xl font-medium tracking-tight text-black mb-3">
                     {ind.role}
                   </h3>
 
-                  <p className="text-xs text-zinc-300 font-light leading-relaxed">
+                  <p className="text-xs text-zinc-600 font-light leading-relaxed">
                     {ind.solution}
                   </p>
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-zinc-300 group-hover:text-white transition-colors">
+                <div className="mt-8 pt-4 border-t border-zinc-100 flex items-center justify-between text-xs font-semibold text-black">
                   <span className="uppercase tracking-wider text-[11px]">Commission Atelier</span>
-                  <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </div>
+                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
               </motion.div>
             );
@@ -106,7 +103,7 @@ export function TargetIndustriesSection() {
         <div className="mt-14 text-center">
           <Link
             to="/contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-zinc-200 transition-all shadow-2xl"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white text-xs font-semibold uppercase tracking-widest hover:bg-zinc-800 transition-colors"
           >
             <span>Request an Industry-Specific Proposal</span>
             <ArrowUpRight className="w-4 h-4" />

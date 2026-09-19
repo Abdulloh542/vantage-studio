@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, ArrowLeft, Play, Sparkles, MapPin } from 'lucide-react';
+import { ArrowUpRight, ArrowLeft, Play } from 'lucide-react';
 import { PROJECTS } from '../data/projects';
 import { BeforeAfterSlider } from '../components/common/BeforeAfterSlider';
 import { VideoLightbox } from '../components/common/VideoLightbox';
@@ -25,87 +25,82 @@ export function ProjectDetailPage() {
   }
 
   return (
-    <main className="w-full bg-[#090a0d] text-white pt-28 md:pt-36">
+    <main className="w-full bg-[#f7f6f2] text-[#121214] pt-24 md:pt-32">
       {/* Back to Work Link */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
         <Link
           to="/work"
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 hover:bg-white hover:text-black text-xs uppercase tracking-wider text-zinc-300 font-mono transition-all border border-white/10"
+          className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-zinc-500 hover:text-black transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Selected Work</span>
         </Link>
       </div>
 
-      {/* Hero Header & Metadata */}
+      {/* Hero Header & Metadata Strip */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
         <div className="max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-[10px] uppercase tracking-widest text-zinc-300 font-mono mb-4 border border-white/10">
-            <Sparkles className="w-3 h-3 text-amber-300" />
-            <span>Case Study — {project.category}</span>
-          </div>
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.04] mb-6">
+          <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
+            Case Study — {project.category}
+          </span>
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-black leading-[1.04] mb-6">
             {project.title}
           </h1>
-          <p className="text-lg sm:text-xl text-zinc-300 font-light max-w-2xl leading-relaxed">
+          <p className="text-lg sm:text-xl text-zinc-600 font-light max-w-2xl leading-relaxed">
             {project.summary}
           </p>
         </div>
 
-        {/* Metadata Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 pt-8 mt-10 border-t border-white/10 text-xs">
-          <div className="glass-card rounded-2xl p-4 border border-white/10">
-            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1 font-mono">
+        {/* Metadata Table */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 pt-10 mt-10 border-t border-black/10 text-xs">
+          <div>
+            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
               Location
             </span>
-            <span className="text-white font-medium flex items-center gap-1">
-              <MapPin className="w-3 h-3 text-zinc-400" />
-              <span>{project.location}</span>
-            </span>
+            <span className="text-black font-medium">{project.location}</span>
           </div>
-          <div className="glass-card rounded-2xl p-4 border border-white/10">
-            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1 font-mono">
+          <div>
+            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
               Client
             </span>
-            <span className="text-white font-medium">{project.client}</span>
+            <span className="text-black font-medium">{project.client}</span>
           </div>
-          <div className="glass-card rounded-2xl p-4 border border-white/10">
-            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1 font-mono">
+          <div>
+            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
               Architect
             </span>
-            <span className="text-white font-medium">{project.architect}</span>
+            <span className="text-black font-medium">{project.architect}</span>
           </div>
-          <div className="glass-card rounded-2xl p-4 border border-white/10">
-            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1 font-mono">
+          <div>
+            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
               Year
             </span>
-            <span className="text-white font-medium">{project.year}</span>
+            <span className="text-black font-medium">{project.year}</span>
           </div>
-          <div className="glass-card rounded-2xl p-4 border border-white/10">
-            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1 font-mono">
-              Deliverables
+          <div>
+            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
+              Services
             </span>
-            <span className="text-amber-200/90 font-medium">
+            <span className="text-black font-medium">
               {project.services.join(' / ')}
             </span>
           </div>
         </div>
 
-        {/* Client Material & Studio Transformation Split (Key Value Argument) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <div className="p-6 rounded-3xl glass-card border border-white/10">
+        {/* Client Material & Studio Transformation Split */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 pt-8 border-t border-black/10">
+          <div className="p-6 bg-white border border-black/10">
             <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 block mb-2 font-semibold">
-              Client Input / Source Material
+              Client Material / Raw Input
             </span>
-            <p className="text-sm font-light text-zinc-300 leading-relaxed">
+            <p className="text-sm font-light text-zinc-800 leading-relaxed">
               {project.clientMaterial || 'Architectural drawings, CAD floor plans & preliminary client concept renders.'}
             </p>
           </div>
 
-          <div className="p-6 rounded-3xl glass-card border border-emerald-500/30 bg-emerald-950/20">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 block mb-2 font-semibold flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Studio Transformation / Deliverables</span>
+          <div className="p-6 bg-black text-white border border-black/10">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 block mb-2 font-semibold">
+              Our Work / Studio Transformation
             </span>
             <p className="text-sm font-light text-zinc-200 leading-relaxed">
               {project.transformationPipeline
@@ -116,58 +111,56 @@ export function ProjectDetailPage() {
         </div>
       </div>
 
-      {/* Hero Visual Frame (Curved Axioma Container) */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-20 md:mb-32">
-        <div className="w-full relative aspect-[16/9] md:aspect-[21/9] rounded-[32px] sm:rounded-[40px] overflow-hidden border border-white/15 bg-zinc-900 shadow-2xl">
-          <img
-            src={project.heroImage}
-            alt={project.title}
-            className="w-full h-full object-cover filter brightness-95"
-          />
-          {project.heroVideo && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-              <button
-                onClick={() => setVideoOpen(true)}
-                data-cursor="PLAY"
-                className="flex items-center gap-3 px-6 py-3.5 rounded-full bg-white/90 text-black hover:bg-white hover:scale-105 transition-all duration-200 shadow-2xl"
-              >
-                <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center">
-                  <Play className="w-3 h-3 fill-current ml-0.5" />
-                </div>
-                <span className="text-xs uppercase tracking-wider font-semibold">
-                  Watch Project Film
-                </span>
-              </button>
-            </div>
-          )}
-        </div>
+      {/* Full-Bleed Hero Visual (with optional video trigger) */}
+      <div className="w-full relative aspect-[16/9] md:aspect-[21/9] bg-zinc-900 overflow-hidden mb-20 md:mb-32">
+        <img
+          src={project.heroImage}
+          alt={project.title}
+          className="w-full h-full object-cover"
+        />
+        {project.heroVideo && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+            <button
+              onClick={() => setVideoOpen(true)}
+              data-cursor="PLAY"
+              className="flex items-center gap-3 px-6 py-3.5 bg-black/70 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-200"
+            >
+              <div className="w-6 h-6 rounded-full border border-current flex items-center justify-center">
+                <Play className="w-3 h-3 fill-current ml-0.5" />
+              </div>
+              <span className="text-xs uppercase tracking-widest font-semibold">
+                Watch Project Film
+              </span>
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Narrative & Metrics */}
+      {/* Editorial Narrative & Project Outcomes */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-24 md:mb-36">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           <div className="lg:col-span-4">
-            <span className="text-xs uppercase tracking-widest text-zinc-400 font-mono block mb-3">
+            <span className="text-xs uppercase tracking-widest text-zinc-400 font-semibold block mb-3">
               The Architectural Story
             </span>
-            <h2 className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
+            <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">
               Context, materiality and spatial emotion.
             </h2>
           </div>
 
-          <div className="lg:col-span-8 space-y-6 text-zinc-300 text-base md:text-lg font-light leading-relaxed">
+          <div className="lg:col-span-8 space-y-6 text-zinc-700 text-base md:text-lg font-light leading-relaxed">
             {project.description.map((p, idx) => (
               <p key={idx}>{p}</p>
             ))}
 
-            {/* Project Metrics Row */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 mt-8 border-t border-white/10">
+            {/* Project Metrics / Stats Row */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8 mt-8 border-t border-black/10">
               {project.stats.map((st) => (
-                <div key={st.label} className="glass-card rounded-2xl p-5 border border-white/10">
-                  <div className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight mb-1">
+                <div key={st.label}>
+                  <div className="text-2xl sm:text-3xl font-light text-black tracking-tight mb-1">
                     {st.value}
                   </div>
-                  <div className="text-[10px] uppercase tracking-wider text-zinc-400 font-mono">
+                  <div className="text-[11px] uppercase tracking-wider text-zinc-500 font-medium">
                     {st.label}
                   </div>
                 </div>
@@ -177,17 +170,17 @@ export function ProjectDetailPage() {
         </div>
       </div>
 
-      {/* Interactive Before / After Section */}
+      {/* Interactive Before / After Section (if available) */}
       {project.beforeAfter && (
         <div className="max-w-7xl mx-auto px-6 md:px-12 mb-24 md:mb-36">
-          <div className="border-t border-white/10 pt-16 mb-10">
-            <span className="text-xs uppercase tracking-widest text-zinc-400 font-mono block mb-2">
+          <div className="border-t border-black/10 pt-16 mb-10">
+            <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-2">
               Visual Transformation
             </span>
-            <h3 className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-white mb-3">
+            <h3 className="text-2xl sm:text-4xl font-light tracking-tight text-black mb-3">
               Source Material → Final Photographic Reality
             </h3>
-            <p className="text-zinc-300 text-sm max-w-2xl font-light leading-relaxed">
+            <p className="text-zinc-600 text-sm max-w-2xl font-light leading-relaxed">
               {project.beforeAfter.description}
             </p>
           </div>
@@ -197,7 +190,7 @@ export function ProjectDetailPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             data-cursor="DRAG"
-            className="rounded-[32px] sm:rounded-[40px] overflow-hidden border border-white/15 shadow-2xl"
+            className="shadow-2xl border border-black/10 overflow-hidden"
           >
             <BeforeAfterSlider
               beforeImage={project.beforeAfter.beforeImage}
@@ -210,35 +203,35 @@ export function ProjectDetailPage() {
         </div>
       )}
 
-      {/* Concept-to-Final Production Steps */}
+      {/* Process Breakdown: "From concept to final visual" */}
       {project.process && project.process.length > 0 && (
-        <div className="bg-[#0c0d11] text-white py-24 md:py-32 mb-24 md:mb-36 border-y border-white/10">
+        <div className="bg-[#0c0c0d] text-white py-24 md:py-32 mb-24 md:mb-36">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             <div className="max-w-3xl mb-16">
-              <span className="text-xs uppercase tracking-widest text-zinc-400 font-mono block mb-3">
+              <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
                 Production Anatomy
               </span>
-              <h3 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight mb-4">
+              <h3 className="text-3xl sm:text-5xl font-light tracking-tight text-white leading-[1.08] mb-4">
                 From concept to final visual.
               </h3>
-              <p className="text-zinc-300 text-sm font-light leading-relaxed">
+              <p className="text-zinc-400 text-sm font-light leading-relaxed">
                 Step-by-step insight into how our atelier executed the visual direction, structural modeling, lighting physics, and post-production for {project.title}.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {project.process.map((step) => (
                 <div
                   key={step.step}
-                  className="glass-card rounded-3xl border border-white/10 p-6 flex flex-col justify-between"
+                  className="bg-zinc-900/60 border border-white/10 p-6 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="flex items-center justify-between text-zinc-400 font-mono text-xs mb-4">
+                    <div className="flex items-center justify-between text-zinc-500 font-mono text-xs mb-4">
                       <span>STEP {step.step}</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     </div>
                     {step.image && (
-                      <div className="aspect-[16/9] rounded-2xl overflow-hidden mb-4 bg-zinc-800 border border-white/10">
+                      <div className="aspect-[16/9] overflow-hidden mb-4 bg-zinc-800">
                         <img
                           src={step.image}
                           alt={step.title}
@@ -247,7 +240,7 @@ export function ProjectDetailPage() {
                         />
                       </div>
                     )}
-                    <h4 className="font-display text-base font-bold text-white mb-2 tracking-tight">
+                    <h4 className="text-base font-medium text-white mb-2 tracking-tight">
                       {step.title}
                     </h4>
                     <p className="text-xs text-zinc-400 font-light leading-relaxed">
@@ -265,19 +258,19 @@ export function ProjectDetailPage() {
       {project.gallery && project.gallery.length > 0 && (
         <div className="max-w-7xl mx-auto px-6 md:px-12 mb-24 md:mb-36">
           <div className="mb-12">
-            <span className="text-xs uppercase tracking-widest text-zinc-400 font-mono block mb-2">
+            <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-2">
               Visual Suite
             </span>
-            <h3 className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-white">
+            <h3 className="text-2xl sm:text-4xl font-light tracking-tight text-black">
               Curated Render Stills
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             {project.gallery.map((item, idx) => (
               <div key={idx} className="group">
                 <div
-                  className={`relative overflow-hidden rounded-3xl bg-zinc-900 border border-white/10 shadow-xl ${
+                  className={`relative overflow-hidden bg-zinc-200 border border-black/5 ${
                     item.aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-[16/10]'
                   }`}
                 >
@@ -288,7 +281,7 @@ export function ProjectDetailPage() {
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   />
                 </div>
-                <p className="text-xs text-zinc-400 mt-3 font-light">
+                <p className="text-xs text-zinc-500 mt-3 font-light">
                   {item.caption}
                 </p>
               </div>
@@ -299,7 +292,7 @@ export function ProjectDetailPage() {
 
       {/* Next Project Teaser Navigation */}
       {nextProject && (
-        <div className="bg-[#090a0d] text-white py-20 md:py-28 border-t border-white/10">
+        <div className="bg-[#121214] text-white py-20 md:py-28 border-t border-white/10">
           <div className="max-w-7xl mx-auto px-6 md:px-12">
             <Link
               to={`/work/${nextProject.slug}`}
@@ -307,32 +300,33 @@ export function ProjectDetailPage() {
               data-cursor="VIEW"
             >
               <div className="flex items-center justify-between mb-8">
-                <span className="text-xs uppercase tracking-widest text-zinc-400 font-mono">
+                <span className="text-xs uppercase tracking-widest text-zinc-400 font-medium">
                   Next Case Study →
                 </span>
-                <span className="px-3 py-1 rounded-full bg-white/10 text-xs uppercase tracking-widest text-zinc-300 font-mono">
+                <span className="text-xs uppercase tracking-widest text-zinc-500">
                   {nextProject.category}
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center glass-card rounded-[32px] sm:rounded-[40px] p-8 border border-white/10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div className="lg:col-span-7">
-                  <h3 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-white group-hover:text-amber-200 transition-colors">
+                  <h3 className="text-4xl sm:text-6xl font-light tracking-tight text-white group-hover:text-zinc-300 transition-colors">
                     {nextProject.title}
                   </h3>
-                  <p className="text-xs uppercase tracking-widest text-zinc-400 mt-2 font-mono">
+                  <p className="text-xs uppercase tracking-widest text-zinc-400 mt-2">
                     {nextProject.location} • {nextProject.services.join(' / ')}
                   </p>
                 </div>
                 <div className="lg:col-span-5">
-                  <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-zinc-800 border border-white/10 shadow-xl">
+                  <div className="relative aspect-[16/9] overflow-hidden bg-zinc-800 border border-white/10">
                     <img
                       src={nextProject.heroImage}
                       alt={nextProject.title}
                       loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute bottom-4 right-4 w-9 h-9 rounded-full bg-white text-black flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg">
+                    <div className="absolute inset-0 bg-black/20 group-hover:opacity-0 transition-opacity" />
+                    <div className="absolute bottom-4 right-4 w-8 h-8 rounded-full bg-white text-black flex items-center justify-center group-hover:scale-110 transition-transform">
                       <ArrowUpRight className="w-4 h-4" />
                     </div>
                   </div>

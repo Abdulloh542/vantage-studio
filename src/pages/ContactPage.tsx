@@ -1,5 +1,5 @@
 import { ProjectBriefForm } from '../components/contact/ProjectBriefForm';
-import { Mail, MapPin, Phone, ArrowUpRight, Sparkles } from 'lucide-react';
+import { Mail, MapPin, Phone, ArrowUpRight } from 'lucide-react';
 
 export function ContactPage() {
   const hubs = [
@@ -27,44 +27,43 @@ export function ContactPage() {
   ];
 
   return (
-    <main className="w-full bg-[#090a0d] text-white pt-32 md:pt-40">
+    <main className="w-full bg-[#f7f6f2] text-[#121214] pt-32 md:pt-44">
       <div className="max-w-7xl mx-auto px-6 md:px-12 pb-24">
         {/* Page Header */}
         <div className="max-w-3xl mb-16 md:mb-20">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-[10px] uppercase tracking-widest text-zinc-300 font-mono mb-4 border border-white/10">
-            <Sparkles className="w-3 h-3 text-amber-300" />
-            <span>12 / Commission Atelier</span>
-          </div>
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.04] mb-6">
-            Have a Project in Mind?
+          <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
+            Initiate Engagement
+          </span>
+          <h1 className="text-5xl sm:text-7xl font-light tracking-tight text-black leading-[1.04] mb-6">
+            Have a project in mind?
           </h1>
-          <p className="text-zinc-300 text-base sm:text-lg font-light leading-relaxed">
-            Tell us what you are building, what you need to visualize, and where you are in the architectural process. We will reply with an itemized quote within 24 business hours.
+          <p className="text-zinc-600 text-lg sm:text-xl font-light leading-relaxed">
+            Tell us what you are building, what you need to visualize, and where you are in the architectural process. We will reply within 24 business hours.
           </p>
         </div>
 
         {/* Main Grid: Contact Form + Studio Directory */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Form Column */}
           <div className="lg:col-span-8">
             <ProjectBriefForm />
           </div>
 
           {/* Direct Atelier Details Column */}
-          <div className="lg:col-span-4 space-y-8">
+          <div className="lg:col-span-4 space-y-12">
             {/* Quick Contact Card */}
-            <div className="glass-card rounded-3xl p-8 border border-white/10 shadow-xl">
-              <span className="text-xs uppercase tracking-widest text-zinc-400 font-mono block mb-4">
-                Direct Channels
+            <div className="bg-white border border-black/10 p-8 shadow-sm">
+              <span className="text-xs uppercase tracking-widest text-zinc-400 font-semibold block mb-4">
+                Direct Inquiries
               </span>
               <div className="space-y-4 text-xs">
                 <div className="flex items-start gap-3">
-                  <Mail className="w-4 h-4 text-amber-200 mt-0.5 flex-shrink-0" />
+                  <Mail className="w-4 h-4 text-zinc-500 mt-0.5 flex-shrink-0" />
                   <div>
-                    <span className="text-zinc-500 block text-[10px] uppercase font-mono">New Commissions</span>
+                    <span className="text-zinc-400 block text-[10px] uppercase">New Commissions</span>
                     <a
                       href="mailto:project@vantage.studio"
-                      className="font-medium text-white hover:text-amber-200 transition-colors"
+                      className="font-medium text-black hover:underline"
                     >
                       project@vantage.studio
                     </a>
@@ -72,12 +71,12 @@ export function ContactPage() {
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <Phone className="w-4 h-4 text-amber-200 mt-0.5 flex-shrink-0" />
+                  <Phone className="w-4 h-4 text-zinc-500 mt-0.5 flex-shrink-0" />
                   <div>
-                    <span className="text-zinc-500 block text-[10px] uppercase font-mono">International Desk</span>
+                    <span className="text-zinc-400 block text-[10px] uppercase">International Desk</span>
                     <a
                       href="tel:+442079460912"
-                      className="font-medium text-white hover:text-amber-200 transition-colors"
+                      className="font-medium text-black hover:underline"
                     >
                       +44 20 7946 0912
                     </a>
@@ -85,8 +84,8 @@ export function ContactPage() {
                 </div>
               </div>
 
-              <div className="border-t border-white/10 pt-6 mt-6">
-                <span className="text-[10px] uppercase tracking-wider text-zinc-500 block mb-3 font-mono">
+              <div className="border-t border-zinc-100 pt-6 mt-6">
+                <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-3 font-semibold">
                   Social Channels
                 </span>
                 <div className="flex flex-col gap-2 text-xs">
@@ -94,7 +93,7 @@ export function ContactPage() {
                     href="https://instagram.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between text-zinc-300 hover:text-white py-1"
+                    className="flex items-center justify-between text-zinc-700 hover:text-black py-1"
                   >
                     <span>Instagram (@vantage.studio)</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -103,7 +102,7 @@ export function ContactPage() {
                     href="https://linkedin.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between text-zinc-300 hover:text-white py-1"
+                    className="flex items-center justify-between text-zinc-700 hover:text-black py-1"
                   >
                     <span>LinkedIn (Vantage Creative Studio)</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -112,7 +111,7 @@ export function ContactPage() {
                     href="https://behance.net"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between text-zinc-300 hover:text-white py-1"
+                    className="flex items-center justify-between text-zinc-700 hover:text-black py-1"
                   >
                     <span>Behance (Selected Portfolios)</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -122,21 +121,21 @@ export function ContactPage() {
             </div>
 
             {/* Global Hubs */}
-            <div className="space-y-4">
-              <span className="text-xs uppercase tracking-widest text-zinc-400 font-mono block">
+            <div className="space-y-6">
+              <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold block">
                 Production Hubs
               </span>
 
               {hubs.map((hub) => (
-                <div key={hub.city} className="glass-card rounded-2xl p-5 border border-white/10">
-                  <h4 className="font-display text-base font-bold text-white mb-0.5">
+                <div key={hub.city} className="border-l-2 border-black/15 pl-4">
+                  <h4 className="text-sm font-semibold text-black mb-0.5">
                     {hub.city}
                   </h4>
-                  <p className="text-[11px] text-amber-200/90 mb-2 font-light">
+                  <p className="text-[11px] text-zinc-500 mb-2">
                     {hub.role}
                   </p>
-                  <p className="text-xs text-zinc-400 font-light flex items-start gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-zinc-500 mt-0.5 flex-shrink-0" />
+                  <p className="text-xs text-zinc-600 font-light flex items-start gap-1.5 mb-1">
+                    <MapPin className="w-3.5 h-3.5 text-zinc-400 mt-0.5 flex-shrink-0" />
                     <span>{hub.address}</span>
                   </p>
                 </div>

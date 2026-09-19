@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
 import { PROJECTS } from '../data/projects';
 import { ProjectCard } from '../components/work/ProjectCard';
 import { ProjectFilter } from '../components/work/ProjectFilter';
@@ -38,24 +37,23 @@ export function WorkPage() {
   }, [activeCategory]);
 
   return (
-    <main className="w-full bg-[#090a0d] text-white pt-32 md:pt-40">
+    <main className="w-full bg-[#f7f6f2] text-[#121214] pt-32 md:pt-44">
       <div className="max-w-7xl mx-auto px-6 md:px-12 pb-24">
         {/* Page Title & Editorial Header */}
-        <div className="max-w-3xl mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-[10px] uppercase tracking-widest text-zinc-300 font-mono mb-4 border border-white/10">
-            <Sparkles className="w-3 h-3 text-amber-300" />
-            <span>02 / Portfolio Index</span>
-          </div>
-          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.04] mb-4">
-            Selected Works & Films
+        <div className="max-w-3xl mb-16">
+          <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
+            Portfolio Index
+          </span>
+          <h1 className="text-5xl sm:text-7xl font-light tracking-tight text-black leading-[1.04] mb-6">
+            Selected Works
           </h1>
-          <p className="text-zinc-300 text-sm md:text-base font-light leading-relaxed">
-            Curated commissions across luxury real estate, civic architecture, adaptive reuse, and cinematic digital storytelling.
+          <p className="text-zinc-600 text-base md:text-lg font-light leading-relaxed">
+            Selected commissions across luxury real estate, civic architecture, adaptive reuse, and cinematic digital storytelling.
           </p>
         </div>
 
         {/* Filter Bar */}
-        <div className="mb-12">
+        <div className="mb-14">
           <ProjectFilter
             categories={categories}
             activeCategory={activeCategory}
@@ -65,23 +63,24 @@ export function WorkPage() {
         </div>
 
         {/* Filtered Projects Grid (Asymmetric Editorial Layout) */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-start">
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 items-start">
           <AnimatePresence>
             {filteredProjects.map((project, idx) => {
+              // Asymmetric column spans: alternating 7 / 5 / 12
               const colSpan =
                 idx % 4 === 0
                   ? 'md:col-span-8'
                   : idx % 4 === 1
-                  ? 'md:col-span-4'
+                  ? 'md:col-span-4 md:pt-16'
                   : idx % 4 === 2
                   ? 'md:col-span-5'
-                  : 'md:col-span-7';
+                  : 'md:col-span-7 md:pt-12';
 
               const aspect =
                 idx % 4 === 0
                   ? 'aspect-[16/10]'
                   : idx % 4 === 1
-                  ? 'aspect-[4/3]'
+                  ? 'aspect-[3/4]'
                   : idx % 4 === 2
                   ? 'aspect-[4/5]'
                   : 'aspect-[16/10]';
@@ -104,7 +103,7 @@ export function WorkPage() {
         </motion.div>
 
         {filteredProjects.length === 0 && (
-          <div className="py-20 text-center text-zinc-400 text-sm font-light">
+          <div className="py-20 text-center text-zinc-500 text-sm font-light">
             No projects found in this category.
           </div>
         )}
