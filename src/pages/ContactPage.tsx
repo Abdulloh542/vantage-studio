@@ -1,16 +1,5 @@
 import { useState } from 'react';
-import {
-  ArrowRight,
-  CheckCircle2,
-  Box,
-  Compass,
-  Layers,
-  Sun,
-  Camera,
-  Maximize2,
-  ShieldCheck,
-  Check,
-} from 'lucide-react';
+import { ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function ContactPage() {
@@ -30,81 +19,51 @@ export function ContactPage() {
   const requirements = [
     {
       step: '01',
-      title: '3D Digital Model & Geometry',
-      category: 'Primary Geometry',
-      icon: Box,
+      title: '3D Model or 2D Plans',
       description:
-        'The raw digital envelope and spatial geometry of the building, architectural exterior, or interior layout.',
-      formats: ['.FBX', '.OBJ', '.SKP (SketchUp)', '.RVT (Revit)', '.3DM (Rhino)', '.DWG (3D)'],
-      note: 'No 3D model yet? We can construct complete 3D digital geometry directly from your 2D CAD elevations.',
-      keyCheck: 'Purged geometry & 1:1 real-world scale',
+        'Revit, SketchUp, Rhino, or 2D CAD floor plans and elevations. No 3D model? We build it directly from your drawings.',
+      formats: '.DWG · .SKP · .RVT · .FBX · .PDF',
+      image:
+        'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=80',
     },
     {
       step: '02',
-      title: '2D Architectural Plans & Elevations',
-      category: 'Dimensional Precision',
-      icon: Compass,
+      title: 'Materials & Finishes',
       description:
-        'Dimensioned floor plans, structural sections, site masterplans, ceiling layouts, and facade elevations.',
-      formats: ['.DWG', '.DXF', '.PDF (Vector)', '.PLN (Archicad)'],
-      note: 'Ensures millimetric spatial accuracy, true structural thicknesses, window reveals, and ceiling heights.',
-      keyCheck: 'Clear ceiling heights & window schedules',
+        'Facade materials, wood veneers, concrete finishes, metal coatings, and paint codes (RAL / Pantone) or reference photos.',
+      formats: 'Material Board · Manufacturer Codes · Photos',
+      image:
+        'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1000&q=80',
     },
     {
       step: '03',
-      title: 'Material Specifications & Finishes',
-      category: 'Surface Realism',
-      icon: Layers,
+      title: 'Atmosphere & Lighting',
       description:
-        'Finish schedule, wood veneers, concrete textures, stone selections, metal coatings, and glazing specifications.',
-      formats: ['Material Schedule', 'High-Res Photos', 'Manufacturer Codes', 'RAL / Pantone'],
-      note: 'Calibrates our physical PBR shaders for authentic surface roughness, reflectance, and microscopic tactile depth.',
-      keyCheck: 'Exact manufacturer product references',
+        'Target time-of-day: golden hour dusk, soft overcast daylight, twilight blue hour, or nocturnal interior illumination.',
+      formats: 'Moodboard · Reference Renders · Style Guide',
+      image:
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80',
     },
     {
       step: '04',
-      title: 'Atmosphere, Mood & Lighting Direction',
-      category: 'Cinematic Mood',
-      icon: Sun,
+      title: 'Site Photos & Desired Angles',
       description:
-        'Target time-of-day: golden hour dusk, crisp Scandinavian overcast daylight, twilight blue hour, or nocturnal glow.',
-      formats: ['Moodboard', 'Reference Renders', 'Style Guide', 'Pinterest Board'],
-      note: 'Directs HDR environmental sun angle, warm artificial interior luminaires, and evocative storytelling.',
-      keyCheck: 'Season, time-of-day & interior mood tone',
-    },
-    {
-      step: '05',
-      title: 'Site Context & Drone Photography',
-      category: 'Photo-Montage',
-      icon: Camera,
-      description:
-        'High-resolution drone aerial panoramas, street-level views, and adjacent landscape or cityscape plates.',
-      formats: ['4K Drone Stills', 'RAW / TIFF', 'GPS Coordinates', 'Google Earth KML'],
-      note: 'Enables millimetric camera matching and seamless photorealistic composite into actual surroundings.',
-      keyCheck: 'Focal length & camera sensor metadata',
-    },
-    {
-      step: '06',
-      title: 'Camera Viewpoints & Target Deliverables',
-      category: 'Final Output',
-      icon: Maximize2,
-      description:
-        'Preferred camera angles (pedestrian eye-level, architectural hero corner, aerial overview) and aspect ratios.',
-      formats: ['Marked Floorplans', '4K UHD (3840×2160)', '8K Ultra-Print', '60fps Cinematic Film'],
-      note: 'Streamlines our camera framing stage and ensures every visual is optimized for your marketing pitch.',
-      keyCheck: 'Target aspect ratios & resolution spec',
+        'Drone aerial plates, site photos for photorealistic composite matching, and preferred camera view directions.',
+      formats: 'Drone 4K Stills · GPS Coordinates · Marked Plans',
+      image:
+        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80',
     },
   ];
 
   return (
     <main className="w-full bg-white text-[#101010] select-none">
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 1: SIGNATURE SOLUM CONTACT & INQUIRY FORM
+          SECTION 1: SOLUM CONTACT & MINIMALIST FORM
           ───────────────────────────────────────────────────────────── */}
       <section className="pt-28 md:pt-36 pb-20 md:pb-28 border-b border-[#101010]/12">
         <div className="max-w-[1440px] mx-auto px-6 md:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* Left Column: Heading & Contact Coordinates */}
+            {/* Left Column: Heading & Key Details */}
             <div className="lg:col-span-6 lg:pr-8 lg:border-r border-[#101010]/12 space-y-12">
               <div>
                 <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[108px] font-semibold tracking-[-0.06em] text-[#101010] leading-[0.9] uppercase mb-6">
@@ -116,9 +75,9 @@ export function ContactPage() {
               </div>
 
               {/* Coordinates List */}
-              <div className="space-y-8 pt-4">
+              <div className="space-y-8 pt-2">
                 <div>
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1.5">
+                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1">
                     Email
                   </span>
                   <a
@@ -130,7 +89,7 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1.5">
+                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1">
                     Phone
                   </span>
                   <a
@@ -142,7 +101,7 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1.5">
+                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1">
                     Address
                   </span>
                   <p className="font-sans font-semibold text-lg sm:text-xl text-[#101010]">
@@ -151,7 +110,7 @@ export function ContactPage() {
                 </div>
 
                 <div>
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1.5">
+                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1">
                     Office hours
                   </span>
                   <p className="font-sans font-semibold text-lg sm:text-xl text-[#101010]">
@@ -161,7 +120,7 @@ export function ContactPage() {
               </div>
             </div>
 
-            {/* Right Column: Social Links & Minimalist Form */}
+            {/* Right Column: Follow Us & Clean Form */}
             <div className="lg:col-span-6 lg:pl-4">
               {/* Follow Us Bar */}
               <div className="flex items-center justify-between pb-5 mb-8 border-b border-[#101010]/12 text-xs font-mono text-[#757575]">
@@ -194,7 +153,7 @@ export function ContactPage() {
                 </div>
               </div>
 
-              {/* Form Area */}
+              {/* Minimalist Form */}
               {submitted ? (
                 <div className="bg-[#F9F9F8] p-10 md:p-14 border border-[#101010]/12 text-center">
                   <CheckCircle2 className="w-10 h-10 text-[#101010] mx-auto mb-4" />
@@ -202,11 +161,11 @@ export function ContactPage() {
                     Inquiry Received
                   </h3>
                   <p className="font-sans text-xs sm:text-sm text-[#757575] leading-relaxed mb-8 max-w-md mx-auto">
-                    Thank you for reaching out. An atelier director will review your project details and respond within 24 hours with an itemized delivery schedule.
+                    Thank you. An atelier director will review your project details and respond within 24 hours with a production proposal.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="px-6 py-3 bg-[#101010] text-white text-xs font-mono uppercase tracking-wider hover:bg-black transition-colors"
+                    className="px-6 py-3 bg-[#101010] text-white text-xs font-mono uppercase tracking-wider hover:bg-black transition-colors cursor-pointer"
                   >
                     Send Another Message
                   </button>
@@ -313,121 +272,81 @@ export function ContactPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 2: WHAT WE NEED FROM YOU (PROJECT INITIATION MATRIX)
-          Replaces generic FAQ with rich visual technical onboarding cards
+          SECTION 2: VISUAL "WHAT WE NEED FROM YOU" (MINIMALIST CARDS WITH IMAGES)
+          Direct visual answers with real imagery, concise punchy copy, no clutter
           ───────────────────────────────────────────────────────────── */}
-      <section className="py-24 md:py-32 bg-[#FFFFFF]">
+      <section className="py-20 md:py-28 bg-[#FFFFFF]">
         <div className="max-w-[1440px] mx-auto px-6 md:px-10">
-          {/* Section Header */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pb-16 border-b border-[#101010]/12 items-end">
-            <div className="lg:col-span-8">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
-                <span className="font-mono text-xs uppercase tracking-wider text-[#757575]">
-                  PROJECT INITIATION &bull; ASSET CHECKLIST
-                </span>
-              </div>
-              <h2 className="font-display text-4xl sm:text-5xl lg:text-7xl font-semibold tracking-[-0.05em] text-[#101010] leading-[0.95] uppercase">
-                What We Need <br />From You.
+          {/* Minimalist Section Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-[#101010]/12">
+            <div>
+              <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-2">
+                // PROJECT INITIATION
+              </span>
+              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.05em] text-[#101010] uppercase leading-none">
+                What We Need From You.
               </h2>
             </div>
-
-            <div className="lg:col-span-4">
-              <p className="font-sans text-xs sm:text-sm text-[#757575] leading-relaxed">
-                To guarantee photorealistic precision and ensure an expedited turnaround schedule, here is the material checklist our 3D atelier requires before commencing production.
-              </p>
-            </div>
+            <p className="font-sans text-xs sm:text-sm text-[#757575] max-w-sm leading-relaxed">
+              Everything required to initiate your 3D architectural renders. Concise, visual, and protected under strict NDA.
+            </p>
           </div>
 
-          {/* 6 Visual Specification Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-12">
-            {requirements.map((item) => {
-              const IconComponent = item.icon;
-              return (
-                <div
-                  key={item.step}
-                  className="bg-[#F9F9F8] p-7 md:p-8 border border-[#101010]/10 flex flex-col justify-between hover:border-[#101010] transition-colors duration-200 group"
-                >
-                  {/* Top Row: Index & Category Pill */}
-                  <div>
-                    <div className="flex items-center justify-between pb-6 mb-6 border-b border-[#101010]/10">
-                      <span className="font-mono text-xs text-[#757575] font-semibold">
-                        {item.step}
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-[11px] uppercase tracking-wider text-[#757575]">
-                          {item.category}
-                        </span>
-                        <div className="w-8 h-8 border border-[#101010]/15 flex items-center justify-center bg-white group-hover:border-[#101010] transition-colors">
-                          <IconComponent className="w-4 h-4 text-[#101010]" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Title & Core Description */}
-                    <h3 className="font-display text-xl sm:text-2xl font-semibold uppercase text-[#101010] tracking-[-0.03em] mb-3 leading-snug">
-                      {item.title}
-                    </h3>
-                    <p className="font-sans text-xs sm:text-sm text-[#757575] leading-relaxed mb-6">
-                      {item.description}
-                    </p>
-
-                    {/* Accepted Formats Badges */}
-                    <div className="mb-6">
-                      <span className="font-mono text-[10px] uppercase tracking-wider text-[#757575] block mb-2">
-                        Accepted Formats &bull; Deliverables:
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {item.formats.map((fmt) => (
-                          <span
-                            key={fmt}
-                            className="bg-white border border-[#101010]/15 px-2 py-0.5 text-[11px] font-mono text-[#101010] font-medium"
-                          >
-                            {fmt}
-                          </span>
-                        ))}
-                      </div>
+          {/* 4 Architectural Visual Cards with Real Images */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-10">
+            {requirements.map((item) => (
+              <div
+                key={item.step}
+                className="group bg-[#FFFFFF] border border-[#101010]/12 flex flex-col justify-between overflow-hidden hover:border-[#101010] transition-colors duration-200"
+              >
+                {/* Visual Image Header with Number Badge */}
+                <div>
+                  <div className="relative aspect-[16/11] overflow-hidden bg-[#F4F4F0]">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover grayscale contrast-105 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 ease-out"
+                    />
+                    <div className="absolute top-3 left-3 px-2.5 py-1 bg-[#101010] text-white font-mono text-xs font-semibold">
+                      {item.step}
                     </div>
                   </div>
 
-                  {/* Bottom Note & Key Requirement */}
-                  <div className="pt-5 border-t border-[#101010]/10 space-y-2.5">
-                    <div className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#101010] shrink-0 mt-0.5" />
-                      <span className="font-mono text-[11px] text-[#101010] font-medium">
-                        {item.keyCheck}
-                      </span>
-                    </div>
-                    <p className="font-sans text-[11px] text-[#757575] leading-relaxed">
-                      {item.note}
+                  {/* Concise Title & Punchy Description */}
+                  <div className="p-5 sm:p-6">
+                    <h3 className="font-display text-lg sm:text-xl font-semibold uppercase text-[#101010] tracking-tight mb-2.5">
+                      {item.title}
+                    </h3>
+                    <p className="font-sans text-xs sm:text-sm text-[#757575] leading-relaxed">
+                      {item.description}
                     </p>
                   </div>
                 </div>
-              );
-            })}
+
+                {/* Bottom Accepted Formats Badge */}
+                <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-3 border-t border-[#101010]/10">
+                  <span className="font-mono text-[11px] text-[#101010] font-medium block">
+                    {item.formats}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
 
-          {/* Bottom Security / Briefing Banner */}
-          <div className="mt-12 p-6 md:p-8 border border-[#101010]/12 bg-[#F9F9F8] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 border border-[#101010]/20 bg-white flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-5 h-5 text-[#101010]" />
-              </div>
-              <div>
-                <h4 className="font-display text-base font-semibold uppercase text-[#101010] tracking-tight mb-1">
-                  Mutual Non-Disclosure &amp; Intellectual Property Protection
-                </h4>
-                <p className="font-sans text-xs text-[#757575] leading-relaxed max-w-2xl">
-                  All blueprints, CAD drawings, 3D geometry, and competition proposals shared with Vantage Studio are strictly protected under international bilateral Non-Disclosure Agreements (NDA).
-                </p>
-              </div>
+          {/* Mutual NDA Safeguard Footer Banner */}
+          <div className="mt-12 p-6 border border-[#101010]/12 bg-[#F9F9F8] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div className="flex items-center gap-3.5">
+              <ShieldCheck className="w-5 h-5 text-[#101010] shrink-0" />
+              <span className="font-sans text-xs sm:text-sm text-[#101010] font-medium">
+                All client 3D models, architectural drawings, and scheme proposals are strictly safeguarded under bilateral NDA.
+              </span>
             </div>
-
             <a
-              href="mailto:hello@vantagestudio.com?subject=Project%20Files%20%26%20NDA%20Inquiry"
-              className="px-6 py-3 bg-[#101010] text-white text-xs font-mono uppercase tracking-wider hover:bg-black transition-colors shrink-0"
+              href="mailto:hello@vantagestudio.com?subject=Standard%20NDA%20Request"
+              className="text-xs font-mono uppercase tracking-wider text-[#101010] underline hover:opacity-70 shrink-0"
             >
-              Request Standard NDA ↗
+              Request Mutual NDA ↗
             </a>
           </div>
         </div>
