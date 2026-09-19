@@ -1,149 +1,181 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 
 export function Footer() {
-  const pages = [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/about' },
-    { label: 'Projects', href: '/projects' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'Contact', href: '/contact' },
-  ];
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
 
-  const legal = [
-    { label: 'Terms of Service', href: '/terms' },
-    { label: 'Privacy Policy', href: '/privacy' },
-    { label: 'Commission Agreement', href: '/contact' },
-    { label: 'Mutual NDA Protocol', href: '/contact' },
-  ];
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      setSubscribed(true);
+      setEmail('');
+      setTimeout(() => setSubscribed(false), 4000);
+    }
+  };
 
   return (
-    <footer className="w-full bg-[#111111] text-[#F6F6F2] pt-24 md:pt-32 pb-12 px-6 md:px-10 border-t border-white/12 overflow-hidden">
-      <div className="max-w-[1440px] mx-auto">
-        {/* Top 4-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 pb-20 border-b border-white/12">
-          {/* Col 1: Large White CTA at Upper Left */}
-          <div className="col-span-1 md:col-span-1 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <span className="w-1.5 h-1.5 bg-white inline-block" />
-                <span className="font-mono text-xs uppercase tracking-wider text-white/50">
-                  INITIATE WORK
-                </span>
+    <footer className="w-full bg-[#0C0C0C] text-[#F6F6F2] pt-20 md:pt-28 pb-6 md:pb-10 px-6 md:px-12 border-t border-white/10 select-none overflow-hidden">
+      <div className="max-w-[1520px] mx-auto">
+        {/* ─────────────────────────────────────────────────────────────
+            TOP ROW: NEWSLETTER SUBSCRIBE + NAV / SOCIALS / CONTACT
+            ───────────────────────────────────────────────────────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 pb-16 md:pb-24 items-start">
+          {/* Left Column: Studio Insights & Updates */}
+          <div className="lg:col-span-5 max-w-md space-y-6">
+            <h3 className="text-2xl sm:text-3xl font-sans font-medium text-white tracking-tight leading-snug">
+              Studio Insights &amp; <br />Updates
+            </h3>
+
+            {subscribed ? (
+              <div className="text-xs font-mono text-white py-2">
+                ✓ THANK YOU FOR SUBSCRIBING
               </div>
-              <h3 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.05em] leading-[0.95] text-white mb-4">
-                START A PROJECT
-              </h3>
-              <p className="text-xs sm:text-sm text-[#757575] leading-relaxed max-w-xs mb-8">
-                Direct commission desk for architects, developers and institutional real estate funds.
-              </p>
+            ) : (
+              <form
+                onSubmit={handleSubscribe}
+                className="flex items-center justify-between border-b border-neutral-700 focus-within:border-white transition-colors pb-2.5 max-w-sm"
+              >
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter Your Email"
+                  className="bg-transparent text-sm font-sans text-white placeholder-neutral-500 focus:outline-none w-full pr-4"
+                />
+                <button
+                  type="submit"
+                  className="text-xs font-mono uppercase tracking-wider text-white hover:opacity-75 transition-opacity underline cursor-pointer whitespace-nowrap shrink-0"
+                >
+                  Subscribe ↗
+                </button>
+              </form>
+            )}
+          </div>
+
+          {/* Right Columns: Nav + Socials + Coordinates */}
+          <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 lg:justify-items-end">
+            {/* Column 1: Main Pages */}
+            <div className="space-y-3">
+              <ul className="space-y-2.5 font-sans text-sm text-neutral-400">
+                <li>
+                  <Link to="/" className="hover:text-white transition-colors">
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/about" className="hover:text-white transition-colors">
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/projects" className="hover:text-white transition-colors">
+                    Projects
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/services" className="hover:text-white transition-colors">
+                    Services
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/contact" className="hover:text-white transition-colors">
+                    Contact
+                  </Link>
+                </li>
+              </ul>
             </div>
 
-            {/* Split Button: Inverts in 180ms, arrow moves 6px right */}
-            <Link
-              to="/contact"
-              className="solum-btn self-start px-6 py-3.5 border border-white text-white text-xs font-mono uppercase tracking-wider hover:bg-white hover:text-[#111111] transition-colors duration-180"
-            >
-              <span>INQUIRE NOW</span>
-              <span className="btn-arrow ml-3">
-                <ArrowRight className="w-3.5 h-3.5 inline-block" />
-              </span>
-            </Link>
-          </div>
-
-          {/* Col 2: Middle Pages List */}
-          <div className="col-span-1 md:pl-8 border-l-0 md:border-l border-white/12">
-            <span className="font-mono text-xs uppercase tracking-wider text-white/50 block mb-6">
-              DIRECTORY
-            </span>
-            <ul className="space-y-3 font-sans text-sm text-white/80">
-              {pages.map((p) => (
-                <li key={p.label}>
-                  <Link
-                    to={p.href}
-                    className="hover:text-white transition-colors duration-180 inline-block py-0.5"
+            {/* Column 2: Social Links */}
+            <div className="space-y-3">
+              <ul className="space-y-2.5 font-sans text-sm text-neutral-400">
+                <li>
+                  <a
+                    href="https://x.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-white transition-colors"
                   >
-                    {p.label}
-                  </Link>
+                    Twitter
+                  </a>
                 </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 3: Right-Middle Legal List */}
-          <div className="col-span-1 md:pl-8 border-l-0 md:border-l border-white/12">
-            <span className="font-mono text-xs uppercase tracking-wider text-white/50 block mb-6">
-              LEGAL &amp; PROTOCOLS
-            </span>
-            <ul className="space-y-3 font-sans text-sm text-white/80">
-              {legal.map((l) => (
-                <li key={l.label}>
-                  <Link
-                    to={l.href}
-                    className="hover:text-white transition-colors duration-180 inline-block py-0.5 text-xs text-[#757575] hover:text-white"
+                <li>
+                  <a
+                    href="https://instagram.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-white transition-colors"
                   >
-                    {l.label}
-                  </Link>
+                    Instagram
+                  </a>
                 </li>
-              ))}
-            </ul>
-          </div>
+                <li>
+                  <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    Linkedin
+                  </a>
+                </li>
+              </ul>
+            </div>
 
-          {/* Col 4: Right-Bottom Single Architectural Media Block */}
-          <div className="col-span-1 md:pl-8 border-l-0 md:border-l border-white/12 flex flex-col justify-between">
-            <span className="font-mono text-xs uppercase tracking-wider text-white/50 block mb-4">
-              ATELIER ARCHIVE
-            </span>
-            <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-900 border border-white/12">
-              <img
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
-                alt="Vantage Studio Architecture Atelier"
-                loading="lazy"
-                className="w-full h-full object-cover filter grayscale contrast-125 opacity-70 hover:opacity-100 transition-opacity duration-500"
-              />
-              <div className="absolute bottom-2 left-2 right-2 text-[10px] font-mono text-white/70 uppercase">
-                LONDON // BERKELEY SQ
+            {/* Column 3: Contact Coordinates */}
+            <div className="col-span-2 sm:col-span-1 space-y-2.5 font-sans text-sm text-neutral-400">
+              <div>
+                <a
+                  href="mailto:hello@vantagestudio.com"
+                  className="block hover:text-white transition-colors"
+                >
+                  hello@vantagestudio.com
+                </a>
+              </div>
+              <div>
+                <a
+                  href="tel:+442079460920"
+                  className="block hover:text-white transition-colors"
+                >
+                  (+44) 20 7946 0920
+                </a>
+              </div>
+              <div>
+                <span className="block text-neutral-400">
+                  London &bull; Zurich &bull; Tashkent
+                </span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Lower Wordmark & Metadata Area */}
-        <div className="pt-16 pb-8">
-          {/* Huge Muted-Gray Editable Wordmark */}
-          <div className="w-full overflow-hidden select-none mb-10">
-            <h2 className="font-display text-[clamp(64px,14vw,220px)] font-bold tracking-[-0.07em] leading-[0.85] text-[#222222] uppercase whitespace-nowrap">
-              VANTAGE
-            </h2>
+        {/* ─────────────────────────────────────────────────────────────
+            MIDDLE ROW: LEGAL LINKS & RIGHTS
+            ───────────────────────────────────────────────────────────── */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-8 pb-10 text-xs font-sans text-neutral-500">
+          <div className="flex items-center gap-2.5">
+            <Link to="/privacy" className="hover:text-neutral-300 transition-colors">
+              Privacy Policy
+            </Link>
+            <span>&bull;</span>
+            <Link to="/terms" className="hover:text-neutral-300 transition-colors">
+              Terms &amp; Conditions
+            </Link>
           </div>
-
-          {/* Lower 3-Column Strip: Descriptor + Socials / Credit / Copyright */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs font-mono text-[#757575] pt-6 border-t border-white/12 items-end">
-            <div>
-              <p className="text-white/80 font-sans text-xs mb-3">
-                Architectural Visualization &bull; AI Spatial Films &bull; Global Property Collateral
-              </p>
-              <div className="flex gap-4 uppercase tracking-wider">
-                <a href="https://instagram.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
-                  Instagram
-                </a>
-                <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
-                  LinkedIn
-                </a>
-                <a href="https://behance.net" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
-                  Behance
-                </a>
-              </div>
-            </div>
-
-            <div className="md:text-center">
-              <span>LONDON &bull; ZURICH &bull; TASHKENT</span>
-            </div>
-
-            <div className="md:text-right">
-              <span>&copy; {new Date().getFullYear()} VANTAGE STUDIO. ALL RIGHTS RESERVED.</span>
-            </div>
+          <div>
+            <span>&copy; {new Date().getFullYear()} Vantage Studio &mdash; All Rights Reserved</span>
           </div>
+        </div>
+
+        {/* ─────────────────────────────────────────────────────────────
+            BOTTOM GRAND FINALE: MASSIVE "Vantage Studio®" WORDMARK
+            Matches exact reference layout in Title Case with ® symbol
+            ───────────────────────────────────────────────────────────── */}
+        <div className="w-full pt-4 overflow-hidden">
+          <h2 className="font-display text-[clamp(44px,13.2vw,240px)] font-bold tracking-[-0.04em] leading-[0.85] text-white whitespace-nowrap">
+            Vantage Studio<sup className="text-[0.45em] ml-1 font-normal font-sans align-super">&reg;</sup>
+          </h2>
         </div>
       </div>
     </footer>
