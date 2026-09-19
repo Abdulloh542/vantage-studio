@@ -56,12 +56,12 @@ export function App() {
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={location.pathname}
-              initial={{ y: '100%' }}
-              animate={{ y: '0%' }}
-              exit={{ y: '-100%' }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{
-                duration: 0.6,
-                ease: [0.44, 0, 0.56, 1], // Global Solum page-transition curve
+                duration: 0.25,
+                ease: [0.22, 1, 0.36, 1],
               }}
               className="w-full"
             >
