@@ -112,7 +112,7 @@ function PageTransition() {
             left: 0,
             right: 0,
             width: '100%',
-            zIndex: 1,
+            zIndex: 10,
             pointerEvents: 'none',
             userSelect: 'none',
           }}
@@ -122,11 +122,11 @@ function PageTransition() {
         </div>
       )}
 
-      {/* 2. INCOMING PAGE: Ascends directly from the bottom (100% -> 0%) over the outgoing page */}
+      {/* 2. INCOMING PAGE: Ascends directly from the bottom (100vh -> 0) over outgoing page AND menu */}
       <motion.div
         key={location.pathname}
-        initial={shouldReduceMotion || isFirstMount ? false : { y: '100%' }}
-        animate={{ y: '0%' }}
+        initial={shouldReduceMotion || isFirstMount ? false : { y: '100vh' }}
+        animate={{ y: 0 }}
         transition={{
           duration: 0.85,
           ease: [0.16, 1, 0.3, 1],
@@ -138,13 +138,13 @@ function PageTransition() {
           WebkitBackfaceVisibility: 'hidden',
           backfaceVisibility: 'hidden',
           position: 'relative',
-          zIndex: 20,
+          zIndex: 60,
         }}
         className="w-full min-h-screen bg-white text-[#101010]"
       >
         {/* Subtle physical card top edge while rising */}
         {prevLocation && (
-          <div className="absolute top-0 left-0 right-0 h-px bg-[#101010]/20 pointer-events-none z-30" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-[#101010]/20 pointer-events-none z-70" />
         )}
         <AppRoutes location={location} />
       </motion.div>

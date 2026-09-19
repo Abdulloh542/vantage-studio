@@ -47,9 +47,9 @@ export function Navbar() {
   return (
     <>
       {/* Pure Transparent Header (No Blur, No Dark Gradient Bar) */}
-      {/* Top Left Wordmark with Direct Fixed mix-blend-difference (Inverts like Solum® across all backgrounds: white on black, black on white, split on images) */}
+      {/* Top Left Wordmark with Direct Fixed mix-blend-difference */}
       {!menuOpen && (
-        <div className="fixed top-0 left-0 z-50 py-5 md:py-6 px-6 md:px-10 pointer-events-none select-none mix-blend-difference">
+        <div className="fixed top-0 left-0 z-[80] py-5 md:py-6 px-6 md:px-10 pointer-events-none select-none mix-blend-difference">
           <Link
             to="/"
             className="pointer-events-auto font-sans font-bold text-sm md:text-base tracking-[-0.04em] uppercase text-white hover:opacity-80 transition-opacity inline-block"
@@ -59,8 +59,8 @@ export function Navbar() {
         </div>
       )}
 
-      {/* Top Right High-Contrast White Menu Button (Normal blend mode, clean white button) */}
-      <header className="fixed top-0 right-0 z-50 py-5 md:py-6 px-6 md:px-10 pointer-events-none select-none">
+      {/* Top Right High-Contrast White Menu Button */}
+      <header className="fixed top-0 right-0 z-[80] py-5 md:py-6 px-6 md:px-10 pointer-events-none select-none">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? 'Close Menu' : 'Open Menu'}
@@ -89,7 +89,7 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.12, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-40 bg-white text-[#101010] flex flex-col justify-between pt-28 pb-10 px-6 md:px-10 overflow-y-auto select-none"
           >
             {/* Top Left Logo inside White Overlay */}
