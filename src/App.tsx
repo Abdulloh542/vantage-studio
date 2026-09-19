@@ -16,6 +16,7 @@ const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage').then((m
 const BlogPage = lazy(() => import('./pages/BlogPage').then((m) => ({ default: m.BlogPage })));
 const BlogDetailPage = lazy(() => import('./pages/BlogDetailPage').then((m) => ({ default: m.BlogDetailPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })));
+const ServicesPage = lazy(() => import('./pages/ServicesPage').then((m) => ({ default: m.ServicesPage })));
 const TermsPage = lazy(() => import('./pages/TermsPage').then((m) => ({ default: m.TermsPage })));
 const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then((m) => ({ default: m.PrivacyPage })));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })));
@@ -72,6 +73,7 @@ export function App() {
                 <Route path="/projects/:slug" element={<ProjectDetailPage />} />
                 <Route path="/blog" element={<BlogPage />} />
                 <Route path="/blog/:slug" element={<BlogDetailPage />} />
+                <Route path="/services" element={<ServicesPage />} />
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/terms" element={<TermsPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
@@ -82,8 +84,7 @@ export function App() {
                 <Route path="/work/:slug" element={<ProjectDetailPage />} />
                 <Route path="/journal" element={<Navigate to="/blog" replace />} />
                 <Route path="/journal/:slug" element={<BlogDetailPage />} />
-                <Route path="/services" element={<Navigate to="/projects" replace />} />
-                <Route path="/services/:slug" element={<Navigate to="/projects" replace />} />
+                <Route path="/services/:slug" element={<ServicesPage />} />
                 <Route path="/process" element={<Navigate to="/about" replace />} />
                 <Route path="/studio" element={<Navigate to="/about" replace />} />
 
