@@ -1,9 +1,9 @@
 import { SolumHero } from '../components/solum/SolumHero';
-import { SolumTransformationProof } from '../components/solum/SolumTransformationProof';
 import { SolumRecentProjects } from '../components/solum/SolumRecentProjects';
 import { SolumMediaBreak } from '../components/solum/SolumMediaBreak';
 import { SolumServices } from '../components/solum/SolumServices';
 import { SolumProcess } from '../components/solum/SolumProcess';
+import { SolumTransformationProof } from '../components/solum/SolumTransformationProof';
 import { SolumClientStories } from '../components/solum/SolumClientStories';
 import { SolumFAQ } from '../components/solum/SolumFAQ';
 import { SolumLatestArticles } from '../components/solum/SolumLatestArticles';
@@ -14,20 +14,20 @@ export function HomePage() {
       {/* 01: Signature Opening Motion & Exhibition Hero */}
       <SolumHero />
 
-      {/* 02: Transformation Proof (Interactive Before/After Slider & 4 Scenarios) */}
-      <SolumTransformationProof />
-
-      {/* 03: Selected Projects Asymmetric Exhibition */}
+      {/* 02: Selected Projects Asymmetric Exhibition */}
       <SolumRecentProjects />
 
-      {/* 04: Media Break with Restrained Parallax */}
+      {/* 03: Media Break with Restrained Parallax */}
       <SolumMediaBreak />
 
-      {/* 05: Disciplines & Services Deep Contrast Section */}
+      {/* 04: Pinned 400vh What We Do Scroll Sequence */}
       <SolumServices />
 
-      {/* 06: Structured 4-Phase Delivery Methodology */}
+      {/* 05: Structured 4-Phase Delivery Methodology */}
       <SolumProcess />
+
+      {/* 06: Transformation Proof (Relocated Technical Chamber with Before/After Slider) */}
+      <SolumTransformationProof />
 
       {/* 07: Client Voices & Testimonial Rail */}
       <SolumClientStories />

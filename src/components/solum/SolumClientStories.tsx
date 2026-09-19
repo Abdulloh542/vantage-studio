@@ -1,6 +1,8 @@
 import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
 import { TESTIMONIALS } from '../../data/testimonials';
+import { WordReveal } from '../common/WordReveal';
 
 export function SolumClientStories() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -13,7 +15,7 @@ export function SolumClientStories() {
   };
 
   return (
-    <section className="w-full bg-white text-[#101010] py-24 md:py-[120px] px-6 md:px-10 border-b border-[#101010]/12">
+    <section className="w-full bg-white text-[#101010] py-24 md:py-[120px] px-6 md:px-10 border-b border-[#101010]/12 select-none">
       <div className="max-w-[1440px] mx-auto">
         {/* Header: 4-Column Editorial Statement & Arrow Controls */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-16 border-b border-[#101010]/12 items-end">
@@ -29,10 +31,14 @@ export function SolumClientStories() {
             </span>
           </div>
 
+          {/* Statement with Word-by-Word Editorial Reveal */}
           <div className="col-span-1 md:col-span-2">
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.05em] text-[#101010] leading-tight uppercase">
-              "WE COMMAND CAPITAL AND SECURE ANCHORS BEFORE GROUNDBREAKING."
-            </h2>
+            <WordReveal
+              text='"WE COMMAND CAPITAL AND SECURE ANCHORS BEFORE GROUNDBREAKING."'
+              as="h2"
+              className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.05em] text-[#101010] leading-tight uppercase"
+              staggerMs={30}
+            />
           </div>
 
           {/* Desktop Arrow Buttons */}
@@ -54,8 +60,12 @@ export function SolumClientStories() {
           </div>
         </div>
 
-        {/* Horizontally Draggable 4-Card Bordered Testimonial Rail */}
-        <div
+        {/* Horizontally Draggable 4-Card Bordered Testimonial Rail: Fades in over 1.2s after 0.1s delay */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 1.2, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           ref={scrollRef}
           className="flex gap-6 overflow-x-auto pt-16 pb-6 no-scrollbar snap-x snap-mandatory cursor-grab active:cursor-grabbing"
         >
@@ -102,7 +112,7 @@ export function SolumClientStories() {
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

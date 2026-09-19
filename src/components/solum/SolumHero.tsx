@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { LogoTicker } from '../common/LogoTicker';
 
 interface HeroSlide {
   id: string;
@@ -61,7 +62,15 @@ const CLIENT_LOGOS = [
 export function SolumHero() {
   const [activeSlideIdx, setActiveSlideIdx] = useState(0);
   const [currentTime, setCurrentTime] = useState('');
-  const [stage, setStage] = useState<'intro' | 'sliding' | 'revealed'>('intro');
+  const shouldReduceMotion = useReducedMotion();
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  // Parallax strictly limited to 10% (-5% to +5%) within clipped media frame
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const parallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '8%']);
 
   // Real-time live clock (e.g. Sep 19, 09:37 AM)
   useEffect(() => {
@@ -80,28 +89,16 @@ export function SolumHero() {
     return () => clearInterval(interval);
   }, []);
 
-  // Signature Solum Opening Motion Sequence:
-  // Phase 1 (0-750ms): Pure white background with centered black Vantage® (Image 2)
-  // Phase 2 (750ms+): Vantage® slides smoothly to the left, white overlay wipes away, revealing photo + UI (Image 3)
-  useEffect(() => {
-    const timer1 = setTimeout(() => {
-      setStage('sliding');
-    }, 700);
-
-    const timer2 = setTimeout(() => {
-      setStage('revealed');
-    }, 1500);
-
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-    };
-  }, []);
-
   const activeSlide = HERO_SLIDES[activeSlideIdx];
 
+  // Base delay offset: if first load, starts at T=560ms after preloader
+  const baseDelay = typeof window !== 'undefined' && sessionStorage.getItem('vantage_preloader_seen') ? 0.1 : 0.56;
+
   return (
-    <section className="relative min-h-screen w-full bg-[#101010] text-white flex flex-col justify-between overflow-hidden select-none">
+    <section
+      ref={heroRef}
+      className="relative min-h-screen w-full bg-[#101010] text-white flex flex-col justify-between overflow-hidden select-none"
+    >
       {/* 4-Column Visible Hairline Grid Overlay */}
       <div className="absolute inset-0 pointer-events-none grid grid-cols-1 md:grid-cols-4 px-6 md:px-10 z-20">
         <div className="border-r border-white/[0.12] h-full hidden md:block" />
@@ -110,80 +107,51 @@ export function SolumHero() {
         <div className="h-full hidden md:block" />
       </div>
 
-      {/* Background Architectural Photo with Smooth Crossfade */}
-      <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={activeSlide.id}
-            src={activeSlide.image}
-            alt={activeSlide.name}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full h-full object-cover filter brightness-95 contrast-105"
-          />
-        </AnimatePresence>
-        {/* Subtle Contrast Gradient for Maximum Legibility */}
+      {/* ========================================================= */}
+      {/* 1) HERO MEDIA: Scale 1.30 -> 1.00 & Opacity 0 -> 1 (2.0s) */}
+      {/* Clipped by its frame, zero bounce, measured parallax      */}
+      {/* ========================================================= */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <motion.div
+          style={{ y: shouldReduceMotion ? '0%' : parallaxY }}
+          className="w-full h-full"
+        >
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={activeSlide.id}
+              src={activeSlide.image}
+              alt={activeSlide.name}
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 1, scale: 1 }
+                  : { opacity: 0, scale: 1.3 }
+              }
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{
+                duration: shouldReduceMotion ? 0.01 : 2.0,
+                delay: baseDelay,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="w-full h-full object-cover filter brightness-95 contrast-105 origin-center will-change-transform"
+            />
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Subtle Contrast Gradient for Maximum Text Legibility */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/50 pointer-events-none" />
       </div>
 
       {/* ========================================================= */}
-      {/* SIGNATURE OPENING ANIMATION OVERLAY (Images 2 & 3)        */}
-      {/* Stage 1: White background with centered Vantage®          */}
-      {/* Stage 2: Slides smoothly to the side and reveals photo    */}
-      {/* ========================================================= */}
-      <AnimatePresence>
-        {stage !== 'revealed' && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            animate={
-              stage === 'sliding'
-                ? { opacity: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
-                : { opacity: 1 }
-            }
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-white text-[#101010] flex items-center justify-center pointer-events-none"
-          >
-            {/* 4-Column Hairline Grid on White Base */}
-            <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-4 px-6 md:px-10">
-              <div className="border-r border-[#101010]/[0.08] h-full hidden md:block" />
-              <div className="border-r border-[#101010]/[0.08] h-full hidden md:block" />
-              <div className="border-r border-[#101010]/[0.08] h-full hidden md:block" />
-              <div className="h-full hidden md:block" />
-            </div>
-
-            {/* Sliding Wordmark: Starts centered, then slides towards left */}
-            <motion.h1
-              initial={{ scale: 0.96, opacity: 0, x: 0 }}
-              animate={
-                stage === 'sliding'
-                  ? {
-                      x: '-26vw',
-                      scale: 0.9,
-                      opacity: 0,
-                      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
-                    }
-                  : {
-                      scale: 1,
-                      opacity: 1,
-                      x: 0,
-                      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-                    }
-              }
-              className="font-display text-[clamp(60px,14vw,200px)] font-bold tracking-[-0.06em] text-[#101010] relative z-10"
-            >
-              Vantage&reg;
-            </motion.h1>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ========================================================= */}
-      {/* TOP BAR (Image 3)                                         */}
+      {/* TOP BAR: Fades in calm rhythm                             */}
       {/* ========================================================= */}
       <div className="relative z-30 pt-6 px-6 md:px-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center font-mono text-sm text-white/90">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: baseDelay + 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center font-mono text-sm text-white/90"
+        >
           {/* Col 1: Small Wordmark */}
           <div className="col-span-1">
             <Link to="/" className="font-sans font-bold text-base sm:text-lg tracking-[-0.04em] text-white">
@@ -201,44 +169,66 @@ export function SolumHero() {
             {currentTime || 'Sep 19, 09:37 AM'}
           </div>
 
-          {/* Col 4: Empty spacer (Menu is in fixed header at far right) */}
+          {/* Col 4: Spacer (Menu button is mounted fixed in Navbar) */}
           <div className="col-span-1" />
-        </div>
+        </motion.div>
       </div>
 
       {/* ========================================================= */}
-      {/* CENTER HERO STAGE (Image 3)                               */}
+      {/* 2) HERO STAGE: Wordmark y80px, Description y80px, CTA     */}
       {/* ========================================================= */}
       <div className="relative z-30 my-auto py-12 md:py-16 px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12 items-end">
-          {/* Left Stage: Giant Vantage® Wordmark & Subtitle (Columns 1-2) */}
+          {/* Left Stage: Wordmark & Subtitle (Columns 1-2) */}
           <div className="col-span-1 md:col-span-2">
+            {/* 2) Headline: Starts opacity 0 / y80px, animates to 1 / y0 over 1.2s after 0.8s delay */}
             <motion.h1
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.85, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display text-[clamp(64px,11vw,160px)] font-bold tracking-[-0.06em] leading-[0.88] text-white mb-6"
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 80 }
+              }
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: shouldReduceMotion ? 0.01 : 1.2,
+                delay: baseDelay + 0.8,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="font-display text-[clamp(64px,11vw,160px)] font-bold tracking-[-0.06em] leading-[0.88] text-white mb-6 select-none"
             >
               Vantage&reg;
             </motion.h1>
 
+            {/* 3) Description: Starts opacity 0 / y80px, animates to 1 / y0 over 1.2s after 0.9s delay */}
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 1, y: 0 }
+                  : { opacity: 0, y: 80 }
+              }
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                duration: shouldReduceMotion ? 0.01 : 1.2,
+                delay: baseDelay + 0.9,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="font-sans text-base sm:text-lg lg:text-xl text-white/90 font-light leading-relaxed max-w-lg"
             >
               Architecture and visual studio creating photorealistic CGI and cinematic marketing films for unbuilt spaces.
             </motion.p>
           </div>
 
-          {/* Right Stage: Disciplines List & Split Start a Project Button (Columns 3-4) */}
+          {/* Right Stage: Disciplines List & Split Start a Project Button */}
           <div className="col-span-1 md:col-span-2 md:pl-8 flex flex-col justify-between items-start md:items-end">
-            {/* Numbered Services Column (Clear, large, readable typography) */}
+            {/* Numbered Services Column */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                duration: 0.6,
+                delay: baseDelay + 1.1,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="space-y-2.5 font-mono text-sm sm:text-base text-white/95 mb-10 w-full md:max-w-xs font-medium"
             >
               <div className="flex items-center gap-3 py-1.5 border-b border-white/15">
@@ -259,11 +249,15 @@ export function SolumHero() {
               </div>
             </motion.div>
 
-            {/* Split Start a Project Button (Exact Solum Format with Arrow Box) */}
+            {/* 4) Split CTA Button: Fades from opacity 0 to 1 after 1.2s delay (no translation) */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{
+                duration: 0.6,
+                delay: baseDelay + 1.2,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="w-full md:max-w-xs"
             >
               <Link
@@ -273,8 +267,9 @@ export function SolumHero() {
                 <div className="flex-1 py-4 px-6 font-sans font-medium text-base tracking-[-0.02em]">
                   Start a Project
                 </div>
+                {/* Arrow translates exactly 6px right on hover in 160ms */}
                 <div className="w-14 border-l border-[#101010]/15 flex items-center justify-center group-hover:bg-[#101010] group-hover:text-white transition-colors duration-180">
-                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-4 h-4 transform transition-transform duration-160 ease-out group-hover:translate-x-1.5" />
                 </div>
               </Link>
             </motion.div>
@@ -283,9 +278,19 @@ export function SolumHero() {
       </div>
 
       {/* ========================================================= */}
-      {/* BOTTOM STRIP (Image 3)                                    */}
+      {/* 5) BOTTOM STRIP: Fades in after 1.3s and 1.4s delay       */}
+      {/* Contains Client Social Proof, LogoTicker, and Switcher    */}
       {/* ========================================================= */}
-      <div className="relative z-30 pb-8 pt-6 px-6 md:px-10 border-t border-white/15">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{
+          duration: 0.6,
+          delay: baseDelay + 1.3,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        className="relative z-30 pb-8 pt-6 px-6 md:px-10 border-t border-white/15"
+      >
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
           {/* Left: Overlapping Avatars + Social Proof (Col 1-4) */}
           <div className="md:col-span-4 flex items-center gap-3">
@@ -304,13 +309,9 @@ export function SolumHero() {
             </p>
           </div>
 
-          {/* Center: Monochrome Partner Logo Strip (Col 5-8) */}
-          <div className="md:col-span-4 hidden lg:flex items-center justify-center gap-6 font-mono text-xs sm:text-sm tracking-widest text-white/70">
-            {CLIENT_LOGOS.map((logo) => (
-              <span key={logo.name} className="hover:text-white transition-colors cursor-default">
-                {logo.name}
-              </span>
-            ))}
+          {/* Center: Draggable Logo Ticker (~20px/s, pauses on hover) (Col 5-8) */}
+          <div className="md:col-span-4 hidden lg:block overflow-hidden">
+            <LogoTicker logos={CLIENT_LOGOS} speed={22} />
           </div>
 
           {/* Right: Project Switcher & 4 Thumbnails (Col 9-12) */}
@@ -350,7 +351,7 @@ export function SolumHero() {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

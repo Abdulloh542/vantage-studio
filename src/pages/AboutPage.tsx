@@ -1,4 +1,18 @@
+import { useRef } from 'react';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { WordReveal } from '../components/common/WordReveal';
+
 export function AboutPage() {
+  const mediaRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+
+  // Clipped frame parallax within 10% range
+  const { scrollYProgress } = useScroll({
+    target: mediaRef,
+    offset: ['start end', 'end start'],
+  });
+  const yParallax = useTransform(scrollYProgress, [0, 1], ['-5%', '5%']);
+
   const stats = [
     { value: '40+', label: 'PROJECTS DELIVERED', note: 'For international ateliers & real estate funds' },
     { value: '$1.8B+', label: 'DEVELOPMENT GDV', note: 'Visualized across prime residential & commercial schemes' },
@@ -40,35 +54,54 @@ export function AboutPage() {
         {/* White Grid Hero with Oversized Studio Title Left/Center and Mission Summary in Right Column */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-20 border-b border-[#101010]/12 items-end">
           <div className="col-span-1 md:col-span-3">
-            <div className="flex items-center gap-2 mb-4">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+              className="flex items-center gap-2 mb-4"
+            >
               <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
-              <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#101010] font-medium">
                 STUDIO MONOGRAPH
               </span>
-            </div>
-            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-[-0.06em] text-[#101010] uppercase leading-[0.94]">
+            </motion.div>
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="font-display text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-[-0.06em] text-[#101010] uppercase leading-[0.94]"
+            >
               TURNING ARCHITECTURE INTO VISUAL REALITY.
-            </h1>
+            </motion.h1>
           </div>
 
-          <div className="col-span-1">
-            <span className="font-mono text-xs text-[#757575] block mb-2">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="col-span-1"
+          >
+            <span className="font-mono text-xs text-[#757575] block mb-2 font-medium">
               MISSION SUMMARY
             </span>
-            <p className="font-sans text-xs sm:text-sm text-[#757575] leading-relaxed">
+            <p className="font-sans text-sm text-[#757575] leading-relaxed font-light">
               We operate as an international atelier combining registered architectural discipline with computational rendering and AI velocity.
             </p>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Full-Bleed Grayscale/Muted Studio Media from Real Assets */}
-        <div className="py-16 md:py-24 border-b border-[#101010]/12">
+        {/* Full-Bleed Grayscale/Muted Studio Media with Restrained Parallax */}
+        <div ref={mediaRef} className="py-16 md:py-24 border-b border-[#101010]/12">
           <div className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden bg-zinc-900 border border-[#101010]/12">
-            <img
+            <motion.img
+              style={{ y: shouldReduceMotion ? '0%' : yParallax }}
               src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=85"
               alt="Vantage Studio Interior Architecture Loft"
-              loading="lazy"
-              className="w-full h-full object-cover filter grayscale contrast-125 brightness-95"
+              initial={{ scale: 1.06, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full h-full object-cover filter grayscale contrast-125 brightness-95 will-change-transform"
             />
             <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-xs text-white/80 uppercase">
               <span>LONDON MAYFAIR // 18 BERKELEY SQ</span>
@@ -78,108 +111,124 @@ export function AboutPage() {
         </div>
 
         {/* Metrics Row with Tabular Figures */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 divide-y sm:divide-y-0 sm:divide-x divide-[#101010]/12 py-16 border-b border-[#101010]/12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 divide-y sm:divide-y-0 sm:divide-x divide-[#101010]/12 py-16 border-b border-[#101010]/12"
+        >
           {stats.map((st) => (
             <div key={st.label} className="p-6 md:p-8">
               <div className="font-display text-4xl sm:text-5xl font-semibold tracking-[-0.06em] text-[#101010] tabular-nums mb-2">
                 {st.value}
               </div>
-              <div className="font-mono text-xs uppercase tracking-wider text-[#101010] mb-1">
+              <div className="font-mono text-xs sm:text-sm uppercase tracking-wider text-[#101010] mb-1 font-medium">
                 {st.label}
               </div>
-              <div className="font-sans text-xs text-[#757575]">
+              <div className="font-sans text-xs sm:text-sm text-[#757575] font-light">
                 {st.note}
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Studio Philosophy & Narrative */}
+        {/* Studio Philosophy & Narrative with Word-by-Word Reveal */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 py-20 border-b border-[#101010]/12 items-start">
           <div className="col-span-1">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
-              <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
+              <span className="font-mono text-xs sm:text-sm uppercase tracking-wider text-[#101010] font-medium">
                 PHILOSOPHY
               </span>
             </div>
           </div>
 
           <div className="col-span-1 md:col-span-3 space-y-6 max-w-3xl text-sm sm:text-base text-[#101010]/85 font-light leading-relaxed">
-            <p className="font-display text-2xl sm:text-3xl font-normal tracking-[-0.03em] leading-snug text-[#101010]">
-              Architecture must be felt before it is understood. We believe the role of visualization is not merely computer representation, but emotional transmission.
-            </p>
-            <p className="text-xs sm:text-sm text-[#757575] leading-relaxed">
+            <WordReveal
+              text="Architecture must be felt before it is understood. We believe the role of visualization is not merely computer representation, but emotional transmission."
+              as="p"
+              className="font-display text-2xl sm:text-3xl font-normal tracking-[-0.03em] leading-snug text-[#101010]"
+              staggerMs={30}
+            />
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="text-sm sm:text-base text-[#757575] leading-relaxed font-light"
+            >
               When reviewing a client’s CAD drawings or structural schedules, we do not simply extrude lines. We investigate how late-afternoon sunlight grazes brushed travertine, how maritime air scatters dawn light over coastal glass, and how spatial scale creates human reverence.
-            </p>
-            <p className="text-xs sm:text-sm text-[#757575] leading-relaxed">
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="text-sm sm:text-base text-[#757575] leading-relaxed font-light"
+            >
               While our studio pioneers neural rendering and AI-assisted motion to accelerate production schedules, computation remains our instrument, while architectural sensitivity remains our compass.
-            </p>
+            </motion.p>
           </div>
         </div>
 
-        {/* History / Award Timeline Rules */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 py-20 border-b border-[#101010]/12 items-start">
-          <div className="col-span-1">
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
-              <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
-                CHRONOLOGY
-              </span>
-            </div>
+        {/* Leadership Grid */}
+        <div className="py-20 border-b border-[#101010]/12">
+          <div className="flex items-center gap-2 mb-12">
+            <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
+            <span className="font-mono text-xs sm:text-sm uppercase tracking-wider text-[#101010] font-medium">
+              PARTNERS &bull; ATELIER DIRECTORS
+            </span>
           </div>
 
-          <div className="col-span-1 md:col-span-3 divide-y divide-[#101010]/12 border-t border-b border-[#101010]/12">
-            {history.map((h) => (
-              <div key={h.year} className="py-6 grid grid-cols-1 sm:grid-cols-12 gap-4 items-baseline">
-                <span className="sm:col-span-2 font-mono text-sm font-semibold text-[#101010] tabular-nums">
-                  {h.year}
-                </span>
-                <span className="sm:col-span-4 font-sans text-sm font-medium uppercase tracking-wider text-[#101010]">
-                  {h.title}
-                </span>
-                <span className="sm:col-span-6 font-sans text-xs text-[#757575] leading-relaxed">
-                  {h.detail}
-                </span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {leadership.map((leader) => (
+              <div key={leader.name} className="space-y-4">
+                <div className="relative aspect-[4/5] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
+                  <img
+                    src={leader.image}
+                    alt={leader.name}
+                    loading="lazy"
+                    className="w-full h-full object-cover filter grayscale contrast-125 transition-transform duration-550 ease-out hover:scale-[1.025]"
+                  />
+                </div>
+                <div>
+                  <h3 className="font-display text-xl sm:text-2xl font-semibold uppercase tracking-tight text-[#101010]">
+                    {leader.name}
+                  </h3>
+                  <span className="font-mono text-xs sm:text-sm text-[#757575] block mt-1 mb-2 font-medium">
+                    {leader.role}
+                  </span>
+                  <p className="font-sans text-xs sm:text-sm text-[#757575] leading-relaxed font-light">
+                    {leader.bio}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Team Grid from CMS Data */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 py-20 items-start">
-          <div className="col-span-1">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
-              <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
-                LEADERSHIP
-              </span>
-            </div>
-            <span className="font-mono text-xs text-[#757575]">
-              ATELIER PARTNERS
+        {/* Chronological Archive */}
+        <div className="py-20">
+          <div className="flex items-center gap-2 mb-12">
+            <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
+            <span className="font-mono text-xs sm:text-sm uppercase tracking-wider text-[#101010] font-medium">
+              CHRONOLOGY
             </span>
           </div>
 
-          <div className="col-span-1 md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-8">
-            {leadership.map((member) => (
-              <div key={member.name} className="flex flex-col">
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12 mb-4">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    loading="lazy"
-                    className="w-full h-full object-cover filter grayscale contrast-120 hover:filter-none transition-all duration-500"
-                  />
+          <div className="divide-y divide-[#101010]/12 border-t border-b border-[#101010]/12">
+            {history.map((h) => (
+              <div key={h.year} className="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
+                <div className="md:col-span-2 font-display text-3xl font-semibold text-[#101010] tabular-nums">
+                  {h.year}
                 </div>
-                <h3 className="font-sans text-sm font-semibold uppercase tracking-wider text-[#101010] mb-1">
-                  {member.name}
-                </h3>
-                <span className="font-mono text-xs text-[#757575] block mb-3">
-                  {member.role}
-                </span>
-                <p className="font-sans text-xs text-[#757575] leading-relaxed">
-                  {member.bio}
-                </p>
+                <div className="md:col-span-4 font-sans text-lg font-medium uppercase tracking-tight text-[#101010]">
+                  {h.title}
+                </div>
+                <div className="md:col-span-6 font-sans text-sm text-[#757575] font-light leading-relaxed">
+                  {h.detail}
+                </div>
               </div>
             ))}
           </div>

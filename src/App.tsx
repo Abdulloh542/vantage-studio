@@ -1,10 +1,12 @@
 import { Suspense, lazy } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { SmoothScroll } from './components/common/SmoothScroll';
 import { BackToTopButton } from './components/common/BackToTopButton';
+import { Preloader } from './components/common/Preloader';
 
 // Code-split pages for peak Lighthouse performance
 const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })));
@@ -24,7 +26,7 @@ function PageLoader() {
     <div className="w-full min-h-[70vh] bg-white text-[#101010] flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
         <div className="w-5 h-5 border border-[#101010]/20 border-t-[#101010] animate-spin" />
-        <span className="text-[11px] tracking-[0.25em] uppercase text-[#757575] font-mono">
+        <span className="text-xs tracking-[0.25em] uppercase text-[#757575] font-mono">
           VANTAGE STUDIO
         </span>
       </div>
@@ -33,44 +35,63 @@ function PageLoader() {
 }
 
 export function App() {
+  const location = useLocation();
+
   return (
-    <div className="min-h-screen flex flex-col bg-white text-[#101010] selection:bg-[#101010] selection:text-white">
+    <div className="min-h-screen flex flex-col bg-white text-[#101010] selection:bg-[#101010] selection:text-white relative overflow-x-hidden">
+      {/* Session-only Neutral Full-Page Preloader */}
+      <Preloader />
+
       {/* Scroll restoration & Lenis smooth scroll */}
       <ScrollToTop />
       <SmoothScroll />
 
-      {/* Transparent Fixed Header & Accessible Fullscreen Overlay Menu */}
+      {/* Fixed Transparent Header & Accessible Fullscreen Overlay Menu */}
       <Navbar />
 
-      {/* Page Routing with Suspense */}
-      <div className="flex-1">
+      {/* Global Page Transition: Vertical Travel translateY 100% to 0 / 0 to -100% */}
+      <div className="flex-1 w-full relative">
         <Suspense fallback={<PageLoader />}>
-          <Routes>
-            {/* Core SOLUM Routes */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/projects/:slug" element={<ProjectDetailPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:slug" element={<BlogDetailPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/terms" element={<TermsPage />} />
-            <Route path="/privacy" element={<PrivacyPage />} />
-            <Route path="/404" element={<NotFoundPage />} />
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={location.pathname}
+              initial={{ y: '100%' }}
+              animate={{ y: '0%' }}
+              exit={{ y: '-100%' }}
+              transition={{
+                duration: 0.6,
+                ease: [0.44, 0, 0.56, 1], // Global Solum page-transition curve
+              }}
+              className="w-full"
+            >
+              <Routes location={location}>
+                {/* Core SOLUM Routes */}
+                <Route path="/" element={<HomePage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+                <Route path="/blog" element={<BlogPage />} />
+                <Route path="/blog/:slug" element={<BlogDetailPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/terms" element={<TermsPage />} />
+                <Route path="/privacy" element={<PrivacyPage />} />
+                <Route path="/404" element={<NotFoundPage />} />
 
-            {/* Backwards-compatibility aliases */}
-            <Route path="/work" element={<Navigate to="/projects" replace />} />
-            <Route path="/work/:slug" element={<ProjectDetailPage />} />
-            <Route path="/journal" element={<Navigate to="/blog" replace />} />
-            <Route path="/journal/:slug" element={<BlogDetailPage />} />
-            <Route path="/services" element={<Navigate to="/projects" replace />} />
-            <Route path="/services/:slug" element={<Navigate to="/projects" replace />} />
-            <Route path="/process" element={<Navigate to="/about" replace />} />
-            <Route path="/studio" element={<Navigate to="/about" replace />} />
+                {/* Backwards-compatibility aliases */}
+                <Route path="/work" element={<Navigate to="/projects" replace />} />
+                <Route path="/work/:slug" element={<ProjectDetailPage />} />
+                <Route path="/journal" element={<Navigate to="/blog" replace />} />
+                <Route path="/journal/:slug" element={<BlogDetailPage />} />
+                <Route path="/services" element={<Navigate to="/projects" replace />} />
+                <Route path="/services/:slug" element={<Navigate to="/projects" replace />} />
+                <Route path="/process" element={<Navigate to="/about" replace />} />
+                <Route path="/studio" element={<Navigate to="/about" replace />} />
 
-            {/* 404 catch-all */}
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+                {/* 404 catch-all */}
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </motion.div>
+          </AnimatePresence>
         </Suspense>
       </div>
 
