@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -20,7 +20,6 @@ const CLIENT_LOGOS = [
 ];
 
 export function SolumHero() {
-  const [currentTime, setCurrentTime] = useState('');
   const shouldReduceMotion = useReducedMotion();
   const heroRef = useRef<HTMLDivElement>(null);
 
@@ -30,23 +29,6 @@ export function SolumHero() {
     offset: ['start start', 'end start'],
   });
   const parallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '6%']);
-
-  // Real-time live clock (e.g. Sep 19, 01:56 PM) matching user screenshot
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const monthDay = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      const timeStr = now.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true,
-      });
-      setCurrentTime(`${monthDay}, ${timeStr}`);
-    };
-    updateTime();
-    const interval = setInterval(updateTime, 10000);
-    return () => clearInterval(interval);
-  }, []);
 
   // Exact image from the user's screenshot: warm luxury living room with plants & gallery wall
   const heroImage = 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2560&q=90';
@@ -106,32 +88,9 @@ export function SolumHero() {
       </div>
 
       {/* ========================================================= */}
-      {/* TOP BAR: Aligned with grid, no overlap with fixed Navbar */}
-      {/* ========================================================= */}
-      <div className="relative z-30 pt-6 px-6 md:px-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center font-mono text-xs sm:text-sm text-white/90">
-          {/* Col 1: Empty spacer so it doesn't collide with fixed Navbar VANTAGE STUDIO */}
-          <div className="col-span-1" />
-
-          {/* Col 2: Based in London & Zurich (exact text from screenshot) */}
-          <div className="hidden md:block col-span-1 text-white/80 font-mono text-xs sm:text-sm">
-            Based in London &amp; Zurich
-          </div>
-
-          {/* Col 3: Live real-time clock (exact text from screenshot) */}
-          <div className="hidden md:block col-span-1 text-white/90 tabular-nums font-mono text-xs sm:text-sm">
-            {currentTime || 'Sep 19, 01:56 PM'}
-          </div>
-
-          {/* Col 4: Spacer (MENU [+] is mounted fixed in Navbar) */}
-          <div className="col-span-1" />
-        </div>
-      </div>
-
-      {/* ========================================================= */}
       {/* CENTER HERO STAGE (Exact layout from user screenshot)     */}
       {/* ========================================================= */}
-      <div className="relative z-30 my-auto py-12 md:py-16 px-6 md:px-10">
+      <div className="relative z-30 my-auto pt-28 md:pt-36 pb-12 md:pb-16 px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12 items-end">
           {/* Left Stage: Giant Vantage® Wordmark & Subtitle (Columns 1-2) */}
           <div className="col-span-1 md:col-span-2">
