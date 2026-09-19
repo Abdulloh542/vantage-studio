@@ -48,27 +48,20 @@ export function Navbar() {
   return (
     <>
       {/* Pure Transparent Header (No Blur, No Dark Gradient Bar) */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 py-5 md:py-6 px-6 md:px-10 flex items-center justify-between pointer-events-none select-none bg-transparent transition-colors duration-200 ${
-          menuOpen ? 'text-[#101010]' : 'text-white'
-        }`}
-      >
-        {/* Frosted Glass Watermark Badge Wordmark (Always visible with high contrast across light & dark backgrounds) */}
-        <Link
-          to="/"
-          className={`pointer-events-auto inline-flex items-center gap-2.5 px-3.5 py-2 backdrop-blur-md transition-all duration-200 shadow-sm ${
-            menuOpen
-              ? 'bg-[#101010] text-white border border-[#101010]'
-              : 'bg-black/60 hover:bg-black/80 text-white border border-white/20'
-          }`}
-        >
-          <span className="w-1.5 h-1.5 bg-white rounded-full inline-block opacity-90" />
-          <span className="font-sans font-bold text-xs uppercase tracking-[0.08em]">
+      {/* Top Left Wordmark with Direct Fixed mix-blend-difference (Inverts like Solum® across all backgrounds: white on black, black on white, split on images) */}
+      {!menuOpen && (
+        <div className="fixed top-0 left-0 z-50 py-5 md:py-6 px-6 md:px-10 pointer-events-none select-none mix-blend-difference">
+          <Link
+            to="/"
+            className="pointer-events-auto font-sans font-bold text-sm md:text-base tracking-[-0.04em] uppercase text-white hover:opacity-80 transition-opacity inline-block"
+          >
             VANTAGE STUDIO
-          </span>
-        </Link>
+          </Link>
+        </div>
+      )}
 
-        {/* High-Contrast White Menu Button (Exact clean white button requested) */}
+      {/* Top Right High-Contrast White Menu Button (Normal blend mode, clean white button) */}
+      <header className="fixed top-0 right-0 z-50 py-5 md:py-6 px-6 md:px-10 pointer-events-none select-none">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? 'Close Menu' : 'Open Menu'}
@@ -100,6 +93,17 @@ export function Navbar() {
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-40 bg-white text-[#101010] flex flex-col justify-between pt-28 pb-10 px-6 md:px-10 overflow-y-auto select-none"
           >
+            {/* Top Left Logo inside White Overlay */}
+            <div className="absolute top-5 md:top-6 left-6 md:left-10 z-50">
+              <Link
+                to="/"
+                onClick={() => setMenuOpen(false)}
+                className="font-sans font-bold text-sm md:text-base tracking-[-0.04em] uppercase text-[#101010] hover:opacity-80 transition-opacity inline-block"
+              >
+                VANTAGE STUDIO
+              </Link>
+            </div>
+
             {/* Top 4-Column Rule Line */}
             <div className="absolute top-20 left-6 right-6 md:left-10 md:right-10 border-b border-[#101010]/12" />
 
