@@ -17,9 +17,9 @@ function CounterNumber({ value, suffix = '' }: { value: number; suffix?: string 
     if (!isInView) return;
 
     const controls = animate(0, value, {
-      duration: 1.8,
-      ease: [0.16, 1, 0.3, 1],
-      onUpdate: (latest) => setCount(Math.floor(latest)),
+      duration: 1.0,
+      ease: [0.22, 1, 0.36, 1],
+      onUpdate: (latest) => setCount(Math.round(latest)),
     });
     return () => controls.stop();
   }, [isInView, value, shouldReduceMotion]);

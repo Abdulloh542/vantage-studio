@@ -75,9 +75,7 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
   return (
     <div
       style={{ zIndex: index + 1 }}
-      className={`relative md:sticky md:top-0 w-full min-h-[auto] md:min-h-screen md:h-[100svh] flex flex-col md:flex-row bg-[#121212] overflow-hidden ${
-        index > 0 ? 'border-t border-white/10' : ''
-      }`}
+      className="relative md:sticky md:top-0 w-full min-h-[auto] md:min-h-screen md:h-[100svh] flex flex-col md:flex-row bg-[#121212] overflow-hidden"
     >
       {/* Left 50% Editorial Content Column */}
       <div className="w-full md:w-1/2 min-h-[auto] md:h-full flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 py-12 md:py-16 bg-[#121212] z-10">

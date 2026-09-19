@@ -116,22 +116,21 @@ export function SolumHero() {
           {/* Right Stage: Split Start a Project Button (Columns 3-4) */}
           <div className="col-span-1 md:col-span-2 md:pl-8 flex flex-col justify-end items-start md:items-end">
 
-            {/* Split Start a Project Button (Exact format from screenshot) */}
+            {/* Split Architectural Start a Project Button */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full md:max-w-xs"
+              transition={{ duration: 0.7, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
               <Link
                 to="/contact"
-                className="group flex items-stretch bg-white text-[#101010] hover:bg-[#F6F6F2] transition-colors duration-180 w-full shadow-2xl"
+                className="group inline-flex items-stretch bg-white text-[#101010] hover:bg-[#F4F4F0] transition-all duration-200 shadow-[0_10px_30px_rgba(0,0,0,0.35)] border border-white"
               >
-                <div className="flex-1 py-4 px-6 font-sans font-medium text-sm sm:text-base tracking-[-0.02em]">
+                <div className="py-3.5 px-6 sm:px-7 font-mono text-xs sm:text-sm font-semibold uppercase tracking-[0.08em] flex items-center">
                   Start a Project
                 </div>
-                <div className="w-14 border-l border-[#101010]/15 flex items-center justify-center group-hover:bg-[#101010] group-hover:text-white transition-colors duration-180">
-                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                <div className="w-12 sm:w-14 border-l border-[#101010]/15 flex items-center justify-center bg-white group-hover:bg-[#101010] group-hover:text-white transition-colors duration-200">
+                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" />
                 </div>
               </Link>
             </motion.div>
