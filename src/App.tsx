@@ -105,7 +105,7 @@ function PageTransition() {
     if (incomingLocation) {
       const timer = setTimeout(() => {
         commitTransition();
-      }, 650);
+      }, 950);
       return () => clearTimeout(timer);
     }
   }, [incomingLocation]);
@@ -124,12 +124,12 @@ function PageTransition() {
           initial={{ y: '100vh' }}
           animate={{ y: 0 }}
           transition={{
-            duration: 0.48,
-            ease: [0.22, 1, 0.36, 1],
+            duration: 0.72,
+            ease: [0.16, 1, 0.3, 1],
           }}
           onAnimationComplete={commitTransition}
           style={{ willChange: 'transform' }}
-          className="fixed inset-0 z-40 bg-white text-[#101010] overflow-hidden shadow-2xl"
+          className="fixed inset-0 z-40 bg-white text-[#101010] overflow-hidden shadow-[0_-24px_60px_rgba(0,0,0,0.12)] border-t border-[#101010]/8"
         >
           <AppRoutes location={incomingLocation} />
         </motion.div>
