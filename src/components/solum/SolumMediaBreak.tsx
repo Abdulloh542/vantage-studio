@@ -10,46 +10,59 @@ export function SolumMediaBreak() {
     offset: ['start end', 'end start'],
   });
 
-  // Restrained parallax: translateY -5% to +5%
-  const y = useTransform(scrollYProgress, [0, 1], ['-5%', '5%']);
+  // Parallax on the background photo
+  const y = useTransform(scrollYProgress, [0, 1], ['-6%', '6%']);
+
+  const marqueeText = 'Vantage Studio ◆ Vantage Studio ◆ Vantage Studio ◆ Vantage Studio ◆ ';
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-[52vh] sm:h-[65vh] lg:h-[75vh] overflow-hidden bg-[#111111] select-none border-b border-[#101010]/12"
+      className="relative w-full h-[55vh] sm:h-[70vh] lg:h-[85vh] overflow-hidden bg-black select-none border-b border-[#101010]/12"
     >
-      {/* Background Media with Restrained Parallax */}
+      {/* Background Architectural Monochrome Photography with Parallax */}
       <motion.div
         style={{ y: shouldReduceMotion ? '0%' : y }}
         className="absolute inset-0 w-full h-[120%] -top-[10%]"
       >
         <img
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85"
-          alt="Riviera Residence Architectural Visualization Dusk"
+          src="https://framerusercontent.com/images/pohnQBsmk5ekejLOxmXlOM46qi0.jpg?width=2400&height=1600"
+          alt="Architectural curved canopy monograph"
           loading="lazy"
-          className="w-full h-full object-cover object-center filter brightness-95"
+          className="w-full h-full object-cover object-center filter grayscale brightness-90 contrast-110"
         />
-        {/* Subtle Black Transparent Image Contrast Overlay */}
-        <div className="absolute inset-0 bg-black/25 pointer-events-none" />
+        {/* Subtle dark gradient overlay */}
+        <div className="absolute inset-0 bg-black/30 pointer-events-none" />
       </motion.div>
 
-      {/* Large Semi-Transparent Editable Lower-Left Title */}
-      <div className="absolute bottom-8 left-6 md:left-10 z-10 pointer-events-none">
-        <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/70 block mb-2">
-          FEATURED MONOGRAPH // 2026
-        </span>
-        <h2 className="font-display text-3xl sm:text-5xl lg:text-7xl font-bold tracking-[-0.06em] text-white/90 uppercase">
-          RIVIERA RESIDENCE
-        </h2>
+      {/* Floating Solum Marquee Typography across the architectural frame (Screenshot 3) */}
+      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none z-10">
+        <div className="w-full flex whitespace-nowrap overflow-hidden">
+          <motion.div
+            animate={{ x: shouldReduceMotion ? '0%' : ['0%', '-50%'] }}
+            transition={{
+              repeat: Infinity,
+              duration: 25,
+              ease: 'linear',
+            }}
+            className="flex items-center whitespace-nowrap text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-[-0.04em] text-white/95 uppercase drop-shadow-lg"
+          >
+            <span>{marqueeText}</span>
+            <span>{marqueeText}</span>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Bottom-Right Coordinates Stamp */}
-      <div className="absolute bottom-8 right-6 md:right-10 z-10 pointer-events-none hidden sm:block text-right">
-        <span className="font-mono text-xs uppercase tracking-wider text-white/70 block">
-          38&deg;33&prime;N 68&deg;47&prime;E
+      {/* Subtle Corner Markers */}
+      <div className="absolute bottom-6 left-6 md:left-12 z-20 pointer-events-none">
+        <span className="font-mono text-xs uppercase tracking-widest text-white/70 block">
+          MONOGRAPH // ATELIER VISION
         </span>
-        <span className="font-mono text-[11px] uppercase tracking-wider text-white/50">
-          TERRACED RESIDENTIAL MONOGRAPH
+      </div>
+
+      <div className="absolute bottom-6 right-6 md:right-12 z-20 pointer-events-none hidden sm:block text-right">
+        <span className="font-mono text-xs uppercase tracking-widest text-white/70 block">
+          ©2019–2026 ARCHITECTURAL VISUALIZATION
         </span>
       </div>
     </section>

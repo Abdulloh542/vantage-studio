@@ -1,5 +1,3 @@
-import { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useReducedMotion, useMotionValueEvent } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
@@ -71,42 +69,6 @@ const SERVICES: ServicePanel[] = [
 ];
 
 export function SolumServices() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const shouldReduceMotion = useReducedMotion();
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  // Scroll tracking across the 400vh track
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  // Track active index for HUD
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    if (latest < 0.28) setActiveIndex(0);
-    else if (latest < 0.58) setActiveIndex(1);
-    else if (latest < 0.86) setActiveIndex(2);
-    else setActiveIndex(3);
-  });
-
-  // Stacking transitions (curtain wipe/slide-up over previous panel)
-  // Panel 1: Stationary, dims and slightly scales down when Panel 2 enters
-  const p1Opacity = useTransform(scrollYProgress, [0.12, 0.32], [1, 0.4]);
-  const p1Scale = useTransform(scrollYProgress, [0.12, 0.32], [1, 0.97]);
-
-  // Panel 2: Slides up from 100% to 0% over Panel 1
-  const p2Y = useTransform(scrollYProgress, [0.12, 0.35], ['100%', '0%']);
-  const p2Opacity = useTransform(scrollYProgress, [0.42, 0.62], [1, 0.4]);
-  const p2Scale = useTransform(scrollYProgress, [0.42, 0.62], [1, 0.97]);
-
-  // Panel 3: Slides up from 100% to 0% over Panel 2
-  const p3Y = useTransform(scrollYProgress, [0.42, 0.65], ['100%', '0%']);
-  const p3Opacity = useTransform(scrollYProgress, [0.72, 0.90], [1, 0.4]);
-  const p3Scale = useTransform(scrollYProgress, [0.72, 0.90], [1, 0.97]);
-
-  // Panel 4: Slides up from 100% to 0% over Panel 3
-  const p4Y = useTransform(scrollYProgress, [0.72, 0.94], ['100%', '0%']);
-
   return (
     <section id="services" className="w-full bg-[#121212] text-white select-none relative">
       {/* ========================================================= */}
@@ -142,213 +104,64 @@ export function SolumServices() {
       </div>
 
       {/* ========================================================= */}
-      {/* 2) 4-PANEL STACKING CURTAIN SCROLL SEQUENCE               */}
+      {/* 2) 4 STICKY STACKING 100vh PANELS (Zero Empty Space)       */}
       {/* ========================================================= */}
-      {shouldReduceMotion ? (
-        // Reduced motion fallback: simple non-sticky layout
-        <div className="w-full flex flex-col">
-          {SERVICES.map((service) => (
-            <div
-              key={service.number}
-              className="w-full min-h-screen flex flex-col md:flex-row border-b border-white/10"
-            >
-              <div className="w-full md:w-1/2 p-8 sm:p-14 md:p-16 lg:p-24 flex flex-col justify-center bg-[#121212]">
-                <span className="font-sans text-2xl text-white/40 block mb-3">{service.number}</span>
-                <h3 className="font-sans font-bold text-4xl text-white mb-4">{service.title}</h3>
-                <p className="font-sans text-white/75 text-base mb-6 leading-relaxed">{service.description}</p>
-                <ul className="space-y-2 border-t border-white/10 pt-4">
-                  {service.bullets.map((b, i) => (
-                    <li key={i} className="text-sm text-white/85 flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-white/40" />
-                      {b}
+      <div className="relative w-full">
+        {SERVICES.map((service, index) => (
+          <div
+            key={service.number}
+            style={{ zIndex: (index + 1) * 10 }}
+            className={`sticky top-0 h-screen w-full flex flex-col md:flex-row bg-[#121212] overflow-hidden ${
+              index > 0 ? 'border-t border-white/15 shadow-[0_-25px_60px_rgba(0,0,0,0.95)]' : ''
+            }`}
+          >
+            {/* Left 50%: Solid Dark Canvas with Centered Content */}
+            <div className="w-full md:w-1/2 h-[52vh] md:h-full flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 py-8 md:py-16 bg-[#121212] z-10">
+              <div className="max-w-xl space-y-4 sm:space-y-6">
+                <div className="flex items-center gap-3">
+                  <span className="font-sans text-xl sm:text-2xl text-white/40 block font-normal">
+                    {service.number}
+                  </span>
+                  <span className="w-8 h-px bg-white/20 inline-block" />
+                  <span className="font-mono text-xs uppercase tracking-widest text-white/50">
+                    Phase 0{index + 1}
+                  </span>
+                </div>
+
+                <h3 className="font-sans font-bold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-white tracking-tight leading-[1.05]">
+                  {service.title}
+                </h3>
+
+                <p className="font-sans text-white/75 text-xs sm:text-sm md:text-base leading-relaxed font-light">
+                  {service.description}
+                </p>
+
+                <ul className="space-y-2 sm:space-y-2.5 pt-4 border-t border-white/10">
+                  {service.bullets.map((bullet, bIdx) => (
+                    <li
+                      key={bIdx}
+                      className="flex items-center gap-3 font-sans text-xs sm:text-sm text-white/85"
+                    >
+                      <span className="w-1.5 h-1.5 bg-white/40 inline-block flex-shrink-0" />
+                      <span>{bullet}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="w-full md:w-1/2 h-[50vh] md:h-auto">
-                <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        /* High-End Scroll-Driven Stacking Card Track (400vh) */
-        <div ref={containerRef} className="relative w-full h-[400vh] bg-[#121212]">
-          {/* Sticky 100vh Viewport Window */}
-          <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#121212]">
-            
-            {/* Active Service Breadcrumb HUD */}
-            <div className="absolute top-6 left-6 sm:left-12 md:left-16 lg:left-24 z-50 flex items-center gap-4 pointer-events-none">
-              <span className="font-mono text-xs uppercase tracking-widest text-white/60">
-                Phase {SERVICES[activeIndex].number} // {SERVICES[activeIndex].title}
-              </span>
-              <div className="flex items-center gap-1.5">
-                {SERVICES.map((_, idx) => (
-                  <div
-                    key={idx}
-                    className={`h-1 rounded-full transition-all duration-300 ${
-                      activeIndex === idx ? 'w-6 bg-white' : 'w-1.5 bg-white/20'
-                    }`}
-                  />
-                ))}
-              </div>
             </div>
 
-            {/* PANEL 01: ARCHITECTURE (Base Layer z-10) */}
-            <motion.div
-              style={{ opacity: p1Opacity, scale: p1Scale }}
-              className="absolute inset-0 w-full h-full flex flex-col md:flex-row z-10 bg-[#121212] origin-center"
-            >
-              {/* Left 50% */}
-              <div className="w-full md:w-1/2 h-[52vh] md:h-full flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 py-8 md:py-16 bg-[#121212]">
-                <div className="max-w-xl space-y-4 sm:space-y-6">
-                  <span className="font-sans text-xl sm:text-2xl text-white/40 block font-normal">
-                    {SERVICES[0].number}
-                  </span>
-                  <h3 className="font-sans font-bold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-white tracking-tight leading-[1.05]">
-                    {SERVICES[0].title}
-                  </h3>
-                  <p className="font-sans text-white/75 text-xs sm:text-sm md:text-base leading-relaxed font-light">
-                    {SERVICES[0].description}
-                  </p>
-                  <ul className="space-y-2 sm:space-y-2.5 pt-4 border-t border-white/10">
-                    {SERVICES[0].bullets.map((bullet, bIdx) => (
-                      <li key={bIdx} className="flex items-center gap-3 font-sans text-xs sm:text-sm text-white/85">
-                        <span className="w-1.5 h-1.5 bg-white/40 inline-block flex-shrink-0" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              {/* Right 50% */}
-              <div className="w-full md:w-1/2 h-[48vh] md:h-full relative overflow-hidden bg-black">
-                <img
-                  src={SERVICES[0].image}
-                  alt={SERVICES[0].title}
-                  className="w-full h-full object-cover filter brightness-95"
-                  loading="eager"
-                />
-              </div>
-            </motion.div>
-
-            {/* PANEL 02: INTERIOR DESIGN (Slides UP over Panel 01 z-20) */}
-            <motion.div
-              style={{ y: p2Y, opacity: p2Opacity, scale: p2Scale }}
-              className="absolute inset-0 w-full h-full flex flex-col md:flex-row z-20 bg-[#121212] border-t border-white/20 shadow-[0_-30px_70px_rgba(0,0,0,0.95)] origin-center"
-            >
-              {/* Left 50% */}
-              <div className="w-full md:w-1/2 h-[52vh] md:h-full flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 py-8 md:py-16 bg-[#121212]">
-                <div className="max-w-xl space-y-4 sm:space-y-6">
-                  <span className="font-sans text-xl sm:text-2xl text-white/40 block font-normal">
-                    {SERVICES[1].number}
-                  </span>
-                  <h3 className="font-sans font-bold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-white tracking-tight leading-[1.05]">
-                    {SERVICES[1].title}
-                  </h3>
-                  <p className="font-sans text-white/75 text-xs sm:text-sm md:text-base leading-relaxed font-light">
-                    {SERVICES[1].description}
-                  </p>
-                  <ul className="space-y-2 sm:space-y-2.5 pt-4 border-t border-white/10">
-                    {SERVICES[1].bullets.map((bullet, bIdx) => (
-                      <li key={bIdx} className="flex items-center gap-3 font-sans text-xs sm:text-sm text-white/85">
-                        <span className="w-1.5 h-1.5 bg-white/40 inline-block flex-shrink-0" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              {/* Right 50% */}
-              <div className="w-full md:w-1/2 h-[48vh] md:h-full relative overflow-hidden bg-black">
-                <img
-                  src={SERVICES[1].image}
-                  alt={SERVICES[1].title}
-                  className="w-full h-full object-cover filter brightness-95"
-                  loading="lazy"
-                />
-              </div>
-            </motion.div>
-
-            {/* PANEL 03: SPACE PLANNING & CONSULTING (Slides UP over Panel 02 z-30) */}
-            <motion.div
-              style={{ y: p3Y, opacity: p3Opacity, scale: p3Scale }}
-              className="absolute inset-0 w-full h-full flex flex-col md:flex-row z-30 bg-[#121212] border-t border-white/20 shadow-[0_-30px_70px_rgba(0,0,0,0.95)] origin-center"
-            >
-              {/* Left 50% */}
-              <div className="w-full md:w-1/2 h-[52vh] md:h-full flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 py-8 md:py-16 bg-[#121212]">
-                <div className="max-w-xl space-y-4 sm:space-y-6">
-                  <span className="font-sans text-xl sm:text-2xl text-white/40 block font-normal">
-                    {SERVICES[2].number}
-                  </span>
-                  <h3 className="font-sans font-bold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-white tracking-tight leading-[1.05]">
-                    {SERVICES[2].title}
-                  </h3>
-                  <p className="font-sans text-white/75 text-xs sm:text-sm md:text-base leading-relaxed font-light">
-                    {SERVICES[2].description}
-                  </p>
-                  <ul className="space-y-2 sm:space-y-2.5 pt-4 border-t border-white/10">
-                    {SERVICES[2].bullets.map((bullet, bIdx) => (
-                      <li key={bIdx} className="flex items-center gap-3 font-sans text-xs sm:text-sm text-white/85">
-                        <span className="w-1.5 h-1.5 bg-white/40 inline-block flex-shrink-0" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              {/* Right 50% */}
-              <div className="w-full md:w-1/2 h-[48vh] md:h-full relative overflow-hidden bg-black">
-                <img
-                  src={SERVICES[2].image}
-                  alt={SERVICES[2].title}
-                  className="w-full h-full object-cover filter brightness-95"
-                  loading="lazy"
-                />
-              </div>
-            </motion.div>
-
-            {/* PANEL 04: PROJECT MANAGEMENT (Slides UP over Panel 03 z-40) */}
-            <motion.div
-              style={{ y: p4Y }}
-              className="absolute inset-0 w-full h-full flex flex-col md:flex-row z-40 bg-[#121212] border-t border-white/20 shadow-[0_-30px_70px_rgba(0,0,0,0.95)]"
-            >
-              {/* Left 50% */}
-              <div className="w-full md:w-1/2 h-[52vh] md:h-full flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 py-8 md:py-16 bg-[#121212]">
-                <div className="max-w-xl space-y-4 sm:space-y-6">
-                  <span className="font-sans text-xl sm:text-2xl text-white/40 block font-normal">
-                    {SERVICES[3].number}
-                  </span>
-                  <h3 className="font-sans font-bold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-white tracking-tight leading-[1.05]">
-                    {SERVICES[3].title}
-                  </h3>
-                  <p className="font-sans text-white/75 text-xs sm:text-sm md:text-base leading-relaxed font-light">
-                    {SERVICES[3].description}
-                  </p>
-                  <ul className="space-y-2 sm:space-y-2.5 pt-4 border-t border-white/10">
-                    {SERVICES[3].bullets.map((bullet, bIdx) => (
-                      <li key={bIdx} className="flex items-center gap-3 font-sans text-xs sm:text-sm text-white/85">
-                        <span className="w-1.5 h-1.5 bg-white/40 inline-block flex-shrink-0" />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              {/* Right 50% */}
-              <div className="w-full md:w-1/2 h-[48vh] md:h-full relative overflow-hidden bg-black">
-                <img
-                  src={SERVICES[3].image}
-                  alt={SERVICES[3].title}
-                  className="w-full h-full object-cover filter brightness-95"
-                  loading="lazy"
-                />
-              </div>
-            </motion.div>
-
+            {/* Right 50%: Full-Bleed 100vh Photography */}
+            <div className="w-full md:w-1/2 h-[48vh] md:h-full relative overflow-hidden bg-black">
+              <img
+                src={service.image}
+                alt={service.title}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                className="w-full h-full object-cover filter brightness-95 hover:scale-[1.02] transition-transform duration-700 ease-out"
+              />
+            </div>
           </div>
-        </div>
-      )}
+        ))}
+      </div>
     </section>
   );
 }
