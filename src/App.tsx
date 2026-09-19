@@ -1,6 +1,6 @@
 import { Suspense, lazy } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { ScrollToTop } from './components/common/ScrollToTop';
@@ -37,6 +37,7 @@ function PageLoader() {
 
 export function App() {
   const location = useLocation();
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#101010] selection:bg-[#101010] selection:text-white relative overflow-x-clip">
@@ -50,20 +51,34 @@ export function App() {
       {/* Fixed Transparent Header & Accessible Fullscreen Overlay Menu */}
       <Navbar />
 
-      {/* Global Page Transition: Vertical Travel translateY 100% to 0 / 0 to -100% */}
-      <div className="flex-1 w-full relative">
+      {/* Global Page Transition: Vertical Travel translateY 100vh to 0 (What We Do stacking style) */}
+      <div className="flex-1 w-full relative overflow-x-clip">
         <Suspense fallback={<PageLoader />}>
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={location.pathname}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { y: '100vh', opacity: 1 }
+              }
+              animate={{ y: 0, opacity: 1 }}
+              exit={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : { opacity: 0, y: -24, transition: { duration: 0.18, ease: 'easeIn' } }
+              }
               transition={{
-                duration: 0.25,
+                duration: 0.55,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="w-full"
+              onAnimationComplete={() => {
+                window.scrollTo(0, 0);
+                if ((window as any).lenis) {
+                  (window as any).lenis.scrollTo(0, { immediate: true });
+                }
+              }}
+              className="w-full bg-white text-[#101010]"
             >
               <Routes location={location}>
                 {/* Core SOLUM Routes */}
