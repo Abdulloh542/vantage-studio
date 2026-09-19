@@ -1,47 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { LogoTicker } from '../common/LogoTicker';
-
-interface HeroSlide {
-  id: string;
-  name: string;
-  image: string;
-  subtitle: string;
-  typology: string;
-}
-
-const HERO_SLIDES: HeroSlide[] = [
-  {
-    id: '01',
-    name: 'Morrow Residence',
-    image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2400&q=85',
-    subtitle: 'Architecture and visual studio creating homes and spaces that feel like they belong.',
-    typology: 'Coastal Luxury',
-  },
-  {
-    id: '02',
-    name: 'Riviera Residence',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85',
-    subtitle: 'Mediterranean terraced living visualized for international off-plan pre-sales.',
-    typology: 'Residential',
-  },
-  {
-    id: '03',
-    name: 'Bunker 37',
-    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=2400&q=85',
-    subtitle: 'A 1943 reinforced monolith reimagined into a contemporary cultural foundation.',
-    typology: 'Adaptive Reuse',
-  },
-  {
-    id: '04',
-    name: 'Berliner Strasse 69',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=85',
-    subtitle: 'Corporate headquarters and commercial leasing campaign collateral in central Berlin.',
-    typology: 'Commercial',
-  },
-];
 
 const CLIENT_AVATARS = [
   'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80',
@@ -60,12 +21,11 @@ const CLIENT_LOGOS = [
 ];
 
 export function SolumHero() {
-  const [activeSlideIdx, setActiveSlideIdx] = useState(0);
   const [currentTime, setCurrentTime] = useState('');
   const shouldReduceMotion = useReducedMotion();
   const heroRef = useRef<HTMLDivElement>(null);
 
-  // Parallax strictly limited to 10% (-5% to +5%) within clipped media frame
+  // Parallax strictly limited to 8% within clipped media frame
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
@@ -89,10 +49,14 @@ export function SolumHero() {
     return () => clearInterval(interval);
   }, []);
 
-  const activeSlide = HERO_SLIDES[activeSlideIdx];
+  // Single ultra-luxury high-converting ArchViz image (or video background when provided)
+  const heroMedia = {
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2560&q=90',
+    title: 'Riviera Residence Dusk Villa',
+    videoUrl: '', // Ready for video URL when provided
+  };
 
-  // Base delay offset: if first load, starts at T=560ms after preloader
-  const baseDelay = typeof window !== 'undefined' && sessionStorage.getItem('vantage_preloader_seen') ? 0.1 : 0.56;
+  const baseDelay = typeof window !== 'undefined' && sessionStorage.getItem('vantage_preloader_seen') ? 0.05 : 0.45;
 
   return (
     <section
@@ -101,67 +65,77 @@ export function SolumHero() {
     >
       {/* 4-Column Visible Hairline Grid Overlay */}
       <div className="absolute inset-0 pointer-events-none grid grid-cols-1 md:grid-cols-4 px-6 md:px-10 z-20">
-        <div className="border-r border-white/[0.12] h-full hidden md:block" />
-        <div className="border-r border-white/[0.12] h-full hidden md:block" />
-        <div className="border-r border-white/[0.12] h-full hidden md:block" />
+        <div className="border-r border-white/[0.1] h-full hidden md:block" />
+        <div className="border-r border-white/[0.1] h-full hidden md:block" />
+        <div className="border-r border-white/[0.1] h-full hidden md:block" />
         <div className="h-full hidden md:block" />
       </div>
 
       {/* ========================================================= */}
-      {/* 1) HERO MEDIA: Scale 1.30 -> 1.00 & Opacity 0 -> 1 (2.0s) */}
-      {/* Clipped by its frame, zero bounce, measured parallax      */}
+      {/* 1) SINGLE CINEMATIC HERO MEDIA (Image or Video)           */}
+      {/* Scale 1.15 -> 1.00 & Opacity 0 -> 1, clipped by frame     */}
       {/* ========================================================= */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
           style={{ y: shouldReduceMotion ? '0%' : parallaxY }}
           className="w-full h-full"
         >
-          <AnimatePresence mode="wait">
+          {heroMedia.videoUrl ? (
+            <video
+              src={heroMedia.videoUrl}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover filter brightness-90 contrast-105"
+            />
+          ) : (
             <motion.img
-              key={activeSlide.id}
-              src={activeSlide.image}
-              alt={activeSlide.name}
+              src={heroMedia.image}
+              alt={heroMedia.title}
               initial={
                 shouldReduceMotion
                   ? { opacity: 1, scale: 1 }
-                  : { opacity: 0, scale: 1.3 }
+                  : { opacity: 0, scale: 1.15 }
               }
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
               transition={{
-                duration: shouldReduceMotion ? 0.01 : 2.0,
+                duration: shouldReduceMotion ? 0.01 : 1.8,
                 delay: baseDelay,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="w-full h-full object-cover filter brightness-95 contrast-105 origin-center will-change-transform"
+              className="w-full h-full object-cover filter brightness-90 contrast-105 origin-center will-change-transform"
             />
-          </AnimatePresence>
+          )}
         </motion.div>
 
-        {/* Subtle Contrast Gradient for Maximum Text Legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/50 pointer-events-none" />
+        {/* Cinematic Vignette & Deep Contrast Gradient for Flawless Text Legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/50 pointer-events-none" />
       </div>
 
       {/* ========================================================= */}
-      {/* TOP BAR: Fades in calm rhythm                             */}
+      {/* TOP BAR: Wordmark, Location, Clock, and Status            */}
       {/* ========================================================= */}
       <div className="relative z-30 pt-6 px-6 md:px-10">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: baseDelay + 0.6, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: baseDelay + 0.3, ease: [0.22, 1, 0.36, 1] }}
           className="grid grid-cols-2 md:grid-cols-4 gap-4 items-center font-mono text-sm text-white/90"
         >
           {/* Col 1: Small Wordmark */}
-          <div className="col-span-1">
+          <div className="col-span-1 flex items-center gap-3">
             <Link to="/" className="font-sans font-bold text-base sm:text-lg tracking-[-0.04em] text-white">
               Vantage&reg;
             </Link>
+            <span className="hidden sm:inline-block text-[10px] uppercase font-mono px-2 py-0.5 border border-white/20 text-white/70">
+              STUDIO
+            </span>
           </div>
 
-          {/* Col 2: Based in Location */}
+          {/* Col 2: Hub Locations */}
           <div className="hidden md:block col-span-1 text-white/80 font-mono text-xs sm:text-sm">
-            Based in London &amp; Zurich
+            London &bull; Zurich &bull; Global
           </div>
 
           {/* Col 3: Real-Time Live Clock */}
@@ -169,108 +143,129 @@ export function SolumHero() {
             {currentTime || 'Sep 19, 09:37 AM'}
           </div>
 
-          {/* Col 4: Spacer (Menu button is mounted fixed in Navbar) */}
-          <div className="col-span-1" />
+          {/* Col 4: Status Indicator */}
+          <div className="col-span-1 flex justify-end items-center gap-2 text-xs font-mono text-white/70">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="hidden sm:inline">COMMISSIONS OPEN Q3/Q4</span>
+          </div>
         </motion.div>
       </div>
 
       {/* ========================================================= */}
-      {/* 2) HERO STAGE: Wordmark y80px, Description y80px, CTA     */}
+      {/* CENTER HERO STAGE: High-Impact Selling Headline & CTAs    */}
       {/* ========================================================= */}
       <div className="relative z-30 my-auto py-12 md:py-16 px-6 md:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12 items-end">
-          {/* Left Stage: Wordmark & Subtitle (Columns 1-2) */}
-          <div className="col-span-1 md:col-span-2">
-            {/* 2) Headline: Starts opacity 0 / y80px, animates to 1 / y0 over 1.2s after 0.8s delay */}
-            <motion.h1
-              initial={
-                shouldReduceMotion
-                  ? { opacity: 1, y: 0 }
-                  : { opacity: 0, y: 80 }
-              }
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-end">
+          {/* Left Stage: Main Headline & Core Proposition (Col 1-7) */}
+          <div className="md:col-span-7 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
-                duration: shouldReduceMotion ? 0.01 : 1.2,
-                delay: baseDelay + 0.8,
+                duration: 0.8,
+                delay: baseDelay + 0.4,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="font-display text-[clamp(64px,11vw,160px)] font-bold tracking-[-0.06em] leading-[0.88] text-white mb-6 select-none"
+              className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-sm border border-white/20 text-xs font-mono tracking-wider text-white"
             >
-              Vantage&reg;
+              <span>AI-POWERED ARCHITECTURAL VISUALIZATION &amp; REAL ESTATE FILMS</span>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.9,
+                delay: baseDelay + 0.55,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="font-display text-[clamp(44px,7.5vw,104px)] font-bold tracking-[-0.05em] leading-[0.92] text-white"
+            >
+              WE TURN UNBUILT <br />
+              CONCEPTS INTO <br />
+              <span className="text-white/80 font-serif italic font-normal tracking-tight">
+                SENSORY REALITY.
+              </span>
             </motion.h1>
 
-            {/* 3) Description: Starts opacity 0 / y80px, animates to 1 / y0 over 1.2s after 0.9s delay */}
             <motion.p
-              initial={
-                shouldReduceMotion
-                  ? { opacity: 1, y: 0 }
-                  : { opacity: 0, y: 80 }
-              }
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
-                duration: shouldReduceMotion ? 0.01 : 1.2,
-                delay: baseDelay + 0.9,
+                duration: 0.8,
+                delay: baseDelay + 0.7,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="font-sans text-base sm:text-lg lg:text-xl text-white/90 font-light leading-relaxed max-w-lg"
+              className="font-sans text-base sm:text-lg lg:text-xl text-white/85 font-light leading-relaxed max-w-xl"
             >
-              Architecture and visual studio creating photorealistic CGI and cinematic marketing films for unbuilt spaces.
+              We transform architectural plans, raw CAD models, and blueprints into photorealistic CGI and cinematic marketing films that sell multi-million dollar developments off-plan.
             </motion.p>
           </div>
 
-          {/* Right Stage: Disciplines List & Split Start a Project Button */}
-          <div className="col-span-1 md:col-span-2 md:pl-8 flex flex-col justify-between items-start md:items-end">
-            {/* Numbered Services Column */}
+          {/* Right Stage: Primary Commercial CTAs & Selling Bulletproof Proof (Col 8-12) */}
+          <div className="md:col-span-5 flex flex-col justify-between items-start md:items-end space-y-8">
+            {/* Quick Selling Proof Box */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{
-                duration: 0.6,
-                delay: baseDelay + 1.1,
+                duration: 0.75,
+                delay: baseDelay + 0.85,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="space-y-2.5 font-mono text-sm sm:text-base text-white/95 mb-10 w-full md:max-w-xs font-medium"
+              className="w-full md:max-w-sm p-6 bg-black/60 backdrop-blur-md border border-white/15 space-y-4"
             >
-              <div className="flex items-center gap-3 py-1.5 border-b border-white/15">
-                <span className="text-white/50 text-xs sm:text-sm">01</span>
-                <span>Architecture Visualization</span>
+              <div className="flex items-center justify-between border-b border-white/15 pb-3">
+                <span className="font-mono text-xs text-white/60 uppercase">STUDIO METRICS</span>
+                <span className="font-mono text-xs text-emerald-400">100% OFF-PLAN TRACK RECORD</span>
               </div>
-              <div className="flex items-center gap-3 py-1.5 border-b border-white/15">
-                <span className="text-white/50 text-xs sm:text-sm">02</span>
-                <span>Interior &amp; Exterior CGI</span>
-              </div>
-              <div className="flex items-center gap-3 py-1.5 border-b border-white/15">
-                <span className="text-white/50 text-xs sm:text-sm">03</span>
-                <span>AI Real Estate Films</span>
-              </div>
-              <div className="flex items-center gap-3 py-1.5 border-b border-white/15">
-                <span className="text-white/50 text-xs sm:text-sm">04</span>
-                <span>3D Spatial Modeling &amp; BIM</span>
+
+              <div className="grid grid-cols-2 gap-4 font-mono text-xs">
+                <div>
+                  <span className="text-2xl sm:text-3xl font-display font-bold text-white block">
+                    $1.8B+
+                  </span>
+                  <span className="text-white/60 uppercase text-[11px]">GDV Visualized</span>
+                </div>
+                <div>
+                  <span className="text-2xl sm:text-3xl font-display font-bold text-white block">
+                    3 WEEKS
+                  </span>
+                  <span className="text-white/60 uppercase text-[11px]">Avg Turnaround</span>
+                </div>
               </div>
             </motion.div>
 
-            {/* 4) Split CTA Button: Fades from opacity 0 to 1 after 1.2s delay (no translation) */}
+            {/* Action Buttons: Start a Project + View Projects */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{
                 duration: 0.6,
-                delay: baseDelay + 1.2,
+                delay: baseDelay + 1.0,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="w-full md:max-w-xs"
+              className="w-full md:max-w-sm flex flex-col sm:flex-row gap-3"
             >
+              {/* Primary Split Start a Project Button */}
               <Link
                 to="/contact"
-                className="group flex items-stretch bg-white text-[#101010] hover:bg-[#F6F6F2] transition-colors duration-180 w-full shadow-2xl"
+                className="group flex-1 flex items-stretch bg-white text-[#101010] hover:bg-[#F6F6F2] transition-colors duration-180 shadow-2xl"
               >
-                <div className="flex-1 py-4 px-6 font-sans font-medium text-base tracking-[-0.02em]">
+                <div className="flex-1 py-4 px-6 font-sans font-semibold text-sm sm:text-base tracking-[-0.02em] whitespace-nowrap">
                   Start a Project
                 </div>
-                {/* Arrow translates exactly 6px right on hover in 160ms */}
-                <div className="w-14 border-l border-[#101010]/15 flex items-center justify-center group-hover:bg-[#101010] group-hover:text-white transition-colors duration-180">
-                  <ArrowRight className="w-4 h-4 transform transition-transform duration-160 ease-out group-hover:translate-x-1.5" />
+                <div className="w-12 border-l border-[#101010]/15 flex items-center justify-center group-hover:bg-[#101010] group-hover:text-white transition-colors duration-180">
+                  <ArrowRight className="w-4 h-4 transform transition-transform duration-160 ease-out group-hover:translate-x-1" />
                 </div>
+              </Link>
+
+              {/* Secondary View Projects Button */}
+              <Link
+                to="/projects"
+                className="px-6 py-4 border border-white/30 hover:border-white text-white font-mono text-xs sm:text-sm uppercase tracking-wider text-center transition-colors duration-180 whitespace-nowrap hover:bg-white/10"
+              >
+                View Works
               </Link>
             </motion.div>
           </div>
@@ -278,22 +273,22 @@ export function SolumHero() {
       </div>
 
       {/* ========================================================= */}
-      {/* 5) BOTTOM STRIP: Fades in after 1.3s and 1.4s delay       */}
-      {/* Contains Client Social Proof, LogoTicker, and Switcher    */}
+      {/* BOTTOM STRIP: Social Proof Avatars & Draggable Logo Marquee*/}
+      {/* Clean, no 4-thumbnail switcher clutter                   */}
       {/* ========================================================= */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{
           duration: 0.6,
-          delay: baseDelay + 1.3,
+          delay: baseDelay + 1.15,
           ease: [0.22, 1, 0.36, 1],
         }}
         className="relative z-30 pb-8 pt-6 px-6 md:px-10 border-t border-white/15"
       >
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-          {/* Left: Overlapping Avatars + Social Proof (Col 1-4) */}
-          <div className="md:col-span-4 flex items-center gap-3">
+          {/* Left: Overlapping Avatars + Social Proof (Col 1-5) */}
+          <div className="md:col-span-5 flex items-center gap-3">
             <div className="flex -space-x-2.5 overflow-hidden">
               {CLIENT_AVATARS.map((src, i) => (
                 <img
@@ -304,51 +299,14 @@ export function SolumHero() {
                 />
               ))}
             </div>
-            <p className="font-sans text-sm text-white/90 leading-tight">
-              Over 100 clients trust us to shape their unbuilt spaces.
+            <p className="font-sans text-xs sm:text-sm text-white/90 leading-tight">
+              Trusted by 100+ premier architects, property developers, and sovereign funds.
             </p>
           </div>
 
-          {/* Center: Draggable Logo Ticker (~20px/s, pauses on hover) (Col 5-8) */}
-          <div className="md:col-span-4 hidden lg:block overflow-hidden">
+          {/* Right: Draggable Logo Ticker (~20px/s, pauses on hover) (Col 6-12) */}
+          <div className="md:col-span-7 overflow-hidden">
             <LogoTicker logos={CLIENT_LOGOS} speed={22} />
-          </div>
-
-          {/* Right: Project Switcher & 4 Thumbnails (Col 9-12) */}
-          <div className="md:col-span-8 lg:col-span-4 flex items-center justify-between md:justify-end gap-4">
-            <div className="text-right font-mono text-xs sm:text-sm">
-              <span className="text-white block font-medium uppercase tracking-wider">
-                {activeSlide.name}
-              </span>
-              <span className="text-white/60 tabular-nums">
-                0{activeSlideIdx + 1} / 0{HERO_SLIDES.length}
-              </span>
-            </div>
-
-            {/* 4 Interactive Thumbnail Cards */}
-            <div className="flex items-center gap-2">
-              {HERO_SLIDES.map((slide, idx) => {
-                const isActive = activeSlideIdx === idx;
-                return (
-                  <button
-                    key={slide.id}
-                    onClick={() => setActiveSlideIdx(idx)}
-                    aria-label={`Switch to slide ${slide.name}`}
-                    className={`relative w-12 sm:w-16 h-9 sm:h-11 overflow-hidden border transition-all duration-200 cursor-pointer ${
-                      isActive
-                        ? 'border-white scale-105 shadow-md'
-                        : 'border-white/25 opacity-60 hover:opacity-100'
-                    }`}
-                  >
-                    <img
-                      src={slide.image}
-                      alt={slide.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                );
-              })}
-            </div>
           </div>
         </div>
       </motion.div>
