@@ -107,18 +107,13 @@ export function Footer() {
           <div className="col-span-1 md:col-span-2">
             <ul className="space-y-3 font-sans text-xs sm:text-sm font-semibold tracking-wider uppercase text-white/90">
               <li>
-                <Link to="/blog" className="hover:text-neutral-400 transition-colors">
-                  BLOG
+                <Link to="/contact" className="hover:text-neutral-400 transition-colors">
+                  CONTACT
                 </Link>
               </li>
               <li>
                 <Link to="/404" className="hover:text-neutral-400 transition-colors">
                   404
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-neutral-400 transition-colors">
-                  CONTACT
                 </Link>
               </li>
             </ul>

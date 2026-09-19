@@ -12,8 +12,6 @@ import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { ProjectsPage } from './pages/ProjectsPage';
 import { ProjectDetailPage } from './pages/ProjectDetailPage';
-import { BlogPage } from './pages/BlogPage';
-import { BlogDetailPage } from './pages/BlogDetailPage';
 import { ServicesPage } from './pages/ServicesPage';
 import { ContactPage } from './pages/ContactPage';
 import { TermsPage } from './pages/TermsPage';
@@ -66,8 +64,6 @@ export function App() {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/projects" element={<ProjectsPage />} />
               <Route path="/projects/:slug" element={<ProjectDetailPage />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/blog/:slug" element={<BlogDetailPage />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/terms" element={<TermsPage />} />
@@ -75,10 +71,12 @@ export function App() {
               <Route path="/404" element={<NotFoundPage />} />
 
               {/* Backwards-compatibility aliases */}
+              <Route path="/blog" element={<Navigate to="/projects" replace />} />
+              <Route path="/blog/*" element={<Navigate to="/projects" replace />} />
+              <Route path="/journal" element={<Navigate to="/projects" replace />} />
+              <Route path="/journal/*" element={<Navigate to="/projects" replace />} />
               <Route path="/work" element={<Navigate to="/projects" replace />} />
               <Route path="/work/:slug" element={<ProjectDetailPage />} />
-              <Route path="/journal" element={<Navigate to="/blog" replace />} />
-              <Route path="/journal/:slug" element={<BlogDetailPage />} />
               <Route path="/services/:slug" element={<ServicesPage />} />
               <Route path="/process" element={<Navigate to="/about" replace />} />
               <Route path="/studio" element={<Navigate to="/about" replace />} />

@@ -6,7 +6,6 @@ import { SolumServices } from '../components/solum/SolumServices';
 import { SolumHowWeWork } from '../components/solum/SolumHowWeWork';
 import { SolumTransformationProof } from '../components/solum/SolumTransformationProof';
 import { SolumFAQ } from '../components/solum/SolumFAQ';
-import { SolumLatestArticles } from '../components/solum/SolumLatestArticles';
 
 export function HomePage() {
   return (
@@ -35,9 +34,6 @@ export function HomePage() {
 
       {/* 08: Operational Protocols & FAQ */}
       <SolumFAQ />
-
-      {/* 09: Architectural Insights & Monograph Articles */}
-      <SolumLatestArticles />
     </main>
   );
 }
