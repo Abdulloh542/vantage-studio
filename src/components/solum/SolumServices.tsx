@@ -91,13 +91,13 @@ export function SolumServices() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIdx, setActiveIdx] = useState(0);
 
-  // Normalized scroll progress across 400vh
+  // Normalized scroll progress across 280vh (balanced responsive duration without dead zones)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
 
-  // Track 4 quadrants (0–24.99%, 25–49.99%, 50–74.99%, 75–100%)
+  // Track 4 quadrants with immediate responsive switching
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
     if (latest < 0.25) {
       setActiveIdx(0);
@@ -124,14 +124,14 @@ export function SolumServices() {
   return (
     <>
       {/* ========================================================================= */}
-      {/* DESKTOP PINNED SCROLL SERVICE SEQUENCE (400vh outer wrapper + sticky stage) */}
+      {/* DESKTOP PINNED SCROLL SERVICE SEQUENCE (280vh wrapper + sticky 100vh stage) */}
       {/* ========================================================================= */}
       <section
         ref={containerRef}
-        className="hidden md:block relative h-[400vh] bg-[#111111] text-[#F6F6F2] select-none"
+        className="hidden md:block relative h-[280vh] bg-[#111111] text-[#F6F6F2] select-none"
       >
         {/* Sticky 100vh Viewport Stage */}
-        <div className="sticky top-0 h-screen w-full flex flex-col justify-between py-10 lg:py-12 px-6 md:px-12 lg:px-16 overflow-hidden bg-[#111111]">
+        <div className="sticky top-0 h-screen w-full flex flex-col justify-between py-8 lg:py-10 px-6 md:px-12 lg:px-16 overflow-hidden bg-[#111111]">
           {/* 4-Column Hairline Grid */}
           <div className="absolute inset-0 pointer-events-none grid grid-cols-4 px-6 md:px-12 lg:px-16 z-0">
             <div className="border-r border-white/[0.08] h-full" />
@@ -141,22 +141,22 @@ export function SolumServices() {
           </div>
 
           {/* Top Bar: Stationary Header in 4-Column Alignment */}
-          <div className="relative z-10 grid grid-cols-4 gap-6 items-end pb-6 border-b border-white/12">
+          <div className="relative z-10 grid grid-cols-4 gap-6 items-end pb-5 border-b border-white/12">
             <div className="col-span-2 space-y-1">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-white inline-block" />
                 <span className="font-mono text-xs uppercase tracking-wider text-white/60 font-medium">
-                  02 // SERVICES
+                  02 // SERVICES &amp; DISCIPLINES
                 </span>
               </div>
-              <h2 className="font-display text-4xl lg:text-5xl font-bold uppercase tracking-[-0.04em] text-white leading-none">
+              <h2 className="font-display text-3xl lg:text-4xl xl:text-5xl font-bold uppercase tracking-[-0.04em] text-white leading-none">
                 WHAT WE DO.
               </h2>
             </div>
 
             <div className="col-span-1 hidden lg:block">
               <p className="font-sans text-xs lg:text-sm text-white/60 font-light leading-relaxed">
-                Photorealistic CGI and cinematic films that pre-sell unbuilt developments.
+                Photorealistic CGI and cinematic marketing films that pre-sell unbuilt developments.
               </p>
             </div>
 
@@ -172,7 +172,7 @@ export function SolumServices() {
           </div>
 
           {/* Center Stage: Stationary Grid with Dynamic Service Crossfade */}
-          <div className="relative z-10 my-auto py-6 grid grid-cols-12 gap-8 lg:gap-14 items-center">
+          <div className="relative z-10 my-auto py-4 grid grid-cols-12 gap-8 lg:gap-14 items-center">
             {/* Left: Dynamic Copy State (Columns 1-5) */}
             <div className="col-span-5 min-h-[360px] flex flex-col justify-center">
               <AnimatePresence mode="wait">
@@ -182,7 +182,7 @@ export function SolumServices() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -16 }}
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  className="space-y-5"
+                  className="space-y-4"
                 >
                   <div>
                     <span className="font-mono text-xs text-white/40 uppercase tracking-widest block mb-2">
@@ -266,8 +266,8 @@ export function SolumServices() {
             </div>
           </div>
 
-          {/* Bottom Bar: Interactive 01–04 State Indicator & Scroll Progress Line */}
-          <div className="relative z-10 pt-4 border-t border-white/12 space-y-3">
+          {/* Bottom Bar: Interactive 01–04 State Indicator, Progress Line & Live Studio Metrics */}
+          <div className="relative z-10 pt-3 border-t border-white/12 space-y-3">
             {/* Proportional Scroll Progress Line */}
             <div className="h-[2px] w-full bg-white/10 overflow-hidden relative">
               <motion.div
@@ -284,7 +284,7 @@ export function SolumServices() {
                   <button
                     key={srv.id}
                     onClick={() => scrollToState(idx)}
-                    className="flex items-center gap-3 py-2 text-left cursor-pointer group transition-all"
+                    className="flex items-center gap-3 py-1.5 text-left cursor-pointer group transition-all"
                   >
                     <span
                       className={`font-mono text-xs transition-colors duration-200 ${
@@ -304,6 +304,26 @@ export function SolumServices() {
                 );
               })}
             </div>
+
+            {/* Architectural Studio Live Metrics Strip (Fills the viewport gracefully) */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2.5 border-t border-white/10 font-mono text-[11px] text-white/50 uppercase tracking-wider">
+              <div>
+                <span className="text-white/35 block">DELIVERY SPRINT</span>
+                <span className="text-white/85">10–14 BUSINESS DAYS</span>
+              </div>
+              <div>
+                <span className="text-white/35 block">MAX RESOLUTION</span>
+                <span className="text-white/85">UP TO 16K MASTER STILLS</span>
+              </div>
+              <div>
+                <span className="text-white/35 block">CINEMA MOTION</span>
+                <span className="text-white/85">4K 60FPS AI DRONE CHOREOGRAPHY</span>
+              </div>
+              <div>
+                <span className="text-white/35 block">DESIGN REVISIONS</span>
+                <span className="text-white/85">100% APPROVAL GUARANTEE</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -315,13 +335,13 @@ export function SolumServices() {
         {/* Mobile Header */}
         <div className="pb-8 border-b border-white/12 space-y-2">
           <span className="font-mono text-xs uppercase tracking-wider text-white/60 font-medium">
-            02 // SERVICES
+            02 // SERVICES &amp; DISCIPLINES
           </span>
           <h2 className="font-display text-3xl font-bold uppercase tracking-[-0.04em] text-white">
             WHAT WE DO.
           </h2>
           <p className="font-sans text-xs text-white/70 font-light leading-relaxed">
-            Photorealistic CGI and cinematic films that pre-sell unbuilt developments.
+            Photorealistic CGI and cinematic marketing films that pre-sell unbuilt developments.
           </p>
         </div>
 

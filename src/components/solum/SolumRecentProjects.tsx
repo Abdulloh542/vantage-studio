@@ -10,10 +10,10 @@ export function SolumRecentProjects() {
   const pBroad = PROJECTS.find((p) => p.slug === 'berliner-strasse-69') || PROJECTS[3];
 
   return (
-    <section className="w-full bg-white text-[#101010] py-24 md:py-[120px] px-6 md:px-10 border-b border-[#101010]/12">
+    <section className="w-full bg-white text-[#101010] py-16 md:py-24 px-6 md:px-10 border-b border-[#101010]/12">
       <div className="max-w-[1440px] mx-auto">
         {/* Section Header: 4-Column Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-16 border-b border-[#101010]/12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-[#101010]/12">
           {/* Column 1: Editorial Rail Marker */}
           <div className="col-span-1">
             <div className="flex items-center gap-2">
