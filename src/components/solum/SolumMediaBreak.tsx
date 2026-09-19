@@ -13,8 +13,8 @@ export function SolumMediaBreak() {
   // Parallax on the background photo
   const yParallax = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
 
-  // Scroll-linked horizontal translation: as you scroll down, the text glides sideways!
-  const xMarquee = useTransform(scrollYProgress, [0, 1], ['10%', '-35%']);
+  // Scroll-linked horizontal translation: restrained, calm, and slow speed
+  const xMarquee = useTransform(scrollYProgress, [0, 1], ['4%', '-14%']);
 
   const marqueeText = 'VANTAGE STUDIO ◆ VANTAGE STUDIO ◆ VANTAGE STUDIO ◆ VANTAGE STUDIO ◆ ';
 
