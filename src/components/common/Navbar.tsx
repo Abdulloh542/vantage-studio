@@ -1,140 +1,154 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
   const location = useLocation();
+  const overlayRef = useRef<HTMLDivElement>(null);
 
+  // Close on route change
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    setMobileMenuOpen(false);
+    setMenuOpen(false);
   }, [location.pathname]);
 
-  const navLinks = [
-    { label: 'ABOUT', href: '/about' },
-    { label: 'SERVICES', href: '/services' },
-    { label: 'PROCESS', href: '/process' },
-    { label: 'PROJECTS', href: '/work' },
-    { label: 'JOURNAL', href: '/journal' },
-    { label: 'CONTACT', href: '/contact' },
+  // Escape key closes menu
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && menuOpen) {
+        setMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [menuOpen]);
+
+  // Lock scroll when menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  const mainLinks = [
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
+    { label: 'Projects', href: '/projects' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Contact', href: '/contact' },
   ];
 
   return (
     <>
+      {/* Fixed Transparent Header with Legible Difference Blend */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-[#050505]/95 backdrop-blur-md border-b border-white/15 py-4'
-            : 'bg-transparent border-b border-white/10 py-6'
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 py-5 md:py-6 px-6 md:px-10 flex items-center justify-between pointer-events-none mix-blend-difference text-white"
       >
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between">
-          {/* Brand Logo */}
-          <Link
-            to="/"
-            className="flex items-center gap-2 group"
+        {/* Compact Editable Wordmark Top Left */}
+        <Link
+          to="/"
+          className="pointer-events-auto font-sans font-semibold text-sm md:text-base tracking-[-0.04em] uppercase select-none hover:opacity-75 transition-opacity"
+        >
+          VANTAGE STUDIO
+        </Link>
+
+        {/* Menu Plus Small Outlined Square Top Right */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? 'Close Menu' : 'Open Menu'}
+          className="pointer-events-auto flex items-center gap-2 text-xs md:text-sm font-mono uppercase tracking-wider select-none hover:opacity-75 transition-opacity group cursor-pointer"
+        >
+          <span>{menuOpen ? 'CLOSE' : 'MENU'}</span>
+          <div
+            className={`w-4 h-4 border border-current flex items-center justify-center transition-transform duration-250 ${
+              menuOpen ? 'rotate-45' : 'group-hover:rotate-90'
+            }`}
           >
-            <span className="font-display font-medium text-lg md:text-xl tracking-[0.2em] uppercase text-white group-hover:text-white/80 transition-colors">
-              VANTAGE<span className="text-[10px] align-top ml-0.5 font-mono">®</span>
-            </span>
-          </Link>
-
-          {/* Desktop Navigation Links with Framer Line Hover */}
-          <nav className="hidden md:flex items-center gap-8 lg:gap-10">
-            {navLinks.map((link) => {
-              const isActive = location.pathname === link.href;
-              return (
-                <Link
-                  key={link.label}
-                  to={link.href}
-                  className="relative py-1 group font-mono text-xs uppercase tracking-[0.2em] text-white/75 hover:text-white transition-colors"
-                >
-                  <span>{link.label}</span>
-                  {/* Framer signature hover line decoration */}
-                  <span
-                    className={`absolute bottom-0 left-0 h-[1px] bg-white transition-all duration-300 ease-out ${
-                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
-                    }`}
-                  />
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Desktop Action & Mobile Toggle */}
-          <div className="flex items-center gap-4">
-            <Link
-              to="/contact"
-              className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 bg-white text-black font-mono text-xs uppercase tracking-[0.2em] hover:bg-white/90 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
-            >
-              <span>START A PROJECT</span>
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </Link>
-
-            {/* Mobile Hamburger Toggle */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden w-10 h-10 flex items-center justify-center text-white border border-white/20 hover:border-white transition-colors"
-              aria-label="Toggle navigation menu"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+            <span className="text-[10px] leading-none mb-0.5">+</span>
           </div>
-        </div>
+        </button>
       </header>
 
-      {/* Mobile Slide-down Menu */}
+      {/* Accessible Full-Screen Pure White Overlay */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            ref={overlayRef}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-[#050505] pt-28 px-6 pb-12 flex flex-col justify-between md:hidden"
+            exit={{ opacity: 0, y: 12 }}
+            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-40 bg-white text-[#101010] flex flex-col justify-between pt-28 pb-10 px-6 md:px-10 overflow-y-auto"
           >
-            <div className="space-y-6">
-              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-white/40 block pb-2 border-b border-white/10">
-                NAVIGATION //
-              </span>
-              <div className="flex flex-col space-y-5">
-                {navLinks.map((link, idx) => (
-                  <Link
+            {/* Top 4-Column Rule Line */}
+            <div className="absolute top-20 left-6 right-6 md:left-10 md:right-10 border-b border-[#101010]/12" />
+
+            {/* Main Links Stack with Hairline Rules */}
+            <div className="max-w-4xl w-full my-auto divide-y divide-[#101010]/12 border-t border-b border-[#101010]/12">
+              {mainLinks.map((link, idx) => {
+                const isHovered = hoveredIdx === idx;
+                const isAnyHovered = hoveredIdx !== null;
+                const isDimmed = isAnyHovered && !isHovered;
+
+                return (
+                  <div
                     key={link.label}
-                    to={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between text-2xl font-display uppercase tracking-wider text-white hover:text-white/70"
+                    onMouseEnter={() => setHoveredIdx(idx)}
+                    onMouseLeave={() => setHoveredIdx(null)}
+                    className="py-4 md:py-6"
                   >
-                    <span>{link.label}</span>
-                    <span className="font-mono text-xs text-white/30">0{idx + 1}</span>
-                  </Link>
-                ))}
-              </div>
+                    <Link
+                      to={link.href}
+                      onClick={() => setMenuOpen(false)}
+                      className={`block font-display text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-0.06em] leading-[0.95] text-[#101010] transition-opacity duration-180 ${
+                        isDimmed ? 'opacity-35' : 'opacity-100'
+                      }`}
+                    >
+                      <span className="font-mono text-xs text-[#757575] mr-4 md:mr-8 align-middle">
+                        0{idx + 1}
+                      </span>
+                      {link.label}
+                    </Link>
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="pt-8 border-t border-white/10 space-y-4">
-              <Link
-                to="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full inline-flex items-center justify-center gap-2 py-4 bg-white text-black font-mono text-xs uppercase tracking-[0.2em]"
-              >
-                <span>START A PROJECT</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </Link>
-              <div className="flex justify-between text-[11px] font-mono text-white/40 uppercase tracking-widest pt-2">
-                <span>LONDON • ZURICH • TASHKENT</span>
-                <span>© 2026</span>
+            {/* Bottom Meta & Legal / Social Links */}
+            <div className="pt-8 border-t border-[#101010]/12 grid grid-cols-1 md:grid-cols-4 gap-6 text-xs font-mono text-[#757575]">
+              <div className="col-span-1">
+                <span className="text-[#101010] block mb-1">ATELIER CONTACT</span>
+                <a href="mailto:commissions@vantagestudio.com" className="hover:text-[#101010] transition-colors">
+                  commissions@vantagestudio.com
+                </a>
+              </div>
+
+              <div className="col-span-1">
+                <span className="text-[#101010] block mb-1">HUBS</span>
+                <span>London &bull; Zurich &bull; Tashkent</span>
+              </div>
+
+              <div className="col-span-1">
+                <span className="text-[#101010] block mb-1">LEGAL</span>
+                <div className="flex gap-4">
+                  <Link to="/terms" onClick={() => setMenuOpen(false)} className="hover:text-[#101010] transition-colors">
+                    Terms
+                  </Link>
+                  <Link to="/privacy" onClick={() => setMenuOpen(false)} className="hover:text-[#101010] transition-colors">
+                    Privacy
+                  </Link>
+                </div>
+              </div>
+
+              <div className="col-span-1 text-left md:text-right">
+                <span className="text-[#101010] block mb-1">&copy; 2026</span>
+                <span>Vantage Studio &mdash; All Rights Reserved</span>
               </div>
             </div>
           </motion.div>

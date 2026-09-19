@@ -4,16 +4,21 @@
 
 @layer base {
   :root {
-    --color-bg-dark: #0c0c0d;
-    --color-bg-card: #141416;
-    --color-bg-light: #f7f6f2;
-    --color-bg-light-muted: #eceae3;
-    --color-border-dark: #242428;
-    --color-border-light: #ded9cd;
+    --color-paper: #FFFFFF;
+    --color-ink: #101010;
+    --color-dark: #111111;
+    --color-light-on-dark: #F6F6F2;
+    --color-muted: #757575;
+    --color-divider: #B8B8B4;
+    --rule-white: rgba(16, 16, 16, 0.12);
+    --rule-dark: rgba(255, 255, 255, 0.12);
   }
 
   html {
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    background-color: #FFFFFF;
+    color: #101010;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum";
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -41,31 +46,38 @@
     width: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0c0c0d;
+    background: #FFFFFF;
   }
   ::-webkit-scrollbar-thumb {
-    background: #27272a;
-    border-radius: 3px;
+    background: #D4D4D0;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #3f3f46;
+    background: #101010;
   }
 }
 
-/* Hairline borders */
-.border-hairline-dark {
-  border-color: rgba(255, 255, 255, 0.08);
+/* 1px Hairline rules */
+.rule-white {
+  border-color: rgba(16, 16, 16, 0.12);
 }
-.border-hairline-light {
-  border-color: rgba(0, 0, 0, 0.08);
-}
-
-/* Custom transitions */
-.transition-editorial {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+.rule-dark {
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
-/* Hide scrollbar for clean horizontal scrollers */
+/* Solum Headings */
+.solum-heading {
+  font-weight: 650;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+}
+
+/* Tabular figures for all metrics */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Hide scrollbar */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -74,31 +86,30 @@
   scrollbar-width: none;
 }
 
-/* Refined Architectural Frosted Glass (Axioma Standard) */
-.glass-panel {
-  background: rgba(15, 15, 18, 0.55);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+/* Split Button Hover Dynamics: Inverts in 180ms, arrow moves 6px right */
+.solum-btn {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid currentColor;
+  transition: all 180ms ease-out;
+  cursor: pointer;
+}
+.solum-btn .btn-arrow {
+  transition: transform 180ms ease-out;
+}
+.solum-btn:hover .btn-arrow {
+  transform: translateX(6px);
 }
 
-.glass-pill {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-}
-
-/* Subtle Marquee */
+/* Marquee */
 @keyframes marquee {
   0% { transform: translateX(0%); }
   100% { transform: translateX(-50%); }
 }
-
 .animate-marquee {
   display: flex;
   width: max-content;
-  animation: marquee 35s linear infinite;
+  animation: marquee 32s linear infinite;
 }
 .animate-marquee:hover {
   animation-play-state: paused;

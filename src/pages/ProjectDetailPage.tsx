@@ -1,355 +1,236 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowUpRight, ArrowLeft, Play } from 'lucide-react';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { PROJECTS } from '../data/projects';
-import { BeforeAfterSlider } from '../components/common/BeforeAfterSlider';
-import { VideoLightbox } from '../components/common/VideoLightbox';
-import { FinalCTASection } from '../components/home/FinalCTASection';
 
 export function ProjectDetailPage() {
   const { slug } = useParams<{ slug: string }>();
-  const [videoOpen, setVideoOpen] = useState(false);
+  const leadImageRef = useRef<HTMLDivElement>(null);
+  const shouldReduceMotion = useReducedMotion();
 
   const project = useMemo(() => {
     return PROJECTS.find((p) => p.slug === slug);
   }, [slug]);
 
+  const currentIndex = useMemo(() => {
+    return PROJECTS.findIndex((p) => p.slug === slug);
+  }, [slug]);
+
+  const prevProject = useMemo(() => {
+    if (currentIndex <= 0) return PROJECTS[PROJECTS.length - 1];
+    return PROJECTS[currentIndex - 1];
+  }, [currentIndex]);
+
   const nextProject = useMemo(() => {
-    if (!project) return null;
-    return PROJECTS.find((p) => p.slug === project.nextProjectSlug) || PROJECTS[0];
-  }, [project]);
+    if (currentIndex < 0 || currentIndex >= PROJECTS.length - 1) return PROJECTS[0];
+    return PROJECTS[currentIndex + 1];
+  }, [currentIndex]);
+
+  const { scrollYProgress } = useScroll({
+    target: leadImageRef,
+    offset: ['start end', 'end start'],
+  });
+  const parallaxY = useTransform(scrollYProgress, [0, 1], ['-5%', '5%']);
 
   if (!project) {
-    return <Navigate to="/work" replace />;
+    return <Navigate to="/projects" replace />;
   }
 
   return (
-    <main className="w-full bg-[#f7f6f2] text-[#121214] pt-24 md:pt-32">
-      {/* Back to Work Link */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-8">
-        <Link
-          to="/work"
-          className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-zinc-500 hover:text-black transition-colors"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to Selected Work</span>
-        </Link>
-      </div>
-
-      {/* Hero Header & Metadata Strip */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
-        <div className="max-w-4xl">
-          <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
-            Case Study — {project.category}
-          </span>
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-black leading-[1.04] mb-6">
-            {project.title}
-          </h1>
-          <p className="text-lg sm:text-xl text-zinc-600 font-light max-w-2xl leading-relaxed">
-            {project.summary}
-          </p>
-        </div>
-
-        {/* Metadata Table */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 pt-10 mt-10 border-t border-black/10 text-xs">
-          <div>
-            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
-              Location
-            </span>
-            <span className="text-black font-medium">{project.location}</span>
-          </div>
-          <div>
-            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
-              Client
-            </span>
-            <span className="text-black font-medium">{project.client}</span>
-          </div>
-          <div>
-            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
-              Architect
-            </span>
-            <span className="text-black font-medium">{project.architect}</span>
-          </div>
-          <div>
-            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
-              Year
-            </span>
-            <span className="text-black font-medium">{project.year}</span>
-          </div>
-          <div>
-            <span className="text-[10px] uppercase tracking-wider text-zinc-400 block mb-1">
-              Services
-            </span>
-            <span className="text-black font-medium">
-              {project.services.join(' / ')}
-            </span>
-          </div>
-        </div>
-
-        {/* Client Material & Studio Transformation Split */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 pt-8 border-t border-black/10">
-          <div className="p-6 bg-white border border-black/10">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 block mb-2 font-semibold">
-              Client Material / Raw Input
-            </span>
-            <p className="text-sm font-light text-zinc-800 leading-relaxed">
-              {project.clientMaterial || 'Architectural drawings, CAD floor plans & preliminary client concept renders.'}
-            </p>
-          </div>
-
-          <div className="p-6 bg-black text-white border border-black/10">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 block mb-2 font-semibold">
-              Our Work / Studio Transformation
-            </span>
-            <p className="text-sm font-light text-zinc-200 leading-relaxed">
-              {project.transformationPipeline
-                ? project.transformationPipeline.join('  →  ')
-                : '3D visualization → photorealistic enhancement → cinematic AI video → final edit'}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Full-Bleed Hero Visual (with optional video trigger) */}
-      <div className="w-full relative aspect-[16/9] md:aspect-[21/9] bg-zinc-900 overflow-hidden mb-20 md:mb-32">
-        <img
-          src={project.heroImage}
-          alt={project.title}
-          className="w-full h-full object-cover"
-        />
-        {project.heroVideo && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-            <button
-              onClick={() => setVideoOpen(true)}
-              data-cursor="PLAY"
-              className="flex items-center gap-3 px-6 py-3.5 bg-black/70 backdrop-blur-md border border-white/20 text-white hover:bg-white hover:text-black transition-all duration-200"
-            >
-              <div className="w-6 h-6 rounded-full border border-current flex items-center justify-center">
-                <Play className="w-3 h-3 fill-current ml-0.5" />
-              </div>
-              <span className="text-xs uppercase tracking-widest font-semibold">
-                Watch Project Film
-              </span>
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Editorial Narrative & Project Outcomes */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-24 md:mb-36">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          <div className="lg:col-span-4">
-            <span className="text-xs uppercase tracking-widest text-zinc-400 font-semibold block mb-3">
-              The Architectural Story
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-light tracking-tight text-black">
-              Context, materiality and spatial emotion.
-            </h2>
-          </div>
-
-          <div className="lg:col-span-8 space-y-6 text-zinc-700 text-base md:text-lg font-light leading-relaxed">
-            {project.description.map((p, idx) => (
-              <p key={idx}>{p}</p>
-            ))}
-
-            {/* Project Metrics / Stats Row */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8 mt-8 border-t border-black/10">
-              {project.stats.map((st) => (
-                <div key={st.label}>
-                  <div className="text-2xl sm:text-3xl font-light text-black tracking-tight mb-1">
-                    {st.value}
-                  </div>
-                  <div className="text-[11px] uppercase tracking-wider text-zinc-500 font-medium">
-                    {st.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Interactive Before / After Section (if available) */}
-      {project.beforeAfter && (
-        <div className="max-w-7xl mx-auto px-6 md:px-12 mb-24 md:mb-36">
-          <div className="border-t border-black/10 pt-16 mb-10">
-            <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-2">
-              Visual Transformation
-            </span>
-            <h3 className="text-2xl sm:text-4xl font-light tracking-tight text-black mb-3">
-              Source Material → Final Photographic Reality
-            </h3>
-            <p className="text-zinc-600 text-sm max-w-2xl font-light leading-relaxed">
-              {project.beforeAfter.description}
-            </p>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            data-cursor="DRAG"
-            className="shadow-2xl border border-black/10 overflow-hidden"
+    <main className="w-full bg-white text-[#101010] pt-28 md:pt-36">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10">
+        {/* Breadcrumb / Rail Label */}
+        <div className="flex items-center justify-between pb-8 border-b border-[#101010]/12 font-mono text-xs text-[#757575] uppercase tracking-wider">
+          <Link
+            to="/projects"
+            className="flex items-center gap-2 hover:text-[#101010] transition-colors"
           >
-            <BeforeAfterSlider
-              beforeImage={project.beforeAfter.beforeImage}
-              beforeLabel={project.beforeAfter.beforeLabel}
-              afterImage={project.beforeAfter.afterImage}
-              afterLabel={project.beforeAfter.afterLabel}
-              aspectRatio="aspect-[16/9] md:aspect-[21/9]"
-            />
-          </motion.div>
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>PROJECTS ARCHIVE</span>
+          </Link>
+          <div className="flex items-center gap-2 text-[#101010]">
+            <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
+            <span>{project.category} // {project.year}</span>
+          </div>
         </div>
-      )}
 
-      {/* Process Breakdown: "From concept to final visual" */}
-      {project.process && project.process.length > 0 && (
-        <div className="bg-[#0c0c0d] text-white py-24 md:py-32 mb-24 md:mb-36">
-          <div className="max-w-7xl mx-auto px-6 md:px-12">
-            <div className="max-w-3xl mb-16">
-              <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
-                Production Anatomy
+        {/* Title & Year */}
+        <div className="py-12 md:py-16 grid grid-cols-1 md:grid-cols-4 gap-8 items-end">
+          <div className="col-span-1 md:col-span-3">
+            <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-[-0.06em] text-[#101010] uppercase leading-[0.94]">
+              {project.title}
+            </h1>
+          </div>
+          <div className="col-span-1 text-left md:text-right font-mono text-xs text-[#757575] uppercase">
+            <span>YEAR: {project.year}</span>
+            <span className="block mt-1">LOCATION: {project.location}</span>
+          </div>
+        </div>
+
+        {/* Ruled Details / Credits Table */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-8 border-t border-b border-[#101010]/12 text-xs font-mono">
+          <div>
+            <span className="text-[#757575] block uppercase mb-1">CLIENT</span>
+            <span className="text-[#101010] font-sans font-medium">{project.client}</span>
+          </div>
+          <div>
+            <span className="text-[#757575] block uppercase mb-1">ARCHITECT</span>
+            <span className="text-[#101010] font-sans font-medium">{project.architect}</span>
+          </div>
+          <div>
+            <span className="text-[#757575] block uppercase mb-1">TYPOLOGY</span>
+            <span className="text-[#101010] font-sans font-medium">{project.category}</span>
+          </div>
+          <div>
+            <span className="text-[#757575] block uppercase mb-1">DISCIPLINES</span>
+            <span className="text-[#101010] font-sans font-medium">{project.services.join(', ')}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Full-Bleed Lead Image with Restrained Parallax */}
+      <div
+        ref={leadImageRef}
+        className="relative w-full h-[55vh] sm:h-[70vh] lg:h-[80vh] overflow-hidden bg-zinc-900 my-16 border-t border-b border-[#101010]/12"
+      >
+        <motion.div
+          style={{ y: shouldReduceMotion ? '0%' : parallaxY }}
+          className="absolute inset-0 w-full h-[120%] -top-[10%]"
+        >
+          <img
+            src={project.heroImage}
+            alt={project.title}
+            loading="eager"
+            className="w-full h-full object-cover filter brightness-95"
+          />
+          <div className="absolute inset-0 bg-black/15 pointer-events-none" />
+        </motion.div>
+        <div className="absolute bottom-4 left-6 md:left-10 text-white font-mono text-xs uppercase tracking-wider">
+          LEAD ELEVATION &bull; {project.title}
+        </div>
+      </div>
+
+      {/* Narrow Narrative Column (4-Column System, Content Starts Column 2) */}
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-16 md:py-24">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
+          <div className="col-span-1">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
+              <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
+                NARRATIVE
               </span>
-              <h3 className="text-3xl sm:text-5xl font-light tracking-tight text-white leading-[1.08] mb-4">
-                From concept to final visual.
-              </h3>
-              <p className="text-zinc-400 text-sm font-light leading-relaxed">
-                Step-by-step insight into how our atelier executed the visual direction, structural modeling, lighting physics, and post-production for {project.title}.
-              </p>
             </div>
+            <span className="font-mono text-xs text-[#757575]">
+              STATEMENT OF INTENT
+            </span>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {project.process.map((step) => (
-                <div
-                  key={step.step}
-                  className="bg-zinc-900/60 border border-white/10 p-6 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between text-zinc-500 font-mono text-xs mb-4">
-                      <span>STEP {step.step}</span>
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                    </div>
-                    {step.image && (
-                      <div className="aspect-[16/9] overflow-hidden mb-4 bg-zinc-800">
-                        <img
-                          src={step.image}
-                          alt={step.title}
-                          loading="lazy"
-                          className="w-full h-full object-cover filter brightness-90"
-                        />
-                      </div>
-                    )}
-                    <h4 className="text-base font-medium text-white mb-2 tracking-tight">
-                      {step.title}
-                    </h4>
-                    <p className="text-xs text-zinc-400 font-light leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className="col-span-1 md:col-span-2 space-y-6 text-sm sm:text-base text-[#101010]/85 font-light leading-relaxed">
+            <p className="font-display text-xl sm:text-2xl font-normal tracking-[-0.03em] leading-snug text-[#101010]">
+              {project.summary}
+            </p>
+            {project.description.map((paragraph, i) => (
+              <p key={i} className="text-xs sm:text-sm text-[#757575] leading-relaxed">
+                {paragraph}
+              </p>
+            ))}
+          </div>
+
+          {/* Project Metrics Summary in Column 4 */}
+          <div className="col-span-1 divide-y divide-[#101010]/12 border-t border-b border-[#101010]/12">
+            {project.stats.map((st) => (
+              <div key={st.label} className="py-3 font-mono text-xs">
+                <span className="text-[#757575] uppercase block text-[11px] mb-0.5">
+                  {st.label}
+                </span>
+                <span className="text-[#101010] font-semibold tabular-nums">
+                  {st.value}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
-      )}
+      </div>
 
-      {/* Gallery Stills: Mixed Grid */}
+      {/* Alternating Full-Bleed and Grid Gallery from CMS */}
       {project.gallery && project.gallery.length > 0 && (
-        <div className="max-w-7xl mx-auto px-6 md:px-12 mb-24 md:mb-36">
-          <div className="mb-12">
-            <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-2">
-              Visual Suite
+        <div className="max-w-[1440px] mx-auto px-6 md:px-10 pb-24 space-y-12">
+          <div className="border-b border-[#101010]/12 pb-4">
+            <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
+              MONOGRAPH GALLERY ({project.gallery.length} PLATES)
             </span>
-            <h3 className="text-2xl sm:text-4xl font-light tracking-tight text-black">
-              Curated Render Stills
-            </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          {/* Gallery Items with 15% view opacity 0/y28px reveal */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {project.gallery.map((item, idx) => (
-              <div key={idx} className="group">
-                <div
-                  className={`relative overflow-hidden bg-zinc-200 border border-black/5 ${
-                    item.aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-[16/10]'
-                  }`}
-                >
+              <motion.div
+                key={item.url + idx}
+                initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className={idx === 0 ? 'md:col-span-2' : 'col-span-1'}
+              >
+                <div className={`relative ${idx === 0 ? 'aspect-[21/9]' : 'aspect-[4/3]'} w-full overflow-hidden bg-zinc-100 border border-[#101010]/12`}>
                   <img
                     src={item.url}
-                    alt={item.caption}
+                    alt={item.caption || project.title}
                     loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    className="w-full h-full object-cover"
                   />
                 </div>
-                <p className="text-xs text-zinc-500 mt-3 font-light">
-                  {item.caption}
-                </p>
-              </div>
+                <div className="pt-2 flex justify-between font-mono text-xs text-[#757575] border-b border-[#101010]/12 pb-2">
+                  <span>PLATE 0{idx + 1}</span>
+                  <span>{item.caption || project.title}</span>
+                </div>
+              </motion.div>
             ))}
           </div>
         </div>
       )}
 
-      {/* Next Project Teaser Navigation */}
-      {nextProject && (
-        <div className="bg-[#121214] text-white py-20 md:py-28 border-t border-white/10">
-          <div className="max-w-7xl mx-auto px-6 md:px-12">
+      {/* Previous & Next Project Navigation Links */}
+      <div className="w-full border-t border-[#101010]/12 bg-[#F6F6F2]">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-10 grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-[#101010]/12">
+          {prevProject && (
             <Link
-              to={`/work/${nextProject.slug}`}
-              className="group block"
-              data-cursor="VIEW"
+              to={`/projects/${prevProject.slug}`}
+              className="py-12 pr-6 flex flex-col justify-between group select-none hover:bg-white transition-colors duration-200"
             >
-              <div className="flex items-center justify-between mb-8">
-                <span className="text-xs uppercase tracking-widest text-zinc-400 font-medium">
-                  Next Case Study →
-                </span>
-                <span className="text-xs uppercase tracking-widest text-zinc-500">
-                  {nextProject.category}
-                </span>
+              <div className="flex items-center gap-2 font-mono text-xs uppercase text-[#757575] mb-4">
+                <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+                <span>PREVIOUS PROJECT</span>
               </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div className="lg:col-span-7">
-                  <h3 className="text-4xl sm:text-6xl font-light tracking-tight text-white group-hover:text-zinc-300 transition-colors">
-                    {nextProject.title}
-                  </h3>
-                  <p className="text-xs uppercase tracking-widest text-zinc-400 mt-2">
-                    {nextProject.location} • {nextProject.services.join(' / ')}
-                  </p>
-                </div>
-                <div className="lg:col-span-5">
-                  <div className="relative aspect-[16/9] overflow-hidden bg-zinc-800 border border-white/10">
-                    <img
-                      src={nextProject.heroImage}
-                      alt={nextProject.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/20 group-hover:opacity-0 transition-opacity" />
-                    <div className="absolute bottom-4 right-4 w-8 h-8 rounded-full bg-white text-black flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <ArrowUpRight className="w-4 h-4" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <h4 className="font-display text-2xl sm:text-3xl font-semibold tracking-[-0.04em] text-[#101010] uppercase">
+                {prevProject.title}
+              </h4>
+              <span className="font-mono text-xs text-[#757575] mt-2">
+                {prevProject.category} &bull; {prevProject.year}
+              </span>
             </Link>
-          </div>
+          )}
+
+          {nextProject && (
+            <Link
+              to={`/projects/${nextProject.slug}`}
+              className="py-12 sm:pl-8 flex flex-col justify-between group select-none hover:bg-white transition-colors duration-200 sm:text-right"
+            >
+              <div className="flex items-center sm:justify-end gap-2 font-mono text-xs uppercase text-[#757575] mb-4">
+                <span>NEXT PROJECT</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+              <h4 className="font-display text-2xl sm:text-3xl font-semibold tracking-[-0.04em] text-[#101010] uppercase">
+                {nextProject.title}
+              </h4>
+              <span className="font-mono text-xs text-[#757575] mt-2">
+                {nextProject.category} &bull; {nextProject.year}
+              </span>
+            </Link>
+          )}
         </div>
-      )}
-
-      {/* Global Final CTA */}
-      <FinalCTASection />
-
-      {/* Video Lightbox Modal */}
-      {project.heroVideo && (
-        <VideoLightbox
-          isOpen={videoOpen}
-          onClose={() => setVideoOpen(false)}
-          videoUrl={project.heroVideo}
-          title={project.title}
-          subtitle="Project Film"
-        />
-      )}
+      </div>
     </main>
   );
 }

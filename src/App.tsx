@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { ScrollToTop } from './components/common/ScrollToTop';
@@ -7,24 +7,24 @@ import { SmoothScroll } from './components/common/SmoothScroll';
 import { BackToTopButton } from './components/common/BackToTopButton';
 
 // Code-split pages for peak Lighthouse performance
-const HomePage = lazy(() => import('./pages/HomePage').then(m => ({ default: m.HomePage })));
-const WorkPage = lazy(() => import('./pages/WorkPage').then(m => ({ default: m.WorkPage })));
-const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage').then(m => ({ default: m.ProjectDetailPage })));
-const ServicesPage = lazy(() => import('./pages/ServicesPage').then(m => ({ default: m.ServicesPage })));
-const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage').then(m => ({ default: m.ServiceDetailPage })));
-const ProcessPage = lazy(() => import('./pages/ProcessPage').then(m => ({ default: m.ProcessPage })));
-const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
-const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
-const JournalPage = lazy(() => import('./pages/JournalPage').then(m => ({ default: m.JournalPage })));
-const JournalDetailPage = lazy(() => import('./pages/JournalDetailPage').then(m => ({ default: m.JournalDetailPage })));
+const HomePage = lazy(() => import('./pages/HomePage').then((m) => ({ default: m.HomePage })));
+const AboutPage = lazy(() => import('./pages/AboutPage').then((m) => ({ default: m.AboutPage })));
+const ProjectsPage = lazy(() => import('./pages/ProjectsPage').then((m) => ({ default: m.ProjectsPage })));
+const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage').then((m) => ({ default: m.ProjectDetailPage })));
+const BlogPage = lazy(() => import('./pages/BlogPage').then((m) => ({ default: m.BlogPage })));
+const BlogDetailPage = lazy(() => import('./pages/BlogDetailPage').then((m) => ({ default: m.BlogDetailPage })));
+const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })));
+const TermsPage = lazy(() => import('./pages/TermsPage').then((m) => ({ default: m.TermsPage })));
+const PrivacyPage = lazy(() => import('./pages/PrivacyPage').then((m) => ({ default: m.PrivacyPage })));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })));
 
 // Architectural minimal loader
 function PageLoader() {
   return (
-    <div className="w-full min-h-[70vh] bg-[#0c0c0d] flex items-center justify-center">
+    <div className="w-full min-h-[70vh] bg-white text-[#101010] flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
-        <div className="w-6 h-6 border border-white/20 border-t-white animate-spin" />
-        <span className="text-[10px] tracking-[0.25em] uppercase text-zinc-500 font-mono">
+        <div className="w-5 h-5 border border-[#101010]/20 border-t-[#101010] animate-spin" />
+        <span className="text-[11px] tracking-[0.25em] uppercase text-[#757575] font-mono">
           VANTAGE STUDIO
         </span>
       </div>
@@ -34,35 +34,47 @@ function PageLoader() {
 
 export function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-[#0c0c0d] selection:bg-white selection:text-black">
+    <div className="min-h-screen flex flex-col bg-white text-[#101010] selection:bg-[#101010] selection:text-white">
       {/* Scroll restoration & Lenis smooth scroll */}
       <ScrollToTop />
       <SmoothScroll />
 
-      {/* Sticky Luxury Navbar */}
+      {/* Transparent Fixed Header & Accessible Fullscreen Overlay Menu */}
       <Navbar />
 
       {/* Page Routing with Suspense */}
       <div className="flex-1">
         <Suspense fallback={<PageLoader />}>
           <Routes>
+            {/* Core SOLUM Routes */}
             <Route path="/" element={<HomePage />} />
-            <Route path="/work" element={<WorkPage />} />
-            <Route path="/work/:slug" element={<ProjectDetailPage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/services/:slug" element={<ServiceDetailPage />} />
-            <Route path="/process" element={<ProcessPage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/studio" element={<AboutPage />} />
-            <Route path="/journal" element={<JournalPage />} />
-            <Route path="/journal/:slug" element={<JournalDetailPage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:slug" element={<BlogDetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            <Route path="*" element={<HomePage />} />
+            <Route path="/terms" element={<TermsPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/404" element={<NotFoundPage />} />
+
+            {/* Backwards-compatibility aliases */}
+            <Route path="/work" element={<Navigate to="/projects" replace />} />
+            <Route path="/work/:slug" element={<ProjectDetailPage />} />
+            <Route path="/journal" element={<Navigate to="/blog" replace />} />
+            <Route path="/journal/:slug" element={<BlogDetailPage />} />
+            <Route path="/services" element={<Navigate to="/projects" replace />} />
+            <Route path="/services/:slug" element={<Navigate to="/projects" replace />} />
+            <Route path="/process" element={<Navigate to="/about" replace />} />
+            <Route path="/studio" element={<Navigate to="/about" replace />} />
+
+            {/* 404 catch-all */}
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
       </div>
 
-      {/* Global Editorial Footer & Back to Top */}
+      {/* Solum 4-Column Footer & Back to Top */}
       <Footer />
       <BackToTopButton />
     </div>

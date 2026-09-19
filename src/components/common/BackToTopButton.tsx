@@ -27,8 +27,7 @@ export function BackToTopButton() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 16 }}
           transition={{ duration: 0.3 }}
-          aria-label="Back to top of page"
-          className="fixed bottom-8 right-8 z-40 px-4 py-3 bg-[#0B0B0A]/90 text-white backdrop-blur-md border border-white/20 font-mono text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 flex items-center gap-2 group shadow-xl"
+          className="fixed bottom-8 right-8 z-40 px-4 py-2.5 bg-white text-[#101010] border border-[#101010] font-mono text-xs uppercase tracking-wider hover:bg-[#101010] hover:text-white transition-colors duration-180 flex items-center gap-2 group cursor-pointer"
         >
           <span>TOP</span>
           <ArrowUp className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5" />
