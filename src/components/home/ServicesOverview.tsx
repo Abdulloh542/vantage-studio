@@ -14,10 +14,10 @@ export function ServicesOverview({ services }: ServicesOverviewProps) {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
           <div className="max-w-2xl">
-            <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
+            <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold block mb-3">
               03 — What We Do
             </span>
-            <h2 className="text-4xl md:text-6xl font-light tracking-tight text-black leading-[1.08]">
+            <h2 className="font-display text-4xl md:text-6xl font-light tracking-tight text-black leading-[1.08]">
               Comprehensive digital solutions for real estate & architecture.
             </h2>
           </div>
@@ -44,7 +44,7 @@ export function ServicesOverview({ services }: ServicesOverviewProps) {
               <div>
                 {/* Ghost Number + Service Title */}
                 <div className="flex items-baseline justify-between mb-4">
-                  <span className="text-4xl md:text-5xl font-light text-zinc-300 group-hover:text-black transition-colors duration-300 font-mono">
+                  <span className="font-display text-4xl md:text-5xl font-bold text-zinc-300 group-hover:text-black transition-colors duration-300">
                     {service.number}
                   </span>
                   <span className="text-[10px] uppercase tracking-widest text-zinc-400">
@@ -52,7 +52,7 @@ export function ServicesOverview({ services }: ServicesOverviewProps) {
                   </span>
                 </div>
 
-                <h3 className="text-xl font-medium tracking-tight text-black mb-3">
+                <h3 className="font-display text-xl font-semibold tracking-tight text-black mb-3">
                   {service.title}
                 </h3>
 

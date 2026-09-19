@@ -41,10 +41,10 @@ export function WorkPage() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 pb-24">
         {/* Page Title & Editorial Header */}
         <div className="max-w-3xl mb-16">
-          <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
+          <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold block mb-3">
             Portfolio Index
           </span>
-          <h1 className="text-5xl sm:text-7xl font-light tracking-tight text-black leading-[1.04] mb-6">
+          <h1 className="font-display text-5xl sm:text-7xl font-light tracking-tight text-black leading-[1.04] mb-6">
             Selected Works
           </h1>
           <p className="text-zinc-600 text-base md:text-lg font-light leading-relaxed">

@@ -74,12 +74,12 @@ export function BeforeAfterFeature() {
         {/* Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end mb-12">
           <div className="lg:col-span-8">
-            <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
+            <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold block mb-3">
               05 — Instant Value Proof
             </span>
-            <h2 className="text-4xl sm:text-6xl font-light tracking-tight text-black leading-[1.06]">
+            <h2 className="font-display text-4xl sm:text-6xl font-light tracking-tight text-black leading-[1.06]">
               Explaining our value <br />
-              <span className="font-normal italic text-zinc-700">in two seconds.</span>
+              <span className="font-semibold text-zinc-900">in two seconds.</span>
             </h2>
           </div>
           <div className="lg:col-span-4">
@@ -104,9 +104,9 @@ export function BeforeAfterFeature() {
               <button
                 key={item.id}
                 onClick={() => setActiveTab(idx)}
-                className={`px-4 py-2 text-xs uppercase tracking-wider transition-all whitespace-nowrap border ${
+                className={`px-4 py-2 rounded-full text-xs uppercase tracking-wider transition-all whitespace-nowrap border ${
                   isActive
-                    ? 'bg-black text-white font-medium border-black shadow-sm'
+                    ? 'bg-black text-white font-semibold border-black shadow-sm'
                     : 'bg-white/70 text-zinc-600 hover:text-black border-black/10 hover:bg-white'
                 }`}
               >
@@ -118,10 +118,10 @@ export function BeforeAfterFeature() {
 
         {/* Active Comparison Context Bar */}
         <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-zinc-500">
-          <h3 className="text-sm font-medium text-black">
+          <h3 className="font-display text-base font-semibold text-black">
             {current.heading}
           </h3>
-          <span className="font-mono text-[11px] text-zinc-400">
+          <span className="text-xs text-zinc-500 font-light">
             {current.description}
           </span>
         </div>
@@ -133,7 +133,7 @@ export function BeforeAfterFeature() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
           data-cursor="DRAG"
-          className="shadow-2xl border border-black/10"
+          className="rounded-2xl overflow-hidden shadow-2xl border border-black/10"
         >
           <BeforeAfterSlider
             beforeImage={current.beforeImage}

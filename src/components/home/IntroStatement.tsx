@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 export function IntroStatement() {
   const stats = [
-    { number: '8+', label: 'Years of Practice', detail: 'Refining architectural CGI and film for global ateliers.' },
-    { number: '100+', label: 'Projects Delivered', detail: 'Completed for premier developers, architects, and luxury funds.' },
-    { number: '$1B+', label: 'Real Estate Visualized', detail: 'Off-plan sales value launched with our digital imagery.' },
+    { number: '10+', label: 'Years of Practice', detail: 'Refining architectural CGI, neural rendering, and film for global ateliers.' },
+    { number: '240+', label: 'Projects Delivered', detail: 'Completed for premier developers, architects, and luxury property funds worldwide.' },
+    { number: '$1.8B+', label: 'Real Estate Visualized', detail: 'Off-plan sales value successfully launched with our digital imagery and films.' },
   ];
 
   return (
@@ -14,7 +14,7 @@ export function IntroStatement() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Label */}
         <div className="mb-12">
-          <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium">
+          <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold">
             01 — Studio Proposition
           </span>
         </div>
@@ -27,10 +27,10 @@ export function IntroStatement() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-[1.06] text-black"
+              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight leading-[1.05] text-black"
             >
               Visualize it <br />
-              <span className="font-normal italic text-zinc-700">before it exists.</span>
+              <span className="font-semibold text-zinc-900">before it exists.</span>
             </motion.h2>
           </div>
 
@@ -73,7 +73,7 @@ export function IntroStatement() {
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               className="border-l border-black/15 pl-6"
             >
-              <div className="text-4xl md:text-5xl font-light tracking-tight text-black mb-2">
+              <div className="font-display text-4xl md:text-5xl font-bold tracking-tight text-black mb-2">
                 {stat.number}
               </div>
               <div className="text-xs uppercase tracking-wider text-black font-semibold mb-1">

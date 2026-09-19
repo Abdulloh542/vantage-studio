@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="bg-[#09090a] text-white pt-24 pb-12 border-t border-white/[0.08] relative overflow-hidden">
       {/* Background Watermark */}
-      <div className="absolute right-0 bottom-0 select-none pointer-events-none opacity-[0.03] text-[20vw] font-black leading-none tracking-tighter text-white">
+      <div className="absolute right-0 bottom-0 select-none pointer-events-none opacity-[0.03] text-[20vw] font-display font-extrabold leading-none tracking-tight text-white">
         VANTAGE
       </div>
 
@@ -14,12 +14,12 @@ export function Footer() {
         <div className="border-b border-white/10 pb-20 mb-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
             <div className="lg:col-span-8">
-              <span className="text-xs uppercase tracking-widest text-zinc-500 mb-4 block">
+              <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold mb-4 block">
                 Partner With Us
               </span>
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.05]">
+              <h2 className="font-display text-4xl md:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.05]">
                 Let's make your project <br />
-                <span className="font-normal italic text-zinc-300">impossible to overlook.</span>
+                <span className="font-semibold text-zinc-200">impossible to overlook.</span>
               </h2>
             </div>
             <div className="lg:col-span-4 flex flex-col items-start lg:items-end gap-4">
@@ -28,7 +28,7 @@ export function Footer() {
               </p>
               <Link
                 to="/contact"
-                className="group inline-flex items-center gap-3 px-7 py-4 bg-white text-black text-xs font-semibold uppercase tracking-widest hover:bg-zinc-200 transition-all duration-200"
+                className="group inline-flex items-center gap-3 px-7 py-4 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-zinc-200 hover:shadow-2xl transition-all duration-200 active:scale-95"
               >
                 <span>Start a Project</span>
                 <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -43,10 +43,10 @@ export function Footer() {
           <div className="col-span-2 md:col-span-4 flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-4 h-4 bg-white text-black flex items-center justify-center font-bold text-[10px]">
+                <div className="w-5 h-5 rounded-md bg-white text-black flex items-center justify-center font-bold text-xs">
                   V
                 </div>
-                <span className="text-sm font-semibold tracking-widest uppercase">
+                <span className="font-display text-sm font-bold tracking-[0.16em] uppercase">
                   Vantage Studio
                 </span>
               </div>

@@ -19,7 +19,7 @@ export function ProjectCard({
       data-cursor="VIEW"
       className={`group block overflow-hidden ${className}`}
     >
-      <div className={`relative ${aspectRatio} overflow-hidden bg-zinc-200 border border-black/5`}>
+      <div className={`relative ${aspectRatio} overflow-hidden rounded-2xl bg-zinc-200 border border-black/5 shadow-sm`}>
         <img
           src={project.heroImage}
           alt={project.title}
@@ -30,7 +30,7 @@ export function ProjectCard({
 
         {/* Floating Category Tag */}
         <div className="absolute top-3 left-3 z-10">
-          <span className="px-2.5 py-0.5 bg-black/70 backdrop-blur-sm text-[9px] uppercase tracking-widest text-zinc-200 font-mono">
+          <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-[9px] uppercase tracking-widest text-white border border-white/10 font-mono">
             {project.category}
           </span>
         </div>
@@ -38,7 +38,7 @@ export function ProjectCard({
 
       <div className="mt-4 flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-xl font-light tracking-tight text-black group-hover:text-zinc-600 transition-colors">
+          <h3 className="font-display text-xl font-normal tracking-tight text-black group-hover:text-zinc-600 transition-colors">
             {project.title}
           </h3>
           <p className="text-xs text-zinc-500 font-light mt-0.5">

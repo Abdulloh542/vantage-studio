@@ -22,6 +22,7 @@ export default {
       },
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'Inter', 'Helvetica Neue', 'sans-serif'],
+        display: ['Syne', 'Plus Jakarta Sans', 'sans-serif'],
         editorial: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {

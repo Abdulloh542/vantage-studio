@@ -37,10 +37,10 @@ export function CinematicFilmSection({ onOpenFilm }: CinematicFilmSectionProps) 
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
-            <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
+            <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold block mb-3">
               04 — Cinematic Direction
             </span>
-            <h2 className="text-4xl sm:text-6xl font-light tracking-tight text-white leading-[1.05]">
+            <h2 className="font-display text-4xl sm:text-6xl font-light tracking-tight text-white leading-[1.05]">
               Architecture in motion.
             </h2>
           </div>
@@ -55,7 +55,7 @@ export function CinematicFilmSection({ onOpenFilm }: CinematicFilmSectionProps) 
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden bg-zinc-900 cursor-pointer group"
+          className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-zinc-900 cursor-pointer group"
           onClick={() => onOpenFilm(filmUrl, filmTitle)}
           data-cursor="PLAY"
         >
@@ -74,7 +74,7 @@ export function CinematicFilmSection({ onOpenFilm }: CinematicFilmSectionProps) 
 
           {/* Central Play Trigger Button */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="flex items-center gap-4 px-6 py-3.5 bg-black/60 backdrop-blur-md border border-white/20 text-white transition-all duration-300 group-hover:scale-105 group-hover:bg-white group-hover:text-black">
+            <div className="flex items-center gap-4 px-6 py-3.5 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white transition-all duration-300 group-hover:scale-105 group-hover:bg-white group-hover:text-black shadow-2xl">
               <div className="w-6 h-6 rounded-full border border-current flex items-center justify-center">
                 <Play className="w-3 h-3 fill-current ml-0.5" />
               </div>

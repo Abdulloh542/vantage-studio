@@ -24,10 +24,10 @@ export function FinalCTASection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tight leading-[1.02] text-white mb-8"
+            className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-light tracking-tight leading-[1.02] text-white mb-8"
           >
             Ready to bring your vision <br />
-            <span className="font-normal italic text-zinc-300">to life?</span>
+            <span className="font-semibold text-zinc-200">to life?</span>
           </motion.h2>
 
           <motion.p
@@ -49,7 +49,7 @@ export function FinalCTASection() {
           >
             <Link
               to="/contact"
-              className="group inline-flex items-center gap-3 px-8 py-4 bg-white text-black text-xs font-semibold uppercase tracking-widest hover:bg-zinc-200 transition-all duration-200 shadow-2xl"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-zinc-200 hover:shadow-2xl transition-all duration-200 active:scale-95"
             >
               <span>Start a Project Brief</span>
               <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -57,7 +57,7 @@ export function FinalCTASection() {
 
             <Link
               to="/work"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-transparent border border-white/25 text-white text-xs font-medium uppercase tracking-widest hover:bg-white/10 transition-all duration-200"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/10 backdrop-blur-md border border-white/25 text-white text-xs font-medium uppercase tracking-wider hover:bg-white/20 transition-all duration-200"
             >
               <span>Browse Selected Work</span>
             </Link>

@@ -19,20 +19,20 @@ export function AIWorkflowSection() {
         {/* Header */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end mb-20">
           <div className="lg:col-span-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 text-[10px] uppercase tracking-widest text-zinc-300 font-mono mb-4 border border-white/10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[10px] uppercase tracking-widest text-zinc-300 mb-4 border border-white/15">
               <Sparkles className="w-3 h-3 text-emerald-400" />
               <span>Technology + Craft</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-white leading-[1.08]">
+            <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-light tracking-tight text-white leading-[1.08]">
               We combine architectural discipline <br />
-              <span className="font-normal italic text-zinc-300">with generative AI speed.</span>
+              <span className="font-semibold text-zinc-200">with generative AI speed.</span>
             </h2>
           </div>
           <div className="lg:col-span-4">
             <p className="text-zinc-400 text-sm font-light leading-relaxed mb-6">
               We combine traditional 3D visualization with modern generative AI workflows to produce architectural marketing content faster while strictly maintaining design accuracy.
             </p>
-            <div className="p-4 bg-white/5 border-l-2 border-emerald-400 text-xs text-zinc-300 leading-relaxed font-light">
+            <div className="p-4 bg-white/5 border-l-2 border-emerald-400 rounded-r-xl text-xs text-zinc-300 leading-relaxed font-light">
               <span className="text-white font-medium block mb-1">Our Core Value Proposition:</span>
               “Provide us with just 2 preliminary renders and a floor plan — our atelier delivers a complete, broadcast-quality marketing film.”
             </div>
@@ -48,13 +48,13 @@ export function AIWorkflowSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.08 }}
-              className="p-5 bg-zinc-900/70 border border-white/10 flex flex-col justify-between group hover:border-white/40 transition-colors"
+              className="p-5 rounded-xl bg-zinc-900/70 border border-white/10 flex flex-col justify-between group hover:border-white/40 hover:-translate-y-1 transition-all"
             >
               <div>
                 <span className="text-[10px] font-mono text-zinc-500 block mb-3">
                   STAGE {st.code}
                 </span>
-                <h4 className="text-sm font-medium text-white mb-2 tracking-tight">
+                <h4 className="font-display text-sm font-semibold text-white mb-2 tracking-tight">
                   {st.label}
                 </h4>
                 <p className="text-[11px] text-zinc-400 font-light leading-relaxed">
