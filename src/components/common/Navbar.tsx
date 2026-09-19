@@ -49,7 +49,7 @@ export function Navbar() {
       {/* Pure Transparent Header (No Blur, No Dark Gradient Bar) */}
       {/* Top Left Wordmark with Direct Fixed mix-blend-difference */}
       {!menuOpen && (
-        <div className="fixed top-0 left-0 z-[80] py-5 md:py-6 px-6 md:px-10 pointer-events-none select-none mix-blend-difference">
+        <div className="fixed top-0 left-0 z-[70] py-5 md:py-6 px-6 md:px-10 pointer-events-none select-none mix-blend-difference">
           <Link
             to="/"
             className="pointer-events-auto font-sans font-bold text-sm md:text-base tracking-[-0.04em] uppercase text-white hover:opacity-80 transition-opacity inline-block"
@@ -60,7 +60,7 @@ export function Navbar() {
       )}
 
       {/* Top Right High-Contrast White Menu Button */}
-      <header className="fixed top-0 right-0 z-[80] py-5 md:py-6 px-6 md:px-10 pointer-events-none select-none">
+      <header className="fixed top-0 right-0 z-[70] py-5 md:py-6 px-6 md:px-10 pointer-events-none select-none">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? 'Close Menu' : 'Open Menu'}
@@ -89,8 +89,8 @@ export function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.12, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-40 bg-white text-[#101010] flex flex-col justify-between pt-28 pb-10 px-6 md:px-10 overflow-y-auto select-none"
+            transition={{ duration: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[60] bg-white text-[#101010] flex flex-col justify-between pt-28 pb-10 px-6 md:px-10 overflow-y-auto select-none"
           >
             {/* Top Left Logo inside White Overlay */}
             <div className="absolute top-5 md:top-6 left-6 md:left-10 z-50">
@@ -106,12 +106,12 @@ export function Navbar() {
             {/* Top 4-Column Rule Line */}
             <div className="absolute top-20 left-6 right-6 md:left-10 md:right-10 border-b border-[#101010]/12" />
 
-            {/* Navigation List Container y16px -> 0, opacity 0 -> 1 in 420ms */}
+            {/* Navigation List Container */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 16 }}
-              transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="max-w-4xl w-full my-auto divide-y divide-[#101010]/12 border-t border-b border-[#101010]/12"
             >
               {mainLinks.map((link, idx) => {
@@ -125,8 +125,8 @@ export function Navbar() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
-                      duration: 0.35,
-                      delay: 0.05 * idx,
+                      duration: 0.3,
+                      delay: 0.04 * idx,
                       ease: [0.22, 1, 0.36, 1],
                     }}
                     onMouseEnter={() => setHoveredIdx(idx)}
@@ -178,7 +178,7 @@ export function Navbar() {
 
               <div className="col-span-1 text-left md:text-right">
                 <span className="text-[#101010] block mb-1 font-medium">&copy; 2026</span>
-                <span>Vantage Studio &mdash; All Rights Reserved</span>
+                <span className="block mt-1">Vantage Studio All Rights Reserved.</span>
               </div>
             </div>
           </motion.div>

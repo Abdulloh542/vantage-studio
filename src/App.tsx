@@ -52,11 +52,11 @@ function AppRoutes({ location }: { location: Location }) {
 
 /**
  * What We Do Stacking Page Transition:
- * - When clicking to navigate:
- *   1. The outgoing page STAYS VISIBLE underneath at its exact scroll position (ZERO white flash!).
- *   2. The target page begins ascending DIRECTLY from the bottom of the screen (100% -> 0%).
- *   3. When the target page completely covers the screen, the background layer is silently cleaned up.
- *   4. The target page was mounted once and remains permanent, so zero elements shift or reload.
+ * - On route navigation:
+ *   1. The outgoing page is fixed at its exact viewport scroll offset (ZERO white flash!).
+ *   2. The target page mounts at y: 100vh and glides up smoothly to y: 0.
+ *   3. When the target page arrives, the background layer is cleaned up silently.
+ *   4. The target page is permanent, preserving all DOM, images, and scroll stability.
  */
 function PageTransition() {
   const location = useLocation();
@@ -69,7 +69,7 @@ function PageTransition() {
   const [prevLocation, setPrevLocation] = useState<Location | null>(null);
   const [savedScrollY, setSavedScrollY] = useState(0);
 
-  // Synchronous state adjustment during render when pathname changes
+  // Synchronously update previous location state when pathname changes
   if (location.pathname !== lastPathnameRef.current) {
     const scroll = window.scrollY || document.documentElement.scrollTop || 0;
     setSavedScrollY(scroll);
@@ -102,17 +102,17 @@ function PageTransition() {
 
   return (
     <div className="flex-1 w-full relative overflow-x-clip min-h-screen">
-      {/* 1. OUTGOING PAGE: Kept in background at exact visual position (NO WHITE FLASH!) */}
+      {/* 1. OUTGOING PAGE: Fixed underneath at exact scroll position (NO WHITE FLASH!) */}
       {prevLocation && (
         <div
           aria-hidden="true"
           style={{
-            position: 'absolute',
-            top: `${-savedScrollY}px`,
+            position: 'fixed',
+            top: -savedScrollY,
             left: 0,
             right: 0,
             width: '100%',
-            zIndex: 10,
+            zIndex: 1,
             pointerEvents: 'none',
             userSelect: 'none',
           }}
@@ -122,7 +122,7 @@ function PageTransition() {
         </div>
       )}
 
-      {/* 2. INCOMING PAGE: Ascends directly from the bottom (100vh -> 0) over outgoing page AND menu */}
+      {/* 2. INCOMING PAGE: Ascends directly from the bottom (100vh -> 0) in normal document flow */}
       <motion.div
         key={location.pathname}
         initial={shouldReduceMotion || isFirstMount ? false : { y: '100vh' }}
@@ -133,18 +133,18 @@ function PageTransition() {
         }}
         onAnimationComplete={handleAnimationComplete}
         style={{
+          position: 'relative',
+          zIndex: 10,
           willChange: prevLocation ? 'transform' : 'auto',
           transform: 'translateZ(0)',
           WebkitBackfaceVisibility: 'hidden',
           backfaceVisibility: 'hidden',
-          position: 'relative',
-          zIndex: 60,
         }}
         className="w-full min-h-screen bg-white text-[#101010]"
       >
         {/* Subtle physical card top edge while rising */}
         {prevLocation && (
-          <div className="absolute top-0 left-0 right-0 h-px bg-[#101010]/20 pointer-events-none z-70" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-[#101010]/20 pointer-events-none z-20" />
         )}
         <AppRoutes location={location} />
       </motion.div>
