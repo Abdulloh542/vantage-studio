@@ -8,10 +8,22 @@ export function Navbar() {
   const location = useLocation();
   const overlayRef = useRef<HTMLDivElement>(null);
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
   // Close on route change
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
+
+  // Track scroll for sticky backdrop
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Escape key closes menu
   useEffect(() => {
@@ -47,31 +59,43 @@ export function Navbar() {
 
   return (
     <>
-      {/* Fixed Transparent Header with Legible Difference Blend */}
+      {/* Fixed Transparent Header with High-Contrast Adaptive Controls */}
       <header
-        className="fixed top-0 left-0 right-0 z-50 py-5 md:py-6 px-6 md:px-10 flex items-center justify-between pointer-events-none mix-blend-difference text-white select-none"
+        className={`fixed top-0 left-0 right-0 z-50 py-4 md:py-5 px-6 md:px-10 flex items-center justify-between transition-all duration-300 select-none ${
+          menuOpen
+            ? 'bg-transparent text-[#101010]'
+            : isScrolled
+            ? 'bg-[#101010]/85 backdrop-blur-md text-white border-b border-white/10 shadow-lg'
+            : 'bg-gradient-to-b from-black/70 via-black/30 to-transparent text-white'
+        }`}
       >
         {/* Compact Wordmark Top Left */}
         <Link
           to="/"
-          className="pointer-events-auto font-sans font-bold text-sm md:text-base tracking-[-0.04em] uppercase select-none hover:opacity-75 transition-opacity"
+          className={`font-sans font-bold text-sm md:text-base tracking-[-0.04em] uppercase transition-colors duration-200 ${
+            menuOpen ? 'text-[#101010]' : 'text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] hover:opacity-80'
+          }`}
         >
           VANTAGE STUDIO
         </Link>
 
-        {/* Menu Plus Small Outlined Square Top Right (240ms rotation) */}
+        {/* High-Contrast Architectural Menu Button (Highly eye-catching & clear) */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? 'Close Menu' : 'Open Menu'}
-          className="pointer-events-auto flex items-center gap-2 text-xs md:text-sm font-mono uppercase tracking-wider select-none hover:opacity-75 transition-opacity group cursor-pointer"
+          className={`cursor-pointer flex items-center gap-3 px-4 py-2 font-mono text-xs font-semibold uppercase tracking-wider transition-all duration-200 shadow-xl group ${
+            menuOpen
+              ? 'bg-[#101010] text-white hover:bg-black border border-[#101010]'
+              : 'bg-white text-[#101010] hover:bg-[#F4F4F0] border border-white'
+          }`}
         >
           <span>{menuOpen ? 'CLOSE' : 'MENU'}</span>
           <div
-            className={`w-4 h-4 border border-current flex items-center justify-center transition-transform duration-[240ms] ease-out ${
+            className={`w-4 h-4 border border-current flex items-center justify-center transition-transform duration-[250ms] ease-out ${
               menuOpen ? 'rotate-45' : 'group-hover:rotate-45'
             }`}
           >
-            <span className="text-[11px] leading-none mb-0.5">+</span>
+            <span className="text-[12px] leading-none mb-0.5 font-bold">+</span>
           </div>
         </button>
       </header>
