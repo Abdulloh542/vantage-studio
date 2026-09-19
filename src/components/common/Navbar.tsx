@@ -53,14 +53,19 @@ export function Navbar() {
           menuOpen ? 'text-[#101010]' : 'text-white'
         }`}
       >
-        {/* Compact Wordmark Top Left with mix-blend-difference so it inverts on all backgrounds */}
+        {/* Frosted Glass Watermark Badge Wordmark (Always visible with high contrast across light & dark backgrounds) */}
         <Link
           to="/"
-          className={`pointer-events-auto font-sans font-bold text-sm md:text-base tracking-[-0.04em] uppercase transition-opacity duration-200 hover:opacity-80 ${
-            menuOpen ? 'text-[#101010]' : 'mix-blend-difference text-white'
+          className={`pointer-events-auto inline-flex items-center gap-2.5 px-3.5 py-2 backdrop-blur-md transition-all duration-200 shadow-sm ${
+            menuOpen
+              ? 'bg-[#101010] text-white border border-[#101010]'
+              : 'bg-black/60 hover:bg-black/80 text-white border border-white/20'
           }`}
         >
-          VANTAGE STUDIO
+          <span className="w-1.5 h-1.5 bg-white rounded-full inline-block opacity-90" />
+          <span className="font-sans font-bold text-xs uppercase tracking-[0.08em]">
+            VANTAGE STUDIO
+          </span>
         </Link>
 
         {/* High-Contrast White Menu Button (Exact clean white button requested) */}
