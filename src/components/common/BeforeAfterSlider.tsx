@@ -41,6 +41,9 @@ export function BeforeAfterSlider({
     };
     const handleTouchMove = (e: TouchEvent) => {
       if (isDragging && e.touches[0]) {
+        if (e.cancelable) {
+          e.preventDefault();
+        }
         handleMove(e.touches[0].clientX);
       }
     };
@@ -48,7 +51,7 @@ export function BeforeAfterSlider({
     if (isDragging) {
       window.addEventListener('mousemove', handleMouseMove);
       window.addEventListener('mouseup', handleMouseUp);
-      window.addEventListener('touchmove', handleTouchMove);
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
       window.addEventListener('touchend', handleMouseUp);
     }
 
@@ -79,7 +82,7 @@ export function BeforeAfterSlider({
       aria-valuemin={0}
       aria-valuemax={100}
       aria-label="Image comparison slider"
-      className={`relative select-none overflow-hidden cursor-ew-resize group outline-none focus-visible:ring-1 focus-visible:ring-white ${aspectRatio} ${className}`}
+      className={`relative select-none overflow-hidden cursor-ew-resize group outline-none focus-visible:ring-1 focus-visible:ring-white touch-pan-y ${aspectRatio} ${className}`}
       onClick={(e) => handleMove(e.clientX)}
     >
       {/* Background (After / Final Image) */}

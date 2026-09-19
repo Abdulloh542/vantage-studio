@@ -75,75 +75,67 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
   return (
     <div
       style={{ zIndex: index + 1 }}
-      className="relative md:sticky md:top-0 w-full min-h-[auto] md:min-h-screen md:h-[100svh] flex flex-col md:flex-row bg-[#121212] overflow-hidden"
+      className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex flex-col md:flex-row bg-[#121212] overflow-hidden border-t border-white/10 shadow-[0_-16px_36px_rgba(0,0,0,0.8)]"
     >
-      {/* Left 50% Editorial Content Column */}
-      <div className="w-full md:w-1/2 min-h-[auto] md:h-full flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 py-12 md:py-16 bg-[#121212] z-10">
-        <div className="max-w-xl space-y-4 sm:space-y-6">
+      {/* Editorial Content Column (Top flex-1 on mobile, Left 50% on desktop) */}
+      <div className="w-full md:w-1/2 flex-1 md:h-full flex flex-col justify-center px-5 sm:px-10 md:px-16 lg:px-24 py-4 sm:py-8 md:py-16 bg-[#121212] z-10 overflow-y-auto sm:overflow-visible">
+        <div className="max-w-xl space-y-3 sm:space-y-4 md:space-y-6 my-auto">
           {/* Number & Phase Tag */}
           <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0.35, y: 18 }}
+            initial={shouldReduceMotion ? false : { opacity: 0.4, y: 10 }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center gap-3"
           >
-            <span className="font-sans text-xl sm:text-2xl text-white/40 block font-normal">
+            <span className="font-sans text-lg sm:text-xl md:text-2xl text-white/40 block font-normal">
               {service.number}
             </span>
-            <span className="w-8 h-px bg-white/20 inline-block" />
-            <span className="font-mono text-xs uppercase tracking-widest text-white/50">
+            <span className="w-6 sm:w-8 h-px bg-white/20 inline-block" />
+            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-white/50">
               Phase 0{index + 1}
             </span>
           </motion.div>
 
           {/* Title */}
           <motion.h3
-            initial={shouldReduceMotion ? false : { opacity: 0.35, y: 18 }}
+            initial={shouldReduceMotion ? false : { opacity: 0.4, y: 12 }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="font-sans font-bold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-white tracking-tight leading-[1.05]"
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.45, delay: 0.04, ease: [0.22, 1, 0.36, 1] }}
+            className="font-sans font-bold text-2xl sm:text-3xl md:text-5xl lg:text-5xl xl:text-6xl text-white tracking-tight leading-[1.08]"
           >
             {service.title}
           </motion.h3>
 
           {/* Description */}
           <motion.p
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+            initial={shouldReduceMotion ? false : { opacity: 0.4, y: 10 }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.55, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-            className="font-sans text-white/75 text-xs sm:text-sm md:text-base leading-relaxed font-light"
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+            className="font-sans text-white/75 text-xs sm:text-sm md:text-base leading-relaxed font-light line-clamp-3 sm:line-clamp-none"
           >
             {service.description}
           </motion.p>
 
           {/* 5 Bullet Items */}
-          <ul className="space-y-2 sm:space-y-2.5 pt-4 border-t border-white/10">
+          <ul className="space-y-1.5 sm:space-y-2 pt-3 sm:pt-4 border-t border-white/10">
             {service.bullets.map((bullet, bIdx) => (
-              <motion.li
+              <li
                 key={bIdx}
-                initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
-                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.35 }}
-                transition={{
-                  duration: 0.45,
-                  delay: 0.12 + bIdx * 0.045,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="flex items-center gap-3 font-sans text-xs sm:text-sm text-white/85"
+                className="flex items-center gap-2.5 font-sans text-[11px] sm:text-xs md:text-sm text-white/85"
               >
                 <span className="w-1.5 h-1.5 bg-white/40 inline-block flex-shrink-0" />
-                <span>{bullet}</span>
-              </motion.li>
+                <span className="leading-tight sm:leading-normal">{bullet}</span>
+              </li>
             ))}
           </ul>
         </div>
       </div>
 
-      {/* Right 50% Media Field */}
-      <div className="w-full md:w-1/2 h-[50vh] md:h-full relative overflow-hidden bg-black">
+      {/* Media Field (Bottom on mobile, Right 50% on desktop) */}
+      <div className="w-full md:w-1/2 h-[36svh] sm:h-[42svh] md:h-full relative overflow-hidden bg-black flex-shrink-0">
         <img
           src={service.image}
           alt={service.title}

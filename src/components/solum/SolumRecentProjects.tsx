@@ -165,7 +165,7 @@ export function SolumRecentProjects() {
               className="col-span-1 md:col-span-3"
             >
               <Link to={`/projects/${pBroad.slug}`} className="group block select-none">
-                <div className="relative aspect-[21/9] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
+                <div className="relative aspect-[16/10] sm:aspect-[21/9] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
                   <img
                     src={pBroad.heroImage}
                     alt={pBroad.title}

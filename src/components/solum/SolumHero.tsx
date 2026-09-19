@@ -142,16 +142,16 @@ export function SolumHero() {
       {/* BOTTOM STRIP: Avatars + Logos (NO 4-thumbnail switcher!)   */}
       {/* ========================================================= */}
       <div className="relative z-30 pb-8 pt-6 px-6 md:px-10 border-t border-white/15">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6">
           {/* Left: Overlapping Avatars + Social Proof */}
-          <div className="flex items-center gap-3">
-            <div className="flex -space-x-2.5 overflow-hidden">
+          <div className="flex items-center gap-3 w-full md:w-auto">
+            <div className="flex -space-x-2.5 overflow-hidden flex-shrink-0">
               {CLIENT_AVATARS.map((src, i) => (
                 <img
                   key={i}
                   src={src}
                   alt="Client avatar"
-                  className="inline-block w-8 h-8 rounded-full border-2 border-[#101010] object-cover"
+                  className="inline-block w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-[#101010] object-cover"
                 />
               ))}
             </div>
@@ -161,7 +161,7 @@ export function SolumHero() {
           </div>
 
           {/* Center/Right: Monochrome Partner Text Strip (FOSTER, HERZOG, GENSLER, etc.) */}
-          <div className="flex items-center flex-wrap justify-end gap-6 sm:gap-8 font-mono text-xs tracking-widest text-white/70">
+          <div className="flex items-center flex-wrap justify-start md:justify-end gap-4 sm:gap-8 font-mono text-xs tracking-widest text-white/70 w-full md:w-auto">
             {CLIENT_LOGOS.map((logo) => (
               <span key={logo.name} className="hover:text-white transition-colors cursor-default">
                 {logo.name}

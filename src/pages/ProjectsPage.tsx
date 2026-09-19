@@ -62,29 +62,29 @@ export function ProjectsPage() {
 
         {/* Content Layout: Left Rail Category Filters + Main Full-Width Project List */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 pt-16 items-start">
-          {/* Left Rail: Category Filters (Active has square marker & black type; inactive is muted) */}
+          {/* Left Rail: Category Filters (Horizontal swipeable strip on mobile, vertical sticky rail on desktop) */}
           <div className="col-span-1 md:sticky md:top-28">
-            <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-6">
+            <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-3 md:mb-6">
               FILTER BY TYPOLOGY
             </span>
-            <div className="space-y-3">
+            <div className="flex md:flex-col overflow-x-auto md:overflow-x-visible no-scrollbar gap-2 md:gap-0 md:space-y-3 pb-3 md:pb-0 -mx-1 px-1 md:mx-0 md:px-0">
               {CATEGORIES.map((cat) => {
                 const isActive = selectedCategory === cat;
                 return (
                   <button
                     key={cat}
                     onClick={() => handleCategoryChange(cat)}
-                    className={`block w-full text-left font-mono text-xs uppercase tracking-wider transition-colors duration-180 cursor-pointer ${
+                    className={`whitespace-nowrap px-3 py-1.5 md:p-0 border md:border-0 text-left font-mono text-xs uppercase tracking-wider transition-colors duration-180 cursor-pointer flex-shrink-0 ${
                       isActive
-                        ? 'text-[#101010] font-semibold flex items-center'
-                        : 'text-[#757575] hover:text-[#101010]'
+                        ? 'border-[#101010] bg-[#101010] md:bg-transparent text-white md:text-[#101010] font-semibold flex items-center'
+                        : 'border-[#101010]/15 text-[#757575] hover:text-[#101010] hover:border-[#101010]'
                     }`}
                   >
                     {isActive && (
-                      <span className="w-1.5 h-1.5 bg-[#101010] inline-block mr-2" />
+                      <span className="w-1.5 h-1.5 bg-white md:bg-[#101010] inline-block mr-2" />
                     )}
                     <span>{cat}</span>
-                    <span className="text-[10px] text-[#757575] ml-2">
+                    <span className={`text-[10px] ml-1.5 ${isActive ? 'text-white/70 md:text-[#757575]' : 'text-[#757575]'}`}>
                       ({cat === 'All' ? PROJECTS.length : PROJECTS.filter((p) => p.category === cat).length})
                     </span>
                   </button>

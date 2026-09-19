@@ -36,13 +36,21 @@ export function resumeLenis() {
 
 export function SmoothScroll() {
   useEffect(() => {
+    const isTouch =
+      typeof window !== 'undefined' &&
+      ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
     const lenis = new Lenis({
-      duration: 1.1,
+      duration: isTouch ? 0.9 : 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      touchMultiplier: 1.5,
+      syncTouch: true,
+      syncTouchLerp: 0.09,
+      touchInertiaExponent: 1.6,
+      touchMultiplier: 1.0,
+      autoResize: true,
     });
 
     (window as any).lenis = lenis;

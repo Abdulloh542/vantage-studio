@@ -72,7 +72,7 @@ export function SolumClientStories() {
           {TESTIMONIALS.map((t) => (
             <div
               key={t.id}
-              className="min-w-[340px] sm:min-w-[420px] max-w-[460px] flex-shrink-0 bg-white border border-[#101010]/12 p-8 md:p-10 flex flex-col justify-between snap-start"
+              className="min-w-[85vw] sm:min-w-[400px] md:min-w-[420px] max-w-[460px] flex-shrink-0 bg-white border border-[#101010]/12 p-6 sm:p-8 md:p-10 flex flex-col justify-between snap-start"
             >
               <div>
                 {/* Category & Subtle Stars */}

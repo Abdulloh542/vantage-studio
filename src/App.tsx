@@ -112,6 +112,7 @@ function PageTransition() {
             left: 0,
             right: 0,
             width: '100%',
+            overflow: 'hidden',
             zIndex: 1,
             pointerEvents: 'none',
             userSelect: 'none',
