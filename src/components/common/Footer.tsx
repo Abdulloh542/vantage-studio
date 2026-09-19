@@ -3,50 +3,54 @@ import { ArrowUpRight } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-[#09090a] text-white pt-24 pb-12 border-t border-white/[0.08] relative overflow-hidden">
+    <footer className="bg-[#060709] text-white pt-24 pb-12 border-t border-white/10 relative overflow-hidden">
       {/* Background Watermark */}
-      <div className="absolute right-0 bottom-0 select-none pointer-events-none opacity-[0.03] text-[20vw] font-black leading-none tracking-tighter text-white">
+      <div className="absolute right-0 bottom-0 select-none pointer-events-none opacity-[0.03] text-[20vw] font-display font-black leading-none tracking-tighter text-white">
         VANTAGE
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         {/* Massive Pre-Footer Statement */}
-        <div className="border-b border-white/10 pb-20 mb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+        <div className="border-b border-white/10 pb-16 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
             <div className="lg:col-span-8">
-              <span className="text-xs uppercase tracking-widest text-zinc-500 mb-4 block">
+              <span className="text-[11px] uppercase tracking-widest text-zinc-400 mb-3 block font-mono">
                 Partner With Us
               </span>
-              <h2 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight text-white leading-[1.05]">
+              <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.05]">
                 Let's make your project <br />
-                <span className="font-normal italic text-zinc-300">impossible to overlook.</span>
+                <span className="font-normal italic text-amber-200/90 font-serif">
+                  impossible to overlook.
+                </span>
               </h2>
             </div>
             <div className="lg:col-span-4 flex flex-col items-start lg:items-end gap-4">
-              <p className="text-zinc-400 text-sm max-w-sm lg:text-right font-light leading-relaxed">
-                Whether you are launching an off-plan development or preparing an international architectural competition, our atelier is ready.
+              <p className="text-zinc-300 text-sm max-w-sm lg:text-right font-light leading-relaxed">
+                Whether launching an off-plan development or preparing an international architectural competition, our atelier is ready.
               </p>
               <Link
                 to="/contact"
-                className="group inline-flex items-center gap-3 px-7 py-4 bg-white text-black text-xs font-semibold uppercase tracking-widest hover:bg-zinc-200 transition-all duration-200"
+                className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-white text-black text-xs font-semibold uppercase tracking-wider hover:bg-zinc-200 hover:scale-105 active:scale-95 transition-all shadow-xl"
               >
                 <span>Start a Project</span>
-                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <div className="w-4 h-4 rounded-full bg-black text-white flex items-center justify-center">
+                  <ArrowUpRight className="w-2.5 h-2.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </div>
               </Link>
             </div>
           </div>
         </div>
 
         {/* Multi-Column Footer Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-10 pb-16 text-xs">
+        <div className="grid grid-cols-2 md:grid-cols-12 gap-8 pb-16 text-xs">
           {/* Col 1: Brand & Studio */}
           <div className="col-span-2 md:col-span-4 flex flex-col justify-between">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-4 h-4 bg-white text-black flex items-center justify-center font-bold text-[10px]">
+              <div className="flex items-center gap-2.5 mb-4">
+                <div className="w-5 h-5 rounded-full bg-white text-black flex items-center justify-center font-display font-black text-[10px]">
                   V
                 </div>
-                <span className="text-sm font-semibold tracking-widest uppercase">
+                <span className="font-display text-sm font-bold tracking-widest uppercase text-white">
                   Vantage Studio
                 </span>
               </div>
@@ -54,14 +58,14 @@ export function Footer() {
                 Cinematic visualization, CGI and AI-enhanced films for architecture, real estate and hospitality worldwide.
               </p>
             </div>
-            <div className="mt-8 text-zinc-500 text-[11px] leading-relaxed">
-              Global production hubs in London, Zurich & Tashkent. Serving developers across Europe, the Middle East and Central Asia.
+            <div className="mt-8 text-zinc-500 text-[11px] leading-relaxed font-mono">
+              Global production hubs in London, Zurich & Tashkent.
             </div>
           </div>
 
           {/* Col 2: Navigation */}
           <div className="col-span-1 md:col-span-2 md:col-start-6">
-            <span className="text-[11px] uppercase tracking-widest text-zinc-500 block mb-4">
+            <span className="text-[11px] uppercase tracking-widest text-zinc-400 block mb-4 font-mono">
               Index
             </span>
             <ul className="space-y-2.5">
@@ -95,7 +99,7 @@ export function Footer() {
 
           {/* Col 3: Services Breakdown */}
           <div className="col-span-1 md:col-span-3">
-            <span className="text-[11px] uppercase tracking-widest text-zinc-500 block mb-4">
+            <span className="text-[11px] uppercase tracking-widest text-zinc-400 block mb-4 font-mono">
               Capabilities
             </span>
             <ul className="space-y-2.5">
@@ -124,23 +128,23 @@ export function Footer() {
 
           {/* Col 4: Coordinates & Social */}
           <div className="col-span-2 md:col-span-3">
-            <span className="text-[11px] uppercase tracking-widest text-zinc-500 block mb-4">
+            <span className="text-[11px] uppercase tracking-widest text-zinc-400 block mb-4 font-mono">
               Direct Channels
             </span>
             <div className="space-y-3 text-zinc-300">
               <div>
-                <span className="text-zinc-500 text-[10px] block uppercase tracking-wider">Project Inquiries</span>
-                <a href="mailto:project@vantage.studio" className="hover:text-white transition-colors">
+                <span className="text-zinc-500 text-[10px] block uppercase tracking-wider font-mono">Project Inquiries</span>
+                <a href="mailto:project@vantage.studio" className="hover:text-amber-200 transition-colors">
                   project@vantage.studio
                 </a>
               </div>
               <div>
-                <span className="text-zinc-500 text-[10px] block uppercase tracking-wider">Press & Lectures</span>
-                <a href="mailto:press@vantage.studio" className="hover:text-white transition-colors">
+                <span className="text-zinc-500 text-[10px] block uppercase tracking-wider font-mono">Press & Lectures</span>
+                <a href="mailto:press@vantage.studio" className="hover:text-amber-200 transition-colors">
                   press@vantage.studio
                 </a>
               </div>
-              <div className="pt-2 flex items-center gap-4 text-xs tracking-wider uppercase text-zinc-400">
+              <div className="pt-2 flex items-center gap-3 text-xs tracking-wider uppercase text-zinc-400">
                 <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   Instagram ↗
                 </a>
@@ -156,14 +160,14 @@ export function Footer() {
         </div>
 
         {/* Bottom Legal Bar */}
-        <div className="border-t border-white/[0.08] pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-zinc-500">
+        <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-zinc-500 font-mono">
           <div>
-            © {new Date().getFullYear()} VANTAGE STUDIO. All rights reserved.
+            © {new Date().getFullYear()} VANTAGE STUDIO LTD. ALL RIGHTS RESERVED.
           </div>
-          <div className="flex items-center gap-6">
-            <span>Privacy Policy</span>
-            <span>Terms of Commission</span>
-            <span>Accredited B2B Visualization Partner</span>
+          <div className="flex items-center gap-6 text-zinc-400">
+            <span>TERMS OF ENGAGEMENT</span>
+            <span>PRIVACY DISCLOSURE</span>
+            <span>NDA PROTOCOLS</span>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
 import { FinalCTASection } from '../components/home/FinalCTASection';
 
 export function AboutPage() {
@@ -31,46 +32,48 @@ export function AboutPage() {
   ];
 
   return (
-    <main className="w-full bg-[#f7f6f2] text-[#121214] pt-32 md:pt-44">
+    <main className="w-full bg-[#090a0d] text-white pt-32 md:pt-40">
       <div className="max-w-7xl mx-auto px-6 md:px-12 pb-24">
         {/* Page Header */}
-        <div className="max-w-4xl mb-20 md:mb-28">
-          <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
-            About Vantage
-          </span>
-          <h1 className="text-5xl sm:text-7xl font-light tracking-tight text-black leading-[1.04] mb-6">
-            Turning architecture into visual experiences.
+        <div className="max-w-4xl mb-16 md:mb-24">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-[10px] uppercase tracking-widest text-zinc-300 font-mono mb-4 border border-white/10">
+            <Sparkles className="w-3 h-3 text-amber-300" />
+            <span>11 / Studio Manifesto</span>
+          </div>
+          <h1 className="font-display text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.04] mb-6">
+            Turning Architecture into Visual Experiences
           </h1>
-          <p className="text-zinc-600 text-lg sm:text-xl font-light leading-relaxed max-w-2xl">
+          <p className="text-zinc-300 text-lg sm:text-xl font-light leading-relaxed max-w-2xl">
             We are an international creative production studio dedicated to the art and science of unbuilt architecture.
           </p>
         </div>
 
-        {/* Hero Atelier Loft Image */}
-        <div className="relative aspect-[16/9] md:aspect-[21/9] bg-zinc-900 overflow-hidden shadow-2xl border border-black/10 mb-24 md:mb-36">
+        {/* Hero Atelier Loft Image (Curved Axioma style) */}
+        <div className="relative aspect-[16/9] md:aspect-[21/9] rounded-[32px] sm:rounded-[40px] overflow-hidden shadow-2xl border border-white/15 bg-zinc-900 mb-20 md:mb-32">
           <img
             src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=85"
             alt="Vantage Studio Interior Architecture Loft"
             className="w-full h-full object-cover filter brightness-90"
           />
-          <div className="absolute bottom-6 left-6 text-white text-xs tracking-wider uppercase">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute bottom-6 left-8 text-white text-xs font-mono tracking-wider uppercase">
             London Mayfair & Zurich Enge Ateliers
           </div>
         </div>
 
         {/* Studio Story & Manifesto */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start mb-24 md:mb-36 border-t border-black/10 pt-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start mb-20 md:mb-32 border-t border-white/10 pt-16">
           <div className="lg:col-span-5">
-            <span className="text-xs uppercase tracking-widest text-zinc-400 font-semibold block mb-3">
+            <span className="text-xs uppercase tracking-widest text-zinc-400 font-mono block mb-3">
               Studio Manifesto
             </span>
-            <h2 className="text-3xl sm:text-4xl font-light tracking-tight text-black">
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
               Architecture must be felt before it is understood.
             </h2>
           </div>
 
-          <div className="lg:col-span-7 space-y-6 text-sm text-zinc-700 font-light leading-relaxed">
-            <p className="text-xl text-black font-normal leading-relaxed">
+          <div className="lg:col-span-7 space-y-6 text-sm sm:text-base text-zinc-300 font-light leading-relaxed">
+            <p className="text-xl text-white font-normal leading-relaxed">
               We are an architectural visualization studio specializing in photorealistic imagery and AI-powered cinematic real estate films.
             </p>
             <p>
@@ -86,7 +89,7 @@ export function AboutPage() {
         </div>
 
         {/* Statistics Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 py-16 border-t border-b border-black/10 mb-24 md:mb-36">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-12 border-t border-b border-white/10 mb-20 md:mb-32">
           {stats.map((st, idx) => (
             <motion.div
               key={st.label}
@@ -94,15 +97,15 @@ export function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="border-l border-black/15 pl-6"
+              className="glass-card rounded-3xl p-6 border border-white/10"
             >
-              <div className="text-4xl sm:text-5xl font-light text-black tracking-tight mb-2">
+              <div className="font-display text-4xl sm:text-5xl font-bold text-white tracking-tight mb-2">
                 {st.value}
               </div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-black mb-1">
+              <div className="text-xs font-semibold uppercase tracking-wider text-amber-200/90 mb-1">
                 {st.label}
               </div>
-              <p className="text-xs text-zinc-500 font-light leading-relaxed">
+              <p className="text-xs text-zinc-400 font-light leading-relaxed">
                 {st.desc}
               </p>
             </motion.div>
@@ -110,20 +113,20 @@ export function AboutPage() {
         </div>
 
         {/* Leadership & Creative Direction */}
-        <div className="mb-24 md:mb-36">
-          <div className="max-w-3xl mb-16">
-            <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
+        <div className="mb-20 md:mb-32">
+          <div className="max-w-3xl mb-14">
+            <span className="text-xs uppercase tracking-widest text-zinc-400 font-mono block mb-3">
               Studio Direction
             </span>
-            <h2 className="text-3xl sm:text-5xl font-light tracking-tight text-black">
+            <h2 className="font-display text-3xl sm:text-5xl font-bold tracking-tight text-white">
               Leadership & Partners
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {leadership.map((member) => (
-              <div key={member.name} className="group">
-                <div className="aspect-[3/4] bg-zinc-200 overflow-hidden mb-6 border border-black/10">
+              <div key={member.name} className="glass-card rounded-3xl p-6 border border-white/10 group shadow-xl">
+                <div className="aspect-[3/4] rounded-2xl bg-zinc-800 overflow-hidden mb-5 border border-white/10">
                   <img
                     src={member.image}
                     alt={member.name}
@@ -131,13 +134,13 @@ export function AboutPage() {
                     className="w-full h-full object-cover filter grayscale contrast-105 group-hover:grayscale-0 transition-all duration-500"
                   />
                 </div>
-                <h3 className="text-xl font-medium text-black tracking-tight mb-1">
+                <h3 className="font-display text-xl font-bold text-white tracking-tight mb-1">
                   {member.name}
                 </h3>
-                <p className="text-xs uppercase tracking-wider text-zinc-500 font-medium mb-3">
+                <p className="text-xs uppercase tracking-wider text-amber-200/90 font-mono mb-3">
                   {member.role}
                 </p>
-                <p className="text-xs text-zinc-600 font-light leading-relaxed">
+                <p className="text-xs text-zinc-400 font-light leading-relaxed">
                   {member.bio}
                 </p>
               </div>

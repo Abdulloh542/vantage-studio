@@ -12,7 +12,7 @@ export function ProjectFilter({
   projectCounts,
 }: ProjectFilterProps) {
   return (
-    <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-4 no-scrollbar border-b border-black/10">
+    <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto pb-4 no-scrollbar border-b border-white/10">
       {categories.map((cat) => {
         const isActive = activeCategory === cat;
         const count = projectCounts[cat] || 0;
@@ -20,14 +20,14 @@ export function ProjectFilter({
           <button
             key={cat}
             onClick={() => onSelectCategory(cat)}
-            className={`px-3.5 py-1.5 text-xs uppercase tracking-widest transition-all duration-200 whitespace-nowrap flex items-center gap-1.5 ${
+            className={`px-4 py-2 rounded-full text-xs uppercase tracking-wider transition-all duration-200 whitespace-nowrap flex items-center gap-2 border ${
               isActive
-                ? 'bg-black text-white font-medium shadow-sm'
-                : 'bg-white/60 text-zinc-600 hover:text-black hover:bg-white border border-black/5'
+                ? 'bg-white text-black font-semibold border-white shadow-xl scale-105'
+                : 'glass-pill-dark text-zinc-300 hover:text-white hover:bg-white/10 border-white/10'
             }`}
           >
             <span>{cat}</span>
-            <span className={`text-[10px] font-mono ${isActive ? 'text-zinc-300' : 'text-zinc-400'}`}>
+            <span className={`text-[10px] font-mono ${isActive ? 'text-zinc-600' : 'text-zinc-400'}`}>
               ({count})
             </span>
           </button>
