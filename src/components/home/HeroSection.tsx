@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowUpRight, ArrowDown } from 'lucide-react';
+import { ArrowUpRight, Play, ArrowDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface HeroSectionProps {
@@ -7,85 +7,85 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ onOpenShowreel }: HeroSectionProps) {
+  const stats = [
+    { value: '40+', label: 'PROJECTS DELIVERED' },
+    { value: '14', label: 'GLOBAL COUNTRIES' },
+    { value: '6+', label: 'YEARS PRACTICE' },
+    { value: '8', label: 'CONTENT FORMATS' },
+  ];
+
   return (
-    <section className="relative min-h-[96vh] w-full bg-[#050505] text-[#FAF9F6] flex flex-col justify-between pt-28 md:pt-36 pb-12 px-6 md:px-12 lg:px-16 overflow-hidden">
-      {/* Background Autoplaying Architectural Cinema Loop */}
-      <div className="absolute inset-0 z-0">
+    <section className="relative min-h-screen w-full bg-[#050505] text-white flex flex-col justify-between pt-28 pb-12 px-6 md:px-12 lg:px-16 overflow-hidden">
+      {/* Background Cinematic Video Loop */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-40 filter brightness-90 contrast-110"
+          className="w-full h-full object-cover opacity-45 filter brightness-85 contrast-110 scale-100"
         >
           <source
-            src="https://framerusercontent.com/assets/8Dw7CceCBzCnlWKOSnlDEADgwQ8.mp4"
+            src="https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-building-at-dusk-40916-large.mp4"
             type="video/mp4"
           />
         </video>
-        {/* Cinematic Vignette and Dark Gradients */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/60 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/90 via-[#050505]/40 to-transparent pointer-events-none" />
+        {/* Architectural Vignette Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-[#050505]/80" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(0,0,0,0.8)_0%,transparent_70%)]" />
       </div>
 
-      {/* Top Metadata Strip */}
+      {/* Top Metadata Strip (STUX Formula) */}
       <motion.div
-        initial={{ opacity: 0, y: -16 }}
+        initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.15 }}
-        className="relative z-10 w-full max-w-[1440px] mx-auto flex items-center justify-between border-b border-white/15 pb-4"
+        transition={{ duration: 0.6, delay: 0.1 }}
+        className="relative z-10 w-full max-w-[1440px] mx-auto flex items-center justify-between border-b border-white/10 pb-4 text-xs font-mono uppercase tracking-[0.25em]"
       >
-        <div className="flex items-center gap-4 font-mono text-xs uppercase tracking-[0.25em] text-white/70">
-          <span className="text-white font-medium">01 / STUDIO</span>
-          <span className="text-white/30">•</span>
-          <span>ARCHVIZ + REAL ESTATE</span>
-        </div>
-
-        <div className="hidden sm:flex items-center gap-6 font-mono text-xs uppercase tracking-[0.2em] text-white/50">
-          <span>LONDON</span>
-          <span>•</span>
-          <span>ZURICH</span>
-          <span>•</span>
-          <span>TASHKENT</span>
-        </div>
+        <span className="text-white/70">
+          01 / STUDIO &mdash; ARCHVIZ + REAL ESTATE
+        </span>
+        <span className="text-white/40 hidden sm:inline">
+          LONDON &bull; ZURICH &bull; TASHKENT
+        </span>
       </motion.div>
 
-      {/* Main Left-Aligned Lower Stage (Master Prompt Spec) */}
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto my-auto py-12 md:py-16">
-        <div className="max-w-5xl text-left">
-          {/* Headline clamp(64px, 7.5vw, 132px) */}
+      {/* Left-Aligned Lower Stage (STUX / ARCHFORM Signature) */}
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto my-auto py-12 lg:py-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+        <div className="lg:col-span-8">
+          {/* Monumental Architectural Headline */}
           <motion.h1
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] xl:text-[6.5rem] font-normal tracking-tight leading-[0.95] text-white mb-8"
+            transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display text-[clamp(44px,7.5vw,118px)] font-normal tracking-[-0.03em] leading-[0.94] text-white uppercase mb-8"
           >
             CINEMATIC <br />
             VISUALIZATION <br />
-            <span className="font-light text-white/80">FOR ARCHITECTURE</span> <br />
-            <span className="italic font-serif font-light text-white/90">&amp; REAL ESTATE</span>
+            <span className="font-serif italic font-light text-white/90">FOR ARCHITECTURE</span> <br />
+            &amp; REAL ESTATE
           </motion.h1>
 
-          {/* Supporting Micro-Copy */}
+          {/* Supporting Micro-copy */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="font-sans text-base sm:text-lg md:text-xl text-white/70 max-w-xl leading-relaxed mb-10 font-light"
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className="text-base sm:text-lg md:text-xl text-white/75 font-sans font-light max-w-xl leading-relaxed mb-10"
           >
-            Visuals and films built to communicate architecture before it exists. We turn unbuilt plans into persuasive spatial reality.
+            Visuals and films built to communicate architecture before it exists. We transform blueprints, BIM models, and unbuilt concepts into photorealistic CGI and cinematic marketing films that command capital.
           </motion.p>
 
-          {/* Actions: VIEW WORK & START A PROJECT */}
+          {/* Action CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.75 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
             className="flex flex-wrap items-center gap-4 sm:gap-6"
           >
             <Link
               to="/contact"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-mono text-xs uppercase tracking-[0.2em] font-medium hover:bg-[#C5A880] hover:text-black transition-all duration-200"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-mono text-xs uppercase tracking-[0.2em] font-medium hover:bg-[#C5A880] hover:text-black transition-all duration-300"
             >
               <span>START A PROJECT</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -93,7 +93,7 @@ export function HeroSection({ onOpenShowreel }: HeroSectionProps) {
 
             <Link
               to="/work"
-              className="inline-flex items-center gap-2 px-8 py-4 border border-white/25 text-white font-mono text-xs uppercase tracking-[0.2em] hover:bg-white/10 hover:border-white transition-all duration-200"
+              className="inline-flex items-center gap-2 px-8 py-4 border border-white/20 text-white font-mono text-xs uppercase tracking-[0.2em] hover:bg-white/10 hover:border-white transition-all duration-300"
             >
               <span>VIEW WORK</span>
             </Link>
@@ -101,34 +101,50 @@ export function HeroSection({ onOpenShowreel }: HeroSectionProps) {
             {onOpenShowreel && (
               <button
                 onClick={onOpenShowreel}
-                className="hidden sm:inline-flex items-center gap-2 px-6 py-4 font-mono text-xs uppercase tracking-widest text-white/70 hover:text-white transition-colors"
+                className="inline-flex items-center gap-2.5 px-6 py-4 text-white/80 hover:text-white font-mono text-xs uppercase tracking-widest transition-colors group"
               >
-                <span>SHOWREEL (90S) ▶</span>
+                <div className="w-7 h-7 rounded-full border border-white/30 flex items-center justify-center group-hover:border-white">
+                  <Play className="w-3 h-3 fill-white ml-0.5" />
+                </div>
+                <span>SHOWREEL (90S)</span>
               </button>
             )}
           </motion.div>
         </div>
+
+        {/* Bottom-Right Scroll Indicator */}
+        <div className="lg:col-span-4 flex lg:justify-end">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-white/40"
+          >
+            <span>SCROLL TO EXPLORE</span>
+            <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center animate-bounce">
+              <ArrowDown className="w-3.5 h-3.5" />
+            </div>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Bottom Coordinates & Scroll Explorer */}
+      {/* 4-Metric Studio Strip (Real Numbers Only) */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.9 }}
-        className="relative z-10 w-full max-w-[1440px] mx-auto pt-6 border-t border-white/15 flex items-center justify-between font-mono text-xs text-white/50 uppercase tracking-widest"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.9 }}
+        className="relative z-10 w-full max-w-[1440px] mx-auto pt-6 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-6"
       >
-        <div className="flex items-center gap-4 sm:gap-8">
-          <span>40+ PROJECTS</span>
-          <span className="hidden sm:inline">•</span>
-          <span className="hidden sm:inline">14 COUNTRIES</span>
-          <span className="hidden md:inline">•</span>
-          <span className="hidden md:inline">6+ YEARS PRACTICE</span>
-        </div>
-
-        <div className="flex items-center gap-2 text-white/70">
-          <span>SCROLL TO EXPLORE</span>
-          <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
-        </div>
+        {stats.map((st) => (
+          <div key={st.label} className="flex flex-col">
+            <span className="font-display text-2xl sm:text-3xl font-light text-white tracking-tight">
+              {st.value}
+            </span>
+            <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-white/45 mt-0.5">
+              {st.label}
+            </span>
+          </div>
+        ))}
       </motion.div>
     </section>
   );

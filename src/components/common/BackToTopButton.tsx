@@ -7,7 +7,7 @@ export function BackToTopButton() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setVisible(window.scrollY > 750);
+      setVisible(window.scrollY > 800);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -15,26 +15,23 @@ export function BackToTopButton() {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.button
+          onClick={scrollToTop}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 16 }}
-          transition={{ duration: 0.25 }}
-          onClick={scrollToTop}
-          aria-label="Back to top"
-          className="fixed bottom-8 right-8 z-40 px-4 py-3 bg-[#0B0B0A]/90 hover:bg-[#0B0B0A] text-white backdrop-blur-md border border-white/20 font-mono text-[11px] uppercase tracking-widest flex items-center gap-2 shadow-2xl transition-all duration-200 hover:scale-105 active:scale-95"
+          transition={{ duration: 0.3 }}
+          aria-label="Back to top of page"
+          className="fixed bottom-8 right-8 z-40 px-4 py-3 bg-[#0B0B0A]/90 text-white backdrop-blur-md border border-white/20 font-mono text-xs uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300 flex items-center gap-2 group shadow-xl"
         >
           <span>TOP</span>
-          <ArrowUp className="w-3.5 h-3.5" />
+          <ArrowUp className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5" />
         </motion.button>
       )}
     </AnimatePresence>

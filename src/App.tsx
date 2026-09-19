@@ -66,11 +66,9 @@ export function App() {
         </Suspense>
       </div>
 
-      {/* Back to top smooth scroll trigger */}
-      <BackToTopButton />
-
-      {/* Global Editorial Footer */}
+      {/* Global Editorial Footer & Back to Top */}
       <Footer />
+      <BackToTopButton />
     </div>
   );
 }
