@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
@@ -68,11 +69,99 @@ const SERVICES: ServicePanel[] = [
   },
 ];
 
+function ServiceCard({ service, index }: { service: ServicePanel; index: number }) {
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <div
+      style={{ zIndex: index + 1 }}
+      className={`relative md:sticky md:top-0 w-full min-h-[auto] md:min-h-screen md:h-[100svh] flex flex-col md:flex-row bg-[#121212] overflow-hidden ${
+        index > 0 ? 'border-t border-white/10' : ''
+      }`}
+    >
+      {/* Left 50% Editorial Content Column */}
+      <div className="w-full md:w-1/2 min-h-[auto] md:h-full flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 py-12 md:py-16 bg-[#121212] z-10">
+        <div className="max-w-xl space-y-4 sm:space-y-6">
+          {/* Number & Phase Tag */}
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0.35, y: 18 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="flex items-center gap-3"
+          >
+            <span className="font-sans text-xl sm:text-2xl text-white/40 block font-normal">
+              {service.number}
+            </span>
+            <span className="w-8 h-px bg-white/20 inline-block" />
+            <span className="font-mono text-xs uppercase tracking-widest text-white/50">
+              Phase 0{index + 1}
+            </span>
+          </motion.div>
+
+          {/* Title */}
+          <motion.h3
+            initial={shouldReduceMotion ? false : { opacity: 0.35, y: 18 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="font-sans font-bold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-white tracking-tight leading-[1.05]"
+          >
+            {service.title}
+          </motion.h3>
+
+          {/* Description */}
+          <motion.p
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.55, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
+            className="font-sans text-white/75 text-xs sm:text-sm md:text-base leading-relaxed font-light"
+          >
+            {service.description}
+          </motion.p>
+
+          {/* 5 Bullet Items */}
+          <ul className="space-y-2 sm:space-y-2.5 pt-4 border-t border-white/10">
+            {service.bullets.map((bullet, bIdx) => (
+              <motion.li
+                key={bIdx}
+                initial={shouldReduceMotion ? false : { opacity: 0, y: 10 }}
+                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.35 }}
+                transition={{
+                  duration: 0.45,
+                  delay: 0.12 + bIdx * 0.045,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="flex items-center gap-3 font-sans text-xs sm:text-sm text-white/85"
+              >
+                <span className="w-1.5 h-1.5 bg-white/40 inline-block flex-shrink-0" />
+                <span>{bullet}</span>
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Right 50% Media Field */}
+      <div className="w-full md:w-1/2 h-[50vh] md:h-full relative overflow-hidden bg-black">
+        <img
+          src={service.image}
+          alt={service.title}
+          loading={index === 0 ? 'eager' : 'lazy'}
+          className="w-full h-full object-cover filter brightness-95 select-none"
+        />
+      </div>
+    </div>
+  );
+}
+
 export function SolumServices() {
   return (
-    <section id="services" className="w-full bg-[#121212] text-white select-none relative">
+    <section id="services" className="w-full bg-[#121212] text-white select-none relative overflow-visible">
       {/* ========================================================= */}
-      {/* 1) SERVICES INTRO HEADER                                   */}
+      {/* 1) NORMAL NON-STICKY INTRODUCTION BLOCK                   */}
       {/* ========================================================= */}
       <div className="w-full py-16 md:py-24 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-white/10 bg-[#121212]">
         <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8">
@@ -91,7 +180,10 @@ export function SolumServices() {
             </p>
           </div>
 
-          <div>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-5">
+            <span className="font-mono text-xs text-white/40 uppercase tracking-widest hidden sm:inline-block">
+              VANTAGE STUDIO&reg;
+            </span>
             <Link
               to="/contact"
               className="solum-btn inline-flex items-center gap-3 px-6 py-3.5 border border-white text-white font-mono text-xs uppercase tracking-wider hover:bg-white hover:text-black transition-colors"
@@ -104,62 +196,11 @@ export function SolumServices() {
       </div>
 
       {/* ========================================================= */}
-      {/* 2) 4 STICKY STACKING 100vh PANELS (Zero Empty Space)       */}
+      {/* 2) VERTICAL SERVICES LIST (Sticky Stacking in Flow)        */}
       {/* ========================================================= */}
-      <div className="relative w-full">
+      <div className="relative w-full overflow-visible">
         {SERVICES.map((service, index) => (
-          <div
-            key={service.number}
-            style={{ zIndex: (index + 1) * 10 }}
-            className={`sticky top-0 h-screen w-full flex flex-col md:flex-row bg-[#121212] overflow-hidden ${
-              index > 0 ? 'border-t border-white/15 shadow-[0_-25px_60px_rgba(0,0,0,0.95)]' : ''
-            }`}
-          >
-            {/* Left 50%: Solid Dark Canvas with Centered Content */}
-            <div className="w-full md:w-1/2 h-[52vh] md:h-full flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 py-8 md:py-16 bg-[#121212] z-10">
-              <div className="max-w-xl space-y-4 sm:space-y-6">
-                <div className="flex items-center gap-3">
-                  <span className="font-sans text-xl sm:text-2xl text-white/40 block font-normal">
-                    {service.number}
-                  </span>
-                  <span className="w-8 h-px bg-white/20 inline-block" />
-                  <span className="font-mono text-xs uppercase tracking-widest text-white/50">
-                    Phase 0{index + 1}
-                  </span>
-                </div>
-
-                <h3 className="font-sans font-bold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl text-white tracking-tight leading-[1.05]">
-                  {service.title}
-                </h3>
-
-                <p className="font-sans text-white/75 text-xs sm:text-sm md:text-base leading-relaxed font-light">
-                  {service.description}
-                </p>
-
-                <ul className="space-y-2 sm:space-y-2.5 pt-4 border-t border-white/10">
-                  {service.bullets.map((bullet, bIdx) => (
-                    <li
-                      key={bIdx}
-                      className="flex items-center gap-3 font-sans text-xs sm:text-sm text-white/85"
-                    >
-                      <span className="w-1.5 h-1.5 bg-white/40 inline-block flex-shrink-0" />
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Right 50%: Full-Bleed 100vh Photography */}
-            <div className="w-full md:w-1/2 h-[48vh] md:h-full relative overflow-hidden bg-black">
-              <img
-                src={service.image}
-                alt={service.title}
-                loading={index === 0 ? 'eager' : 'lazy'}
-                className="w-full h-full object-cover filter brightness-95 hover:scale-[1.02] transition-transform duration-700 ease-out"
-              />
-            </div>
-          </div>
+          <ServiceCard key={service.number} service={service} index={index} />
         ))}
       </div>
     </section>

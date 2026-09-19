@@ -39,7 +39,7 @@ export function App() {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-[#101010] selection:bg-[#101010] selection:text-white relative overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-white text-[#101010] selection:bg-[#101010] selection:text-white relative overflow-x-clip">
       {/* Session-only Neutral Full-Page Preloader */}
       <Preloader />
 

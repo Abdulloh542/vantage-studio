@@ -11,9 +11,12 @@ export function SolumMediaBreak() {
   });
 
   // Parallax on the background photo
-  const y = useTransform(scrollYProgress, [0, 1], ['-6%', '6%']);
+  const yParallax = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
 
-  const marqueeText = 'Vantage Studio ◆ Vantage Studio ◆ Vantage Studio ◆ Vantage Studio ◆ ';
+  // Scroll-linked horizontal translation: as you scroll down, the text glides sideways!
+  const xMarquee = useTransform(scrollYProgress, [0, 1], ['10%', '-35%']);
+
+  const marqueeText = 'VANTAGE STUDIO ◆ VANTAGE STUDIO ◆ VANTAGE STUDIO ◆ VANTAGE STUDIO ◆ ';
 
   return (
     <section
@@ -22,7 +25,7 @@ export function SolumMediaBreak() {
     >
       {/* Background Architectural Monochrome Photography with Parallax */}
       <motion.div
-        style={{ y: shouldReduceMotion ? '0%' : y }}
+        style={{ y: shouldReduceMotion ? '0%' : yParallax }}
         className="absolute inset-0 w-full h-[120%] -top-[10%]"
       >
         <img
@@ -35,22 +38,15 @@ export function SolumMediaBreak() {
         <div className="absolute inset-0 bg-black/30 pointer-events-none" />
       </motion.div>
 
-      {/* Floating Solum Marquee Typography across the architectural frame (Screenshot 3) */}
+      {/* Floating Horizontal Typography linked directly to page scroll */}
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none z-10">
-        <div className="w-full flex whitespace-nowrap overflow-hidden">
-          <motion.div
-            animate={{ x: shouldReduceMotion ? '0%' : ['0%', '-50%'] }}
-            transition={{
-              repeat: Infinity,
-              duration: 25,
-              ease: 'linear',
-            }}
-            className="flex items-center whitespace-nowrap text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-[-0.04em] text-white/95 uppercase drop-shadow-lg"
-          >
-            <span>{marqueeText}</span>
-            <span>{marqueeText}</span>
-          </motion.div>
-        </div>
+        <motion.div
+          style={{ x: shouldReduceMotion ? '0%' : xMarquee }}
+          className="flex items-center whitespace-nowrap text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-[-0.04em] text-white/95 uppercase drop-shadow-2xl will-change-transform"
+        >
+          <span>{marqueeText}</span>
+          <span>{marqueeText}</span>
+        </motion.div>
       </div>
 
       {/* Subtle Corner Markers */}

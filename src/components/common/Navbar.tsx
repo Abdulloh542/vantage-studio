@@ -53,11 +53,11 @@ export function Navbar() {
           menuOpen ? 'text-[#101010]' : 'text-white'
         }`}
       >
-        {/* Compact Wordmark Top Left */}
+        {/* Compact Wordmark Top Left with mix-blend-difference so it inverts on all backgrounds */}
         <Link
           to="/"
-          className={`pointer-events-auto font-sans font-bold text-sm md:text-base tracking-[-0.04em] uppercase transition-colors duration-200 ${
-            menuOpen ? 'text-[#101010]' : 'text-white hover:opacity-80'
+          className={`pointer-events-auto font-sans font-bold text-sm md:text-base tracking-[-0.04em] uppercase transition-opacity duration-200 hover:opacity-80 ${
+            menuOpen ? 'text-[#101010]' : 'mix-blend-difference text-white'
           }`}
         >
           VANTAGE STUDIO
