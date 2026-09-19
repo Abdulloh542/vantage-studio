@@ -105,7 +105,7 @@ function PageTransition() {
     if (incomingLocation) {
       const timer = setTimeout(() => {
         commitTransition();
-      }, 950);
+      }, 1100);
       return () => clearTimeout(timer);
     }
   }, [incomingLocation]);
@@ -113,24 +113,31 @@ function PageTransition() {
   return (
     <div className="flex-1 w-full relative">
       {/* Base Page: sits in normal document flow at current scroll position */}
-      <div className="w-full bg-white text-[#101010]">
+      <div className={`w-full bg-white text-[#101010] ${incomingLocation ? 'pointer-events-none select-none' : ''}`}>
         <AppRoutes location={displayLocation} />
       </div>
 
-      {/* Incoming Page: slides up from bottom (100vh -> 0) over the Base Page, exactly like "What We Do" */}
+      {/* Incoming Page: slides up from bottom (100% -> 0) over the Base Page, silky smooth and 100% GPU accelerated */}
       {incomingLocation && (
         <motion.div
           key={incomingLocation.pathname}
-          initial={{ y: '100vh' }}
-          animate={{ y: 0 }}
+          initial={{ y: '100%' }}
+          animate={{ y: '0%' }}
           transition={{
-            duration: 0.72,
-            ease: [0.16, 1, 0.3, 1],
+            duration: 0.86,
+            ease: [0.19, 1, 0.22, 1],
           }}
           onAnimationComplete={commitTransition}
-          style={{ willChange: 'transform' }}
-          className="fixed inset-0 z-40 bg-white text-[#101010] overflow-hidden shadow-[0_-24px_60px_rgba(0,0,0,0.12)] border-t border-[#101010]/8"
+          style={{
+            willChange: 'transform',
+            transform: 'translateZ(0)',
+            WebkitBackfaceVisibility: 'hidden',
+            backfaceVisibility: 'hidden',
+          }}
+          className="fixed inset-0 z-40 bg-white text-[#101010] overflow-hidden border-t border-[#101010]/15"
         >
+          {/* Zero-overhead physical top depth edge */}
+          <div className="absolute -top-8 left-0 right-0 h-8 bg-gradient-to-t from-black/12 to-transparent pointer-events-none" />
           <AppRoutes location={incomingLocation} />
         </motion.div>
       )}
