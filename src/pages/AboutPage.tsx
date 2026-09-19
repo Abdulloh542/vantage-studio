@@ -69,9 +69,12 @@ export function AboutPage() {
             </h2>
           </div>
 
-          <div className="lg:col-span-7 space-y-6 text-zinc-700 text-base md:text-lg font-light leading-relaxed">
+          <div className="lg:col-span-7 space-y-6 text-sm text-zinc-700 font-light leading-relaxed">
+            <p className="text-xl text-black font-normal leading-relaxed">
+              We are an architectural visualization studio specializing in photorealistic imagery and AI-powered cinematic real estate films.
+            </p>
             <p>
-              Vantage Studio was founded on a simple premise: computer rendering has often prioritized technical speed at the expense of architectural soul. We set out to build an atelier where lighting physics, emotional resonance, and material truth take precedence.
+              With more than 6 years of experience in architectural visualization, we combine 3D production, generative AI and cinematic storytelling to transform architectural concepts into compelling visual experiences.
             </p>
             <p>
               Our team consists of registered architects, computational lighting engineers, and cinematic storytellers. When we review a drawing, we do not merely see polylines; we evaluate how afternoon shadows fall across fluted travertine, how coastal fog filters morning sun, and how human life will occupy the space.

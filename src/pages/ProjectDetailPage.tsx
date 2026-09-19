@@ -86,6 +86,29 @@ export function ProjectDetailPage() {
             </span>
           </div>
         </div>
+
+        {/* Client Material & Studio Transformation Split */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 pt-8 border-t border-black/10">
+          <div className="p-6 bg-white border border-black/10">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 block mb-2 font-semibold">
+              Client Material / Raw Input
+            </span>
+            <p className="text-sm font-light text-zinc-800 leading-relaxed">
+              {project.clientMaterial || 'Architectural drawings, CAD floor plans & preliminary client concept renders.'}
+            </p>
+          </div>
+
+          <div className="p-6 bg-black text-white border border-black/10">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 block mb-2 font-semibold">
+              Our Work / Studio Transformation
+            </span>
+            <p className="text-sm font-light text-zinc-200 leading-relaxed">
+              {project.transformationPipeline
+                ? project.transformationPipeline.join('  →  ')
+                : '3D visualization → photorealistic enhancement → cinematic AI video → final edit'}
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Full-Bleed Hero Visual (with optional video trigger) */}

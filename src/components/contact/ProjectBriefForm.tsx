@@ -12,6 +12,7 @@ export function ProjectBriefForm() {
     projectType: 'Architectural Visualization',
     estimatedScope: 'Medium (4–8 Stills)',
     timeline: '1–2 Months',
+    videoDuration: '90s Signature Film',
     budgetRange: '$15k – $35k',
     message: '',
     deliverables: ['Exterior Stills', 'Interior Stills'],
@@ -189,8 +190,8 @@ export function ProjectBriefForm() {
             </div>
           </div>
 
-          {/* Step 3: Scope & Timeline */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Step 3: Scope, Timeline & Video Duration */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
               <label className="text-[11px] uppercase tracking-wider text-zinc-500 font-semibold block mb-2">
                 Estimated Scope
@@ -210,7 +211,24 @@ export function ProjectBriefForm() {
 
             <div>
               <label className="text-[11px] uppercase tracking-wider text-zinc-500 font-semibold block mb-2">
-                Desired Launch Timeline
+                Desired Video Duration
+              </label>
+              <select
+                value={formData.videoDuration}
+                onChange={(e) => setFormData({ ...formData, videoDuration: e.target.value })}
+                className="w-full px-3 py-2.5 border border-zinc-200 text-xs text-zinc-800 bg-white focus:outline-none focus:border-black"
+              >
+                <option value="30s Social Teaser">30s Social Teaser</option>
+                <option value="60s Brand Walkthrough">60s Brand Walkthrough</option>
+                <option value="90s Signature Film">90s Signature Film</option>
+                <option value="120s+ Master Film">120s+ Master Film</option>
+                <option value="Stills Only / No Video">Stills Only / No Video</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-[11px] uppercase tracking-wider text-zinc-500 font-semibold block mb-2">
+                Launch Deadline
               </label>
               <select
                 value={formData.timeline}
@@ -226,7 +244,7 @@ export function ProjectBriefForm() {
 
             <div>
               <label className="text-[11px] uppercase tracking-wider text-zinc-500 font-semibold block mb-2">
-                Anticipated Budget Range
+                Budget Range
               </label>
               <select
                 value={formData.budgetRange}
@@ -349,7 +367,7 @@ export function ProjectBriefForm() {
                 </div>
               ) : (
                 <>
-                  <span>Submit Project Brief</span>
+                  <span>Request a Project Quote</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </>
               )}

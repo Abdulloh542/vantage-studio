@@ -5,7 +5,9 @@ import { SelectedWorkSection } from '../components/home/SelectedWorkSection';
 import { ServicesOverview } from '../components/home/ServicesOverview';
 import { CinematicFilmSection } from '../components/home/CinematicFilmSection';
 import { BeforeAfterFeature } from '../components/home/BeforeAfterFeature';
-import { ProcessSnapshot } from '../components/home/ProcessSnapshot';
+import { HowWeWorkSection } from '../components/home/HowWeWorkSection';
+import { AIWorkflowSection } from '../components/home/AIWorkflowSection';
+import { TargetIndustriesSection } from '../components/home/TargetIndustriesSection';
 import { CapabilitiesSection } from '../components/home/CapabilitiesSection';
 import { TrustSection } from '../components/home/TrustSection';
 import { StudioPreview } from '../components/home/StudioPreview';
@@ -36,37 +38,43 @@ export function HomePage() {
 
   return (
     <main className="w-full overflow-hidden">
-      {/* 01 Hero Video (Dark) */}
+      {/* 01 Hero Video (Dark with Quick Services Ticker) */}
       <HeroSection onOpenShowreel={handleOpenShowreel} />
 
       {/* 02 Intro Statement (Light) */}
       <IntroStatement />
 
-      {/* 03 Selected Work (Light) */}
+      {/* 03 Selected Work (Large Case Studies) */}
       <SelectedWorkSection projects={PROJECTS} />
 
-      {/* 04 Services (Light) */}
+      {/* 04 What We Do / Services (Light) */}
       <ServicesOverview services={SERVICES} />
 
       {/* 05 Cinematic Film (Black) */}
       <CinematicFilmSection onOpenFilm={handleOpenFilm} />
 
-      {/* 06 Before / After (Light) */}
+      {/* 06 Before / After (4-Scenario Interactive Slider) */}
       <BeforeAfterFeature />
 
-      {/* 07 Process Snapshot (Dark) */}
-      <ProcessSnapshot />
+      {/* 07 How We Work (4-Step Frictionless Collaboration) */}
+      <HowWeWorkSection />
 
-      {/* 08 Capabilities (Light) */}
+      {/* 08 AI Workflow & Technology + Craft (Dark) */}
+      <AIWorkflowSection />
+
+      {/* 09 Built for Industry Leaders (Target Industries Grid) */}
+      <TargetIndustriesSection />
+
+      {/* 10 Capabilities & Typologies (Light) */}
       <CapabilitiesSection />
 
-      {/* 09 Trust / Clients / Locations (Light) */}
+      {/* 11 Trust / Clients / Global Locations (Light) */}
       <TrustSection />
 
-      {/* 10 About Atelier Preview (Light) */}
+      {/* 12 About Atelier Culture & Experience (Light) */}
       <StudioPreview />
 
-      {/* 11 Final Monumental CTA (Black) */}
+      {/* 13 Have a Project in Mind? (Monumental Black Final CTA) */}
       <FinalCTASection />
 
       {/* Video Lightbox Modal */}

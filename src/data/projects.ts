@@ -4,64 +4,72 @@ export const PROJECTS: Project[] = [
   {
     slug: 'riviera-residence',
     title: 'Riviera Residence',
-    subtitle: 'Residential Development',
-    location: 'Tashkent, Uzbekistan',
+    subtitle: 'Architectural Film / AI Visualization',
+    location: 'Dushanbe, Tajikistan',
     year: '2025',
-    client: 'Golden House Group',
-    architect: 'Milan Design Atelier',
+    client: 'Golden Horizon Developments',
+    architect: 'Milan Design Atelier & Local Partners',
     category: 'Residential',
-    services: ['Architectural Visualization', 'AI Architectural Film', 'Real Estate Marketing'],
-    tags: ['All', 'CGI', 'Architecture', 'Real Estate', 'AI Film', 'Exterior'],
+    services: ['Architectural Visualization', 'AI Film Production', 'Real Estate Marketing'],
+    tags: ['All', 'CGI', 'Architecture', 'Real Estate', 'AI Film', 'Exterior', 'Residential'],
     heroImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85',
     heroVideo: 'https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-building-at-dusk-40916-large.mp4',
-    summary: 'A luxury multi-tiered residential development in Tashkent designed to introduce Mediterranean terraced living into a contemporary urban context.',
+    videoDuration: '90s 4K Film',
+    clientMaterial: 'Architectural floor plans, Revit schematics and 2 early concept renders',
+    transformationPipeline: [
+      '3D BIM & Geometry Optimization',
+      'Photorealistic Lighting & Travertine Texturing',
+      'AI Generative Motion & Environmental Haze',
+      'Cinematic Editing & Orchestral Master Score'
+    ],
+    summary: 'A signature multi-tiered residential development designed to introduce Mediterranean terraced living into Central Asia’s growing luxury property market.',
     description: [
-      'Tasked with communicating the human scale and architectural sophistication of Riviera Residence before groundbreaking, our studio developed a comprehensive visual identity encompassing exterior twilight CGI, interior penthouses, and a cinematic marketing film.',
-      'We translated raw Revit schematics and landscape planting schedules into an emotive narrative focusing on the interplay between natural limestone, bronze facade fins, and evening lighting.',
-      'The marketing film, produced using our proprietary AI-enhanced cinematic pipeline, achieved a 240% pre-launch reservation target within 60 days of release.'
+      'The developer approached our atelier with just two preliminary concept renders and architectural CAD floor plans. They needed a complete visual marketing campaign to launch international pre-sales.',
+      'From these raw inputs, our team engineered a high-fidelity 3D digital model, populated indigenous botanical landscaping, and calibrated precise summer twilight illumination.',
+      'Using our proprietary AI-assisted motion pipeline, we produced a broadcast-quality 90-second marketing film in three weeks, achieving a 240% pre-launch reservation target within 60 days.'
     ],
     stats: [
       { label: 'Total Area', value: '42,000 m²' },
-      { label: 'Units', value: '148 Penthouses & Suites' },
+      { label: 'Units', value: '148 Luxury Residences' },
       { label: 'GDV', value: '$165M' },
-      { label: 'Deliverables', value: '18 CGI Stills + 90s Film' }
+      { label: 'Outputs', value: '18 CGI Stills + 90s Film' }
     ],
     beforeAfter: {
       beforeImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=1800&q=80',
-      beforeLabel: 'SITE & CAD CONTOUR',
+      beforeLabel: 'CLIENT INPUT: CAD & SKETCH',
       afterImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85',
-      afterLabel: 'FINAL DUSK CGI',
-      description: 'Side-by-side comparison illustrating our transformation from initial survey topography and untextured geometry to an atmosphere-rich dusk visualization.'
+      afterLabel: 'OUR WORK: FINAL DUSK CGI',
+      description: 'The core value argument: our studio took two early schematic drawings and transformed them into an emotional, photorealistic twilight marketing experience.'
     },
     process: [
       {
         step: '01',
-        title: 'Source CAD & Material Curation',
-        description: 'Ingesting 3D geometry from the architectural team, auditing site coordinates, and sampling physical Italian travertine and aged bronze cladding.',
+        title: 'Input: 2 Renders + Architectural Plans',
+        description: 'Ingesting basic 2D drawings and client concept renders, establishing accurate camera heights, and auditing masterplan site coordinates.',
         image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
       },
       {
         step: '02',
-        title: '3D Environmental & Lighting Study',
-        description: 'Building volumetric botanical foliage tailored to Tashkent microclimate and simulating precise solar angles for the summer solstice twilight.',
+        title: '3D Visualization & Materiality',
+        description: 'Rebuilding clean 3D geometry, sampling Italian travertine and aged bronze, and simulating exact twilight sun angles.',
         image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80'
       },
       {
         step: '03',
-        title: 'AI Enhancement & Micro-Details',
-        description: 'Synthesizing realistic surface imperfections, dusk atmospheric moisture, and human movement dynamics to eliminate the sterile CG feel.',
+        title: 'AI Generative Enhancement',
+        description: 'Injecting atmospheric moisture, foliage rustling, and subtle motion micro-details to eradicate artificial sterility.',
         image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80'
       },
       {
         step: '04',
-        title: 'Cinematic Camera Direction',
-        description: 'Directing steadycam sweeps and drone ascents in virtual 3D space, timed to an orchestral score recorded specifically for the sales launch.',
+        title: 'Cinematic AI Film Production',
+        description: 'Generating steadycam sweeps, drone approaches, and penthouse walkthroughs timed to a custom musical composition.',
         image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80'
       },
       {
         step: '05',
         title: 'Final Launch Delivery',
-        description: 'Delivering 8K exhibition stills, social media cutdowns, interactive pre-sales touchscreens, and the full 90-second launch film.',
+        description: 'Exporting 8K presentation stills, 4K ProRes master films, and interactive touchscreens for the VIP sales gallery.',
         image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80'
       }
     ],
@@ -94,59 +102,61 @@ export const PROJECTS: Project[] = [
   {
     slug: 'bunker-37',
     title: 'Bunker 37',
-    subtitle: 'Brutalist Heritage Renovation & Art Pavilions',
-    location: 'Berlin, Germany',
+    subtitle: 'Renovation Visualization / Real Estate Film',
+    location: 'Hamburg, Germany',
     year: '2025',
-    client: 'KulturRaum Berlin GmbH',
+    client: 'Nordic Urban Redevelopment AG',
     architect: 'Studio Chipperfield Partner',
     category: 'Heritage',
-    services: ['Renovation & Transformation', 'AI Architectural Film', 'Exterior CGI'],
-    tags: ['All', 'Renovation', 'Architecture', 'CGI', 'AI Film', 'Exterior'],
+    services: ['Renovation & Construction', 'AI Architectural Films', 'Exterior CGI'],
+    tags: ['All', 'Renovation', 'Architecture', 'CGI', 'AI Film', 'Exterior', 'Heritage'],
     heroImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=2400&q=85',
     heroVideo: 'https://assets.mixkit.co/videos/preview/mixkit-silhouette-of-a-person-in-an-art-gallery-41485-large.mp4',
-    summary: 'A monumental post-war monolithic concrete bunker reimagined into an international contemporary art foundation and rooftop pavilion.',
+    videoDuration: '120s Heritage Film',
+    clientMaterial: 'Historical LiDAR point-cloud scans and municipal landmark conservation blueprints',
+    transformationPipeline: [
+      'Point Cloud Photogrammetry Ingestion',
+      'Structural Glass Cantilever Insertion',
+      'Atmospheric Chiaroscuro Daylight Calibration',
+      'Historical Dissolve Video Sequences'
+    ],
+    summary: 'A monumental post-war concrete bunker transformed into an international contemporary art foundation, rooftop pavilion, and luxury lofts.',
     description: [
-      'Bunker 37 represented an extraordinary architectural challenge: honoring the somber weight of 2-meter thick reinforced concrete while visualizing light-filled glass insertions and public cultural galleries.',
-      'Our team deployed historical archival scans and LiDAR point-clouds to construct an accurate 1:1 digital twin of the deteriorating structure.',
-      'Through a series of comparative before-and-after studies and a 2-minute cinematic visual essay, we helped the foundation secure federal landmark approval and multi-million euro private endowment funding.'
+      'Bunker 37 represented an extraordinary preservation challenge: honoring the historic weight of 2-meter thick reinforced concrete while visualizing light-filled glass insertions and public cultural galleries.',
+      'Deploying archival scans and LiDAR point-clouds, our studio built a 1:1 digital twin of the deteriorating structure.',
+      'Through comparative before-and-after studies and a 2-minute cinematic visual essay, we helped the developers secure municipal landmark approval and multi-million euro private endowment funding.'
     ],
     stats: [
       { label: 'Floor Area', value: '18,500 m²' },
-      { label: 'Year Built', value: '1943 (Renovated 2025)' },
-      { label: 'Status', value: 'Approved / In Construction' },
+      { label: 'Original Year', value: '1943 (Renovated 2025)' },
+      { label: 'Approval Status', value: '100% Landmark Approved' },
       { label: 'Outputs', value: '14 Stills + Heritage Film' }
     ],
     beforeAfter: {
       beforeImage: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=1800&q=80',
-      beforeLabel: 'EXISTING MONOLITH',
+      beforeLabel: 'EXISTING CONCRETE BUNKER',
       afterImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1800&q=85',
       afterLabel: 'PROPOSED CULTURAL PAVILION',
-      description: 'Transition revealing the adaptive reuse scheme: existing weathered concrete softened by floating glass lanterns and landscaped public courtyards.'
+      description: 'Adaptive reuse visualization: weathering concrete softened by floating glass lanterns and landscaped public courtyards.'
     },
     process: [
       {
         step: '01',
-        title: 'Photogrammetry & Structural Audit',
-        description: 'Extracting 45 million point cloud vertices from drone photogrammetry to map every fissure, patina mark, and spall in the historic concrete.',
+        title: 'LiDAR Photogrammetry',
+        description: 'Processing 45M point cloud vertices to map every structural fissure in the historic concrete.',
         image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
       },
       {
         step: '02',
-        title: 'Glass Insertion & Chiaroscuro Lighting',
-        description: 'Modeling the optical properties of low-iron museum glazing in contrast with raw brutalist textures, calibrating light penetration into former defense bunkers.',
+        title: '3D Glass Insertion',
+        description: 'Modeling low-iron museum glazing in contrast with raw brutalist textures, calibrating light penetration into former defense bunkers.',
         image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80'
       },
       {
         step: '03',
-        title: 'AI Historical Transition Sequences',
-        description: 'Creating frame-by-frame generative transitions that show the concrete monolith disintegrating into the new cultural complex.',
+        title: 'AI Historical Dissolve Film',
+        description: 'Creating frame-by-frame generative transitions that show the concrete monolith morphing into the new cultural complex.',
         image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'
-      },
-      {
-        step: '04',
-        title: 'Exhibition & Grant Delivery',
-        description: 'Producing large-format fine-art photographic prints for the Berlin Senate architecture commission and museum board.',
-        image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80'
       }
     ],
     gallery: [
@@ -157,31 +167,147 @@ export const PROJECTS: Project[] = [
       },
       {
         url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Rooftop pavilion glowing as a civic lantern over the Berlin skyline',
+        caption: 'Rooftop pavilion glowing as a civic lantern over the Hamburg skyline',
         aspectRatio: 'portrait'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Subterranean contemplation chamber with water reflection installation',
-        aspectRatio: 'landscape'
       }
     ],
     featured: true,
     featuredOrder: 2,
+    nextProjectSlug: 'australia-residence'
+  },
+  {
+    slug: 'australia-residence',
+    title: 'Residential Development',
+    subtitle: '3D Visualization / AI Walkthrough',
+    location: 'Perth, Western Australia',
+    year: '2025',
+    client: 'Oceanic Land Holdings Pty Ltd',
+    architect: 'Bespoke Coastal Studios',
+    category: 'Residential',
+    services: ['Architectural Visualization', 'AI Walkthrough Videos', 'Real Estate Marketing'],
+    tags: ['All', 'CGI', 'Architecture', 'Real Estate', 'AI Film', 'Animation', 'Exterior', 'Residential'],
+    heroImage: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2400&q=85',
+    videoDuration: '60s AI Walkthrough',
+    clientMaterial: 'Survey site boundary topography and initial landscape architect CAD concepts',
+    transformationPipeline: [
+      'Coastal Sand & Dune Topography 3D',
+      'Native Australian Coastal Vegetation Modeling',
+      'AI Drone Walkthrough Synthesis',
+      'Social Media Cutdowns for Off-Plan Buyers'
+    ],
+    summary: 'A collection of bespoke oceanfront cliffside villas designed to capture panoramic Indian Ocean sunsets through cantilevered glass pavilions.',
+    description: [
+      'The developer needed to sell multi-million dollar residences off-plan while the site was still an undeveloped coastal sand ridge.',
+      'Our studio generated full 3D terrain topography, simulated endemic Australian coastal flora, and choreographed an AI-assisted drone walkthrough moving seamlessly from the open ocean into private infinity terraces.',
+      'All eight flagship residences were reserved within four months of the visual campaign launch.'
+    ],
+    stats: [
+      { label: 'Residences', value: '8 Exclusive Cliff Villas' },
+      { label: 'Site Area', value: '34,000 m²' },
+      { label: 'Average Price', value: '$6.5M AUD' },
+      { label: 'Off-Plan Sellout', value: '100% in 120 Days' }
+    ],
+    beforeAfter: {
+      beforeImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=1800&q=80',
+      beforeLabel: 'EMPTY COASTAL PLOT & WIREFRAME',
+      afterImage: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1800&q=85',
+      afterLabel: 'PROPOSED OCEANFRONT VILLA CGI',
+      description: 'From an empty sand contour drawing to an ultra-luxury oceanfront living reality that accelerated buyer deposit commitments.'
+    },
+    process: [
+      {
+        step: '01',
+        title: 'Geographic Sun & Wave Simulation',
+        description: 'Calibrating the Western Australian golden hour solar trajectory and coastal atmospheric spray.',
+        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
+      }
+    ],
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=85',
+        caption: 'Cantilevered infinity terrace blending seamlessly into the Indian Ocean',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1600&q=85',
+        caption: 'Living room with rammed-earth feature walls and cedar acoustic ceiling',
+        aspectRatio: 'portrait'
+      }
+    ],
+    featured: true,
+    featuredOrder: 3,
+    nextProjectSlug: 'berliner-strasse-69'
+  },
+  {
+    slug: 'berliner-strasse-69',
+    title: 'Berliner Straße 69',
+    subtitle: 'Development Marketing Film & CGI',
+    location: 'Leipzig, Germany',
+    year: '2025',
+    client: 'Saxonia Real Estate Fund',
+    architect: 'Eckert & Klinke Architekten',
+    category: 'Commercial',
+    services: ['Real Estate Marketing', 'AI Architectural Films', 'Interior & Exterior CGI'],
+    tags: ['All', 'Commercial', 'Architecture', 'CGI', 'AI Film', 'Real Estate', 'Interior'],
+    heroImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=85',
+    videoDuration: '75s Commercial Reel',
+    clientMaterial: '2D CAD elevations, structural column grid and preliminary interior schedule',
+    transformationPipeline: [
+      'CAD to High-Poly BIM Mesh Conversion',
+      'PBR Specular Material Calibration',
+      'AI Daylight Passage Simulation',
+      'Marketing Teaser & Leasing Deck Production'
+    ],
+    summary: 'A 14-storey mixed-use office tower and urban public galleria featuring energy-positive glass facades and timber interior courtyards.',
+    description: [
+      'To attract institutional anchor corporate tenants prior to construction, Saxonia Real Estate required marketing visuals that communicated sustainability, employee wellness, and acoustic serenity.',
+      'We constructed high-detail 3D representations of both the urban street frontage and the multi-level biophilic atrium.',
+      'The marketing film generated over 50 qualified leasing inquiries within 30 days of public release.'
+    ],
+    stats: [
+      { label: 'Tower GFA', value: '24,000 m²' },
+      { label: 'Floors', value: '14 Storeys' },
+      { label: 'Certification', value: 'DGNB Platinum Target' },
+      { label: 'Pre-Leasing', value: '70% Committed' }
+    ],
+    beforeAfter: {
+      beforeImage: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1800&q=80',
+      beforeLabel: '3DS MAX VIEWPORT CAD',
+      afterImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=85',
+      afterLabel: 'FINISHED TURNKEY VISUALIZATION',
+      description: 'Side-by-side comparison showing raw wireframe structural columns transformed into a light-filled corporate headquarters.'
+    },
+    process: [
+      {
+        step: '01',
+        title: 'BIM Ingestion & Daylight Physics',
+        description: 'Simulating diffused European winter daylight filtering through triple-glazed acoustic curtainwalls.',
+        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
+      }
+    ],
+    gallery: [
+      {
+        url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=85',
+        caption: 'Triple-height atrium lobby with integrated living plant walls and timber seating',
+        aspectRatio: 'landscape'
+      }
+    ],
+    featured: true,
+    featuredOrder: 4,
     nextProjectSlug: 'marlow-on-mill'
   },
   {
     slug: 'marlow-on-mill',
     title: 'Marlow On Mill',
-    subtitle: 'Suburban Luxury Residential & Landscape',
+    subtitle: 'Suburban Terraced Luxury Residences',
     location: 'Cape Town, South Africa',
     year: '2025',
     client: 'Bespoke Landholdings',
     architect: 'SAOTA Collaborative',
     category: 'Residential',
     services: ['Architectural Visualization', 'Interior CGI', 'Real Estate Marketing'],
-    tags: ['All', 'CGI', 'Architecture', 'Real Estate', 'Exterior', 'Interior'],
-    heroImage: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2400&q=85',
+    tags: ['All', 'CGI', 'Architecture', 'Real Estate', 'Exterior', 'Interior', 'Residential'],
+    heroImage: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=2400&q=85',
     summary: 'A bespoke cluster of mountain-facing residences celebrating Table Mountain stone, timber pergolas, and native fynbos landscape architecture.',
     description: [
       'Nestled along the foothills of the Twelve Apostles, Marlow On Mill required imagery that communicated an organic relationship between structure and topography.',
@@ -199,16 +325,6 @@ export const PROJECTS: Project[] = [
         url: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=85',
         caption: 'Infinity pool blending with the Atlantic ocean horizon',
         aspectRatio: 'landscape'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Open-plan living room with natural stone fireplace and cedar rafters',
-        aspectRatio: 'portrait'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Evening approach showcasing subtle landscape lighting scheme',
-        aspectRatio: 'landscape'
       }
     ],
     process: [
@@ -217,16 +333,10 @@ export const PROJECTS: Project[] = [
         title: 'Geographic Sun Study',
         description: 'Accurately calibrating the mountain ridge shadow profile against time of day to determine the most flattering lighting scenarios.',
         image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
-      },
-      {
-        step: '02',
-        title: 'Botanical Biome Simulation',
-        description: 'Digitally populating 14 distinct species of indigenous Cape fynbos flora with procedural wind turbulence for video frames.',
-        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'
       }
     ],
-    featured: true,
-    featuredOrder: 3,
+    featured: false,
+    featuredOrder: 5,
     nextProjectSlug: 'venetian-penthouse'
   },
   {
@@ -239,7 +349,7 @@ export const PROJECTS: Project[] = [
     architect: 'Atelier Matteo Thun',
     category: 'Residential',
     services: ['Interior CGI', 'Material & Lighting Studies', 'AI Architectural Film'],
-    tags: ['All', 'Interior', 'CGI', 'Architecture', 'AI Film'],
+    tags: ['All', 'Interior', 'CGI', 'Architecture', 'AI Film', 'Animation'],
     heroImage: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2400&q=85',
     summary: 'A restored 16th-century Palazzo piano nobile interior combining fresco restoration with minimalist Italian modern furniture and terrazzo floors.',
     description: [
@@ -258,11 +368,6 @@ export const PROJECTS: Project[] = [
         url: 'https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1600&q=85',
         caption: 'Grand salon with restored timber beams and water reflection highlights',
         aspectRatio: 'landscape'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Monolithic Calacatta marble kitchen island with antique brass tapware',
-        aspectRatio: 'portrait'
       }
     ],
     process: [
@@ -273,152 +378,8 @@ export const PROJECTS: Project[] = [
         image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
       }
     ],
-    featured: true,
-    featuredOrder: 4,
-    nextProjectSlug: 'freirodaer-weg'
-  },
-  {
-    slug: 'freirodaer-weg',
-    title: 'Freirodaer Weg',
-    subtitle: 'Timber Pavilion & Forest Sanctuary',
-    location: 'Leipzig, Germany',
-    year: '2025',
-    client: 'Freirodaer Stiftung',
-    architect: 'Eckert & Klinke Architekten',
-    category: 'Cultural',
-    services: ['Architectural Visualization', 'Exterior CGI', 'AI Architectural Film'],
-    tags: ['All', 'Architecture', 'CGI', 'Exterior', 'AI Film'],
-    heroImage: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=2400&q=85',
-    summary: 'A minimalist mass-timber pavilion set within an ancient birch forest, celebrating tactile wood craftsmanship and peaceful forest acoustics.',
-    description: [
-      'Freirodaer Weg serves as a contemplative retreat and exhibition pavilion constructed entirely from sustainably harvested local spruce and charcoal-treated larch.',
-      'Our imagery explored seasonal atmospheric variations: autumn mist, winter snowfall, and crisp spring dawn.',
-      'The quiet restraint of the visuals mirrors the philosophy of MIR and Beauty & The Bit, letting the architecture breathe inside its natural biome.'
-    ],
-    stats: [
-      { label: 'Enclosed Area', value: '1,400 m²' },
-      { label: 'Timber Source', value: '100% Certified Black Forest Spruce' },
-      { label: 'Award', value: 'German Architecture Visualization Shortlist' },
-      { label: 'Deliverables', value: '10 Editorial Stills + 60s Ambient Film' }
-    ],
-    gallery: [
-      {
-        url: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1600&q=85',
-        caption: 'The pavilion emerging through morning birch forest fog',
-        aspectRatio: 'landscape'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Detail of charred timber rainscreen and frameless glass corner',
-        aspectRatio: 'portrait'
-      }
-    ],
-    process: [
-      {
-        step: '01',
-        title: 'Micro-Botanical Scanning',
-        description: 'Collecting high-density 3D bark and moss textures from the actual site in Saxony.',
-        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
-      }
-    ],
-    featured: true,
-    featuredOrder: 5,
-    nextProjectSlug: 'cascades-at-vista'
-  },
-  {
-    slug: 'cascades-at-vista',
-    title: 'Cascades at Vista',
-    subtitle: 'Biophilic Headquarters & Sky Atrium',
-    location: 'Singapore',
-    year: '2025',
-    client: 'CapitaLand Urban Development',
-    architect: 'WOHA Collaborative',
-    category: 'Commercial',
-    services: ['Architectural Visualization', 'AI Architectural Film', 'Real Estate Marketing'],
-    tags: ['All', 'Commercial', 'Architecture', 'Interior', 'Real Estate', 'AI Film'],
-    heroImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=85',
-    summary: 'A 38-storey commercial skyscraper featuring stacked sky gardens, cascading waterfalls, and naturally ventilated public breezeways.',
-    description: [
-      'In a competitive commercial leasing landscape, CapitaLand required visuals that demonstrated the tangible wellness and energy benefits of their biophilic design.',
-      'Our team produced panoramic aerial shots showing the tower within the Singapore CBD skyline, coupled with immersive street-level arrival visuals.',
-      'Over 75% of the anchor office tenancies were committed before structural topping-out.'
-    ],
-    stats: [
-      { label: 'Tower Height', value: '190 m / 38 Floors' },
-      { label: 'Commercial GFA', value: '64,000 m²' },
-      { label: 'Green Plot Ratio', value: '450%' },
-      { label: 'Pre-Lease Rate', value: '78% at Launch' }
-    ],
-    gallery: [
-      {
-        url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Tower exterior showing stepped terraces with tropical landscaping',
-        aspectRatio: 'landscape'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Triple-height lobby with living green wall and filtered daylight canopy',
-        aspectRatio: 'portrait'
-      }
-    ],
-    process: [
-      {
-        step: '01',
-        title: 'Atmospheric Humidity Simulation',
-        description: 'Simulating equatorial haze and sunlight diffusion through glass curtainwalls.',
-        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
-      }
-    ],
-    featured: true,
-    featuredOrder: 6,
-    nextProjectSlug: 'park-seefeld'
-  },
-  {
-    slug: 'park-seefeld',
-    title: 'Park Seefeld',
-    subtitle: 'Alpine Wellness Resort & Chalet Village',
-    location: 'Tyrol, Austria',
-    year: '2024',
-    client: 'Alpen Hospitality Group',
-    architect: 'Baumann & Partner',
-    category: 'Hospitality',
-    services: ['Architectural Visualization', 'Animation & Walkthroughs', 'Real Estate Marketing'],
-    tags: ['All', 'Hospitality', 'CGI', 'Animation', 'Exterior'],
-    heroImage: 'https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=2400&q=85',
-    summary: 'A year-round mountain retreat pairing traditional Tyrolean stone masonry with expansive panoramic glazing and thermal open-air pools.',
-    description: [
-      'Park Seefeld required winter visualization that captured the crisp warmth of heated timber interiors against snow-covered alpine peaks.',
-      'We engineered custom procedural snow accumulation shaders that accurately nestled onto roof overhangs, pine needles, and stone ledges.',
-      'The campaign imagery established an ultra-luxury hospitality brand identity 18 months prior to opening.'
-    ],
-    stats: [
-      { label: 'Chalets & Suites', value: '45 Private Residences' },
-      { label: 'Spa Area', value: '3,800 m² Thermal Spa' },
-      { label: 'Altitude', value: '1,200 m Above Sea Level' },
-      { label: 'Visuals', value: '16 Stills + Winter Cinematic' }
-    ],
-    gallery: [
-      {
-        url: 'https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Heated outdoor infinity pool steaming into sub-zero evening air',
-        aspectRatio: 'landscape'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Chalet living room with central open fire and heavy timber trusses',
-        aspectRatio: 'portrait'
-      }
-    ],
-    process: [
-      {
-        step: '01',
-        title: 'Snow & Frost Shader Engineering',
-        description: 'Calibrating subsurface scattering to replicate fresh powder and ice formation.',
-        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
-      }
-    ],
     featured: false,
-    featuredOrder: 7,
+    featuredOrder: 6,
     nextProjectSlug: 'papes-residences'
   },
   {
@@ -458,11 +419,6 @@ export const PROJECTS: Project[] = [
         url: 'https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=1600&q=85',
         caption: 'Restored grand courtyard facade at blue hour with gas lantern lighting',
         aspectRatio: 'landscape'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Interior ballroom salon showing restored ceiling frescoes and chevron parquet',
-        aspectRatio: 'portrait'
       }
     ],
     process: [
@@ -471,12 +427,49 @@ export const PROJECTS: Project[] = [
         title: 'Archival Fresco Documentation',
         description: 'Digitally mapping 18th-century Austrian Baroque ceiling frescoes from high-resolution archival photogrammetry.',
         image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
-      },
+      }
+    ],
+    featured: false,
+    featuredOrder: 7,
+    nextProjectSlug: 'park-seefeld'
+  },
+  {
+    slug: 'park-seefeld',
+    title: 'Park Seefeld',
+    subtitle: 'Alpine Wellness Resort & Chalet Village',
+    location: 'Tyrol, Austria',
+    year: '2024',
+    client: 'Alpen Hospitality Group',
+    architect: 'Baumann & Partner',
+    category: 'Hospitality',
+    services: ['Architectural Visualization', 'Animation & Walkthroughs', 'Real Estate Marketing'],
+    tags: ['All', 'Hospitality', 'CGI', 'Animation', 'Exterior'],
+    heroImage: 'https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=2400&q=85',
+    summary: 'A year-round mountain retreat pairing traditional Tyrolean stone masonry with expansive panoramic glazing and thermal open-air pools.',
+    description: [
+      'Park Seefeld required winter visualization that captured the crisp warmth of heated timber interiors against snow-covered alpine peaks.',
+      'We engineered custom procedural snow accumulation shaders that accurately nestled onto roof overhangs, pine needles, and stone ledges.',
+      'The campaign imagery established an ultra-luxury hospitality brand identity 18 months prior to opening.'
+    ],
+    stats: [
+      { label: 'Chalets & Suites', value: '45 Private Residences' },
+      { label: 'Spa Area', value: '3,800 m² Thermal Spa' },
+      { label: 'Altitude', value: '1,200 m Above Sea Level' },
+      { label: 'Visuals', value: '16 Stills + Winter Cinematic' }
+    ],
+    gallery: [
       {
-        step: '02',
-        title: 'Micro-Gold Leaf Shading',
-        description: 'Calibrating anisotropic metallic shaders to accurately replicate aged gold leaf leafing under chandelier illumination.',
-        image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80'
+        url: 'https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=1600&q=85',
+        caption: 'Heated outdoor infinity pool steaming into sub-zero evening air',
+        aspectRatio: 'landscape'
+      }
+    ],
+    process: [
+      {
+        step: '01',
+        title: 'Snow & Frost Shader Engineering',
+        description: 'Calibrating subsurface scattering to replicate fresh powder and ice formation.',
+        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
       }
     ],
     featured: false,

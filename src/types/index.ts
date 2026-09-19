@@ -42,6 +42,9 @@ export interface Project {
   stats: ProjectStats[];
   process: ProcessStageItem[];
   beforeAfter?: BeforeAfterData;
+  clientMaterial?: string; // e.g. "Architectural drawings / CAD plans / 2 preliminary renders"
+  transformationPipeline?: string[]; // e.g. ["3D Visualization", "Photorealistic Enhancement", "Cinematic AI Video", "Final Marketing Edit"]
+  videoDuration?: string;
   gallery: GalleryItem[];
   featured: boolean;
   featuredOrder: number;
@@ -98,6 +101,7 @@ export interface ProjectBrief {
   projectType: string;
   estimatedScope: string;
   timeline: string;
+  videoDuration?: string;
   budgetRange: string;
   message: string;
   deliverables: string[];

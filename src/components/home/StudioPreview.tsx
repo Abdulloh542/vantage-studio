@@ -18,11 +18,11 @@ export function StudioPreview() {
             </h2>
           </div>
           <div className="lg:col-span-5 space-y-6 text-zinc-700 font-light text-base leading-relaxed">
-            <p>
-              We are an international creative production studio uniting trained architects, 3D artists, film directors, and computational researchers under one roof.
+            <p className="font-normal text-black text-lg">
+              We are an architectural visualization studio specializing in photorealistic imagery and AI-powered cinematic real estate films.
             </p>
-            <p className="text-sm text-zinc-500 font-normal">
-              We leverage AI as a production advantage—not as our core identity. The soul of our imagery stems from deep architectural appreciation, precise lighting studies, and an obsession with material truth.
+            <p className="text-sm text-zinc-600 font-light leading-relaxed">
+              With more than 6 years of experience in architectural visualization, we combine 3D production, generative AI and cinematic storytelling to transform architectural concepts into compelling visual experiences.
             </p>
             <div className="pt-2">
               <Link

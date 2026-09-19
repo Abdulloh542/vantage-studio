@@ -13,24 +13,24 @@ export const SERVICES: Service[] = [
     solution: 'We treat every project as an editorial architectural photography commission. By mastering daylight physics, micro-surface imperfections, and cinematic framing, we create imagery that commands institutional respect.',
     deliverables: [
       {
-        name: 'Exterior Twilight & Daytime CGI',
+        name: 'Exterior Visualization',
         description: 'Atmospheric hero viewpoints capturing facade materiality, seasonal daylighting, and landscape integration.'
       },
       {
-        name: 'Luxury Interior Stills',
+        name: 'Interior Visualization',
         description: 'Sensory interior spaces featuring bespoke furniture styling, caustic light reflections, and tactile materiality.'
       },
       {
-        name: 'Aerial & Contextual Panoramas',
-        description: 'Drone-matched perspectives demonstrating urban masterplan relationships, skyline positioning, and site geography.'
+        name: '3D Modeling & CAD Ingestion',
+        description: 'Precision geometry cleanup and structural modeling directly from Revit, Rhino, and AutoCAD.'
       },
       {
-        name: 'Material & Craft Studies',
-        description: 'Extreme close-up macro shots celebrating joinery, fluted stonework, custom glazing, and bespoke architectural hardware.'
+        name: 'Photorealistic Enhancement',
+        description: 'Layering tactile material depth, micro-imperfections, and ambient atmosphere into computer graphics.'
       },
       {
-        name: '360° Virtual Walkthroughs',
-        description: 'High-resolution interactive panoramic environments for VIP client presentations and off-plan sales suites.'
+        name: 'Aerial & Masterplan Panoramas',
+        description: 'Drone-matched perspectives demonstrating urban masterplan relationships and skyline positioning.'
       },
       {
         name: 'Fine Art Exhibition Prints',
@@ -84,27 +84,27 @@ export const SERVICES: Service[] = [
     heroHeadline: 'Architecture in motion, before the first foundation is poured.',
     heroSubhead: 'We fuse state-of-the-art camera simulation with AI motion synthesis to produce evocative architectural films in a fraction of traditional animation timelines.',
     problem: 'Full CGI video animation historically required months of render-farm compute and prohibitive seven-figure production budgets, putting film out of reach for agile launch campaigns.',
-    solution: 'Our studio combines high-fidelity 3D cameras with proprietary AI motion synthesis models. This gives architects and developers broadcast-quality cinematic films with natural environmental dynamics (swaying trees, morning mist, shifting light) rapidly and affordably.',
+    solution: 'Our studio combines high-fidelity 3D cameras with proprietary AI motion synthesis models. This gives architects and developers broadcast-quality cinematic films with natural environmental dynamics rapidly and affordably.',
     deliverables: [
       {
-        name: 'Cinematic Launch Films (60s–120s)',
+        name: 'Cinematic Architectural Films',
         description: 'Complete narrative films with cinematic pacing, original sound design, and custom orchestral scoring.'
       },
       {
-        name: 'AI Image-to-Video Extensions',
-        description: 'Breathtaking moving vignettes created from our approved architectural stills.'
+        name: 'AI Walkthroughs & FPV',
+        description: 'Smooth virtual camera tours navigating seamlessly through spaces and private penthouse terraces.'
       },
       {
-        name: 'Drone FPV Simulation',
-        description: 'Dynamic aerial fly-throughs moving seamlessly from high altitude down into individual penthouses.'
+        name: 'Image-to-Video Synthesis',
+        description: 'Breathtaking moving vignettes generated directly from approved 3D stills.'
       },
       {
-        name: 'Atmospheric Cinemagraphs',
-        description: 'Subtle looping video moments designed for website heroes, digital banners, and presentation decks.'
+        name: 'Render-to-Video Animation',
+        description: 'Converting untextured or preliminary renders into fluid, high-resolution motion sequences.'
       },
       {
-        name: 'Social Media Cutdowns (9:16)',
-        description: 'Vertical aspect ratio reels and stories formatted specifically for high engagement on Instagram, LinkedIn, and TikTok.'
+        name: 'Concept Films & Teasers',
+        description: 'Atmospheric 15–30 second teasers designed for social media acquisition and investor teasers.'
       }
     ],
     workflow: [
@@ -150,24 +150,28 @@ export const SERVICES: Service[] = [
     shortDescription: 'Commercial visual positioning and digital launch assets that drive pre-sales and investor velocity.',
     heroHeadline: 'Visual campaigns that turn architectural concepts into off-plan commitments.',
     heroSubhead: 'We partner with developers and sales agencies to craft cohesive visual suites that build prestige, command premium prices per square meter, and accelerate sales cycles.',
-    problem: 'Property developments frequently suffer from fragmented visual collateral: renders from one vendor, branding from another, and disjointed marketing collateral that confuses high-net-worth buyers.',
+    problem: 'Property developments frequently suffer from fragmented visual collateral: renders from one vendor, branding from another, and disjointed marketing collateral that confuses buyers.',
     solution: 'We act as the single visual creative partner. From the initial investment teaser to the sales gallery interactive displays and social launch blitz, we deliver a unified world-class brand experience.',
     deliverables: [
       {
-        name: 'Pre-Sales Marketing Suites',
-        description: 'Curated visual assets tailored for private client brochures, investor prospectuses, and sales gallery touchscreens.'
+        name: 'Property Presentation Films',
+        description: 'Hero marketing films crafted specifically for private buyer presentations and launch galas.'
       },
       {
-        name: 'Development Hero Campaigns',
+        name: 'Development Marketing Suites',
         description: 'Complete visual identity packages including signature CGI stills, lifestyle vignettes, and night views.'
       },
       {
-        name: 'Floorplan & Unit Visualizers',
-        description: 'Isometric cutaways and 3D floor plans that clearly communicate spatial proportions and light orientation.'
+        name: 'Location & Infrastructure Videos',
+        description: 'Contextual animations highlighting nearby transport hubs, coastlines, parks, and cultural amenities.'
       },
       {
-        name: 'Targeted Digital Ad Creatives',
-        description: 'High-conversion visual formats optimized for digital acquisition and private brokerage networks.'
+        name: 'Map & Masterplan Animations',
+        description: 'Dynamic 3D aerial flyovers illustrating masterplan phasing and community connectivity.'
+      },
+      {
+        name: 'Social Media Reels (9:16)',
+        description: 'High-impact vertical video cuts optimized for Instagram, LinkedIn, and TikTok property campaigns.'
       }
     ],
     workflow: [
@@ -208,28 +212,28 @@ export const SERVICES: Service[] = [
     id: 'renovation',
     slug: 'renovation',
     number: '04',
-    title: 'Renovation & Transformation',
-    shortDescription: 'Before/After comparisons, adaptive reuse visualizations, and historical restorations.',
+    title: 'Renovation & Construction',
+    shortDescription: 'Before/After films, adaptive reuse visualizations, and construction timelapse simulations.',
     heroHeadline: 'Visualizing potential across heritage, adaptive reuse, and complex transformations.',
     heroSubhead: 'We bridge the gap between existing site realities and proposed architectural visions, helping stakeholders and planning authorities instantly see what could be.',
     problem: 'Adaptive reuse and renovation projects are notoriously difficult for planning boards, investors, and public stakeholders to conceptualize when looking at aging or dilapidated structures.',
     solution: 'We specialize in millimeter-accurate Before/After visualizations, 3D camera projections matched onto drone photography, and interactive digital sliders that demonstrate respect for historical fabric alongside contemporary interventions.',
     deliverables: [
       {
-        name: 'Interactive Before / After Sliders',
+        name: 'Before / After Films & Sliders',
         description: 'Web-ready interactive sliders and video wipes comparing current conditions with proposed interventions.'
       },
       {
-        name: 'Planning & Landmark Visual Studies',
-        description: 'Unbiased, rigorous visual assessments required for municipal heritage boards and urban design approvals.'
-      },
-      {
-        name: 'Adaptive Reuse Commercial Studies',
-        description: 'Visualizations demonstrating how industrial or heritage spaces can be converted into vibrant commercial hubs.'
-      },
-      {
-        name: 'Construction Phasing Previews',
+        name: 'Construction Timelapse Previews',
         description: 'Sequenced renders illustrating each phase of restoration and structural modernization.'
+      },
+      {
+        name: 'Renovation Visualization',
+        description: 'High-detail stills showing historic facades restored with modern glazing and lighting.'
+      },
+      {
+        name: 'Existing → Proposed Transformation',
+        description: 'Direct visual comparisons illustrating how outdated buildings are converted into prime commercial hubs.'
       }
     ],
     workflow: [
