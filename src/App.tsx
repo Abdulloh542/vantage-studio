@@ -5,6 +5,7 @@ import { Footer } from './components/common/Footer';
 import { CustomCursor } from './components/common/CustomCursor';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { SmoothScroll } from './components/common/SmoothScroll';
+import { BackToTopButton } from './components/common/BackToTopButton';
 
 // Code-split pages for peak Lighthouse performance
 const HomePage = lazy(() => import('./pages/HomePage').then(m => ({ default: m.HomePage })));
@@ -64,6 +65,9 @@ export function App() {
           </Routes>
         </Suspense>
       </div>
+
+      {/* Back to top smooth scroll trigger */}
+      <BackToTopButton />
 
       {/* Global Editorial Footer */}
       <Footer />
