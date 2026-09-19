@@ -99,10 +99,43 @@ export interface ProjectBrief {
   email: string;
   phone?: string;
   projectType: string;
+  location?: string;
+  deadline?: string;
   estimatedScope: string;
   timeline: string;
   videoDuration?: string;
   budgetRange: string;
   message: string;
   deliverables: string[];
+}
+
+export interface Testimonial {
+  id: string;
+  quote: string;
+  author: string;
+  role: string;
+  company: string;
+  project: string;
+  location: string;
+  image?: string;
+}
+
+export interface FAQItem {
+  id: string;
+  question: string;
+  answer: string;
+  category: string;
+}
+
+export interface JournalArticle {
+  slug: string;
+  title: string;
+  subtitle: string;
+  date: string;
+  readTime: string;
+  category: string;
+  heroImage: string;
+  excerpt: string;
+  content: string[];
+  featured?: boolean;
 }

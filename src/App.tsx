@@ -14,6 +14,8 @@ const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage').then(m 
 const ProcessPage = lazy(() => import('./pages/ProcessPage').then(m => ({ default: m.ProcessPage })));
 const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
+const JournalPage = lazy(() => import('./pages/JournalPage').then(m => ({ default: m.JournalPage })));
+const JournalDetailPage = lazy(() => import('./pages/JournalDetailPage').then(m => ({ default: m.JournalDetailPage })));
 
 // Architectural minimal loader
 function PageLoader() {
@@ -52,6 +54,9 @@ export function App() {
             <Route path="/services/:slug" element={<ServiceDetailPage />} />
             <Route path="/process" element={<ProcessPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/studio" element={<AboutPage />} />
+            <Route path="/journal" element={<JournalPage />} />
+            <Route path="/journal/:slug" element={<JournalDetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="*" element={<HomePage />} />
           </Routes>

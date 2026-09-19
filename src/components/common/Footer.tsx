@@ -66,28 +66,33 @@ export function Footer() {
             </span>
             <ul className="space-y-2.5">
               <li>
-                <Link to="/work" className="text-zinc-300 hover:text-white transition-colors">
+                <Link to="/work" className="text-zinc-300 hover:text-[#C5A880] transition-colors">
                   Selected Work
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-zinc-300 hover:text-white transition-colors">
+                <Link to="/services" className="text-zinc-300 hover:text-[#C5A880] transition-colors">
                   Services
                 </Link>
               </li>
               <li>
-                <Link to="/process" className="text-zinc-300 hover:text-white transition-colors">
-                  Production Process
+                <Link to="/process" className="text-zinc-300 hover:text-[#C5A880] transition-colors">
+                  Methodology
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-zinc-300 hover:text-white transition-colors">
-                  Studio Philosophy
+                <Link to="/studio" className="text-zinc-300 hover:text-[#C5A880] transition-colors">
+                  Studio
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-zinc-300 hover:text-white transition-colors">
-                  Contact Atelier
+                <Link to="/journal" className="text-zinc-300 hover:text-[#C5A880] transition-colors">
+                  Discourse &amp; Insights
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-zinc-300 hover:text-[#C5A880] transition-colors">
+                  Contact
                 </Link>
               </li>
             </ul>

@@ -37,7 +37,7 @@ export function ServicesPage() {
                 <div className={`grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
                   {/* Visual Frame */}
                   <div className={`lg:col-span-6 ${isReversed ? 'lg:order-2' : ''}`}>
-                    <div className="relative aspect-[4/3] bg-zinc-200 overflow-hidden rounded-2xl shadow-xl border border-black/10 group">
+                    <div className="relative aspect-[4/3] bg-black/10 overflow-hidden border border-black/10 group">
                       <img
                         src={service.image}
                         alt={service.title}
@@ -45,7 +45,7 @@ export function ServicesPage() {
                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
                       <div className="absolute top-4 left-4">
-                        <span className="px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-sm text-white text-[10px] uppercase tracking-widest font-mono">
+                        <span className="px-3.5 py-1.5 bg-[#0B0B0A]/85 backdrop-blur-sm text-white text-[10px] uppercase tracking-widest font-mono">
                           Pillar {service.number}
                         </span>
                       </div>

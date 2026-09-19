@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Play } from 'lucide-react';
 import type { Project } from '../../types';
 
 interface SelectedWorkSectionProps {
@@ -8,76 +8,195 @@ interface SelectedWorkSectionProps {
 }
 
 export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
-  const featured = projects.slice(0, 5);
+  const p1 = projects.find(p => p.slug === 'riviera-residence') || projects[0];
+  const p2 = projects.find(p => p.slug === 'bunker-37') || projects[1];
+  const p3 = projects.find(p => p.slug === 'australia-residence') || projects[2];
+  const p4 = projects.find(p => p.slug === 'berliner-strasse-69') || projects[3];
+  const p5 = projects.find(p => p.slug === 'marlow-on-mill') || projects[4];
+  const p6 = projects.find(p => p.slug === 'venetian-penthouse') || projects[5];
 
   return (
-    <section className="bg-[#f7f6f2] text-[#121214] py-24 md:py-36 border-t border-black/10">
+    <section id="selected-work" className="bg-[#FAF9F6] text-[#11110F] py-28 md:py-40 border-t border-[#11110F]/15">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-20 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 md:mb-28 gap-8 border-b border-[#11110F]/15 pb-12">
           <div>
-            <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold block mb-3">
-              02 — Portfolio
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#77736C] font-semibold block mb-4">
+              03 / PROJECTS
             </span>
-            <h2 className="font-display text-4xl md:text-6xl font-light tracking-tight text-black">
-              Selected Work
+            <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-[#11110F]">
+              SELECTED WORK
             </h2>
+            <p className="mt-4 text-sm sm:text-base text-[#77736C] font-light max-w-xl">
+              Selected architectural images, films and development campaigns.
+            </p>
           </div>
           <Link
             to="/work"
-            className="group inline-flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-black hover:text-zinc-600 transition-colors pb-1 border-b border-black self-start md:self-auto"
+            className="group inline-flex items-center gap-2.5 text-xs uppercase tracking-[0.2em] font-semibold text-[#11110F] hover:text-[#77736C] transition-colors pb-1 border-b border-[#11110F] self-start md:self-auto"
           >
-            <span>Explore All Projects ({projects.length})</span>
-            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <span>Project Index ({projects.length})</span>
+            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
           </Link>
         </div>
 
-        {/* Asymmetric Editorial Portfolio Grid */}
-        <div className="space-y-16 md:space-y-24">
-          {/* Project 01: Hero Panoramic (Riviera Residence) */}
-          {featured[0] && (
+        {/* Varied Editorial Project Compositions */}
+        <div className="space-y-28 md:space-y-40">
+          {/* COMPOSITION 01: Full-Width Cinematic Panoramic Image (Riviera Residence) */}
+          {p1 && (
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
               <Link
-                to={`/work/${featured[0].slug}`}
+                to={`/work/${p1.slug}`}
                 data-cursor="VIEW"
                 className="group block"
               >
-                <div className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden rounded-2xl bg-zinc-200 border border-black/5 shadow-md">
+                <div className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-zinc-200 border border-[#11110F]/10 shadow-sm">
                   <img
-                    src={featured[0].heroImage}
-                    alt={featured[0].title}
+                    src={p1.heroImage}
+                    alt={p1.title}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  
-                  {/* Subtle Badge */}
-                  <div className="absolute top-5 left-5 z-10 flex items-center gap-2">
-                    <span className="px-3.5 py-1.5 bg-black/70 backdrop-blur-md rounded-full text-[10px] uppercase tracking-widest text-white border border-white/15">
-                      Featured Case Study
-                    </span>
-                    <span className="px-3 py-1 bg-white/90 backdrop-blur-md rounded-full text-[10px] uppercase tracking-wider text-black font-semibold">
-                      $140M GMV
+                  <div className="absolute top-6 left-6 z-10">
+                    <span className="px-3.5 py-1.5 bg-[#050505]/75 backdrop-blur-md text-[10px] uppercase tracking-[0.2em] text-white border border-white/10">
+                      01 — Panoramic Case Study
                     </span>
                   </div>
                 </div>
 
-                <div className="mt-6 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div className="mt-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
                   <div>
-                    <h3 className="font-display text-2xl md:text-3xl font-normal tracking-tight text-black group-hover:text-zinc-600 transition-colors">
-                      {featured[0].title}
+                    <h3 className="font-display text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-[#11110F] transition-transform duration-300 group-hover:-translate-y-1">
+                      {p1.title}
                     </h3>
-                    <p className="text-xs text-zinc-500 uppercase tracking-widest mt-1">
-                      {featured[0].location} • {featured[0].category}
+                    <p className="text-xs uppercase tracking-[0.2em] text-[#77736C] mt-2">
+                      {p1.location} • {p1.year} • {p1.category}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-black group-hover:translate-x-1 transition-transform">
-                    <span>View Project</span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs uppercase tracking-[0.18em] text-[#77736C] font-mono">
+                      {p1.services.join(' / ')}
+                    </span>
+                    <div className="w-8 h-8 rounded-full border border-[#11110F]/20 flex items-center justify-center text-[#11110F] transition-transform duration-300 group-hover:translate-x-1.5 group-hover:border-[#11110F]">
+                      <ArrowUpRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          )}
+
+          {/* COMPOSITION 02: 70% Image + 30% Metadata Layout (Bunker 37) */}
+          {p2 && (
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <Link
+                to={`/work/${p2.slug}`}
+                data-cursor="VIEW"
+                className="group grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center"
+              >
+                <div className="lg:col-span-8 relative aspect-[16/10] overflow-hidden bg-zinc-200 border border-[#11110F]/10">
+                  <img
+                    src={p2.heroImage}
+                    alt={p2.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute top-5 left-5 z-10">
+                    <span className="px-3 py-1 bg-[#050505]/75 backdrop-blur-md text-[10px] uppercase tracking-[0.2em] text-white border border-white/10">
+                      02 — Adaptive Reuse
+                    </span>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-4 flex flex-col justify-between h-full py-4 border-t lg:border-t-0 lg:border-l border-[#11110F]/15 lg:pl-10">
+                  <div>
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#77736C] font-mono block mb-3">
+                      PROJECT 02
+                    </span>
+                    <h3 className="font-display text-3xl sm:text-4xl font-light tracking-tight text-[#11110F] transition-transform duration-300 group-hover:-translate-y-1 mb-3">
+                      {p2.title}
+                    </h3>
+                    <p className="text-xs uppercase tracking-[0.2em] text-[#77736C] mb-6">
+                      {p2.location} • {p2.year}
+                    </p>
+                    <p className="text-sm text-[#11110F]/80 font-light leading-relaxed mb-8">
+                      {p2.summary}
+                    </p>
+                  </div>
+
+                  <div className="pt-6 border-t border-[#11110F]/15 flex items-center justify-between">
+                    <span className="text-xs uppercase tracking-[0.16em] text-[#77736C] font-mono">
+                      {p2.category}
+                    </span>
+                    <div className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-[#11110F] transition-transform duration-300 group-hover:translate-x-1.5">
+                      <span>Explore</span>
+                      <ArrowUpRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          )}
+
+          {/* COMPOSITION 03: Vertical Image Left + Giant Type Right (Australia Residence) */}
+          {p3 && (
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <Link
+                to={`/work/${p3.slug}`}
+                data-cursor="VIEW"
+                className="group grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"
+              >
+                <div className="lg:col-span-5 relative aspect-[3/4] overflow-hidden bg-zinc-200 border border-[#11110F]/10">
+                  <img
+                    src={p3.heroImage}
+                    alt={p3.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute top-5 left-5 z-10">
+                    <span className="px-3 py-1 bg-[#050505]/75 backdrop-blur-md text-[10px] uppercase tracking-[0.2em] text-white border border-white/10">
+                      03 — Coastal Pavilion
+                    </span>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-7">
+                  <span className="text-[10px] uppercase tracking-[0.25em] text-[#77736C] font-mono block mb-4">
+                    PROJECT 03 — RESIDENTIAL
+                  </span>
+                  <h3 className="font-display text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-[#11110F] leading-[1.02] transition-transform duration-300 group-hover:-translate-y-1 mb-6">
+                    {p3.title}
+                  </h3>
+                  <p className="text-base sm:text-lg text-[#11110F]/80 font-light leading-relaxed max-w-xl mb-8">
+                    Eight exclusive cantilevered pavilions overlooking the Pacific Ocean, visualized to secure private equity funding before municipal groundbreaking.
+                  </p>
+                  <div className="grid grid-cols-2 gap-6 border-t border-b border-[#11110F]/15 py-6 mb-8 text-xs">
+                    <div>
+                      <span className="text-[#77736C] uppercase tracking-wider block mb-1">LOCATION</span>
+                      <span className="text-[#11110F] font-medium">{p3.location}</span>
+                    </div>
+                    <div>
+                      <span className="text-[#77736C] uppercase tracking-wider block mb-1">SERVICES</span>
+                      <span className="text-[#11110F] font-medium">{p3.services.slice(0, 2).join(', ')}</span>
+                    </div>
+                  </div>
+                  <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-[#11110F] pb-1 border-b border-[#11110F] transition-transform duration-300 group-hover:translate-x-2">
+                    <span>View Case Study</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </div>
                 </div>
@@ -85,178 +204,144 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
             </motion.div>
           )}
 
-          {/* Projects 02 & 03: Split Asymmetric Grid (Bunker 37 + Marlow On Mill) */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-10 items-start">
-            {featured[1] && (
+          {/* COMPOSITION 04: Full-Width Video / Film Frame (Berliner Strasse 69) */}
+          {p4 && (
+            <motion.div
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <Link
+                to={`/work/${p4.slug}`}
+                data-cursor="VIEW"
+                className="group block"
+              >
+                <div className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-zinc-900 border border-[#11110F]/10">
+                  <img
+                    src={p4.heroImage}
+                    alt={p4.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] filter brightness-95"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
+                  
+                  <div className="absolute top-6 left-6 z-10 flex items-center gap-3">
+                    <span className="px-3 py-1 bg-black/75 backdrop-blur-md text-[10px] uppercase tracking-[0.2em] text-white border border-white/10">
+                      04 — Commercial Headquarters Film
+                    </span>
+                  </div>
+
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md border border-white/40 flex items-center justify-center text-white transition-transform duration-300 group-hover:scale-110 group-hover:bg-white group-hover:text-black">
+                      <Play className="w-6 h-6 fill-current ml-1" />
+                    </div>
+                  </div>
+
+                  <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white">
+                    <div>
+                      <h3 className="font-display text-2xl sm:text-4xl font-light tracking-tight">
+                        {p4.title}
+                      </h3>
+                      <p className="text-xs text-zinc-300 uppercase tracking-widest mt-1">
+                        {p4.location} • Commercial Leasing Campaign
+                      </p>
+                    </div>
+                    <div className="hidden sm:flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-white">
+                      <span>Watch Film & Case Study</span>
+                      <ArrowUpRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          )}
+
+          {/* COMPOSITION 05: Asymmetric Dual-Crop Layout (Marlow on Mill & Venetian Penthouse) */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 items-start">
+            {p5 && (
               <motion.div
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.7, delay: 0.1 }}
                 className="md:col-span-7"
               >
                 <Link
-                  to={`/work/${featured[1].slug}`}
+                  to={`/work/${p5.slug}`}
                   data-cursor="VIEW"
                   className="group block"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-zinc-200 border border-black/5 shadow-md">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-zinc-200 border border-[#11110F]/10">
                     <img
-                      src={featured[1].heroImage}
-                      alt={featured[1].title}
+                      src={p5.heroImage}
+                      alt={p5.title}
                       loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     />
-                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute top-4 left-4 z-10">
-                      <span className="px-3 py-1 bg-black/70 backdrop-blur-md rounded-full text-[10px] uppercase tracking-widest text-white border border-white/15">
-                        {featured[1].category}
+                      <span className="px-3 py-1 bg-[#050505]/75 backdrop-blur-md text-[10px] uppercase tracking-[0.2em] text-white border border-white/10">
+                        05A — Residential
                       </span>
                     </div>
                   </div>
 
                   <div className="mt-5 flex items-center justify-between">
                     <div>
-                      <h3 className="font-display text-xl md:text-2xl font-normal tracking-tight text-black group-hover:text-zinc-600 transition-colors">
-                        {featured[1].title}
+                      <h3 className="font-display text-2xl font-light tracking-tight text-[#11110F] transition-transform duration-300 group-hover:-translate-y-1">
+                        {p5.title}
                       </h3>
-                      <p className="text-xs text-zinc-500 uppercase tracking-widest mt-1">
-                        {featured[1].location}
+                      <p className="text-xs text-[#77736C] uppercase tracking-[0.2em] mt-1">
+                        {p5.location}
                       </p>
                     </div>
-                    <ArrowUpRight className="w-4 h-4 text-black group-hover:translate-x-1 transition-transform" />
+                    <div className="w-7 h-7 rounded-full border border-[#11110F]/20 flex items-center justify-center text-[#11110F] transition-transform duration-300 group-hover:translate-x-1">
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </div>
                   </div>
                 </Link>
               </motion.div>
             )}
 
-            {featured[2] && (
+            {p6 && (
               <motion.div
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.7, delay: 0.2 }}
                 className="md:col-span-5 md:pt-16"
               >
                 <Link
-                  to={`/work/${featured[2].slug}`}
+                  to={`/work/${p6.slug}`}
                   data-cursor="VIEW"
                   className="group block"
                 >
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-zinc-200 border border-black/5 shadow-md">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-zinc-200 border border-[#11110F]/10">
                     <img
-                      src={featured[2].heroImage}
-                      alt={featured[2].title}
+                      src={p6.heroImage}
+                      alt={p6.title}
                       loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                     />
-                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute top-4 left-4 z-10">
-                      <span className="px-3 py-1 bg-black/70 backdrop-blur-md rounded-full text-[10px] uppercase tracking-widest text-white border border-white/15">
-                        {featured[2].category}
+                      <span className="px-3 py-1 bg-[#050505]/75 backdrop-blur-md text-[10px] uppercase tracking-[0.2em] text-white border border-white/10">
+                        05B — Heritage
                       </span>
                     </div>
                   </div>
 
                   <div className="mt-5 flex items-center justify-between">
                     <div>
-                      <h3 className="font-display text-xl md:text-2xl font-normal tracking-tight text-black group-hover:text-zinc-600 transition-colors">
-                        {featured[2].title}
+                      <h3 className="font-display text-2xl font-light tracking-tight text-[#11110F] transition-transform duration-300 group-hover:-translate-y-1">
+                        {p6.title}
                       </h3>
-                      <p className="text-xs text-zinc-500 uppercase tracking-widest mt-1">
-                        {featured[2].location}
+                      <p className="text-xs text-[#77736C] uppercase tracking-[0.2em] mt-1">
+                        {p6.location}
                       </p>
                     </div>
-                    <ArrowUpRight className="w-4 h-4 text-black group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </Link>
-              </motion.div>
-            )}
-          </div>
-
-          {/* Projects 04 & 05: Inverted Split Layout (Venetian Penthouse + Freirodaer Weg) */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-10 items-start">
-            {featured[3] && (
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="md:col-span-5"
-              >
-                <Link
-                  to={`/work/${featured[3].slug}`}
-                  data-cursor="VIEW"
-                  className="group block"
-                >
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-zinc-200 border border-black/5 shadow-md">
-                    <img
-                      src={featured[3].heroImage}
-                      alt={featured[3].title}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                    />
-                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute top-4 left-4 z-10">
-                      <span className="px-3 py-1 bg-black/70 backdrop-blur-md rounded-full text-[10px] uppercase tracking-widest text-white border border-white/15">
-                        {featured[3].category}
-                      </span>
+                    <div className="w-7 h-7 rounded-full border border-[#11110F]/20 flex items-center justify-center text-[#11110F] transition-transform duration-300 group-hover:translate-x-1">
+                      <ArrowUpRight className="w-3.5 h-3.5" />
                     </div>
-                  </div>
-
-                  <div className="mt-5 flex items-center justify-between">
-                    <div>
-                      <h3 className="font-display text-xl md:text-2xl font-normal tracking-tight text-black group-hover:text-zinc-600 transition-colors">
-                        {featured[3].title}
-                      </h3>
-                      <p className="text-xs text-zinc-500 uppercase tracking-widest mt-1">
-                        {featured[3].location}
-                      </p>
-                    </div>
-                    <ArrowUpRight className="w-4 h-4 text-black group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </Link>
-              </motion.div>
-            )}
-
-            {featured[4] && (
-              <motion.div
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                className="md:col-span-7 md:pt-12"
-              >
-                <Link
-                  to={`/work/${featured[4].slug}`}
-                  data-cursor="VIEW"
-                  className="group block"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-zinc-200 border border-black/5 shadow-md">
-                    <img
-                      src={featured[4].heroImage}
-                      alt={featured[4].title}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                    />
-                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute top-4 left-4 z-10">
-                      <span className="px-3 py-1 bg-black/70 backdrop-blur-md rounded-full text-[10px] uppercase tracking-widest text-white border border-white/15">
-                        {featured[4].category}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="mt-5 flex items-center justify-between">
-                    <div>
-                      <h3 className="font-display text-xl md:text-2xl font-normal tracking-tight text-black group-hover:text-zinc-600 transition-colors">
-                        {featured[4].title}
-                      </h3>
-                      <p className="text-xs text-zinc-500 uppercase tracking-widest mt-1">
-                        {featured[4].location}
-                      </p>
-                    </div>
-                    <ArrowUpRight className="w-4 h-4 text-black group-hover:translate-x-1 transition-transform" />
                   </div>
                 </Link>
               </motion.div>

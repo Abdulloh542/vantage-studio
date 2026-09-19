@@ -47,14 +47,14 @@ export function AboutPage() {
         </div>
 
         {/* Hero Atelier Loft Image */}
-        <div className="relative aspect-[16/9] md:aspect-[21/9] bg-zinc-900 overflow-hidden rounded-2xl shadow-2xl border border-black/10 mb-24 md:mb-36">
+        <div className="relative aspect-[16/9] md:aspect-[21/9] bg-zinc-900 overflow-hidden border border-black/10 mb-24 md:mb-36">
           <img
             src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=85"
             alt="Vantage Studio Interior Architecture Loft"
             className="w-full h-full object-cover filter brightness-90"
           />
-          <div className="absolute bottom-6 left-6 text-white text-xs tracking-wider uppercase">
-            London Mayfair & Zurich Enge Ateliers
+          <div className="absolute bottom-6 left-6 text-white text-xs font-mono tracking-widest uppercase">
+            London Mayfair &amp; Zurich Enge Ateliers
           </div>
         </div>
 

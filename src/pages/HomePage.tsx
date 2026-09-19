@@ -2,19 +2,16 @@ import { useState } from 'react';
 import { HeroSection } from '../components/home/HeroSection';
 import { IntroStatement } from '../components/home/IntroStatement';
 import { SelectedWorkSection } from '../components/home/SelectedWorkSection';
-import { ServicesOverview } from '../components/home/ServicesOverview';
+import { EditorialServiceIndex } from '../components/home/EditorialServiceIndex';
 import { CinematicFilmSection } from '../components/home/CinematicFilmSection';
 import { BeforeAfterFeature } from '../components/home/BeforeAfterFeature';
-import { HowWeWorkSection } from '../components/home/HowWeWorkSection';
-import { AIWorkflowSection } from '../components/home/AIWorkflowSection';
-import { TargetIndustriesSection } from '../components/home/TargetIndustriesSection';
-import { CapabilitiesSection } from '../components/home/CapabilitiesSection';
-import { TrustSection } from '../components/home/TrustSection';
-import { StudioPreview } from '../components/home/StudioPreview';
+import { ProcessSection } from '../components/home/ProcessSection';
+import { TestimonialSection } from '../components/home/TestimonialSection';
+import { JournalSection } from '../components/home/JournalSection';
+import { FAQSection } from '../components/home/FAQSection';
 import { FinalCTASection } from '../components/home/FinalCTASection';
 import { VideoLightbox } from '../components/common/VideoLightbox';
 import { PROJECTS } from '../data/projects';
-import { SERVICES } from '../data/services';
 
 export function HomePage() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -37,47 +34,41 @@ export function HomePage() {
   };
 
   return (
-    <main className="w-full overflow-hidden">
-      {/* 01 Hero Video (Dark with Quick Services Ticker) */}
+    <main className="w-full overflow-hidden bg-[#050505]">
+      {/* 01 HERO VIDEO & POSITIONING (Dark) */}
       <HeroSection onOpenShowreel={handleOpenShowreel} />
 
-      {/* 02 Intro Statement (Light) */}
+      {/* 02 MANIFESTO & PROPOSITION (Light #F4F2EE) */}
       <IntroStatement />
 
-      {/* 03 Selected Work (Large Case Studies) */}
+      {/* 03 SELECTED PROJECTS (Light #FAF9F6) */}
       <SelectedWorkSection projects={PROJECTS} />
 
-      {/* 04 What We Do / Services (Light) */}
-      <ServicesOverview services={SERVICES} />
-
-      {/* 05 Cinematic Film (Black) */}
+      {/* 04 CINEMATIC FILM DIRECTION (Dark #0B0B0A) */}
       <CinematicFilmSection onOpenFilm={handleOpenFilm} />
 
-      {/* 06 Before / After (4-Scenario Interactive Slider) */}
+      {/* 05 BEFORE / AFTER TRANSFORMATION (Light #F4F2EE) */}
       <BeforeAfterFeature />
 
-      {/* 07 How We Work (4-Step Frictionless Collaboration) */}
-      <HowWeWorkSection />
+      {/* 06 SERVICES & DISCIPLINES (Light #FAF9F6) */}
+      <EditorialServiceIndex />
 
-      {/* 08 AI Workflow & Technology + Craft (Dark) */}
-      <AIWorkflowSection />
+      {/* 07 PRODUCTION METHODOLOGY (Light #F4F2EE) */}
+      <ProcessSection />
 
-      {/* 09 Built for Industry Leaders (Target Industries Grid) */}
-      <TargetIndustriesSection />
+      {/* 08 TESTIMONIALS & TRUST (Light #FAF9F6) */}
+      <TestimonialSection />
 
-      {/* 10 Capabilities & Typologies (Light) */}
-      <CapabilitiesSection />
+      {/* 09 ARCHITECTURAL DISCOURSE / JOURNAL (Light #F4F2EE) */}
+      <JournalSection />
 
-      {/* 11 Trust / Clients / Global Locations (Light) */}
-      <TrustSection />
+      {/* 10 FREQUENTLY ASKED QUESTIONS (Light #FAF9F6) */}
+      <FAQSection />
 
-      {/* 12 About Atelier Culture & Experience (Light) */}
-      <StudioPreview />
-
-      {/* 13 Have a Project in Mind? (Monumental Black Final CTA) */}
+      {/* 11 INITIATE ENGAGEMENT / FINAL CTA (Dark #050505) */}
       <FinalCTASection />
 
-      {/* Video Lightbox Modal */}
+      {/* Lightbox Modal */}
       <VideoLightbox
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}

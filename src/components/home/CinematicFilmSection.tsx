@@ -32,21 +32,27 @@ export function CinematicFilmSection({ onOpenFilm }: CinematicFilmSectionProps) 
   }, []);
 
   return (
-    <section className="bg-black text-white py-24 md:py-36 relative overflow-hidden">
+    <section className="bg-[#0B0B0A] text-[#F7F4EF] py-28 md:py-40 relative overflow-hidden border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8 border-b border-white/10 pb-12">
           <div>
-            <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold block mb-3">
-              04 — Cinematic Direction
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#77736C] font-semibold block mb-4">
+              04 / CINEMATIC DIRECTION
             </span>
-            <h2 className="font-display text-4xl sm:text-6xl font-light tracking-tight text-white leading-[1.05]">
-              Architecture in motion.
+            <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-white leading-[1.02]">
+              ARCHITECTURE <br />
+              <span className="font-semibold text-zinc-300">IN MOTION.</span>
             </h2>
           </div>
-          <p className="text-zinc-400 text-sm max-w-md font-light leading-relaxed">
-            We direct virtual cameras with cinematic sensibility—capturing the passage of natural daylight, atmospheric humidity, and spatial rhythm before construction begins.
-          </p>
+          <div className="max-w-md">
+            <p className="text-sm uppercase tracking-[0.2em] text-[#C5A880] mb-2 font-mono">
+              Motion turns a design into a story.
+            </p>
+            <p className="text-zinc-400 text-sm sm:text-base font-light leading-relaxed">
+              We direct virtual cameras with cinematic sensibility—capturing the passage of natural daylight, atmospheric humidity, and spatial rhythm before construction begins.
+            </p>
+          </div>
         </div>
 
         {/* Hero Video Frame */}
@@ -55,7 +61,7 @@ export function CinematicFilmSection({ onOpenFilm }: CinematicFilmSectionProps) 
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-zinc-900 cursor-pointer group"
+          className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden bg-zinc-900 border border-white/15 cursor-pointer group"
           onClick={() => onOpenFilm(filmUrl, filmTitle)}
           data-cursor="PLAY"
         >
@@ -74,23 +80,23 @@ export function CinematicFilmSection({ onOpenFilm }: CinematicFilmSectionProps) 
 
           {/* Central Play Trigger Button */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="flex items-center gap-4 px-6 py-3.5 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white transition-all duration-300 group-hover:scale-105 group-hover:bg-white group-hover:text-black shadow-2xl">
+            <div className="flex items-center gap-4 px-7 py-4 bg-[#050505]/75 backdrop-blur-md border border-white/20 text-white transition-all duration-300 group-hover:scale-105 group-hover:bg-white group-hover:text-black">
               <div className="w-6 h-6 rounded-full border border-current flex items-center justify-center">
                 <Play className="w-3 h-3 fill-current ml-0.5" />
               </div>
-              <span className="text-xs uppercase tracking-widest font-semibold">
+              <span className="text-xs uppercase tracking-[0.2em] font-semibold">
                 Play Studio Film (2:14)
               </span>
             </div>
           </div>
 
           {/* Bottom Video Metadata */}
-          <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-xs text-zinc-400 pointer-events-none">
+          <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-xs text-zinc-400 pointer-events-none border-t border-white/10 pt-4">
             <div className="flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-              <span className="uppercase tracking-widest text-[10px] text-white">4K Master Audio & Visuals</span>
+              <span className="uppercase tracking-[0.2em] text-[10px] text-white">4K Master Audio & Visuals</span>
             </div>
-            <span className="hidden sm:inline uppercase tracking-widest text-[10px] text-zinc-400">
+            <span className="hidden sm:inline uppercase tracking-[0.2em] text-[10px] text-zinc-400">
               Click to view full cinematic sequence
             </span>
           </div>

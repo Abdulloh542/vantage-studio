@@ -8,16 +8,27 @@ export default {
   theme: {
     extend: {
       colors: {
+        arch: {
+          light: '#F4F2EE',
+          white: '#FAF9F6',
+          dark: '#0B0B0A',
+          black: '#050505',
+          ink: '#11110F',
+          muted: '#77736C',
+          ivory: '#F7F4EF',
+          accent: '#C5A880',
+          bronze: '#A39274',
+        },
         studio: {
-          bg: '#0c0c0d',
-          card: '#141416',
-          border: '#242428',
-          light: '#f7f6f2',
-          lightMuted: '#eceae3',
-          lightBorder: '#ded9cd',
-          textDark: '#121214',
-          textMuted: '#71717a',
-          accent: '#d4af37', // subtle architectural bronze/gold hint if ever needed
+          bg: '#050505',
+          card: '#0B0B0A',
+          border: 'rgba(255,255,255,0.16)',
+          light: '#F4F2EE',
+          lightMuted: '#FAF9F6',
+          lightBorder: 'rgba(17,17,15,0.14)',
+          textDark: '#11110F',
+          textMuted: '#77736C',
+          accent: '#C5A880',
         }
       },
       fontFamily: {
