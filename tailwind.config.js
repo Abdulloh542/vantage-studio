@@ -32,9 +32,10 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'Inter', 'Helvetica Neue', 'sans-serif'],
-        display: ['Syne', 'Plus Jakarta Sans', 'sans-serif'],
-        editorial: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        sans: ['Geist', 'Inter', 'Plus Jakarta Sans', 'Helvetica Neue', 'sans-serif'],
+        mono: ['Geist Mono', 'JetBrains Mono', 'monospace'],
+        display: ['Geist', 'Syne', 'Plus Jakarta Sans', 'sans-serif'],
+        editorial: ['Geist', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         tighter: '-0.04em',

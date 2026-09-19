@@ -4,6 +4,7 @@ import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { CustomCursor } from './components/common/CustomCursor';
 import { ScrollToTop } from './components/common/ScrollToTop';
+import { SmoothScroll } from './components/common/SmoothScroll';
 
 // Code-split pages for peak Lighthouse performance
 const HomePage = lazy(() => import('./pages/HomePage').then(m => ({ default: m.HomePage })));
@@ -34,8 +35,9 @@ function PageLoader() {
 export function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[#0c0c0d] selection:bg-white selection:text-black">
-      {/* Scroll restoration */}
+      {/* Scroll restoration & Lenis smooth scroll */}
       <ScrollToTop />
+      <SmoothScroll />
 
       {/* Desktop micro cursor */}
       <CustomCursor />
