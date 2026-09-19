@@ -50,37 +50,36 @@ export function HeroSection({ onOpenShowreel }: HeroSectionProps) {
         </span>
       </motion.div>
 
-      {/* Left-Aligned Lower Stage (STUX / ARCHFORM Signature) */}
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto my-auto py-12 lg:py-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+      {/* Left-Aligned Lower Stage (STUX / ARCHFORM Signature with Side Entrance Animation) */}
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto my-auto py-10 lg:py-16 grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
         <div className="lg:col-span-8">
-          {/* Monumental Architectural Headline */}
+          {/* Monumental Architectural Headline with Slide-in from Left */}
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display text-[clamp(44px,7.5vw,118px)] font-normal tracking-[-0.03em] leading-[0.94] text-white uppercase mb-8"
+            initial={{ opacity: 0, x: -80 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display text-[clamp(40px,6.5vw,94px)] font-normal tracking-[-0.03em] leading-[0.96] text-white uppercase mb-6"
           >
-            CINEMATIC <br />
+            AI ARCHITECTURAL <br />
             VISUALIZATION <br />
-            <span className="font-serif italic font-light text-white/90">FOR ARCHITECTURE</span> <br />
-            &amp; REAL ESTATE
+            <span className="font-serif italic font-light text-white/90">&amp; CINEMATIC FILMS</span>
           </motion.h1>
 
-          {/* Supporting Micro-copy */}
+          {/* Crisp, Concise Positioning Micro-copy */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
-            className="text-base sm:text-lg md:text-xl text-white/75 font-sans font-light max-w-xl leading-relaxed mb-10"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="text-base sm:text-lg md:text-xl text-white/80 font-sans font-light max-w-xl leading-relaxed mb-8"
           >
-            Visuals and films built to communicate architecture before it exists. We transform blueprints, BIM models, and unbuilt concepts into photorealistic CGI and cinematic marketing films that command capital.
+            We transform architectural plans, 3D models and concepts into photorealistic CGI, AI walkthroughs and cinematic marketing films.
           </motion.p>
 
           {/* Action CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.7, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-wrap items-center gap-4 sm:gap-6"
           >
             <Link
@@ -115,9 +114,9 @@ export function HeroSection({ onOpenShowreel }: HeroSectionProps) {
         {/* Bottom-Right Scroll Indicator */}
         <div className="lg:col-span-4 flex lg:justify-end">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center gap-3 text-xs font-mono uppercase tracking-widest text-white/40"
           >
             <span>SCROLL TO EXPLORE</span>
@@ -128,11 +127,11 @@ export function HeroSection({ onOpenShowreel }: HeroSectionProps) {
         </div>
       </div>
 
-      {/* 4-Metric Studio Strip (Real Numbers Only) */}
+      {/* 4-Metric Studio Strip (Real Numbers Only with Slide-in) */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.9 }}
+        transition={{ duration: 0.7, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
         className="relative z-10 w-full max-w-[1440px] mx-auto pt-6 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-6"
       >
         {stats.map((st) => (

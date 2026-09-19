@@ -22,24 +22,41 @@ export function FAQSection() {
   return (
     <section className="py-24 md:py-36 bg-[#FAF9F6] border-t border-black/10">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
-        {/* Section Header */}
+        {/* Section Header with Side-in Entrance */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-black/10 gap-6">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -70 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#C5A880] block mb-3">
-              10 / PROJECT PROTOCOLS
+              08 / PROJECT PROTOCOLS &amp; FAQ
             </span>
             <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-normal tracking-tight text-[#0B0B0A]">
               FREQUENTLY ASKED <br className="hidden md:block" />
               QUESTIONS
             </h2>
-          </div>
-          <p className="max-w-md text-sm md:text-base text-black/70 leading-relaxed font-sans">
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-md text-sm md:text-base text-black/70 leading-relaxed font-sans"
+          >
             Transparent operational protocols designed to give developers, marketing heads, and architects complete clarity before contract initiation.
-          </p>
+          </motion.p>
         </div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap gap-2 md:gap-3 mb-12">
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-wrap gap-2 md:gap-3 mb-12"
+        >
           {categories.map((cat) => (
             <button
               key={cat}
@@ -53,7 +70,7 @@ export function FAQSection() {
               {cat}
             </button>
           ))}
-        </div>
+        </motion.div>
 
         {/* Accordion List */}
         <div className="border-t border-black/10 divide-y divide-black/10">

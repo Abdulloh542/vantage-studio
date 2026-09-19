@@ -2,7 +2,6 @@ import { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
-import { CustomCursor } from './components/common/CustomCursor';
 import { ScrollToTop } from './components/common/ScrollToTop';
 import { SmoothScroll } from './components/common/SmoothScroll';
 import { BackToTopButton } from './components/common/BackToTopButton';
@@ -39,9 +38,6 @@ export function App() {
       {/* Scroll restoration & Lenis smooth scroll */}
       <ScrollToTop />
       <SmoothScroll />
-
-      {/* Desktop micro cursor */}
-      <CustomCursor />
 
       {/* Sticky Luxury Navbar */}
       <Navbar />

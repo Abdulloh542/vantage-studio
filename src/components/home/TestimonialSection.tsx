@@ -33,18 +33,29 @@ export function TestimonialSection() {
   return (
     <section className="relative py-24 md:py-36 bg-[#FAF9F6] border-t border-black/10 overflow-hidden">
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16">
-        {/* Section Header */}
+        {/* Section Header with Side-in Entrance */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-6 border-b border-black/10 gap-6">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -70 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
             <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#C5A880] block mb-3">
-              08 / TESTIMONIALS & TRUST
+              07 / CLIENT VOICES &amp; TRUST
             </span>
             <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-normal tracking-tight text-[#0B0B0A]">
               ENDORSED BY <br className="hidden md:block" />
               INDUSTRY LEADERS
             </h2>
-          </div>
-          <div className="flex items-center gap-4">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center gap-4"
+          >
             <span className="font-mono text-sm tracking-wider text-black/50">
               0{activeIndex + 1} / 0{TESTIMONIALS.length}
             </span>
@@ -64,7 +75,7 @@ export function TestimonialSection() {
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Testimonial Active Display */}

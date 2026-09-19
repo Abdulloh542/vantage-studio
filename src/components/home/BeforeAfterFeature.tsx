@@ -71,40 +71,58 @@ export function BeforeAfterFeature() {
   return (
     <section className="bg-[#F4F2EE] text-[#11110F] py-28 md:py-40 border-t border-[#11110F]/15">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Header */}
+        {/* Header with Side-in Entrance */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end mb-16 border-b border-[#11110F]/15 pb-12">
-          <div className="lg:col-span-8">
-            <span className="text-[11px] uppercase tracking-[0.25em] text-[#77736C] font-semibold block mb-4">
-              05 / TRANSFORMATION PROOF
+          <motion.div
+            initial={{ opacity: 0, x: -70 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-8"
+          >
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#77736C] font-mono font-semibold block mb-4">
+              06 / TRANSFORMATION PROOF
             </span>
             <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-[#11110F] leading-[1.02]">
               EXPLAINING OUR VALUE <br />
-              <span className="font-semibold italic text-[#11110F]">IN TWO SECONDS.</span>
+              <span className="font-serif italic font-normal text-[#11110F]">IN TWO SECONDS.</span>
             </h2>
-          </div>
-          <div className="lg:col-span-4">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-4"
+          >
             <p className="text-[#77736C] text-sm sm:text-base font-light leading-relaxed mb-6">
               Drag the hairline slider to inspect how we transform blueprints, raw CAD, and client concept sketches into sensory marketing reality.
             </p>
             <Link
               to={`/work/${current.projectSlug}`}
-              className="group inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-[#11110F] hover:text-[#77736C] transition-colors pb-1 border-b border-[#11110F]"
+              className="group inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] font-semibold text-[#11110F] hover:text-[#77736C] transition-colors pb-1 border-b border-[#11110F]"
             >
               <span>View Project Case Study</span>
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
-          </div>
+          </motion.div>
         </div>
 
         {/* 4 Interactive Comparison Mode Tabs */}
-        <div className="flex items-center gap-3 overflow-x-auto pb-4 mb-8 no-scrollbar border-b border-[#11110F]/10">
+        <motion.div
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex items-center gap-3 overflow-x-auto pb-4 mb-8 no-scrollbar border-b border-[#11110F]/10"
+        >
           {comparisons.map((item, idx) => {
             const isActive = activeTab === idx;
             return (
               <button
                 key={item.id}
                 onClick={() => setActiveTab(idx)}
-                className={`px-5 py-2.5 text-xs uppercase tracking-[0.16em] transition-all whitespace-nowrap border ${
+                className={`px-5 py-2.5 text-xs font-mono uppercase tracking-[0.16em] transition-all whitespace-nowrap border ${
                   isActive
                     ? 'bg-[#11110F] text-white font-semibold border-[#11110F]'
                     : 'bg-white/80 text-[#77736C] hover:text-[#11110F] border-[#11110F]/15 hover:bg-white'
@@ -114,7 +132,7 @@ export function BeforeAfterFeature() {
               </button>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Active Comparison Context Bar */}
         <div className="mb-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 text-xs text-[#77736C]">
@@ -126,13 +144,12 @@ export function BeforeAfterFeature() {
           </span>
         </div>
 
-        {/* Interactive Comparison Slider */}
+        {/* Interactive Comparison Slider (Slide from Right) */}
         <motion.div
           key={current.id}
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          data-cursor="DRAG"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="border border-[#11110F]/15 shadow-sm"
         >
           <BeforeAfterSlider

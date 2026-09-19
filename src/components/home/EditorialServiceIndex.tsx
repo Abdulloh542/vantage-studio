@@ -17,11 +17,16 @@ export function EditorialServiceIndex() {
   return (
     <section className="bg-[#FAF9F6] text-[#11110F] py-28 md:py-40 border-t border-[#11110F]/15 relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Section Header */}
+        {/* Section Header with Side-in Entrance */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8 border-b border-[#11110F]/15 pb-12">
-          <div>
-            <span className="text-[11px] uppercase tracking-[0.25em] text-[#77736C] font-semibold block mb-4">
-              06 / SERVICES & DISCIPLINES
+          <motion.div
+            initial={{ opacity: 0, x: -70 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#77736C] font-mono font-semibold block mb-4">
+              03 / SERVICES &amp; DISCIPLINES
             </span>
             <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-[#11110F]">
               SERVICES
@@ -29,20 +34,33 @@ export function EditorialServiceIndex() {
             <p className="mt-4 text-sm sm:text-base text-[#77736C] font-light max-w-xl">
               From early schematic drawings to launch-ready marketing suites, we provide end-to-end visual production.
             </p>
-          </div>
-          <Link
-            to="/services"
-            className="group inline-flex items-center gap-2.5 text-xs uppercase tracking-[0.2em] font-semibold text-[#11110F] hover:text-[#77736C] transition-colors pb-1 border-b border-[#11110F] self-start md:self-auto"
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span>All Services & Deliverables</span>
-            <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-          </Link>
+            <Link
+              to="/services"
+              className="group inline-flex items-center gap-2.5 text-xs font-mono uppercase tracking-[0.2em] font-semibold text-[#11110F] hover:text-[#77736C] transition-colors pb-1 border-b border-[#11110F] self-start md:self-auto"
+            >
+              <span>All Services &amp; Deliverables</span>
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </Link>
+          </motion.div>
         </div>
 
         {/* Desktop Editorial Numbered Row Layout with Live Contextual Preview */}
         <div className="hidden lg:grid grid-cols-12 gap-16 items-start">
-          {/* Left Column: Numbered Service Rows */}
-          <div className="col-span-7 divide-y divide-[#11110F]/15">
+          {/* Left Column: Numbered Service Rows (Slide from Left) */}
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="col-span-7 divide-y divide-[#11110F]/15"
+          >
             {SERVICES.map((service, idx) => {
               const isActive = activeServiceIdx === idx;
               return (
@@ -108,10 +126,16 @@ export function EditorialServiceIndex() {
                 </div>
               );
             })}
-          </div>
+          </motion.div>
 
-          {/* Right Column: Sticky Contextual Image Preview Frame */}
-          <div className="col-span-5 sticky top-32">
+          {/* Right Column: Sticky Contextual Image Preview Frame (Slide from Right) */}
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="col-span-5 sticky top-32"
+          >
             <div className="relative aspect-[4/3] bg-zinc-200 overflow-hidden border border-[#11110F]/15 shadow-sm">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -149,7 +173,7 @@ export function EditorialServiceIndex() {
                 </motion.div>
               </AnimatePresence>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Mobile Accordion Stack (Tap to expand) */}

@@ -34,36 +34,46 @@ export function CinematicFilmSection({ onOpenFilm }: CinematicFilmSectionProps) 
   return (
     <section className="bg-[#0B0B0A] text-[#F7F4EF] py-28 md:py-40 relative overflow-hidden border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Section Header */}
+        {/* Section Header with Side-in Entrance */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8 border-b border-white/10 pb-12">
-          <div>
-            <span className="text-[11px] uppercase tracking-[0.25em] text-[#77736C] font-semibold block mb-4">
-              04 / CINEMATIC DIRECTION
+          <motion.div
+            initial={{ opacity: 0, x: -70 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="text-[11px] uppercase tracking-[0.25em] text-[#C5A880] font-mono font-semibold block mb-4">
+              05 / CINEMATIC DIRECTION
             </span>
             <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-white leading-[1.02]">
               ARCHITECTURE <br />
-              <span className="font-semibold text-zinc-300">IN MOTION.</span>
+              <span className="font-serif italic font-normal text-zinc-300">IN MOTION.</span>
             </h2>
-          </div>
-          <div className="max-w-md">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-md"
+          >
             <p className="text-sm uppercase tracking-[0.2em] text-[#C5A880] mb-2 font-mono">
               Motion turns a design into a story.
             </p>
             <p className="text-zinc-400 text-sm sm:text-base font-light leading-relaxed">
               We direct virtual cameras with cinematic sensibility—capturing the passage of natural daylight, atmospheric humidity, and spatial rhythm before construction begins.
             </p>
-          </div>
+          </motion.div>
         </div>
 
         {/* Hero Video Frame */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden bg-zinc-900 border border-white/15 cursor-pointer group"
+          className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden bg-zinc-900 border border-white/15 cursor-pointer group shadow-2xl"
           onClick={() => onOpenFilm(filmUrl, filmTitle)}
-          data-cursor="PLAY"
         >
           <video
             ref={videoRef}

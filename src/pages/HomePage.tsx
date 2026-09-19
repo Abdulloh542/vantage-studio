@@ -4,11 +4,8 @@ import { IntroStatement } from '../components/home/IntroStatement';
 import { SelectedWorkSection } from '../components/home/SelectedWorkSection';
 import { CinematicFilmSection } from '../components/home/CinematicFilmSection';
 import { EditorialServiceIndex } from '../components/home/EditorialServiceIndex';
-import { ProcessSection } from '../components/home/ProcessSection';
 import { BeforeAfterFeature } from '../components/home/BeforeAfterFeature';
-import { StudioPreview } from '../components/home/StudioPreview';
 import { TestimonialSection } from '../components/home/TestimonialSection';
-import { JournalSection } from '../components/home/JournalSection';
 import { FAQSection } from '../components/home/FAQSection';
 import { FinalCTASection } from '../components/home/FinalCTASection';
 import { VideoLightbox } from '../components/common/VideoLightbox';
@@ -36,40 +33,31 @@ export function HomePage() {
 
   return (
     <main className="w-full overflow-hidden bg-[#050505]">
-      {/* 01 DARK HERO: 94vh Architectural Film Loop, Left-aligned Headline, 01/STUDIO, Actions, 4-Metric Strip */}
+      {/* 01 DARK HERO: Cinematic Film Loop, Short Clear AI Archviz Headline, Actions, Stats Strip */}
       <HeroSection onOpenShowreel={handleOpenShowreel} />
 
-      {/* 02 LIGHT EDITORIAL MANIFESTO: "VISUALIZE BEFORE IT EXISTS" + Real Stats (40+, 14, 6+, 8) */}
+      {/* 02 ABOUT US & HOW WE WORK: What we do & 4-Stage Production Pipeline */}
       <IntroStatement />
 
-      {/* 03 LIGHT SELECTED WORK: 5 Varied Compositions (21:9 Panoramas, 70/30 Splits, Vertical + Giant Type) */}
-      <SelectedWorkSection projects={PROJECTS} />
-
-      {/* 04 DARK CINEMATIC FILM: "ARCHITECTURE IN MOTION" 4K Video Player & Lightbox */}
-      <CinematicFilmSection onOpenFilm={handleOpenFilm} />
-
-      {/* 05 LIGHT NUMBERED SERVICE INDEX: 01–06 with Real-Time Desktop Hover Contextual Image Preview Swap */}
+      {/* 03 SERVICES & DISCIPLINES: 01–06 Numbered Index with Live Contextual Image Hover Preview */}
       <EditorialServiceIndex />
 
-      {/* 06 WARM/OFF-WHITE PROCESS: 7 Production Phases with Desktop Sticky Preview & Mobile Accordion */}
-      <ProcessSection />
+      {/* 04 SELECTED WORK: Architectural Case Studies with Alternating Side-in Animations */}
+      <SelectedWorkSection projects={PROJECTS} />
 
-      {/* 07 LIGHT BEFORE / AFTER TRANSFORMATION: 4 Scenarios with 1px Hairline Slider (SOURCE / FINAL) */}
+      {/* 05 CINEMATIC DIRECTION: "ARCHITECTURE IN MOTION" 4K Video Player & Lightbox */}
+      <CinematicFilmSection onOpenFilm={handleOpenFilm} />
+
+      {/* 06 BEFORE / AFTER TRANSFORMATION: 4 Scenarios with Interactive Hairline Slider */}
       <BeforeAfterFeature />
 
-      {/* 08 DARK ATELIER MANIFESTO: "We build visual experiences for architecture that has not been built yet" */}
-      <StudioPreview />
-
-      {/* 09 LIGHT TESTIMONIALS & TRUST: 01/04 Quote Slider + Global Architectural Partner Marquee */}
+      {/* 07 CLIENT VOICES & TRUST: Endorsements & Architectural Partner Marquee */}
       <TestimonialSection />
 
-      {/* 10 WARM EDITORIAL INSIGHTS / JOURNAL: 1 Featured Article + 2 Smaller Supporting Cards */}
-      <JournalSection />
-
-      {/* 11 LIGHT FREQUENTLY ASKED QUESTIONS: Real Client Concerns (BIM Formats, Turnaround, Revisions) */}
+      {/* 08 PROJECT PROTOCOLS & FAQ: Key B2B Operational Questions */}
       <FAQSection />
 
-      {/* 12 DARK MONUMENTAL FINAL CTA: "HAVE A PROJECT IN MIND?" + Direct Desk & Mutual NDA */}
+      {/* 09 MONUMENTAL FINAL CTA: "READY TO VISUALIZE THE UNBUILT?" + Conversion Desk */}
       <FinalCTASection />
 
       {/* Video Lightbox Modal */}

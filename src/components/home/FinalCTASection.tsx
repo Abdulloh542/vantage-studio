@@ -11,19 +11,19 @@ export function FinalCTASection() {
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-16 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <motion.span
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="font-mono text-xs uppercase tracking-[0.25em] text-[#C5A880] block mb-6"
           >
-            11 / INITIATE ENGAGEMENT
+            09 / INITIATE ENGAGEMENT
           </motion.span>
 
           <motion.h2
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -80 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-tight leading-[0.98] text-[#FAF9F6] mb-8"
           >
             READY TO VISUALIZE <br />
@@ -31,10 +31,10 @@ export function FinalCTASection() {
           </motion.h2>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.15 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="text-base sm:text-lg text-white/60 font-sans max-w-2xl mx-auto leading-relaxed mb-12"
           >
             Whether embarking on an international architectural competition, luxury residential sales launch, or institutional masterplan, our studio delivers uncompromising imagery that commands capital.
