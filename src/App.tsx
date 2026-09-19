@@ -53,94 +53,114 @@ function AppRoutes({ location }: { location: Location }) {
 }
 
 /**
- * Solum Page Transition:
- * Mirrored after the tactile stacking panel motion in "What We Do":
- * - The current page remains frozen in place at its exact scroll position (no white flashes, no jumps).
- * - The incoming page mounts at y: 100vh and smoothly slides up over the current page into full view.
- * - When the slide-up completes (y: 0), scroll is reset cleanly to 0, and the new page seamlessly takes over.
+ * Solum Single-Instance Stacking Page Transition:
+ * - When navigating to a new route:
+ *   1. Outgoing page stays frozen in the background at its exact scroll position (zero jump).
+ *   2. Incoming page is mounted ONCE and permanently (never unmounted or remounted).
+ *   3. Incoming page smoothly glides up from bottom (100% -> 0%) over 1.1 seconds.
+ *   4. Upon arrival, the background page is silently cleared.
+ *   5. The incoming page NEVER shifts, never reloads, and never jitters because its DOM tree is preserved.
  */
 function PageTransition() {
   const location = useLocation();
   const shouldReduceMotion = useReducedMotion();
 
-  // Currently committed page in normal document flow
-  const [displayLocation, setDisplayLocation] = useState<Location>(location);
-  // Incoming page sliding up over displayLocation
-  const [incomingLocation, setIncomingLocation] = useState<Location | null>(null);
+  // The outgoing page kept frozen in the background during ascension
+  const [prevLocation, setPrevLocation] = useState<Location | null>(null);
+  const [savedScrollY, setSavedScrollY] = useState(0);
 
-  const displayLocationRef = useRef(displayLocation);
-  displayLocationRef.current = displayLocation;
-
-  const incomingLocationRef = useRef(incomingLocation);
-  incomingLocationRef.current = incomingLocation;
+  const currentLocationRef = useRef<Location>(location);
+  const isNavigatingRef = useRef(false);
 
   useEffect(() => {
-    // Only trigger transition on actual pathname changes
-    if (location.pathname !== displayLocationRef.current.pathname) {
+    // Only trigger on real pathname changes
+    if (location.pathname !== currentLocationRef.current.pathname) {
       if (shouldReduceMotion) {
-        setDisplayLocation(location);
+        currentLocationRef.current = location;
         resetLenisScroll();
-      } else {
-        pauseLenis();
-        setIncomingLocation(location);
+        return;
       }
-    }
-  }, [location.pathname, shouldReduceMotion]);
 
-  const commitTransition = () => {
-    const target = incomingLocationRef.current;
-    if (target) {
-      // 1. Reset scroll to top while the incoming page is covering the viewport
+      // 1. Capture exact scroll position of outgoing view
+      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      setSavedScrollY(scrollY);
+
+      // 2. Preserve outgoing location for the background layer
+      setPrevLocation(currentLocationRef.current);
+      currentLocationRef.current = location;
+      isNavigatingRef.current = true;
+
+      // 3. Reset scroll so new incoming page is at top: 0
       resetLenisScroll();
-      // 2. Resume Lenis smooth scroll
-      resumeLenis();
-      // 3. Promote target to base page and clean up overlay
-      setDisplayLocation(target);
-      setIncomingLocation(null);
+      pauseLenis();
     }
+  }, [location, shouldReduceMotion]);
+
+  const handleAnimationComplete = () => {
+    // Ascension completed: unmount outgoing background layer
+    setPrevLocation(null);
+    isNavigatingRef.current = false;
+    resumeLenis();
   };
 
-  // Safety fallback timer ensuring transition commits even if browser throttles animations
+  // Safety fallback ensuring background layer is cleared even if animation frame is throttled
   useEffect(() => {
-    if (incomingLocation) {
+    if (prevLocation) {
       const timer = setTimeout(() => {
-        commitTransition();
-      }, 1100);
+        handleAnimationComplete();
+      }, 1400);
       return () => clearTimeout(timer);
     }
-  }, [incomingLocation]);
+  }, [prevLocation]);
 
   return (
-    <div className="flex-1 w-full relative">
-      {/* Base Page: sits in normal document flow at current scroll position */}
-      <div className={`w-full bg-white text-[#101010] ${incomingLocation ? 'pointer-events-none select-none' : ''}`}>
-        <AppRoutes location={displayLocation} />
-      </div>
-
-      {/* Incoming Page: slides up from bottom (100% -> 0) over the Base Page, silky smooth and 100% GPU accelerated */}
-      {incomingLocation && (
-        <motion.div
-          key={incomingLocation.pathname}
-          initial={{ y: '100%' }}
-          animate={{ y: '0%' }}
-          transition={{
-            duration: 0.86,
-            ease: [0.19, 1, 0.22, 1],
-          }}
-          onAnimationComplete={commitTransition}
+    <div className="flex-1 w-full relative overflow-x-clip min-h-screen">
+      {/* 1. OUTGOING BACKGROUND LAYER (Frozen at its exact scroll position) */}
+      {prevLocation && (
+        <div
+          aria-hidden="true"
           style={{
-            willChange: 'transform',
-            transform: 'translateZ(0)',
-            WebkitBackfaceVisibility: 'hidden',
-            backfaceVisibility: 'hidden',
+            position: 'absolute',
+            top: `${-savedScrollY}px`,
+            left: 0,
+            right: 0,
+            width: '100%',
+            zIndex: 1,
+            pointerEvents: 'none',
+            userSelect: 'none',
           }}
-          className="fixed inset-0 z-40 bg-white text-[#101010] overflow-hidden border-t border-[#101010]/15"
+          className="w-full bg-white text-[#101010]"
         >
-          {/* Zero-overhead physical top depth edge */}
-          <div className="absolute -top-8 left-0 right-0 h-8 bg-gradient-to-t from-black/12 to-transparent pointer-events-none" />
-          <AppRoutes location={incomingLocation} />
-        </motion.div>
+          <AppRoutes location={prevLocation} />
+        </div>
       )}
+
+      {/* 2. PERMANENT INCOMING PAGE (Mounted ONCE, slides up 100% -> 0%, never remounts or shifts) */}
+      <motion.div
+        key={location.pathname}
+        initial={shouldReduceMotion || !prevLocation ? false : { y: '100%' }}
+        animate={{ y: '0%' }}
+        transition={{
+          duration: 1.1,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        onAnimationComplete={handleAnimationComplete}
+        style={{
+          willChange: prevLocation ? 'transform' : 'auto',
+          transform: 'translateZ(0)',
+          WebkitBackfaceVisibility: 'hidden',
+          backfaceVisibility: 'hidden',
+          position: 'relative',
+          zIndex: 10,
+        }}
+        className="w-full min-h-screen bg-white text-[#101010]"
+      >
+        {/* Subtle physical hairline top border during ascension */}
+        {prevLocation && (
+          <div className="absolute top-0 left-0 right-0 h-px bg-[#101010]/15 pointer-events-none z-50" />
+        )}
+        <AppRoutes location={location} />
+      </motion.div>
     </div>
   );
 }
