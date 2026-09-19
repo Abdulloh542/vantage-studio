@@ -113,32 +113,8 @@ export function SolumHero() {
             </motion.p>
           </div>
 
-          {/* Right Stage: Disciplines List & Split Start a Project Button (Columns 3-4) */}
-          <div className="col-span-1 md:col-span-2 md:pl-8 flex flex-col justify-between items-start md:items-end">
-            {/* Numbered Services Column (Exact 4 disciplines from screenshot) */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-2.5 font-mono text-xs sm:text-sm text-white/95 mb-10 w-full md:max-w-xs font-medium"
-            >
-              <div className="flex items-center gap-3 py-1.5 border-b border-white/15">
-                <span className="text-white/50">01</span>
-                <span>Architecture Visualization</span>
-              </div>
-              <div className="flex items-center gap-3 py-1.5 border-b border-white/15">
-                <span className="text-white/50">02</span>
-                <span>Interior &amp; Exterior CGI</span>
-              </div>
-              <div className="flex items-center gap-3 py-1.5 border-b border-white/15">
-                <span className="text-white/50">03</span>
-                <span>AI Real Estate Films</span>
-              </div>
-              <div className="flex items-center gap-3 py-1.5 border-b border-white/15">
-                <span className="text-white/50">04</span>
-                <span>3D Spatial Modeling &amp; BIM</span>
-              </div>
-            </motion.div>
+          {/* Right Stage: Split Start a Project Button (Columns 3-4) */}
+          <div className="col-span-1 md:col-span-2 md:pl-8 flex flex-col justify-end items-start md:items-end">
 
             {/* Split Start a Project Button (Exact format from screenshot) */}
             <motion.div
