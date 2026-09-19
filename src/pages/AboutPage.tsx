@@ -3,9 +3,9 @@ import { FinalCTASection } from '../components/home/FinalCTASection';
 
 export function AboutPage() {
   const stats = [
-    { value: '100+', label: 'Projects Delivered', desc: 'Across 14 countries in Europe, the Middle East, and Asia.' },
-    { value: '$1B+', label: 'Real Estate Value Visualized', desc: 'Off-plan developments launched with our imagery.' },
-    { value: '100%', label: 'In-House Production', desc: 'Direct artistic control from senior architects and 3D artists.' },
+    { value: '240+', label: 'Projects Delivered', desc: 'Across 16 countries in Europe, the Middle East, and Asia.' },
+    { value: '$1.8B+', label: 'Real Estate Value Visualized', desc: 'Off-plan developments successfully launched.' },
+    { value: '4x', label: 'Faster AI Turnaround', desc: 'Proprietary neural rendering cutting animation lead times.' },
     { value: '24h', label: 'Brief Turnaround', desc: 'Rapid scoping and itemized timeline generation.' },
   ];
 
@@ -35,10 +35,10 @@ export function AboutPage() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 pb-24">
         {/* Page Header */}
         <div className="max-w-4xl mb-20 md:mb-28">
-          <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
+          <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold block mb-3">
             About Vantage
           </span>
-          <h1 className="text-5xl sm:text-7xl font-light tracking-tight text-black leading-[1.04] mb-6">
+          <h1 className="font-display text-5xl sm:text-7xl font-light tracking-tight text-black leading-[1.04] mb-6">
             Turning architecture into visual experiences.
           </h1>
           <p className="text-zinc-600 text-lg sm:text-xl font-light leading-relaxed max-w-2xl">
@@ -47,7 +47,7 @@ export function AboutPage() {
         </div>
 
         {/* Hero Atelier Loft Image */}
-        <div className="relative aspect-[16/9] md:aspect-[21/9] bg-zinc-900 overflow-hidden shadow-2xl border border-black/10 mb-24 md:mb-36">
+        <div className="relative aspect-[16/9] md:aspect-[21/9] bg-zinc-900 overflow-hidden rounded-2xl shadow-2xl border border-black/10 mb-24 md:mb-36">
           <img
             src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=85"
             alt="Vantage Studio Interior Architecture Loft"

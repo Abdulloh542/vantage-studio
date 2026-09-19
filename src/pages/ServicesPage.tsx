@@ -10,10 +10,10 @@ export function ServicesPage() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 pb-24">
         {/* Page Header */}
         <div className="max-w-3xl mb-20 md:mb-28">
-          <span className="text-xs uppercase tracking-widest text-zinc-500 font-medium block mb-3">
+          <span className="text-xs uppercase tracking-widest text-zinc-500 font-semibold block mb-3">
             Services & Capabilities
           </span>
-          <h1 className="text-5xl sm:text-7xl font-light tracking-tight text-black leading-[1.04] mb-6">
+          <h1 className="font-display text-5xl sm:text-7xl font-light tracking-tight text-black leading-[1.04] mb-6">
             Visual solutions for projects that have not been built yet.
           </h1>
           <p className="text-zinc-600 text-base md:text-lg font-light leading-relaxed">
@@ -37,7 +37,7 @@ export function ServicesPage() {
                 <div className={`grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
                   {/* Visual Frame */}
                   <div className={`lg:col-span-6 ${isReversed ? 'lg:order-2' : ''}`}>
-                    <div className="relative aspect-[4/3] bg-zinc-200 overflow-hidden shadow-xl border border-black/10 group">
+                    <div className="relative aspect-[4/3] bg-zinc-200 overflow-hidden rounded-2xl shadow-xl border border-black/10 group">
                       <img
                         src={service.image}
                         alt={service.title}
@@ -45,7 +45,7 @@ export function ServicesPage() {
                         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
                       <div className="absolute top-4 left-4">
-                        <span className="px-3 py-1 bg-black/75 backdrop-blur-sm text-white text-[10px] uppercase tracking-widest font-mono">
+                        <span className="px-3.5 py-1.5 rounded-full bg-black/75 backdrop-blur-sm text-white text-[10px] uppercase tracking-widest font-mono">
                           Pillar {service.number}
                         </span>
                       </div>
@@ -54,10 +54,10 @@ export function ServicesPage() {
 
                   {/* Editorial Text Column */}
                   <div className={`lg:col-span-6 ${isReversed ? 'lg:order-1' : ''}`}>
-                    <span className="text-5xl font-light text-zinc-300 font-mono block mb-2">
+                    <span className="font-display text-5xl font-bold text-zinc-300 block mb-2">
                       {service.number}
                     </span>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-black mb-4">
+                    <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-black mb-4">
                       {service.title}
                     </h2>
                     <p className="text-zinc-600 text-sm md:text-base font-light leading-relaxed mb-8">
