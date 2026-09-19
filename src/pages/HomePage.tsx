@@ -5,7 +5,6 @@ import { SolumRecentProjects } from '../components/solum/SolumRecentProjects';
 import { SolumServices } from '../components/solum/SolumServices';
 import { SolumHowWeWork } from '../components/solum/SolumHowWeWork';
 import { SolumTransformationProof } from '../components/solum/SolumTransformationProof';
-import { SolumClientStories } from '../components/solum/SolumClientStories';
 import { SolumFAQ } from '../components/solum/SolumFAQ';
 import { SolumLatestArticles } from '../components/solum/SolumLatestArticles';
 
@@ -33,13 +32,11 @@ export function HomePage() {
       {/* 07: Transformation Proof (Interactive Before/After Technical Chamber) */}
       <SolumTransformationProof />
 
-      {/* 08: Client Voices & Developer Testimonials */}
-      <SolumClientStories />
 
-      {/* 09: Operational Protocols & FAQ */}
+      {/* 08: Operational Protocols & FAQ */}
       <SolumFAQ />
 
-      {/* 10: Architectural Insights & Monograph Articles */}
+      {/* 09: Architectural Insights & Monograph Articles */}
       <SolumLatestArticles />
     </main>
   );
