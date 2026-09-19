@@ -20,25 +20,25 @@ export function SolumFAQ() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
-                <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
+                <span className="font-mono text-xs sm:text-sm uppercase tracking-wider text-[#101010] font-medium">
                   PROTOCOLS
                 </span>
               </div>
               <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.05em] text-[#101010] uppercase leading-tight mb-4">
                 FREQUENTLY ASKED QUESTIONS
               </h2>
-              <p className="font-sans text-xs sm:text-sm text-[#757575] leading-relaxed mb-8">
+              <p className="font-sans text-sm sm:text-base text-[#757575] leading-relaxed mb-8 font-light">
                 Clear operational answers regarding CAD inputs, production timelines, revision structures, and deliverable standards.
               </p>
             </div>
 
             <Link
               to="/contact"
-              className="solum-btn self-start px-5 py-3 border border-[#101010] text-xs font-mono uppercase tracking-wider text-[#101010] hover:bg-[#101010] hover:text-white transition-colors duration-180"
+              className="solum-btn self-start px-6 py-3.5 border border-[#101010] text-xs sm:text-sm font-mono uppercase tracking-wider text-[#101010] hover:bg-[#101010] hover:text-white transition-colors duration-180"
             >
               <span>DIRECT INQUIRY</span>
               <span className="btn-arrow ml-3">
-                <ArrowRight className="w-3.5 h-3.5 inline-block" />
+                <ArrowRight className="w-4 h-4 inline-block" />
               </span>
             </Link>
           </div>
@@ -54,23 +54,23 @@ export function SolumFAQ() {
                   <button
                     onClick={() => toggle(item.id)}
                     aria-expanded={isOpen}
-                    className="w-full py-5 md:py-6 flex items-baseline justify-between text-left group cursor-pointer"
+                    className="w-full py-6 md:py-7 flex items-baseline justify-between text-left group cursor-pointer"
                   >
                     <div className="flex items-baseline gap-4 md:gap-6 pr-4">
-                      <span className="font-mono text-xs text-[#757575] tabular-nums">
+                      <span className="font-mono text-xs sm:text-sm text-[#757575] tabular-nums font-medium">
                         {formattedNumber}
                       </span>
-                      <h3 className="font-sans text-base sm:text-lg font-medium text-[#101010] tracking-[-0.02em] group-hover:opacity-75 transition-opacity">
+                      <h3 className="font-sans text-lg sm:text-xl font-medium text-[#101010] tracking-[-0.02em] group-hover:opacity-75 transition-opacity">
                         {item.question}
                       </h3>
                     </div>
 
                     <div
-                      className={`w-5 h-5 flex-shrink-0 border border-[#101010]/30 flex items-center justify-center transition-transform duration-250 ${
+                      className={`w-6 h-6 flex-shrink-0 border border-[#101010]/30 flex items-center justify-center transition-transform duration-250 ${
                         isOpen ? 'rotate-45 border-[#101010]' : 'group-hover:border-[#101010]'
                       }`}
                     >
-                      <span className="text-xs leading-none mb-0.5">+</span>
+                      <span className="text-sm leading-none mb-0.5">+</span>
                     </div>
                   </button>
 
@@ -84,7 +84,7 @@ export function SolumFAQ() {
                         className="overflow-hidden"
                       >
                         <div className="bg-[#F6F6F2] p-6 md:p-8 mb-6 border border-[#101010]/10">
-                          <p className="font-sans text-xs sm:text-sm text-[#101010]/85 leading-relaxed font-normal">
+                          <p className="font-sans text-sm sm:text-base text-[#101010]/85 leading-relaxed font-normal">
                             {item.answer}
                           </p>
                         </div>

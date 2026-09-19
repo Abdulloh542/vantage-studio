@@ -1,6 +1,7 @@
 import { SolumHero } from '../components/solum/SolumHero';
-import { SolumMediaBreak } from '../components/solum/SolumMediaBreak';
+import { SolumTransformationProof } from '../components/solum/SolumTransformationProof';
 import { SolumRecentProjects } from '../components/solum/SolumRecentProjects';
+import { SolumMediaBreak } from '../components/solum/SolumMediaBreak';
 import { SolumServices } from '../components/solum/SolumServices';
 import { SolumProcess } from '../components/solum/SolumProcess';
 import { SolumClientStories } from '../components/solum/SolumClientStories';
@@ -10,28 +11,31 @@ import { SolumLatestArticles } from '../components/solum/SolumLatestArticles';
 export function HomePage() {
   return (
     <main className="w-full bg-white text-[#101010]">
-      {/* 01 & 02: OPENING & HERO MOTION */}
+      {/* 01: Signature Opening Motion & Exhibition Hero */}
       <SolumHero />
 
-      {/* 03: MEDIA BREAK with Restrained Parallax */}
-      <SolumMediaBreak />
+      {/* 02: Transformation Proof (Interactive Before/After Slider & 4 Scenarios) */}
+      <SolumTransformationProof />
 
-      {/* 04: RECENT PROJECTS Asymmetric Exhibition */}
+      {/* 03: Selected Projects Asymmetric Exhibition */}
       <SolumRecentProjects />
 
-      {/* 05: SERVICES Deep Black Section */}
+      {/* 04: Media Break with Restrained Parallax */}
+      <SolumMediaBreak />
+
+      {/* 05: Disciplines & Services Deep Contrast Section */}
       <SolumServices />
 
-      {/* 06: PROCESS Dark Continuation Methodology */}
+      {/* 06: Structured 4-Phase Delivery Methodology */}
       <SolumProcess />
 
-      {/* 07: CLIENT STORIES White Horizontal Rail */}
+      {/* 07: Client Voices & Testimonial Rail */}
       <SolumClientStories />
 
-      {/* 08: FAQ Left Title & Right Numbered Accordion */}
+      {/* 08: Operational FAQ Accordion */}
       <SolumFAQ />
 
-      {/* 09: LATEST ARTICLES Uneven 4-Column CMS Grid */}
+      {/* 09: Latest Architectural Insights & Journal */}
       <SolumLatestArticles />
     </main>
   );

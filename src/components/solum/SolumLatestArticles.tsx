@@ -13,7 +13,7 @@ export function SolumLatestArticles() {
           <div className="col-span-1">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
-              <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
+              <span className="font-mono text-xs sm:text-sm uppercase tracking-wider text-[#101010] font-medium">
                 INSIGHTS
               </span>
             </div>
@@ -28,11 +28,11 @@ export function SolumLatestArticles() {
           <div className="col-span-1 flex justify-start md:justify-end">
             <Link
               to="/blog"
-              className="solum-btn px-5 py-3 border border-[#101010] text-xs font-mono uppercase tracking-wider text-[#101010] hover:bg-[#101010] hover:text-white transition-colors duration-180"
+              className="solum-btn px-6 py-3.5 border border-[#101010] text-xs sm:text-sm font-mono uppercase tracking-wider text-[#101010] hover:bg-[#101010] hover:text-white transition-colors duration-180"
             >
               <span>ALL ARTICLES ({JOURNAL_ARTICLES.length})</span>
               <span className="btn-arrow ml-3">
-                <ArrowRight className="w-3.5 h-3.5 inline-block" />
+                <ArrowRight className="w-4 h-4 inline-block" />
               </span>
             </Link>
           </div>
@@ -56,14 +56,14 @@ export function SolumLatestArticles() {
 
                   {/* White Date Near Top */}
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="font-mono text-xs text-white/90 uppercase tracking-wider bg-black/50 px-2.5 py-1 border border-white/15">
+                    <span className="font-mono text-xs sm:text-sm text-white/95 uppercase tracking-wider bg-black/60 px-3 py-1 border border-white/20">
                       {articles[0].date} &bull; {articles[0].category}
                     </span>
                   </div>
 
                   {/* Title at Lower Edge */}
                   <div className="absolute bottom-6 left-6 right-6 z-10 text-white">
-                    <h3 className="font-display text-xl sm:text-2xl lg:text-3xl font-semibold tracking-[-0.04em] leading-snug group-hover:text-white/90">
+                    <h3 className="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-[-0.04em] leading-snug group-hover:text-white/90">
                       {articles[0].title}
                     </h3>
                   </div>
@@ -86,13 +86,13 @@ export function SolumLatestArticles() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30 pointer-events-none" />
 
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="font-mono text-xs text-white/90 uppercase tracking-wider bg-black/50 px-2.5 py-1 border border-white/15">
+                    <span className="font-mono text-xs sm:text-sm text-white/95 uppercase tracking-wider bg-black/60 px-3 py-1 border border-white/20">
                       {articles[1].date}
                     </span>
                   </div>
 
                   <div className="absolute bottom-6 left-6 right-6 z-10 text-white">
-                    <h3 className="font-display text-lg sm:text-xl font-semibold tracking-[-0.04em] leading-snug group-hover:text-white/90">
+                    <h3 className="font-display text-xl sm:text-2xl font-semibold tracking-[-0.04em] leading-snug group-hover:text-white/90">
                       {articles[1].title}
                     </h3>
                   </div>
@@ -115,13 +115,13 @@ export function SolumLatestArticles() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/30 pointer-events-none" />
 
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="font-mono text-xs text-white/90 uppercase tracking-wider bg-black/50 px-2.5 py-1 border border-white/15">
+                    <span className="font-mono text-xs sm:text-sm text-white/95 uppercase tracking-wider bg-black/60 px-3 py-1 border border-white/20">
                       {articles[2].date}
                     </span>
                   </div>
 
                   <div className="absolute bottom-6 left-6 right-6 z-10 text-white">
-                    <h3 className="font-display text-lg sm:text-xl font-semibold tracking-[-0.04em] leading-snug group-hover:text-white/90">
+                    <h3 className="font-display text-xl sm:text-2xl font-semibold tracking-[-0.04em] leading-snug group-hover:text-white/90">
                       {articles[2].title}
                     </h3>
                   </div>

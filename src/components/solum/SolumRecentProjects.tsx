@@ -18,7 +18,7 @@ export function SolumRecentProjects() {
           <div className="col-span-1">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
-              <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
+              <span className="font-mono text-xs sm:text-sm uppercase tracking-wider text-[#101010] font-medium">
                 PROJECTS
               </span>
             </div>
@@ -31,11 +31,11 @@ export function SolumRecentProjects() {
             </h2>
             <Link
               to="/projects"
-              className="solum-btn self-start sm:self-auto px-5 py-3 border border-[#101010] text-xs font-mono uppercase tracking-wider text-[#101010] hover:bg-[#101010] hover:text-white transition-colors duration-180"
+              className="solum-btn self-start sm:self-auto px-6 py-3.5 border border-[#101010] text-xs sm:text-sm font-mono uppercase tracking-wider text-[#101010] hover:bg-[#101010] hover:text-white transition-colors duration-180"
             >
               <span>ALL PROJECTS ({PROJECTS.length})</span>
               <span className="btn-arrow ml-3">
-                <ArrowRight className="w-3.5 h-3.5 inline-block" />
+                <ArrowRight className="w-4 h-4 inline-block" />
               </span>
             </Link>
           </div>
@@ -46,10 +46,10 @@ export function SolumRecentProjects() {
           {/* Row 1: Central Lead Item Spanning Two Columns + Column 1 Rail Details */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
             <div className="col-span-1 hidden md:block pt-4">
-              <span className="font-mono text-xs uppercase text-[#757575] block mb-2">
+              <span className="font-mono text-xs sm:text-sm uppercase text-[#757575] font-medium block mb-2">
                 EXHIBITION 01
               </span>
-              <span className="font-sans text-xs text-[#757575] leading-relaxed block">
+              <span className="font-sans text-sm text-[#757575] leading-relaxed block font-light">
                 Full-span architectural elevation and Mediterranean terraced landscape.
               </span>
             </div>
@@ -73,11 +73,11 @@ export function SolumRecentProjects() {
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-550" />
                 </div>
                 {/* Thin White Metadata Strip with Title Left / Year Right */}
-                <div className="pt-3 flex items-center justify-between font-mono text-xs text-[#101010] border-b border-[#101010]/12 pb-2">
+                <div className="pt-4 flex items-center justify-between font-mono text-sm sm:text-base text-[#101010] border-b border-[#101010]/12 pb-3">
                   <span className="font-semibold uppercase tracking-wider group-hover:underline">
                     {pLead.title}
                   </span>
-                  <span className="text-[#757575] tabular-nums">
+                  <span className="text-xs sm:text-sm text-[#757575] tabular-nums font-normal">
                     {pLead.category} &bull; {pLead.year}
                   </span>
                 </div>
@@ -105,11 +105,11 @@ export function SolumRecentProjects() {
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-550" />
                 </div>
-                <div className="pt-3 flex items-center justify-between font-mono text-xs text-[#101010] border-b border-[#101010]/12 pb-2">
+                <div className="pt-4 flex items-center justify-between font-mono text-sm sm:text-base text-[#101010] border-b border-[#101010]/12 pb-3">
                   <span className="font-semibold uppercase tracking-wider group-hover:underline">
                     {pSupport1.title}
                   </span>
-                  <span className="text-[#757575] tabular-nums">
+                  <span className="text-xs sm:text-sm text-[#757575] tabular-nums font-normal">
                     {pSupport1.category} &bull; {pSupport1.year}
                   </span>
                 </div>
@@ -134,11 +134,11 @@ export function SolumRecentProjects() {
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-550" />
                 </div>
-                <div className="pt-3 flex items-center justify-between font-mono text-xs text-[#101010] border-b border-[#101010]/12 pb-2">
+                <div className="pt-4 flex items-center justify-between font-mono text-sm sm:text-base text-[#101010] border-b border-[#101010]/12 pb-3">
                   <span className="font-semibold uppercase tracking-wider group-hover:underline">
                     {pSupport2.title}
                   </span>
-                  <span className="text-[#757575] tabular-nums">
+                  <span className="text-xs sm:text-sm text-[#757575] tabular-nums font-normal">
                     {pSupport2.category} &bull; {pSupport2.year}
                   </span>
                 </div>
@@ -149,10 +149,10 @@ export function SolumRecentProjects() {
           {/* Row 3: One Broad Item Below Spanning Full Columns 2 to 4 */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
             <div className="col-span-1 hidden md:block pt-4">
-              <span className="font-mono text-xs uppercase text-[#757575] block mb-2">
+              <span className="font-mono text-xs sm:text-sm uppercase text-[#757575] font-medium block mb-2">
                 EXHIBITION 04
               </span>
-              <span className="font-sans text-xs text-[#757575] leading-relaxed block">
+              <span className="font-sans text-sm text-[#757575] leading-relaxed block font-light">
                 Corporate headquarters masterplan &amp; 4K cinematic film sequence.
               </span>
             </div>
@@ -174,11 +174,11 @@ export function SolumRecentProjects() {
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-550" />
                 </div>
-                <div className="pt-3 flex items-center justify-between font-mono text-xs text-[#101010] border-b border-[#101010]/12 pb-2">
+                <div className="pt-4 flex items-center justify-between font-mono text-sm sm:text-base text-[#101010] border-b border-[#101010]/12 pb-3">
                   <span className="font-semibold uppercase tracking-wider group-hover:underline">
                     {pBroad.title}
                   </span>
-                  <span className="text-[#757575] tabular-nums">
+                  <span className="text-xs sm:text-sm text-[#757575] tabular-nums font-normal">
                     {pBroad.category} &bull; {pBroad.year}
                   </span>
                 </div>

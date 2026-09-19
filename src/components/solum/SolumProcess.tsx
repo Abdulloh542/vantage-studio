@@ -38,7 +38,7 @@ export function SolumProcess() {
           <div className="col-span-1">
             <div className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-[#F6F6F2] inline-block" />
-              <span className="font-mono text-xs uppercase tracking-wider text-[#F6F6F2]">
+              <span className="font-mono text-xs sm:text-sm uppercase tracking-wider text-[#F6F6F2] font-medium">
                 PROCESS
               </span>
             </div>
@@ -48,13 +48,13 @@ export function SolumProcess() {
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.06em] text-white uppercase leading-[0.96]">
               PRODUCTION METHODOLOGY
             </h2>
-            <p className="font-sans text-sm sm:text-base text-[#757575] leading-relaxed max-w-xl">
+            <p className="font-sans text-base sm:text-lg text-white/70 leading-relaxed max-w-xl font-light">
               A structured 4-phase delivery framework that ensures architectural fidelity, predictability, and uncompromising visual quality.
             </p>
           </div>
         </div>
 
-        {/* 4-Column Discovery / Design / Development / Build Row with 90ms stagger reveal */}
+        {/* 4-Column Discovery / Design / Development / Build Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 divide-y sm:divide-y-0 sm:divide-x divide-white/12 pt-16">
           {stages.map((stage, idx) => (
             <motion.div
@@ -70,28 +70,28 @@ export function SolumProcess() {
                 delay: idx * 0.09,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="p-6 md:p-8 flex flex-col justify-between min-h-[300px]"
+              className="p-6 md:p-8 flex flex-col justify-between min-h-[340px]"
             >
               <div>
-                <span className="font-mono text-xs text-[#757575] block mb-6">
+                <span className="font-mono text-xs sm:text-sm text-white/50 block mb-6 font-medium">
                   PHASE {stage.number}
                 </span>
 
-                <h3 className="font-display text-2xl font-semibold tracking-[-0.04em] text-white uppercase mb-2">
+                <h3 className="font-display text-2xl sm:text-3xl font-semibold tracking-[-0.04em] text-white uppercase mb-2">
                   {stage.title}
                 </h3>
 
-                <span className="font-mono text-xs text-[#757575] block uppercase tracking-wider mb-4">
+                <span className="font-mono text-xs sm:text-sm text-white/80 block uppercase tracking-wider mb-4 font-medium">
                   {stage.summary}
                 </span>
 
-                <p className="font-sans text-xs sm:text-sm text-[#757575] leading-relaxed font-light">
+                <p className="font-sans text-sm sm:text-base text-white/70 leading-relaxed font-light">
                   {stage.description}
                 </p>
               </div>
 
               <div className="pt-6 border-t border-white/12 mt-6">
-                <span className="font-mono text-[11px] text-white/50 uppercase">
+                <span className="font-mono text-xs text-white/50 uppercase tracking-wider">
                   DELIVERY STAGE 0{idx + 1}
                 </span>
               </div>

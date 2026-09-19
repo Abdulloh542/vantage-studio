@@ -7,7 +7,7 @@ export function SolumClientStories() {
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
-      const scrollAmount = direction === 'left' ? -380 : 380;
+      const scrollAmount = direction === 'left' ? -420 : 420;
       scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
@@ -20,11 +20,11 @@ export function SolumClientStories() {
           <div className="col-span-1">
             <div className="flex items-center gap-2 mb-2">
               <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
-              <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
+              <span className="font-mono text-xs sm:text-sm uppercase tracking-wider text-[#101010] font-medium">
                 CLIENT VOICES
               </span>
             </div>
-            <span className="font-mono text-xs text-[#757575] block">
+            <span className="font-mono text-xs sm:text-sm text-[#757575] block">
               TESTIMONIALS &bull; 04 ENTRIES
             </span>
           </div>
@@ -40,14 +40,14 @@ export function SolumClientStories() {
             <button
               onClick={() => scroll('left')}
               aria-label="Previous Testimonial"
-              className="w-11 h-11 border border-[#101010]/20 hover:border-[#101010] flex items-center justify-center text-[#101010] transition-colors duration-180"
+              className="w-12 h-12 border border-[#101010]/20 hover:border-[#101010] flex items-center justify-center text-[#101010] transition-colors duration-180 cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => scroll('right')}
               aria-label="Next Testimonial"
-              className="w-11 h-11 border border-[#101010]/20 hover:border-[#101010] flex items-center justify-center text-[#101010] transition-colors duration-180"
+              className="w-12 h-12 border border-[#101010]/20 hover:border-[#101010] flex items-center justify-center text-[#101010] transition-colors duration-180 cursor-pointer"
             >
               <ArrowRight className="w-4 h-4" />
             </button>
@@ -62,23 +62,23 @@ export function SolumClientStories() {
           {TESTIMONIALS.map((t) => (
             <div
               key={t.id}
-              className="min-w-[320px] sm:min-w-[400px] max-w-[420px] flex-shrink-0 bg-white border border-[#101010]/12 p-8 flex flex-col justify-between snap-start"
+              className="min-w-[340px] sm:min-w-[420px] max-w-[460px] flex-shrink-0 bg-white border border-[#101010]/12 p-8 md:p-10 flex flex-col justify-between snap-start"
             >
               <div>
                 {/* Category & Subtle Stars */}
                 <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#101010]/12">
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
+                  <span className="font-mono text-xs sm:text-sm uppercase tracking-wider text-[#101010] font-medium">
                     {t.project}
                   </span>
                   <div className="flex items-center gap-1 text-[#101010]">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-3 h-3 fill-current stroke-none opacity-80" />
+                      <Star key={i} className="w-3.5 h-3.5 fill-current stroke-none opacity-80" />
                     ))}
                   </div>
                 </div>
 
                 {/* Quote */}
-                <blockquote className="font-sans text-sm sm:text-base text-[#101010] leading-relaxed mb-8 font-normal">
+                <blockquote className="font-sans text-base sm:text-lg text-[#101010] leading-relaxed mb-8 font-normal">
                   &ldquo;{t.quote}&rdquo;
                 </blockquote>
               </div>
@@ -89,13 +89,13 @@ export function SolumClientStories() {
                   src={t.image}
                   alt={t.author}
                   loading="lazy"
-                  className="w-10 h-10 object-cover filter grayscale contrast-125 border border-[#101010]/12"
+                  className="w-12 h-12 object-cover filter grayscale contrast-125 border border-[#101010]/12"
                 />
                 <div>
-                  <div className="font-sans text-xs font-semibold uppercase tracking-wider text-[#101010]">
+                  <div className="font-sans text-sm sm:text-base font-semibold uppercase tracking-wider text-[#101010]">
                     {t.author}
                   </div>
-                  <div className="font-mono text-[11px] text-[#757575]">
+                  <div className="font-mono text-xs sm:text-sm text-[#757575]">
                     {t.role} &bull; {t.company}
                   </div>
                 </div>
