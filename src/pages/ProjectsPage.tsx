@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { PROJECTS } from '../data/projects';
+import { ArchvizProjectShowcase } from '../components/common/ArchvizProjectShowcase';
 
 const CATEGORIES = ['All', 'Residential', 'Commercial', 'Cultural', 'Hospitality', 'Mixed-Use'];
 
@@ -131,13 +132,23 @@ export function ProjectsPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="space-y-16 md:space-y-24"
+                  className="space-y-12 sm:space-y-16"
                 >
                   {filteredProjects.map((project, idx) => {
+                    if (project.heroVideo) {
+                      return (
+                        <ArchvizProjectShowcase
+                          key={project.slug}
+                          project={project}
+                          index={idx}
+                        />
+                      );
+                    }
+
                     const aspect = ASPECT_RATIOS[idx % ASPECT_RATIOS.length];
 
                     return (
-                      <div key={project.slug} className="group">
+                      <div key={project.slug} className="group py-8 border-b border-[#101010]/12">
                         <Link to={`/projects/${project.slug}`} className="block select-none">
                           {/* Image with Deliberately Varied Aspect Ratio */}
                           <div className={`relative ${aspect} w-full overflow-hidden bg-zinc-100 border border-[#101010]/12`}>

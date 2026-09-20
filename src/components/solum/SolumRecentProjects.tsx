@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { PROJECTS } from '../../data/projects';
+import { ArchvizProjectShowcase } from '../common/ArchvizProjectShowcase';
 
 export function SolumRecentProjects() {
   const pLead = PROJECTS.find((p) => p.slug === 'riviera-residence') || PROJECTS[0];
@@ -41,49 +42,16 @@ export function SolumRecentProjects() {
           </div>
         </div>
 
-        {/* Asymmetric Composition */}
-        <div className="space-y-16 md:space-y-24 pt-16">
-          {/* Row 1: Central Lead Item Spanning Two Columns + Column 1 Rail Details */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
-            <div className="col-span-1 hidden md:block pt-4">
-              <span className="font-mono text-xs sm:text-sm uppercase text-[#757575] font-medium block mb-2">
-                EXHIBITION 01
-              </span>
-              <span className="font-sans text-sm text-[#757575] leading-relaxed block font-light">
-                Full-span architectural elevation and Mediterranean terraced landscape.
-              </span>
-            </div>
+        {/* ─────────────────────────────────────────────────────────────
+            FEATURED CINEMATIC ARCHVIZ SHOWCASE (MATCHING USER SCREENSHOT)
+            Large Video Left + 6 Frame Stills Right + 4K Lightbox
+            ───────────────────────────────────────────────────────────── */}
+        <div className="w-full">
+          <ArchvizProjectShowcase project={pLead} index={0} />
+        </div>
 
-            {/* Central Lead Item Spanning 2 Columns */}
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="col-span-1 md:col-span-2 md:col-start-2"
-            >
-              <Link to={`/projects/${pLead.slug}`} className="group block select-none">
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
-                  <img
-                    src={pLead.heroImage}
-                    alt={pLead.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-550 ease-out group-hover:scale-[1.025]"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-550" />
-                </div>
-                {/* Thin White Metadata Strip with Title Left / Year Right */}
-                <div className="pt-4 flex items-center justify-between font-mono text-sm sm:text-base text-[#101010] border-b border-[#101010]/12 pb-3">
-                  <span className="font-semibold uppercase tracking-wider group-hover:underline">
-                    {pLead.title}
-                  </span>
-                  <span className="text-xs sm:text-sm text-[#757575] tabular-nums font-normal">
-                    {pLead.category} &bull; {pLead.year}
-                  </span>
-                </div>
-              </Link>
-            </motion.div>
-          </div>
+        {/* Asymmetric Supporting Exhibition Rows */}
+        <div className="space-y-16 md:space-y-24 pt-16">
 
           {/* Row 2: Offset Supporting Items (2 Cards) */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
