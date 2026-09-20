@@ -30,10 +30,8 @@ export function SolumHero() {
   });
   const parallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '6%']);
 
-  // Exact image from the user's screenshot: warm luxury living room with plants & gallery wall
-  const heroImage = 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2560&q=90';
-  // High-performance architectural dusk video loop (replace with your direct link or local file anytime)
-  const heroVideoUrl = 'https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-building-at-dusk-40916-large.mp4';
+  const heroImage = '/videos/hero_poster.webp';
+  const heroVideoUrl = '/videos/hero.mp4';
 
   return (
     <section
