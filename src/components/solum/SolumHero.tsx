@@ -32,7 +32,8 @@ export function SolumHero() {
 
   // Exact image from the user's screenshot: warm luxury living room with plants & gallery wall
   const heroImage = 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2560&q=90';
-  const heroVideoUrl = ''; // Prepared for video when provided
+  // High-performance architectural dusk video loop (replace with your direct link or local file anytime)
+  const heroVideoUrl = 'https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-building-at-dusk-40916-large.mp4';
 
   return (
     <section
@@ -48,7 +49,7 @@ export function SolumHero() {
       </div>
 
       {/* ========================================================= */}
-      {/* 1) HERO BACKGROUND: Single visual (or video when ready)   */}
+      {/* 1) HERO BACKGROUND: Ambient Cinematic Video (No controls) */}
       {/* ========================================================= */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
@@ -58,11 +59,14 @@ export function SolumHero() {
           {heroVideoUrl ? (
             <video
               src={heroVideoUrl}
+              poster={heroImage}
               autoPlay
               muted
               loop
               playsInline
-              className="w-full h-full object-cover filter brightness-95 contrast-105"
+              controls={false}
+              disablePictureInPicture
+              className="w-full h-full object-cover filter brightness-90 contrast-105 pointer-events-none select-none"
             />
           ) : (
             <motion.img
