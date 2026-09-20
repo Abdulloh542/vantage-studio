@@ -1,197 +1,175 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
 
-interface ServicePanel {
+interface ServiceItem {
   number: string;
   title: string;
+  tagline: string;
   description: string;
-  bullets: string[];
+  pills: string[];
   image: string;
+  hasDemo?: boolean;
+  demoUrl?: string;
 }
 
-const SERVICES: ServicePanel[] = [
+const SERVICES: ServiceItem[] = [
   {
     number: '01',
-    title: 'Architecture',
+    title: 'Visual Content',
+    tagline: 'CGI for real estate: photorealistic renders, animation and virtual tours that turn concepts into experiences that sell.',
     description:
-      'From first concept to final structure, we craft photorealistic architectural imagery and masterplans that respond to site, daylight, and material physics, balancing form, atmosphere, and commercial durability.',
-    bullets: [
-      'New building visualization & masterplanning',
-      'Site analysis & environmental daylight studies',
-      'Concept development & schematic 3D design',
-      'Structural & technical BIM CGI drawings',
-      'Permit & planning authority documentation',
-    ],
-    image: 'https://framerusercontent.com/images/rIjy0DwlLemTQ2s2BTHaMSII2Fg.jpg?width=2400&height=1600',
+      'We treat every render as an architectural monograph. Simulating natural daylight trajectories, atmospheric micro-textures in travertine, concrete, and brushed bronze, and curated landscaping to produce evocative imagery that commands institutional capital.',
+    pills: ['3D Rendering', '3D Animations', 'Virtual Tours', 'Drone Compositing'],
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85',
   },
   {
     number: '02',
-    title: 'Interior Design',
+    title: 'Sales Experiences',
+    tagline: 'Interactive platforms that turn browsers into buyers. Move beyond static renders. Give buyers the power to explore, customize, and commit before construction.',
     description:
-      'We shape the spaces inside a building with the same care given to its architecture, considering natural light, tactile materials, circulation flow, and how people actually live or work in the space day to day.',
-    bullets: [
-      'Space planning & bespoke layout design',
-      'Material & luxury finish curation',
-      'Custom furniture & architectural fixture design',
-      'Natural & artificial lighting choreography',
-      'Styling & museum-grade final staging',
-    ],
-    image: 'https://framerusercontent.com/images/NK9CCeVqA1QfjxGwAkHn5lv7QR8.jpg?width=1920&height=2880',
+      'Lightweight real-time 3D applications engineered for sales gallery touchscreen tables, mobile browsers, and VR headsets. Empower prospective buyers to inspect unit layouts, verify views from specific floor levels, and change luxury finishes on the fly.',
+    pills: ['Interactive CRM', 'UX Research & Strategy', 'Touchscreen Sales Apps', 'Web-Based 3D'],
+    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85',
+    hasDemo: true,
+    demoUrl: '/projects/riviera-residence',
   },
   {
     number: '03',
-    title: 'Space Planning & Consulting',
+    title: 'Brand Identity',
+    tagline: 'Strategic design systems that define market presence. Great architectural developments deserve great branding.',
     description:
-      'For developers and architects who need expert visual guidance without a full design build, we help optimize unbuilt developments, solve spatial marketing challenges, and advise on key design decisions before ground is broken.',
-    bullets: [
-      'Layout & off-plan circulation assessment',
-      'Pre-construction feasibility consulting',
-      'Zoning & architectural code compliance',
-      'Spatial efficiency & unit mix optimization',
-      'Design direction & cinematic concept consulting',
-    ],
-    image: 'https://framerusercontent.com/images/yznMxGotqqcgsULHwIRkmlRFPNg.jpg?width=1920&height=2880',
-  },
-  {
-    number: '04',
-    title: 'Project Management & Renovation',
-    description:
-      'We oversee the full visual journey from initial blueprint to final handover, coordinating 3D pipelines, production timelines, and marketing milestones so the vision on paper becomes a sold reality.',
-    bullets: [
-      'Production sourcing & pipeline coordination',
-      'Campaign budget & milestone delivery management',
-      'On-site drone supervision & quality control',
-      'Adaptive reuse & historical remodel oversight',
-      'Final 16K master file & cinematic film handover',
-    ],
-    image: 'https://framerusercontent.com/images/ex3qqvYls9dRO4lkffiTeOs6hI.jpg?width=1920&height=2562',
+      'From editorial typography and launch monographs to bespoke digital landing pages and marketing suites, we build cohesive brand universes that communicate prestige and drive rapid off-plan pre-sales velocity.',
+    pills: ['Visual Identity', 'Brand Storytelling', 'Web Design & Development', 'Brochures & Signage'],
+    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=2400&q=85',
   },
 ];
 
-function ServiceCard({ service, index }: { service: ServicePanel; index: number }) {
-  const shouldReduceMotion = useReducedMotion();
-
-  return (
-    <div
-      style={{ zIndex: index + 1 }}
-      className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex flex-col md:flex-row bg-[#121212] overflow-hidden border-t border-white/10 shadow-[0_-16px_36px_rgba(0,0,0,0.8)]"
-    >
-      {/* Editorial Content Column (Top flex-1 on mobile, Left 50% on desktop) */}
-      <div className="w-full md:w-1/2 flex-1 md:h-full flex flex-col justify-center px-5 sm:px-10 md:px-16 lg:px-24 py-4 sm:py-8 md:py-16 bg-[#121212] z-10 overflow-y-auto sm:overflow-visible">
-        <div className="max-w-xl space-y-3 sm:space-y-4 md:space-y-6 my-auto">
-          {/* Number & Phase Tag */}
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0.4, y: 10 }}
-            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center gap-3"
-          >
-            <span className="font-sans text-lg sm:text-xl md:text-2xl text-white/40 block font-normal">
-              {service.number}
-            </span>
-            <span className="w-6 sm:w-8 h-px bg-white/20 inline-block" />
-            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-white/50">
-              Phase 0{index + 1}
-            </span>
-          </motion.div>
-
-          {/* Title */}
-          <motion.h3
-            initial={shouldReduceMotion ? false : { opacity: 0.4, y: 12 }}
-            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.45, delay: 0.04, ease: [0.22, 1, 0.36, 1] }}
-            className="font-sans font-bold text-2xl sm:text-3xl md:text-5xl lg:text-5xl xl:text-6xl text-white tracking-tight leading-[1.08]"
-          >
-            {service.title}
-          </motion.h3>
-
-          {/* Description */}
-          <motion.p
-            initial={shouldReduceMotion ? false : { opacity: 0.4, y: 10 }}
-            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="font-sans text-white/75 text-xs sm:text-sm md:text-base leading-relaxed font-light line-clamp-3 sm:line-clamp-none"
-          >
-            {service.description}
-          </motion.p>
-
-          {/* 5 Bullet Items */}
-          <ul className="space-y-1.5 sm:space-y-2 pt-3 sm:pt-4 border-t border-white/10">
-            {service.bullets.map((bullet, bIdx) => (
-              <li
-                key={bIdx}
-                className="flex items-center gap-2.5 font-sans text-[11px] sm:text-xs md:text-sm text-white/85"
-              >
-                <span className="w-1.5 h-1.5 bg-white/40 inline-block flex-shrink-0" />
-                <span className="leading-tight sm:leading-normal">{bullet}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      {/* Media Field (Bottom on mobile, Right 50% on desktop) */}
-      <div className="w-full md:w-1/2 h-[36svh] sm:h-[42svh] md:h-full relative overflow-hidden bg-black flex-shrink-0">
-        <img
-          src={service.image}
-          alt={service.title}
-          loading={index === 0 ? 'eager' : 'lazy'}
-          className="w-full h-full object-cover filter brightness-95 select-none"
-        />
-      </div>
-    </div>
-  );
-}
-
 export function SolumServices() {
   return (
-    <section id="services" className="w-full bg-[#121212] text-white select-none relative overflow-visible">
-      {/* ========================================================= */}
-      {/* 1) NORMAL NON-STICKY INTRODUCTION BLOCK                   */}
-      {/* ========================================================= */}
-      <div className="w-full py-16 md:py-24 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-white/10 bg-[#121212]">
-        <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8">
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-white/60 inline-block rounded-full" />
-              <span className="font-mono text-xs uppercase tracking-wider text-white/50 block">
-                02 // SERVICES
-              </span>
-            </div>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-[-0.04em] text-white">
-              WHAT WE DO.
-            </h2>
-            <p className="font-sans text-sm sm:text-base text-white/70 max-w-xl font-light leading-relaxed">
-              From first concept to final finish, Vantage Studio offers a full range of architecture and visual design services for unbuilt spaces.
+    <section id="services" className="w-full bg-[#0A0A0A] text-white py-20 sm:py-28 lg:py-36 select-none border-b border-white/10">
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 md:px-14">
+        {/* ========================================================= */}
+        {/* 1) HERO INTRO (MATCHING 77 RENDER STUDIO EDITORIAL STYLE) */}
+        {/* ========================================================= */}
+        <div className="max-w-4xl mb-14 sm:mb-20 space-y-5">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 bg-white rounded-full inline-block" />
+            <span className="font-mono text-xs uppercase tracking-widest text-white/50">
+              02 // CAPABILITIES & SOLUTIONS
+            </span>
+          </div>
+
+          <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.06]">
+            Comprehensive digital solutions that transform real estate from concept to close.
+          </h2>
+
+          <p className="font-sans text-sm sm:text-base lg:text-lg text-white/60 font-light max-w-2xl leading-relaxed">
+            From photorealistic CGI visualization to interactive sales platforms and spatial branding, we are your end-to-end digital partner.
+          </p>
+        </div>
+
+        {/* ========================================================= */}
+        {/* 2) CINEMATIC FULL-WIDTH LANDSCAPE CARDS                   */}
+        {/* ========================================================= */}
+        <div className="space-y-8 sm:space-y-12">
+          {SERVICES.map((service, index) => (
+            <motion.div
+              key={service.number}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative w-full rounded-2xl sm:rounded-3xl overflow-hidden min-h-[380px] sm:min-h-[440px] lg:min-h-[480px] flex flex-col justify-between p-6 sm:p-10 lg:p-14 border border-white/10 bg-zinc-950 shadow-2xl transition-all duration-500 hover:border-white/25"
+            >
+              {/* Background Cinematic Image with Hover Zoom */}
+              <img
+                src={service.image}
+                alt={service.title}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                className="absolute inset-0 w-full h-full object-cover filter brightness-[0.70] contrast-[1.05] group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
+              />
+
+              {/* Multi-Stop Dark Vignette Overlay for High-Contrast Readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/35 md:bg-gradient-to-r md:from-black/95 md:via-black/70 md:to-black/30 pointer-events-none" />
+
+              {/* Top / Middle Content Block */}
+              <div className="relative z-10 max-w-3xl space-y-3 sm:space-y-4">
+                <h3 className="font-display text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+                  {service.number} {service.title}
+                </h3>
+
+                <p className="font-sans text-sm sm:text-base lg:text-lg text-white/90 font-medium leading-relaxed">
+                  {service.tagline}
+                </p>
+
+                <p className="font-sans text-xs sm:text-sm text-white/60 font-light leading-relaxed line-clamp-2 sm:line-clamp-none max-w-2xl">
+                  {service.description}
+                </p>
+              </div>
+
+              {/* Bottom Interactive Bar: Pills Left + Action Buttons Right */}
+              <div className="relative z-10 pt-6 mt-6 border-t border-white/15 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                {/* Frosted Glass Pills */}
+                <div className="flex flex-wrap items-center gap-2">
+                  {service.pills.map((pill) => (
+                    <span
+                      key={pill}
+                      className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-[11px] sm:text-xs font-sans text-white/90 tracking-wide transition-colors cursor-default"
+                    >
+                      {pill}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Split Action Buttons (Start a project + optional View Demo) */}
+                <div className="flex items-center gap-3 flex-shrink-0 self-start sm:self-auto">
+                  {service.hasDemo && (
+                    <Link
+                      to={service.demoUrl || '/projects'}
+                      className="px-5 py-2.5 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/30 text-xs sm:text-sm font-sans font-medium text-white transition-all duration-200 inline-flex items-center gap-1.5"
+                    >
+                      <span>View Demo</span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-75" />
+                    </Link>
+                  )}
+
+                  <Link
+                    to="/contact"
+                    className="px-6 py-2.5 rounded-full bg-white hover:bg-white/90 text-black text-xs sm:text-sm font-sans font-semibold transition-all duration-200 hover:shadow-[0_0_24px_rgba(255,255,255,0.35)] inline-flex items-center gap-2"
+                  >
+                    <span>Start a project</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* ========================================================= */}
+        {/* 3) CLOSING STATEMENT BANNER (MATCHING 77 RENDER FOOTER)   */}
+        {/* ========================================================= */}
+        <div className="mt-16 sm:mt-24 pt-12 border-t border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+          <div className="space-y-2">
+            <h3 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+              Making the invisible,
+              <br />
+              unforgettable.
+            </h3>
+            <p className="font-sans text-xs sm:text-sm text-white/50 max-w-md font-light">
+              We craft visual architectures and interactive platforms that help developers pre-sell and command market leadership.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center gap-5">
-            <span className="font-mono text-xs text-white/40 uppercase tracking-widest hidden sm:inline-block">
-              VANTAGE STUDIO&reg;
-            </span>
-            <Link
-              to="/contact"
-              className="solum-btn inline-flex items-center gap-3 px-6 py-3.5 border border-white text-white font-mono text-xs uppercase tracking-wider hover:bg-white hover:text-black transition-colors"
-            >
-              <span>START A PROJECT</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
+          <Link
+            to="/contact"
+            className="px-8 py-3.5 rounded-full bg-white hover:bg-white/90 text-black font-sans text-xs sm:text-sm font-semibold tracking-wide uppercase transition-all duration-200 hover:shadow-[0_0_28px_rgba(255,255,255,0.4)] inline-flex items-center gap-3 self-start md:self-auto"
+          >
+            <span>Start a project</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
-      </div>
-
-      {/* ========================================================= */}
-      {/* 2) VERTICAL SERVICES LIST (Sticky Stacking in Flow)        */}
-      {/* ========================================================= */}
-      <div className="relative w-full overflow-visible">
-        {SERVICES.map((service, index) => (
-          <ServiceCard key={service.number} service={service} index={index} />
-        ))}
       </div>
     </section>
   );

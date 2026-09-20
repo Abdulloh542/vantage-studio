@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { Volume2, VolumeX, Maximize2, ArrowRight, Eye } from 'lucide-react';
 import type { Project } from '../../types';
 import { LightboxModal, type LightboxImage } from './LightboxModal';
@@ -16,10 +15,9 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Compile 6 high-res stills for the right-hand grid
+  // Compile all high-res stills for the project
   const stills: LightboxImage[] = [];
 
-  // Add gallery items or process images to reach 6 stills
   if (project.gallery && project.gallery.length > 0) {
     project.gallery.forEach((g) => {
       stills.push({
@@ -30,10 +28,9 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     });
   }
 
-  // If fewer than 6, fill with process images or heroImage
-  if (stills.length < 6 && project.process) {
+  if (project.process) {
     project.process.forEach((p) => {
-      if (p.image && stills.length < 6) {
+      if (p.image) {
         stills.push({
           url: p.image,
           caption: `${p.step} // ${p.title} — ${p.description}`,
@@ -43,7 +40,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     });
   }
 
-  if (stills.length < 6) {
+  if (project.heroImage) {
     stills.push({
       url: project.heroImage,
       caption: 'Lead Master Elevation & Architectural Framing',
@@ -51,8 +48,35 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     });
   }
 
-  // Exactly 6 stills
-  const displayStills = stills.slice(0, 6);
+  // Fallback high-res stills if project has fewer than 9 images
+  const fallbackImages = [
+    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85',
+    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=85',
+    'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=85',
+    'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1600&q=85',
+    'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&w=1600&q=85',
+    'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1600&q=85',
+  ];
+  let fbIdx = 0;
+  while (stills.length < 9) {
+    stills.push({
+      url: fallbackImages[fbIdx % fallbackImages.length],
+      caption: `Architectural Perspective ${stills.length + 1}`,
+      title: project.title,
+    });
+    fbIdx++;
+  }
+
+  // Partition into 3 alternating rows with their originalIndex for lightbox
+  const itemsWithIdx = stills.map((item, originalIndex) => ({ item, originalIndex }));
+  const r1Base = itemsWithIdx.filter((_, i) => i % 3 === 0);
+  const r2Base = itemsWithIdx.filter((_, i) => i % 3 === 1);
+  const r3Base = itemsWithIdx.filter((_, i) => i % 3 === 2);
+
+  // Duplicate each row array for seamless 0% -> -50% infinite loop
+  const row1Loop = [...r1Base, ...r1Base];
+  const row2Loop = [...r2Base, ...r2Base];
+  const row3Loop = [...r3Base, ...r3Base];
 
   const toggleSound = () => {
     if (videoRef.current) {
@@ -182,38 +206,106 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
           </div>
         </div>
 
-        {/* RIGHT: 6 Keyframe Stills Arranged in a 2-Column x 3-Row Grid */}
-        <div className="lg:col-span-5 xl:col-span-5 grid grid-cols-2 gap-2 sm:gap-3 h-full min-h-[260px] sm:min-h-[420px] lg:min-h-[520px]">
-          {displayStills.map((still, idx) => (
-            <motion.div
-              key={still.url + idx}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.2 }}
-              onClick={() => handleOpenLightbox(idx)}
-              className="group relative w-full h-full min-h-[90px] sm:min-h-[130px] lg:min-h-[160px] overflow-hidden bg-zinc-900 border border-[#101010]/12 cursor-pointer"
+        {/* RIGHT: 3-Tier Alternating Infinite Marquee Stills (CGI Studio / Solé Ettalong Master Dynamic) */}
+        <div className="lg:col-span-5 xl:col-span-5 flex flex-col justify-between gap-2 sm:gap-2.5 h-full min-h-[300px] sm:min-h-[420px] lg:min-h-[520px] overflow-hidden bg-[#0A0A0A] border border-[#101010]/12 p-2">
+          {/* Row 1: Slides Left (animate-marquee) */}
+          <div className="relative w-full overflow-hidden h-[95px] sm:h-[132px] lg:h-[162px] flex items-center">
+            <div
+              className="flex items-center gap-2 sm:gap-2.5 animate-marquee w-max"
+              style={{ animationDuration: '32s' }}
             >
-              <img
-                src={still.url}
-                alt={still.caption || `Still ${idx + 1}`}
-                loading="lazy"
-                className="w-full h-full object-cover filter brightness-95 group-hover:brightness-105 transition-all duration-500"
-              />
-
-              {/* Hover Dark Vignette & Expand Icon */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 flex items-center justify-center">
-                <div className="w-8 h-8 rounded-full bg-white text-black opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center shadow-lg">
-                  <Eye className="w-4 h-4" />
+              {row1Loop.map((entry, idx) => (
+                <div
+                  key={`r1-${idx}`}
+                  onClick={() => handleOpenLightbox(entry.originalIndex)}
+                  className="group relative w-36 sm:w-48 lg:w-56 h-[95px] sm:h-[132px] lg:h-[162px] flex-shrink-0 overflow-hidden bg-zinc-900 border border-white/10 cursor-pointer"
+                >
+                  <img
+                    src={entry.item.url}
+                    alt={entry.item.caption || `Still ${entry.originalIndex + 1}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 pointer-events-none select-none"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-white text-black opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center shadow-lg">
+                      <Eye className="w-4 h-4" />
+                    </div>
+                  </div>
+                  <div className="absolute top-2 left-2 z-10 pointer-events-none">
+                    <span className="px-1.5 py-0.5 bg-black/80 text-[9px] font-mono text-white/90 border border-white/15 uppercase tabular-nums">
+                      0{entry.originalIndex + 1}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
 
-              {/* Corner Frame Number Index */}
-              <div className="absolute top-2 left-2 z-10 pointer-events-none">
-                <span className="px-1.5 py-0.5 bg-black/75 text-[9px] font-mono text-white/80 border border-white/10 uppercase">
-                  0{idx + 1}
-                </span>
-              </div>
-            </motion.div>
-          ))}
+          {/* Row 2: Slides Rightwards (Reverse direction) */}
+          <div className="relative w-full overflow-hidden h-[95px] sm:h-[132px] lg:h-[162px] flex items-center">
+            <div
+              className="flex items-center gap-2 sm:gap-2.5 animate-marquee-reverse w-max"
+              style={{ animationDuration: '36s' }}
+            >
+              {row2Loop.map((entry, idx) => (
+                <div
+                  key={`r2-${idx}`}
+                  onClick={() => handleOpenLightbox(entry.originalIndex)}
+                  className="group relative w-36 sm:w-48 lg:w-56 h-[95px] sm:h-[132px] lg:h-[162px] flex-shrink-0 overflow-hidden bg-zinc-900 border border-white/10 cursor-pointer"
+                >
+                  <img
+                    src={entry.item.url}
+                    alt={entry.item.caption || `Still ${entry.originalIndex + 1}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 pointer-events-none select-none"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-white text-black opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center shadow-lg">
+                      <Eye className="w-4 h-4" />
+                    </div>
+                  </div>
+                  <div className="absolute top-2 left-2 z-10 pointer-events-none">
+                    <span className="px-1.5 py-0.5 bg-black/80 text-[9px] font-mono text-white/90 border border-white/15 uppercase tabular-nums">
+                      0{entry.originalIndex + 1}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Row 3: Slides Leftwards */}
+          <div className="relative w-full overflow-hidden h-[95px] sm:h-[132px] lg:h-[162px] flex items-center">
+            <div
+              className="flex items-center gap-2 sm:gap-2.5 animate-marquee w-max"
+              style={{ animationDuration: '29s' }}
+            >
+              {row3Loop.map((entry, idx) => (
+                <div
+                  key={`r3-${idx}`}
+                  onClick={() => handleOpenLightbox(entry.originalIndex)}
+                  className="group relative w-36 sm:w-48 lg:w-56 h-[95px] sm:h-[132px] lg:h-[162px] flex-shrink-0 overflow-hidden bg-zinc-900 border border-white/10 cursor-pointer"
+                >
+                  <img
+                    src={entry.item.url}
+                    alt={entry.item.caption || `Still ${entry.originalIndex + 1}`}
+                    loading="lazy"
+                    className="w-full h-full object-cover filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 pointer-events-none select-none"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-white text-black opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center shadow-lg">
+                      <Eye className="w-4 h-4" />
+                    </div>
+                  </div>
+                  <div className="absolute top-2 left-2 z-10 pointer-events-none">
+                    <span className="px-1.5 py-0.5 bg-black/80 text-[9px] font-mono text-white/90 border border-white/15 uppercase tabular-nums">
+                      0{entry.originalIndex + 1}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -280,7 +372,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
       <LightboxModal
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
-        images={displayStills}
+        images={stills}
         currentIndex={lightboxIndex}
         onNavigate={(idx) => setLightboxIndex(idx)}
       />

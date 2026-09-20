@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { PROJECTS } from '../data/projects';
 import { ArchvizProjectShowcase } from '../components/common/ArchvizProjectShowcase';
@@ -18,7 +18,6 @@ const ASPECT_RATIOS = [
 
 export function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [isFiltering, setIsFiltering] = useState(false);
 
   const filteredProjects = useMemo(() => {
     if (selectedCategory === 'All') return PROJECTS;
@@ -27,12 +26,9 @@ export function ProjectsPage() {
 
   const handleCategoryChange = (cat: string) => {
     if (cat === selectedCategory) return;
-    setIsFiltering(true);
-    setTimeout(() => {
-      setSelectedCategory(cat);
-      setIsFiltering(false);
-    }, 150);
+    setSelectedCategory(cat);
   };
+
 
   return (
     <main className="w-full bg-white text-[#101010] pt-28 md:pt-36 pb-24 md:pb-36">
@@ -95,45 +91,38 @@ export function ProjectsPage() {
           </div>
 
           {/* Main Content: One Full-Width Media Project per Row with Varied Heights */}
-          <div className="col-span-1 md:col-span-3">
-            <AnimatePresence mode="wait">
-              {isFiltering ? (
-                /* Minimal Spinner During Filter Transition */
-                <div key="loader" className="py-32 flex items-center justify-center">
-                  <div className="w-5 h-5 border border-[#101010]/20 border-t-[#101010] animate-spin" />
-                </div>
-              ) : filteredProjects.length === 0 ? (
-                /* Real Empty State */
-                <motion.div
-                  key="empty"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.35 }}
-                  className="py-32 text-center border border-[#101010]/12 p-12"
+          <div className="col-span-1 md:col-span-3 min-h-[500px]">
+            {filteredProjects.length === 0 ? (
+              /* Real Empty State */
+              <motion.div
+                key="empty"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.35 }}
+                className="py-32 text-center border border-[#101010]/12 p-12"
+              >
+                <span className="font-mono text-xs text-[#757575] uppercase block mb-3">
+                  00 // NO ENTRIES FOUND
+                </span>
+                <h3 className="font-display text-2xl font-semibold uppercase text-[#101010] mb-4">
+                  NO PROJECTS IN THIS TYPOLOGY
+                </h3>
+                <button
+                  onClick={() => handleCategoryChange('All')}
+                  className="solum-btn px-5 py-2.5 border border-[#101010] text-xs font-mono uppercase tracking-wider hover:bg-[#101010] hover:text-white transition-colors"
                 >
-                  <span className="font-mono text-xs text-[#757575] uppercase block mb-3">
-                    00 // NO ENTRIES FOUND
-                  </span>
-                  <h3 className="font-display text-2xl font-semibold uppercase text-[#101010] mb-4">
-                    NO PROJECTS IN THIS TYPOLOGY
-                  </h3>
-                  <button
-                    onClick={() => handleCategoryChange('All')}
-                    className="solum-btn px-5 py-2.5 border border-[#101010] text-xs font-mono uppercase tracking-wider hover:bg-[#101010] hover:text-white transition-colors"
-                  >
-                    RESET FILTER
-                  </button>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key={selectedCategory}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  className="space-y-12 sm:space-y-16"
-                >
+                  RESET FILTER
+                </button>
+              </motion.div>
+            ) : (
+              <motion.div
+                key={selectedCategory}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-12 sm:space-y-16"
+              >
                   {filteredProjects.map((project, idx) => {
                     if (project.heroVideo) {
                       return (
@@ -187,7 +176,6 @@ export function ProjectsPage() {
                   })}
                 </motion.div>
               )}
-            </AnimatePresence>
           </div>
         </div>
       </div>

@@ -1,72 +1,88 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ExternalLink } from 'lucide-react';
 
-const DETAILED_SERVICES = [
+interface ServiceDetail {
+  number: string;
+  slug: string;
+  title: string;
+  tagline: string;
+  description: string;
+  heroImage: string;
+  pills: string[];
+  businessOutcome: string;
+  deliverables: string[];
+  hasDemo?: boolean;
+  demoUrl?: string;
+}
+
+const DETAILED_SERVICES: ServiceDetail[] = [
   {
     number: '01',
-    slug: 'real-estate-films',
-    title: 'Real Estate Films & AI Walkthroughs',
-    category: 'CINEMATIC MOTION & MARKETING FILMS',
-    heroImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=2400&q=85',
-    headline: 'Cinematic films that command institutional capital and pre-sell developments off-plan.',
+    slug: 'visual-content',
+    title: 'Visual Content',
+    tagline: 'CGI for real estate: photorealistic renders, 4K animation films, and virtual tours that turn unbuilt concepts into experiences that sell.',
     description:
-      'We choreograph sweeping 4K drone passes, fluid interior Steadicam movements, and daylight-to-dusk lighting transitions. Our films transform blueprints and raw architectural CAD into emotional cinematic stories that buyers and investment committees fall in love with before ground is broken.',
+      'We treat every architectural visualization as an editorial photography commission. By accurately simulating sun trajectories, micro-surface imperfections in stone, wood, and concrete, and botanical landscaping, we produce evocative imagery and cinematic films that command institutional capital.',
+    heroImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85',
+    pills: ['3D Rendering', '3D Animations', 'Virtual Tours', 'Drone Compositing'],
     businessOutcome: 'Average +340% increase in international off-plan pre-sales velocity and investor engagement.',
     deliverables: [
       '60-90s Cinematic Launch Trailer (4K Broadcast Quality)',
       'Virtual Architectural Walkthroughs & Steadicam Paths',
-      'Social Media 9:16 Vertical Video Suites for Instagram & TikTok',
-      'High-Resolution Drone Footage Integration & Aerial Tracking',
+      'Ultra-High-Resolution 16K Master Files for Physical Hoardings',
+      'Daylight, Overcast & Atmospheric Dusk Hero Viewpoints',
       'Custom Bespoke Musical Score & Spatial Sound Design',
     ],
   },
   {
     number: '02',
-    slug: 'architectural-visualization',
-    title: 'Architectural Visualization (Interior & Exterior CGI)',
-    category: 'PHOTOREALISTIC STILLS UP TO 16K',
-    heroImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85',
-    headline: 'Museum-grade CGI capturing material physics, natural illumination, and human scale.',
+    slug: 'sales-experiences',
+    title: 'Sales Experiences',
+    tagline: 'Interactive platforms that turn browsers into buyers. Move beyond static renders. Give buyers the power to explore, customize, and commit before construction.',
     description:
-      'We treat every architectural visualization as an editorial photography commission. By accurately simulating sun trajectories, micro-surface imperfections in stone, wood, and concrete, and botanical landscaping, we produce evocative imagery that commands premium pricing.',
-    businessOutcome: 'Secures expedited municipal planning approvals and early anchor tenant commitments.',
+      'We optimize heavy architectural BIM and AutoCAD geometry into lightweight, interactive real-time environments for sales gallery touchscreen tables, web-based unit selectors, and Unreal Engine virtual reality headsets.',
+    heroImage: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85',
+    pills: ['Interactive CRM', 'UX Research & Strategy', 'Touchscreen Sales Apps', 'Web-Based 3D'],
+    businessOutcome: 'Empowers prospective international buyers to configure penthouses and walk through floorplans remotely.',
     deliverables: [
-      'Daylight, Overcast & Atmospheric Dusk Hero Viewpoints',
-      'Sensory Luxury Interior CGI with Custom Furniture Curation',
-      'Aerial Masterplan Perspectives & Urban Context Compositing',
-      'Material & Texture Sample Close-Up Vignettes',
-      'Ultra-High-Resolution 16K Master Files for Physical Hoardings',
+      'Custom Sales Gallery Touchscreen Application',
+      'Web-Based 3D Apartment Selector & Sun Study Tool',
+      'Unreal Engine Virtual Reality Walkthrough Suites',
+      'Interactive Material & Finish Switcher for Clients',
+      'Live Unit Availability & Reservation System Integration',
     ],
+    hasDemo: true,
+    demoUrl: '/projects/riviera-residence',
   },
   {
     number: '03',
-    slug: 'ai-architectural-enhancement',
-    title: 'AI Architectural Enhancement & Neural Relighting',
-    category: 'PROPRIETARY AI PIPELINE',
-    heroImage: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2400&q=85',
-    headline: 'Transform rough preliminary sketches and untextured 3D models into photoreal visuals in days.',
+    slug: 'brand-identity',
+    title: 'Brand Identity',
+    tagline: 'Strategic design systems that define market presence. Great architectural developments deserve great branding.',
     description:
-      'Using our proprietary neural rendering technology, we ingest preliminary architect sketch concepts, apply physically accurate material shaders, calibrate atmospheric daylight, and generate multi-angle marketing visuals in a fraction of traditional production schedules.',
-    businessOutcome: 'Accelerates visual turnarounds by 60%, empowering rapid design testing and early investor teasers.',
+      'From editorial typography and launch monographs to bespoke digital landing pages and marketing suites, we build cohesive brand universes that communicate prestige and drive rapid off-plan pre-sales velocity.',
+    heroImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=2400&q=85',
+    pills: ['Visual Identity', 'Brand Storytelling', 'Web Design & Development', 'Brochures & Signage'],
+    businessOutcome: 'Elevates development perceived value and anchors premium price-per-square-meter positioning.',
     deliverables: [
-      'Rapid Concept Generation & Lighting Iterations',
-      'Atmospheric Weather Simulation (Rain, Fog, Golden Hour, Dusk)',
-      'Vegetation, Landscaping & Biophilic Surface Synthesis',
-      'Rapid Turnaround Marketing Teasers for Press Releases',
-      'Seamless Upscaling to Ultra-High Resolution',
+      'Bespoke Development Logo, Typography & Color Palette',
+      'Architectural Marketing Website & Mobile Microsite',
+      'Hardcover Luxury Sales Book & Editorial Brochure Design',
+      'Site Hoarding & Presentation Gallery Environmental Signage',
+      'Digital Advertising Campaign Toolkits for Global Rollout',
     ],
   },
   {
     number: '04',
     slug: 'construction-timelapse-marketing',
-    title: 'Construction Timelapse & Marketing Videos',
-    category: 'DEVELOPMENT STORYTELLING',
-    heroImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=85',
-    headline: 'Documenting the rising architectural landmark from ground breaking to topping out.',
+    title: 'Development Storytelling & Aerial Drone',
+    tagline: 'Documenting the rising architectural landmark from ground breaking to topping out.',
     description:
       'We combine on-site robotic drone timelapse captures with 3D CGI projections to illustrate construction milestones, facade installation, and final architectural fruition for institutional investors, city councils, and future corporate tenants.',
-    businessOutcome: 'Provides continuous milestone visibility, investor confidence, and ongoing marketing momentum.',
+    heroImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=85',
+    pills: ['Drone Timelapse', 'Investor Briefs', 'Facade Tracking', 'PR Film Packages'],
+    businessOutcome: 'Provides continuous milestone visibility, investor confidence, and sustained marketing momentum.',
     deliverables: [
       'Quarterly Investor Progress Videos & Milestone Briefs',
       'Hybrid Site Drone Footage + 3D Render Overlays',
@@ -75,32 +91,16 @@ const DETAILED_SERVICES = [
       'Broadcast-Quality PR Video Packages for Press & Media',
     ],
   },
-  {
-    number: '05',
-    slug: 'spatial-bim-interactive-vr',
-    title: '3D Spatial Modeling & Interactive Sales Suites',
-    category: 'REAL-TIME COMPUTATION',
-    heroImage: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85',
-    headline: 'Millimeter-precise Revit structural translation into interactive touchscreen apps and VR suites.',
-    description:
-      'We optimize heavy architectural BIM and AutoCAD geometry into lightweight, interactive real-time environments for sales gallery touchscreen tables, web-based unit selectors, and Unreal Engine virtual reality headsets.',
-    businessOutcome: 'Empowers prospective international buyers to configure penthouses and walk through floorplans remotely.',
-    deliverables: [
-      'BIM, Revit & Rhino Model Optimization & Topology Cleanup',
-      'Custom Sales Gallery Touchscreen Application',
-      'Web-Based 3D Apartment Selector & Sun Study Tool',
-      'Unreal Engine Virtual Reality Walkthrough Suites',
-      'Interactive Material & Finish Switcher for Clients',
-    ],
-  },
 ];
 
 export function ServicesPage() {
   return (
-    <main className="w-full bg-white text-[#101010] pt-28 md:pt-36">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-10">
-        {/* Header: Editorial Statement */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-16 border-b border-[#101010]/12 items-end">
+    <main className="w-full bg-[#0A0A0A] text-white pt-28 md:pt-36 pb-24 md:pb-36 select-none">
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 md:px-14">
+        {/* ========================================================= */}
+        {/* HEADER: EDITORIAL HERO STATEMENT                          */}
+        {/* ========================================================= */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-16 border-b border-white/10 items-end">
           <div className="md:col-span-8 space-y-4">
             <motion.div
               initial={{ opacity: 0, y: 12 }}
@@ -108,9 +108,9 @@ export function ServicesPage() {
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               className="flex items-center gap-2"
             >
-              <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
-              <span className="font-mono text-xs uppercase tracking-wider text-[#101010] font-medium">
-                COMMERCIAL CAPABILITIES &bull; 05 DISCIPLINES
+              <span className="w-2 h-2 bg-white rounded-full inline-block" />
+              <span className="font-mono text-xs uppercase tracking-widest text-white/50 font-medium">
+                COMMERCIAL CAPABILITIES // 04 DISCIPLINES
               </span>
             </motion.div>
 
@@ -118,108 +118,158 @@ export function ServicesPage() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-[-0.06em] text-[#101010] uppercase leading-[0.94]"
+              className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.02]"
             >
-              VISUAL PRODUCTION FOR UNBUILT ARCHITECTURE.
+              Comprehensive digital solutions that transform real estate from concept to close.
             </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.16 }}
+              className="font-sans text-sm sm:text-base lg:text-lg text-white/60 font-light max-w-2xl leading-relaxed"
+            >
+              From photorealistic visualization to interactive platforms that accelerate sales, we are your end-to-end digital partner.
+            </motion.p>
           </div>
 
           <div className="md:col-span-4 flex md:justify-end">
             <Link
               to="/contact"
-              className="solum-btn px-6 py-4 border border-[#101010] text-[#101010] text-xs font-mono uppercase tracking-wider hover:bg-[#101010] hover:text-white transition-colors duration-180"
+              className="px-7 py-3.5 rounded-full bg-white hover:bg-white/90 text-black text-xs sm:text-sm font-sans font-semibold tracking-wide uppercase transition-all duration-200 hover:shadow-[0_0_24px_rgba(255,255,255,0.35)] inline-flex items-center gap-2"
             >
               <span>COMMISSION A PROJECT</span>
-              <span className="btn-arrow ml-3">
-                <ArrowRight className="w-4 h-4 inline-block" />
-              </span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
 
-        {/* Stack of 5 Commercial Services */}
-        <div className="divide-y divide-[#101010]/12">
-          {DETAILED_SERVICES.map((srv) => (
+        {/* ========================================================= */}
+        {/* CINEMATIC FULL-WIDTH LANDSCAPE CARDS                      */}
+        {/* ========================================================= */}
+        <div className="space-y-10 sm:space-y-14 pt-14 sm:pt-20">
+          {DETAILED_SERVICES.map((srv, index) => (
             <motion.div
               key={srv.slug}
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-              className="py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"
+              transition={{ duration: 0.65, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative w-full rounded-2xl sm:rounded-3xl overflow-hidden min-h-[420px] sm:min-h-[480px] lg:min-h-[520px] flex flex-col justify-between p-6 sm:p-10 lg:p-14 border border-white/10 bg-zinc-950 shadow-2xl transition-all duration-500 hover:border-white/25"
             >
-              {/* Media Frame (Col 1-6) */}
-              <div className="lg:col-span-6">
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-zinc-900 border border-[#101010]/12 group">
-                  <img
-                    src={srv.heroImage}
-                    alt={srv.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover filter brightness-95 contrast-105 transition-transform duration-700 ease-out group-hover:scale-[1.025]"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="font-mono text-xs uppercase tracking-wider text-white bg-black/70 backdrop-blur-sm px-3 py-1.5 border border-white/20">
-                      {srv.category}
-                    </span>
-                  </div>
-                </div>
-              </div>
+              {/* Background Image with Hover Zoom */}
+              <img
+                src={srv.heroImage}
+                alt={srv.title}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                className="absolute inset-0 w-full h-full object-cover filter brightness-[0.70] contrast-[1.05] group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
+              />
 
-              {/* Text & Deliverables Column (Col 7-12) */}
-              <div className="lg:col-span-6 space-y-6">
-                <div>
-                  <span className="font-mono text-xs sm:text-sm text-[#757575] block mb-2 font-medium">
-                    DISCIPLINE {srv.number}
-                  </span>
-                  <h2 className="font-display text-3xl sm:text-4xl font-semibold uppercase tracking-tight text-[#101010]">
-                    {srv.title}
+              {/* Dark Vignette Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/65 to-black/35 md:bg-gradient-to-r md:from-black/95 md:via-black/75 md:to-black/35 pointer-events-none" />
+
+              {/* Top / Content Area */}
+              <div className="relative z-10 max-w-4xl space-y-4">
+                <div className="space-y-2">
+                  <h2 className="font-display text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+                    {srv.number} {srv.title}
                   </h2>
+                  <p className="font-sans text-sm sm:text-base lg:text-lg text-white/90 font-medium leading-relaxed">
+                    {srv.tagline}
+                  </p>
                 </div>
 
-                <p className="font-sans text-sm sm:text-base text-[#101010]/80 leading-relaxed font-light">
+                <p className="font-sans text-xs sm:text-sm text-white/60 font-light leading-relaxed max-w-3xl">
                   {srv.description}
                 </p>
 
-                {/* Business Impact Box */}
-                <div className="p-4 bg-[#F8F7F4] border-l-2 border-[#101010] border-y border-r border-[#101010]/10">
-                  <span className="font-mono text-xs uppercase text-[#757575] block mb-1">
-                    COMMERCIAL OUTCOME:
+                {/* Commercial Impact Callout */}
+                <div className="inline-block p-3 sm:p-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 max-w-xl">
+                  <span className="font-mono text-[10px] sm:text-xs uppercase tracking-wider text-white/50 block mb-1">
+                    COMMERCIAL OUTCOME
                   </span>
-                  <p className="font-sans text-sm text-[#101010] font-medium">
+                  <p className="font-sans text-xs sm:text-sm text-white/90 font-medium">
                     {srv.businessOutcome}
                   </p>
                 </div>
 
-                {/* Deliverables List */}
-                <div className="pt-4 border-t border-[#101010]/12 space-y-3">
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block font-medium">
-                    TYPICAL DELIVERABLES:
+                {/* Deliverables Checklist */}
+                <div className="pt-2">
+                  <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-white/40 block mb-2">
+                    CORE DELIVERABLES
                   </span>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-w-3xl">
                     {srv.deliverables.map((d) => (
-                      <li key={d} className="flex items-center gap-2 text-xs sm:text-sm font-mono text-[#101010]/85">
-                        <CheckCircle2 className="w-4 h-4 text-[#101010]/50 flex-shrink-0" />
+                      <li key={d} className="flex items-center gap-2 text-xs sm:text-sm font-mono text-white/80">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-white/50 flex-shrink-0" />
                         <span>{d}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
+              </div>
 
-                {/* Direct Action Link */}
-                <div className="pt-4 flex items-center gap-6">
+              {/* Bottom Interactive Bar */}
+              <div className="relative z-10 pt-6 mt-6 border-t border-white/15 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                {/* Frosted Glass Category Pills */}
+                <div className="flex flex-wrap items-center gap-2">
+                  {srv.pills.map((pill) => (
+                    <span
+                      key={pill}
+                      className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-[11px] sm:text-xs font-sans text-white/90 tracking-wide transition-colors cursor-default"
+                    >
+                      {pill}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Split Action Buttons */}
+                <div className="flex items-center gap-3 flex-shrink-0 self-start sm:self-auto">
+                  {srv.hasDemo && (
+                    <Link
+                      to={srv.demoUrl || '/projects'}
+                      className="px-5 py-2.5 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/30 text-xs sm:text-sm font-sans font-medium text-white transition-all duration-200 inline-flex items-center gap-1.5"
+                    >
+                      <span>View Demo</span>
+                      <ExternalLink className="w-3.5 h-3.5 opacity-75" />
+                    </Link>
+                  )}
+
                   <Link
                     to="/contact"
-                    className="solum-btn px-6 py-3.5 bg-[#101010] text-white text-xs font-mono uppercase tracking-wider hover:bg-zinc-800 transition-colors"
+                    className="px-6 py-2.5 rounded-full bg-white hover:bg-white/90 text-black text-xs sm:text-sm font-sans font-semibold transition-all duration-200 hover:shadow-[0_0_24px_rgba(255,255,255,0.35)] inline-flex items-center gap-2"
                   >
-                    <span>COMMISSION THIS SERVICE</span>
-                    <span className="btn-arrow ml-3">
-                      <ArrowRight className="w-3.5 h-3.5 inline-block" />
-                    </span>
+                    <span>Start a project</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
             </motion.div>
           ))}
+        </div>
+
+        {/* ========================================================= */}
+        {/* CLOSING STATEMENT BANNER                                  */}
+        {/* ========================================================= */}
+        <div className="mt-20 sm:mt-28 pt-12 border-t border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+          <div className="space-y-2">
+            <h3 className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+              Making the invisible,
+              <br />
+              unforgettable.
+            </h3>
+            <p className="font-sans text-xs sm:text-sm text-white/50 max-w-md font-light">
+              We craft visual architectures and interactive platforms that empower developers to pre-sell architectural developments with confidence.
+            </p>
+          </div>
+
+          <Link
+            to="/contact"
+            className="px-8 py-3.5 rounded-full bg-white hover:bg-white/90 text-black font-sans text-xs sm:text-sm font-semibold tracking-wide uppercase transition-all duration-200 hover:shadow-[0_0_28px_rgba(255,255,255,0.4)] inline-flex items-center gap-3 self-start md:self-auto"
+          >
+            <span>Start a project</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </main>
