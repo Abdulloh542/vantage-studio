@@ -51,10 +51,10 @@ export function SolumSpatialBreakdown() {
         {/* Subtle Ambient Radial Vignette */}
         <div className="absolute inset-0 bg-gradient-radial from-zinc-900/40 via-[#0A0A0A] to-[#0A0A0A] pointer-events-none" />
 
-        {/* Central Stage Container (Compact, perfectly fitting viewport) */}
-        <div className="relative w-full max-w-[1100px] h-full flex items-center justify-center px-4 sm:px-6">
+        {/* Central Stage Container (Refined balanced luxury scale) */}
+        <div className="relative w-full max-w-[1140px] h-full flex items-center justify-center px-4 sm:px-6">
           {/* ========================================================= */}
-          {/* CONNECTING ARROWS (EXACT SYMMETRICAL 42.5° DIAGONALS)     */}
+          {/* CONNECTING ARROWS (EXACT SYMMETRICAL DIAGONALS)           */}
           {/* Placed at z-10 BEHIND cards (z-20) so they NEVER pierce photos */}
           {/* ========================================================= */}
           <motion.svg
@@ -78,9 +78,9 @@ export function SolumSpatialBreakdown() {
 
             {/* 1. Top-Left Diagonal Arrow (Center Villa corner to Tree Canopy corner) */}
             <motion.line
-              x1="-210"
-              y1="-118"
-              x2="-258"
+              x1="-214"
+              y1="-120"
+              x2="-260"
               y2="-158"
               stroke="rgba(255,255,255,0.75)"
               strokeWidth="1.5"
@@ -90,9 +90,9 @@ export function SolumSpatialBreakdown() {
             />
             {/* 2. Top-Right Diagonal Arrow (Center Villa corner to Wall Sculpture corner) */}
             <motion.line
-              x1="210"
-              y1="-118"
-              x2="258"
+              x1="214"
+              y1="-120"
+              x2="260"
               y2="-158"
               stroke="rgba(255,255,255,0.75)"
               strokeWidth="1.5"
@@ -102,9 +102,9 @@ export function SolumSpatialBreakdown() {
             />
             {/* 3. Bottom-Left Diagonal Arrow (Center Villa corner to Pool Landscape corner) */}
             <motion.line
-              x1="-210"
-              y1="118"
-              x2="-258"
+              x1="-214"
+              y1="120"
+              x2="-260"
               y2="158"
               stroke="rgba(255,255,255,0.75)"
               strokeWidth="1.5"
@@ -114,9 +114,9 @@ export function SolumSpatialBreakdown() {
             />
             {/* 4. Bottom-Right Diagonal Arrow (Center Villa corner to Timber Soffit corner) */}
             <motion.line
-              x1="210"
-              y1="118"
-              x2="258"
+              x1="214"
+              y1="120"
+              x2="260"
               y2="158"
               stroke="rgba(255,255,255,0.75)"
               strokeWidth="1.5"
@@ -142,7 +142,7 @@ export function SolumSpatialBreakdown() {
                     scale: cardScale,
                   }
             }
-            className="absolute z-20 w-[110px] sm:w-[140px] md:w-[180px] lg:w-[205px] xl:w-[230px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[116px] sm:w-[150px] md:w-[190px] lg:w-[218px] xl:w-[245px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/tree_canopy_detail.webp"
@@ -165,7 +165,7 @@ export function SolumSpatialBreakdown() {
                     scale: cardScale,
                   }
             }
-            className="absolute z-20 w-[110px] sm:w-[140px] md:w-[180px] lg:w-[205px] xl:w-[230px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[116px] sm:w-[150px] md:w-[190px] lg:w-[218px] xl:w-[245px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/sculpture_detail.webp"
@@ -188,7 +188,7 @@ export function SolumSpatialBreakdown() {
                     scale: cardScale,
                   }
             }
-            className="absolute z-20 w-[110px] sm:w-[140px] md:w-[180px] lg:w-[205px] xl:w-[230px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[116px] sm:w-[150px] md:w-[190px] lg:w-[218px] xl:w-[245px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/landscape_detail.webp"
@@ -211,7 +211,7 @@ export function SolumSpatialBreakdown() {
                     scale: cardScale,
                   }
             }
-            className="absolute z-20 w-[110px] sm:w-[140px] md:w-[180px] lg:w-[205px] xl:w-[230px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[116px] sm:w-[150px] md:w-[190px] lg:w-[218px] xl:w-[245px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/ceiling_lighting_detail.webp"
@@ -227,7 +227,7 @@ export function SolumSpatialBreakdown() {
           {/* ========================================================= */}
           <motion.div
             style={shouldReduceMotion ? undefined : { scale: centerScale }}
-            className="relative z-30 w-[220px] sm:w-[280px] md:w-[350px] lg:w-[400px] xl:w-[440px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/35 bg-black shadow-[0_0_80px_rgba(0,0,0,0.95)] group"
+            className="relative z-30 w-[230px] sm:w-[300px] md:w-[375px] lg:w-[425px] xl:w-[470px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/35 bg-black shadow-[0_0_80px_rgba(0,0,0,0.95)] group"
           >
             <img
               src="/images/before_after/villa_after.webp"
