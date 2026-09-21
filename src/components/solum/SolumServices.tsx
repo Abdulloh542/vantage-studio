@@ -75,7 +75,7 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
   return (
     <div
       style={{ zIndex: index + 1 }}
-      className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex flex-col md:flex-row bg-[#121212] overflow-hidden border-t border-white/10 shadow-[0_-16px_36px_rgba(0,0,0,0.8)]"
+      className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex flex-col md:flex-row bg-[#121212] overflow-hidden shadow-[0_-24px_48px_rgba(0,0,0,0.95)]"
     >
       {/* Editorial Content Column (Top flex-1 on mobile, Left 50% on desktop) */}
       <div className="w-full md:w-1/2 flex-1 md:h-full flex flex-col justify-center px-5 sm:px-10 md:px-16 lg:px-24 py-4 sm:py-8 md:py-16 bg-[#121212] z-10 overflow-y-auto sm:overflow-visible">
@@ -153,7 +153,7 @@ export function SolumServices() {
       {/* ========================================================= */}
       {/* 1) NORMAL NON-STICKY INTRODUCTION BLOCK                   */}
       {/* ========================================================= */}
-      <div className="w-full py-16 md:py-24 px-6 sm:px-12 md:px-16 lg:px-24 border-b border-white/10 bg-[#121212]">
+      <div className="w-full py-16 md:py-24 px-6 sm:px-12 md:px-16 lg:px-24 bg-[#121212]">
         <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-3">
             <div className="flex items-center gap-2">
