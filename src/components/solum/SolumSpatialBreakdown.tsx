@@ -1,24 +1,32 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 
 export function SolumSpatialBreakdown() {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
+  // Viewport scroll-driven tracking: starts when section enters, fully expanded at center
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start start', 'end end'],
+    offset: ['start 85%', 'center 45%'],
   });
 
-  // Direct 1:1 scroll tracking (No autonomous spring lag / 'wop' jump)
-  // Reaches full expansion quickly and smoothly between 5% and 45% of scroll
-  const spread = useTransform(scrollYProgress, [0.05, 0.45], [0, 1]);
-  const centerScale = useTransform(scrollYProgress, [0, 0.25, 0.85, 1], [0.95, 1, 1, 0.97]);
+  // Physical liquid spring: silky smooth 60fps/120Hz tracking, zero discrete 'wop' jumps
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 220,
+    damping: 28,
+    mass: 0.35,
+    restDelta: 0.001,
+  });
 
-  // Linear fade-in and scale directly mapped to scroll
-  const cardOpacity = useTransform(scrollYProgress, [0.05, 0.22], [0, 1]);
-  const cardScale = useTransform(spread, [0, 1], [0.75, 1]);
-  const lineOpacity = useTransform(scrollYProgress, [0.12, 0.35], [0, 0.85]);
+  // Direct 1:1 progressive expansion across the entire travel range
+  const spread = useTransform(smoothProgress, [0, 1], [0, 1]);
+  const centerScale = useTransform(smoothProgress, [0, 1], [0.96, 1]);
+
+  // Smooth progressive card fade and scale
+  const cardOpacity = useTransform(smoothProgress, [0.05, 0.45], [0, 1]);
+  const cardScale = useTransform(smoothProgress, [0, 1], [0.75, 1]);
+  const lineOpacity = useTransform(smoothProgress, [0.15, 0.65], [0, 0.85]);
 
   // Wide translations so all 4 corner cards CLEAR the center card completely
   const tlX = useTransform(spread, (v) => `${v * -156}%`);
@@ -36,107 +44,109 @@ export function SolumSpatialBreakdown() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-[160vh] bg-[#0A0A0A] text-white select-none overflow-visible"
+      className="relative w-full min-h-[92vh] sm:min-h-[96vh] py-16 sm:py-24 bg-[#0A0A0A] text-white select-none overflow-hidden flex items-center justify-center"
     >
-      {/* Pinned Viewport Stage */}
-      <div className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex items-center justify-center overflow-hidden">
-        {/* Subtle Ambient Radial Vignette */}
-        <div className="absolute inset-0 bg-gradient-radial from-zinc-900/40 via-[#0A0A0A] to-[#0A0A0A] pointer-events-none" />
+      {/* Subtle Ambient Radial Vignette */}
+      <div className="absolute inset-0 bg-gradient-radial from-zinc-900/40 via-[#0A0A0A] to-[#0A0A0A] pointer-events-none" />
 
-        {/* Central Stage Container */}
-        <div className="relative w-full max-w-[1400px] h-full flex items-center justify-center px-4 sm:px-6">
-          {/* ========================================================= */}
-          {/* CONNECTING ARROWS & HAIRLINE LEADER LINES (SVG)           */}
-          {/* ========================================================= */}
-          <motion.svg
-            style={{ opacity: shouldReduceMotion ? 0.7 : lineOpacity }}
-            className="absolute inset-0 w-full h-full pointer-events-none z-15"
-          >
-            <defs>
-              <marker
-                id="arrowhead-tl"
-                markerWidth="8"
-                markerHeight="8"
-                refX="5"
-                refY="4"
-                orient="auto"
-              >
-                <polygon points="0 1, 8 4, 0 7" fill="rgba(255,255,255,0.75)" />
-              </marker>
-              <marker
-                id="arrowhead-tr"
-                markerWidth="8"
-                markerHeight="8"
-                refX="5"
-                refY="4"
-                orient="auto"
-              >
-                <polygon points="0 1, 8 4, 0 7" fill="rgba(255,255,255,0.75)" />
-              </marker>
-              <marker
-                id="arrowhead-bl"
-                markerWidth="8"
-                markerHeight="8"
-                refX="5"
-                refY="4"
-                orient="auto"
-              >
-                <polygon points="0 1, 8 4, 0 7" fill="rgba(255,255,255,0.75)" />
-              </marker>
-              <marker
-                id="arrowhead-br"
-                markerWidth="8"
-                markerHeight="8"
-                refX="5"
-                refY="4"
-                orient="auto"
-              >
-                <polygon points="0 1, 8 4, 0 7" fill="rgba(255,255,255,0.75)" />
-              </marker>
-            </defs>
+      {/* Central Stage Container */}
+      <div className="relative w-full max-w-[1400px] h-full flex items-center justify-center px-4 sm:px-6">
+        {/* ========================================================= */}
+        {/* CONNECTING ARROWS & HAIRLINE LEADER LINES (SVG)           */}
+        {/* ========================================================= */}
+        <motion.svg
+          style={{ opacity: shouldReduceMotion ? 0.7 : lineOpacity }}
+          className="absolute inset-0 w-full h-full pointer-events-none z-15"
+        >
+          <defs>
+            <marker
+              id="arrowhead-tl"
+              markerWidth="8"
+              markerHeight="8"
+              refX="5"
+              refY="4"
+              orient="auto"
+            >
+              <polygon points="0 1, 8 4, 0 7" fill="rgba(255,255,255,0.75)" />
+            </marker>
+            <marker
+              id="arrowhead-tr"
+              markerWidth="8"
+              markerHeight="8"
+              refX="5"
+              refY="4"
+              orient="auto"
+            >
+              <polygon points="0 1, 8 4, 0 7" fill="rgba(255,255,255,0.75)" />
+            </marker>
+            <marker
+              id="arrowhead-bl"
+              markerWidth="8"
+              markerHeight="8"
+              refX="5"
+              refY="4"
+              orient="auto"
+            >
+              <polygon points="0 1, 8 4, 0 7" fill="rgba(255,255,255,0.75)" />
+            </marker>
+            <marker
+              id="arrowhead-br"
+              markerWidth="8"
+              markerHeight="8"
+              refX="5"
+              refY="4"
+              orient="auto"
+            >
+              <polygon points="0 1, 8 4, 0 7" fill="rgba(255,255,255,0.75)" />
+            </marker>
+          </defs>
 
-            {/* 4 Directional Connecting Arrow Lines (Center to 4 Corners) */}
-            <line
-              x1="44%"
-              y1="42%"
-              x2="22%"
-              y2="20%"
-              stroke="rgba(255,255,255,0.45)"
-              strokeWidth="1.5"
-              strokeDasharray="4 4"
-              markerEnd="url(#arrowhead-tl)"
-            />
-            <line
-              x1="56%"
-              y1="42%"
-              x2="78%"
-              y2="20%"
-              stroke="rgba(255,255,255,0.45)"
-              strokeWidth="1.5"
-              strokeDasharray="4 4"
-              markerEnd="url(#arrowhead-tr)"
-            />
-            <line
-              x1="44%"
-              y1="58%"
-              x2="22%"
-              y2="80%"
-              stroke="rgba(255,255,255,0.45)"
-              strokeWidth="1.5"
-              strokeDasharray="4 4"
-              markerEnd="url(#arrowhead-bl)"
-            />
-            <line
-              x1="56%"
-              y1="58%"
-              x2="78%"
-              y2="80%"
-              stroke="rgba(255,255,255,0.45)"
-              strokeWidth="1.5"
-              strokeDasharray="4 4"
-              markerEnd="url(#arrowhead-br)"
-            />
-          </motion.svg>
+          {/* 4 Directional Connecting Arrow Lines (Center to 4 Corners) with dynamic path length */}
+          <motion.line
+            x1="44%"
+            y1="42%"
+            x2="22%"
+            y2="20%"
+            stroke="rgba(255,255,255,0.45)"
+            strokeWidth="1.5"
+            strokeDasharray="4 4"
+            markerEnd="url(#arrowhead-tl)"
+            style={shouldReduceMotion ? undefined : { pathLength: spread }}
+          />
+          <motion.line
+            x1="56%"
+            y1="42%"
+            x2="78%"
+            y2="20%"
+            stroke="rgba(255,255,255,0.45)"
+            strokeWidth="1.5"
+            strokeDasharray="4 4"
+            markerEnd="url(#arrowhead-tr)"
+            style={shouldReduceMotion ? undefined : { pathLength: spread }}
+          />
+          <motion.line
+            x1="44%"
+            y1="58%"
+            x2="22%"
+            y2="80%"
+            stroke="rgba(255,255,255,0.45)"
+            strokeWidth="1.5"
+            strokeDasharray="4 4"
+            markerEnd="url(#arrowhead-bl)"
+            style={shouldReduceMotion ? undefined : { pathLength: spread }}
+          />
+          <motion.line
+            x1="56%"
+            y1="58%"
+            x2="78%"
+            y2="80%"
+            stroke="rgba(255,255,255,0.45)"
+            strokeWidth="1.5"
+            strokeDasharray="4 4"
+            markerEnd="url(#arrowhead-br)"
+            style={shouldReduceMotion ? undefined : { pathLength: spread }}
+          />
+        </motion.svg>
 
           {/* ========================================================= */}
           {/* 4 EXPANDING DETAIL VIGNETTES (EMERGE FROM BEHIND)          */}
@@ -251,7 +261,6 @@ export function SolumSpatialBreakdown() {
             <div className="absolute inset-0 border border-white/10 rounded-xl sm:rounded-2xl pointer-events-none" />
           </motion.div>
         </div>
-      </div>
     </section>
   );
 }
