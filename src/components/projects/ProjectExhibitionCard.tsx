@@ -28,6 +28,7 @@ export function ProjectExhibitionCard({
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const playPromiseRef = useRef<Promise<void> | null>(null);
   const isPlayingRef = useRef(false);
+  const shouldPlayRef = useRef(false);
 
   useEffect(() => {
     const handleFsChange = () => {
@@ -71,6 +72,7 @@ export function ProjectExhibitionCard({
 
   // Safe playback helper that avoids unhandled promise rejections and autoplay blocks
   const safePlay = useCallback(() => {
+    shouldPlayRef.current = true;
     const video = videoRef.current;
     if (!video || !project.heroVideo) return;
 
@@ -83,18 +85,30 @@ export function ProjectExhibitionCard({
         playPromiseRef.current
           .then(() => {
             playPromiseRef.current = null;
-            isPlayingRef.current = true;
-            setIsPlaying(true);
+            if (!shouldPlayRef.current) {
+              video.pause();
+              isPlayingRef.current = false;
+              setIsPlaying(false);
+            } else {
+              isPlayingRef.current = true;
+              setIsPlaying(true);
+            }
           })
           .catch(() => {
             playPromiseRef.current = null;
             // Retry with muted=true if browser blocked unmuted audio
-            if (video) {
+            if (video && shouldPlayRef.current) {
               video.muted = true;
               setIsMuted(true);
               video.play().then(() => {
-                isPlayingRef.current = true;
-                setIsPlaying(true);
+                if (!shouldPlayRef.current) {
+                  video.pause();
+                  isPlayingRef.current = false;
+                  setIsPlaying(false);
+                } else {
+                  isPlayingRef.current = true;
+                  setIsPlaying(true);
+                }
               }).catch(() => {});
             }
           });
@@ -106,6 +120,7 @@ export function ProjectExhibitionCard({
 
   // Safe pause helper that waits for pending play promise to finish first
   const safePause = useCallback(() => {
+    shouldPlayRef.current = false;
     const video = videoRef.current;
     if (!video) return;
 
@@ -124,21 +139,41 @@ export function ProjectExhibitionCard({
     }
   }, []);
 
-  // Viewport Auto-Play: triggers smoothly when within 250px of viewport
+  // Viewport Auto-Play: precisely plays when video enters active viewport window on scroll,
+  // and automatically pauses when scrolled past it (above or below), resuming when scrolled back.
   useEffect(() => {
     const el = containerRef.current;
     if (!el || typeof IntersectionObserver === 'undefined') return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsInView(entry.isIntersecting);
+        const isVisibleInActiveZone = entry.isIntersecting && entry.intersectionRatio >= 0.20;
+        setIsInView(isVisibleInActiveZone);
       },
-      { rootMargin: '250px 0px', threshold: [0, 0.1, 0.3] }
+      {
+        root: null,
+        rootMargin: '-8% 0px -8% 0px',
+        threshold: [0, 0.1, 0.2, 0.35, 0.5, 0.75],
+      }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  // Pause when browser tab is inactive / minimized to save CPU and battery
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        safePause();
+      } else if (isInView) {
+        safePlay();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [isInView, safePlay, safePause]);
 
   useEffect(() => {
     if (isInView) {
@@ -300,11 +335,10 @@ export function ProjectExhibitionCard({
               ref={setVideoRef}
               src={project.heroVideo}
               poster={project.heroImage}
-              autoPlay
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               controls={false}
               disablePictureInPicture
               onCanPlay={handleCanPlay}

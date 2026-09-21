@@ -19,10 +19,11 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isInView, setIsInView] = useState(index === 0);
+  const [isInView, setIsInView] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const playPromiseRef = useRef<Promise<void> | null>(null);
+  const shouldPlayRef = useRef(false);
 
   useEffect(() => {
     const handleFsChange = () => {
@@ -52,6 +53,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   }, []);
 
   const safePlay = useCallback(() => {
+    shouldPlayRef.current = true;
     const video = videoRef.current;
     if (!video) return;
     video.defaultMuted = true;
@@ -63,14 +65,26 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
         playPromiseRef.current
           .then(() => {
             playPromiseRef.current = null;
-            setIsPlaying(true);
+            if (!shouldPlayRef.current) {
+              video.pause();
+              setIsPlaying(false);
+            } else {
+              setIsPlaying(true);
+            }
           })
           .catch(() => {
             playPromiseRef.current = null;
-            if (video) {
+            if (video && shouldPlayRef.current) {
               video.muted = true;
               setIsMuted(true);
-              video.play().then(() => setIsPlaying(true)).catch(() => {});
+              video.play().then(() => {
+                if (!shouldPlayRef.current) {
+                  video.pause();
+                  setIsPlaying(false);
+                } else {
+                  setIsPlaying(true);
+                }
+              }).catch(() => {});
             }
           });
       }
@@ -80,6 +94,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   }, [isMuted]);
 
   const safePause = useCallback(() => {
+    shouldPlayRef.current = false;
     const video = videoRef.current;
     if (!video) return;
 
@@ -96,20 +111,41 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     }
   }, []);
 
+  // Viewport Auto-Play: precisely plays when video enters active viewport window on scroll,
+  // and automatically pauses when scrolled past it (above or below), resuming when scrolled back.
   useEffect(() => {
     const el = containerRef.current;
     if (!el || typeof IntersectionObserver === 'undefined') return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsInView(entry.isIntersecting);
+        const isVisibleInActiveZone = entry.isIntersecting && entry.intersectionRatio >= 0.20;
+        setIsInView(isVisibleInActiveZone);
       },
-      { rootMargin: '250px 0px', threshold: [0, 0.1, 0.3] }
+      {
+        root: null,
+        rootMargin: '-8% 0px -8% 0px',
+        threshold: [0, 0.1, 0.2, 0.35, 0.5, 0.75],
+      }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  // Pause when browser tab is inactive / minimized to save CPU and battery
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        safePause();
+      } else if (isInView) {
+        safePlay();
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [isInView, safePlay, safePause]);
 
   useEffect(() => {
     if (isInView) {
@@ -374,11 +410,10 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 ref={setVideoRef}
                 src={project.heroVideo}
                 poster={project.heroImage}
-                autoPlay
                 muted
                 loop
                 playsInline
-                preload="auto"
+                preload="metadata"
                 controls={false}
                 disablePictureInPicture
                 onCanPlay={() => {
