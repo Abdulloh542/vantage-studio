@@ -19,11 +19,10 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(index === 0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const playPromiseRef = useRef<Promise<void> | null>(null);
-  const shouldPlayRef = useRef(false);
+  const requestIdRef = useRef(0);
 
   useEffect(() => {
     const handleFsChange = () => {
@@ -52,37 +51,38 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     }
   }, []);
 
+  // Safe playback helper that avoids unhandled promise rejections, race conditions, and autoplay blocks
   const safePlay = useCallback(() => {
-    shouldPlayRef.current = true;
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || !project.heroVideo) return;
+
+    const currentId = ++requestIdRef.current;
     video.defaultMuted = true;
     video.muted = isMuted;
 
     try {
-      playPromiseRef.current = video.play();
-      if (playPromiseRef.current !== undefined) {
-        playPromiseRef.current
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise
           .then(() => {
-            playPromiseRef.current = null;
-            if (!shouldPlayRef.current) {
+            if (currentId !== requestIdRef.current) {
               video.pause();
               setIsPlaying(false);
             } else {
               setIsPlaying(true);
             }
           })
-          .catch(() => {
-            playPromiseRef.current = null;
-            if (video && shouldPlayRef.current) {
+          .catch((err) => {
+            if (err?.name === 'AbortError') return;
+            if (currentId === requestIdRef.current) {
               video.muted = true;
               setIsMuted(true);
               video.play().then(() => {
-                if (!shouldPlayRef.current) {
+                if (currentId === requestIdRef.current) {
+                  setIsPlaying(true);
+                } else {
                   video.pause();
                   setIsPlaying(false);
-                } else {
-                  setIsPlaying(true);
                 }
               }).catch(() => {});
             }
@@ -91,47 +91,45 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     } catch {
       // ignore
     }
-  }, [isMuted]);
+  }, [project.heroVideo, isMuted]);
 
+  // Safe pause helper that invalidates any in-flight play request immediately
   const safePause = useCallback(() => {
-    shouldPlayRef.current = false;
     const video = videoRef.current;
     if (!video) return;
 
-    if (playPromiseRef.current) {
-      playPromiseRef.current
-        .then(() => {
-          video.pause();
-          setIsPlaying(false);
-        })
-        .catch(() => {});
-    } else {
+    ++requestIdRef.current;
+    try {
       video.pause();
-      setIsPlaying(false);
+    } catch {
+      // ignore
     }
+    setIsPlaying(false);
   }, []);
 
-  // Viewport Auto-Play: precisely plays when video enters active viewport window on scroll,
-  // and automatically pauses when scrolled past it (above or below), resuming when scrolled back.
+  // Viewport Auto-Play: triggers smoothly when video enters viewport on scroll,
+  // pauses when scrolled out, and resumes when scrolled back in.
   useEffect(() => {
     const el = containerRef.current;
-    if (!el || typeof IntersectionObserver === 'undefined') return;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      safePlay();
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const isVisibleInActiveZone = entry.isIntersecting && entry.intersectionRatio >= 0.20;
-        setIsInView(isVisibleInActiveZone);
+        setIsInView(entry.isIntersecting);
       },
       {
         root: null,
-        rootMargin: '-8% 0px -8% 0px',
-        threshold: [0, 0.1, 0.2, 0.35, 0.5, 0.75],
+        rootMargin: '50px 0px 50px 0px',
+        threshold: 0.15,
       }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [safePlay]);
 
   // Pause when browser tab is inactive / minimized to save CPU and battery
   useEffect(() => {
@@ -413,7 +411,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="auto"
                 controls={false}
                 disablePictureInPicture
                 onCanPlay={() => {
@@ -423,6 +421,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 onLoadedMetadata={handleLoadedMetadata}
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
+                onPlaying={() => setIsPlaying(true)}
                 onClick={handleContainerClick}
                 className={`w-full h-full ${
                   isFullscreen

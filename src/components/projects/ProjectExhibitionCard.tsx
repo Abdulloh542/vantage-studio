@@ -26,9 +26,7 @@ export function ProjectExhibitionCard({
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const playPromiseRef = useRef<Promise<void> | null>(null);
-  const isPlayingRef = useRef(false);
-  const shouldPlayRef = useRef(false);
+  const requestIdRef = useRef(0);
 
   useEffect(() => {
     const handleFsChange = () => {
@@ -70,44 +68,38 @@ export function ProjectExhibitionCard({
     }
   }, []);
 
-  // Safe playback helper that avoids unhandled promise rejections and autoplay blocks
+  // Safe playback helper that avoids unhandled promise rejections, race conditions, and autoplay blocks
   const safePlay = useCallback(() => {
-    shouldPlayRef.current = true;
     const video = videoRef.current;
     if (!video || !project.heroVideo) return;
 
+    const currentId = ++requestIdRef.current;
     video.defaultMuted = true;
     video.muted = isMuted;
 
     try {
-      playPromiseRef.current = video.play();
-      if (playPromiseRef.current !== undefined) {
-        playPromiseRef.current
+      const promise = video.play();
+      if (promise !== undefined) {
+        promise
           .then(() => {
-            playPromiseRef.current = null;
-            if (!shouldPlayRef.current) {
+            if (currentId !== requestIdRef.current) {
               video.pause();
-              isPlayingRef.current = false;
               setIsPlaying(false);
             } else {
-              isPlayingRef.current = true;
               setIsPlaying(true);
             }
           })
-          .catch(() => {
-            playPromiseRef.current = null;
-            // Retry with muted=true if browser blocked unmuted audio
-            if (video && shouldPlayRef.current) {
+          .catch((err) => {
+            if (err?.name === 'AbortError') return;
+            if (currentId === requestIdRef.current) {
               video.muted = true;
               setIsMuted(true);
               video.play().then(() => {
-                if (!shouldPlayRef.current) {
-                  video.pause();
-                  isPlayingRef.current = false;
-                  setIsPlaying(false);
-                } else {
-                  isPlayingRef.current = true;
+                if (currentId === requestIdRef.current) {
                   setIsPlaying(true);
+                } else {
+                  video.pause();
+                  setIsPlaying(false);
                 }
               }).catch(() => {});
             }
@@ -118,48 +110,43 @@ export function ProjectExhibitionCard({
     }
   }, [project.heroVideo, isMuted]);
 
-  // Safe pause helper that waits for pending play promise to finish first
+  // Safe pause helper that invalidates any in-flight play request immediately
   const safePause = useCallback(() => {
-    shouldPlayRef.current = false;
     const video = videoRef.current;
     if (!video) return;
 
-    if (playPromiseRef.current) {
-      playPromiseRef.current
-        .then(() => {
-          video.pause();
-          isPlayingRef.current = false;
-          setIsPlaying(false);
-        })
-        .catch(() => {});
-    } else {
+    ++requestIdRef.current;
+    try {
       video.pause();
-      isPlayingRef.current = false;
-      setIsPlaying(false);
+    } catch {
+      // ignore
     }
+    setIsPlaying(false);
   }, []);
 
-  // Viewport Auto-Play: precisely plays when video enters active viewport window on scroll,
-  // and automatically pauses when scrolled past it (above or below), resuming when scrolled back.
+  // Viewport Auto-Play: triggers smoothly when video is in viewport on scroll,
+  // pauses when scrolled out, and resumes when scrolled back in.
   useEffect(() => {
     const el = containerRef.current;
-    if (!el || typeof IntersectionObserver === 'undefined') return;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      safePlay();
+      return;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const isVisibleInActiveZone = entry.isIntersecting && entry.intersectionRatio >= 0.20;
-        setIsInView(isVisibleInActiveZone);
+        setIsInView(entry.isIntersecting);
       },
       {
         root: null,
-        rootMargin: '-8% 0px -8% 0px',
-        threshold: [0, 0.1, 0.2, 0.35, 0.5, 0.75],
+        rootMargin: '50px 0px 50px 0px',
+        threshold: 0.15,
       }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [safePlay]);
 
   // Pause when browser tab is inactive / minimized to save CPU and battery
   useEffect(() => {
@@ -338,10 +325,12 @@ export function ProjectExhibitionCard({
               muted
               loop
               playsInline
-              preload="metadata"
+              preload="auto"
               controls={false}
               disablePictureInPicture
               onCanPlay={handleCanPlay}
+              onPlaying={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
               onClick={togglePlay}
