@@ -130,7 +130,7 @@ export const PROJECTS: Project[] = [
       { label: 'Floor Area', value: '18,500 m²' },
       { label: 'Original Year', value: '1943 (Renovated 2025)' },
       { label: 'Approval Status', value: '100% Landmark Approved' },
-      { label: 'Outputs', value: '7 Stills + 4K Cinema Film' }
+      { label: 'Outputs', value: '9 Stills + 4K Cinema Film' }
     ],
     beforeAfter: {
       beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982068/projects/bunker-37/create_a_detailed_exploded_axonometric_2.jpg',
@@ -193,6 +193,16 @@ export const PROJECTS: Project[] = [
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982065/projects/bunker-37/Create_an_architectural_concept_board_20.jpg',
         caption: 'Architectural concept board: texture and spatial daylight study',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982783/projects/bunker-37/ChatGPT_Image_Jun_20__2026__03_30_05_PM.png',
+        caption: 'Top-down architectural axonometric: apartment floorplan spatial configuration and illuminated private suite',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982781/projects/bunker-37/bunker_37_drone_aerial_context.jpg',
+        caption: 'Aerial drone perspective: Bunker 37 situated in historic Hamburg neighborhood context',
         aspectRatio: 'landscape'
       }
     ],

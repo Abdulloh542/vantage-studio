@@ -70,16 +70,27 @@ async function main() {
   const bunkerFolder = 'C:\\Users\\user\\Desktop\\Site uchun ishlar\\Bunker 37';
   console.log(`Target Cloudinary Cloud: ${cloudName}`);
 
+  const cachePath = path.join(process.cwd(), 'bunker37_cloudinary_urls.json');
+  let results = {};
+  if (fs.existsSync(cachePath)) {
+    try {
+      results = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
+    } catch (e) {}
+  }
+
   const files = fs.readdirSync(bunkerFolder);
-  const results = {};
 
   for (const file of files) {
+    if (results[file]) {
+      console.log(`Skipping already uploaded: ${file}`);
+      continue;
+    }
     const fullPath = path.join(bunkerFolder, file);
     const ext = path.extname(file).toLowerCase();
     
     // Upload the web-optimized video instead of the 351MB raw file if available
     if (ext === '.mp4') {
-      if (file === 'bunker_37_web.mp4') {
+      if (file === 'bunker_37_web.mp4' && !results['heroVideo']) {
         const res = await uploadFile(fullPath, 'video', 'bunker_37_film');
         results['heroVideo'] = res.secure_url;
       }
@@ -96,10 +107,7 @@ async function main() {
   console.log('\n--- UPLOAD SUMMARY ---');
   console.log(JSON.stringify(results, null, 2));
 
-  fs.writeFileSync(
-    path.join(process.cwd(), 'bunker37_cloudinary_urls.json'),
-    JSON.stringify(results, null, 2)
-  );
+  fs.writeFileSync(cachePath, JSON.stringify(results, null, 2));
   console.log('Saved bunker37_cloudinary_urls.json');
 }
 

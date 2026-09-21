@@ -15,37 +15,29 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Compile all high-res stills for the project
+  // Compile all unique high-res stills for the project
   const stills: LightboxImage[] = [];
+  const seenUrls = new Set<string>();
 
-  if (project.gallery && project.gallery.length > 0) {
-    project.gallery.forEach((g) => {
+  const addStill = (url?: string, caption?: string) => {
+    if (url && !seenUrls.has(url)) {
+      seenUrls.add(url);
       stills.push({
-        url: g.url,
-        caption: g.caption,
+        url,
+        caption: caption || project.title,
         title: project.title,
       });
-    });
-  }
+    }
+  };
 
+  if (project.gallery && project.gallery.length > 0) {
+    project.gallery.forEach((g) => addStill(g.url, g.caption));
+  }
   if (project.process) {
-    project.process.forEach((p) => {
-      if (p.image) {
-        stills.push({
-          url: p.image,
-          caption: `${p.step} // ${p.title} — ${p.description}`,
-          title: project.title,
-        });
-      }
-    });
+    project.process.forEach((p) => addStill(p.image, `${p.step} // ${p.title} — ${p.description}`));
   }
-
   if (project.heroImage) {
-    stills.push({
-      url: project.heroImage,
-      caption: 'Lead Master Elevation & Architectural Framing',
-      title: project.title,
-    });
+    addStill(project.heroImage, 'Lead Master Elevation & Architectural Framing');
   }
 
   // Fallback high-res stills if project has fewer than 9 images
@@ -59,19 +51,15 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   ];
   let fbIdx = 0;
   while (stills.length < 9) {
-    stills.push({
-      url: fallbackImages[fbIdx % fallbackImages.length],
-      caption: `Architectural Perspective ${stills.length + 1}`,
-      title: project.title,
-    });
+    addStill(fallbackImages[fbIdx % fallbackImages.length], `Architectural Perspective ${stills.length + 1}`);
     fbIdx++;
   }
 
-  // Partition into 3 alternating rows with their originalIndex for lightbox
+  // Exact 3-3-3 partitioning: 3 unique stills per row without cross-row repetition
   const itemsWithIdx = stills.map((item, originalIndex) => ({ item, originalIndex }));
-  const r1Base = itemsWithIdx.filter((_, i) => i % 3 === 0);
-  const r2Base = itemsWithIdx.filter((_, i) => i % 3 === 1);
-  const r3Base = itemsWithIdx.filter((_, i) => i % 3 === 2);
+  const r1Base = itemsWithIdx.slice(0, 3);
+  const r2Base = itemsWithIdx.slice(3, 6);
+  const r3Base = itemsWithIdx.slice(6, 9);
 
   // Duplicate each row array for seamless 0% -> -50% infinite loop
   const row1Loop = [...r1Base, ...r1Base];
@@ -139,9 +127,9 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
           Exact layout matching user's reference screenshot
           ───────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-stretch">
-        {/* LEFT: Cinematic High-Fidelity Video (or Hero Image Fallback) */}
-        <div className="lg:col-span-7 xl:col-span-7 flex flex-col">
-          <div className="relative aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/11] w-full h-full min-h-[260px] sm:min-h-[420px] lg:min-h-[520px] overflow-hidden bg-black border border-[#101010]/12 group">
+        {/* LEFT: Cinematic High-Fidelity Video (or Hero Image Fallback) - Expanded */}
+        <div className="lg:col-span-8 xl:col-span-8 flex flex-col">
+          <div className="relative aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] w-full h-full min-h-[280px] sm:min-h-[440px] lg:min-h-[540px] overflow-hidden bg-black border border-[#101010]/12 group">
             {project.heroVideo ? (
               <video
                 ref={videoRef}
@@ -166,13 +154,6 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
 
             {/* Subtle Gradient vignette */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
-
-            {/* Top Badge: Video Format */}
-            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 pointer-events-none">
-              <span className="px-2.5 py-1 bg-black/75 backdrop-blur-sm text-[10px] sm:text-xs font-mono uppercase tracking-widest text-white border border-white/15">
-                {project.videoDuration || '4K CINEMATIC MASTER'}
-              </span>
-            </div>
 
             {/* Bottom Left: Title & Location Watermark */}
             <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 pointer-events-none">
@@ -206,19 +187,19 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
           </div>
         </div>
 
-        {/* RIGHT: 3-Tier Alternating Infinite Marquee Stills (CGI Studio / Solé Ettalong Master Dynamic) */}
-        <div className="lg:col-span-5 xl:col-span-5 flex flex-col justify-between gap-2 sm:gap-2.5 h-full min-h-[300px] sm:min-h-[420px] lg:min-h-[520px] overflow-hidden bg-[#0A0A0A] border border-[#101010]/12 p-2">
-          {/* Row 1: Slides Left (animate-marquee) */}
-          <div className="relative w-full overflow-hidden h-[95px] sm:h-[132px] lg:h-[162px] flex items-center">
+        {/* RIGHT: 3-Tier Alternating Infinite Marquee Stills (Compact light background, 3-3-3 distinct images) */}
+        <div className="lg:col-span-4 xl:col-span-4 flex flex-col justify-between gap-2 sm:gap-2.5 h-full min-h-[300px] sm:min-h-[440px] lg:min-h-[540px] overflow-hidden bg-[#F8F8F6] border border-[#101010]/10 p-2 sm:p-2.5">
+          {/* Row 1: Slides Left (animate-marquee) - 3 unique images */}
+          <div className="relative w-full overflow-hidden h-[90px] sm:h-[135px] lg:h-[165px] flex items-center">
             <div
               className="flex items-center gap-2 sm:gap-2.5 animate-marquee w-max"
-              style={{ animationDuration: '32s' }}
+              style={{ animationDuration: '30s' }}
             >
               {row1Loop.map((entry, idx) => (
                 <div
                   key={`r1-${idx}`}
                   onClick={() => handleOpenLightbox(entry.originalIndex)}
-                  className="group relative w-36 sm:w-48 lg:w-56 h-[95px] sm:h-[132px] lg:h-[162px] flex-shrink-0 overflow-hidden bg-zinc-900 border border-white/10 cursor-pointer"
+                  className="group relative w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px] flex-shrink-0 overflow-hidden bg-zinc-100 border border-[#101010]/10 cursor-pointer"
                 >
                   <img
                     src={entry.item.url}
@@ -226,32 +207,27 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                     loading="lazy"
                     className="w-full h-full object-cover filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 pointer-events-none select-none"
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full bg-white text-black opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center shadow-lg">
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-300 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-[#101010] text-white opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center shadow-lg">
                       <Eye className="w-4 h-4" />
                     </div>
-                  </div>
-                  <div className="absolute top-2 left-2 z-10 pointer-events-none">
-                    <span className="px-1.5 py-0.5 bg-black/80 text-[9px] font-mono text-white/90 border border-white/15 uppercase tabular-nums">
-                      0{entry.originalIndex + 1}
-                    </span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Row 2: Slides Rightwards (Reverse direction) */}
-          <div className="relative w-full overflow-hidden h-[95px] sm:h-[132px] lg:h-[162px] flex items-center">
+          {/* Row 2: Slides Rightwards (Reverse direction) - 3 unique images */}
+          <div className="relative w-full overflow-hidden h-[90px] sm:h-[135px] lg:h-[165px] flex items-center">
             <div
               className="flex items-center gap-2 sm:gap-2.5 animate-marquee-reverse w-max"
-              style={{ animationDuration: '36s' }}
+              style={{ animationDuration: '32s' }}
             >
               {row2Loop.map((entry, idx) => (
                 <div
                   key={`r2-${idx}`}
                   onClick={() => handleOpenLightbox(entry.originalIndex)}
-                  className="group relative w-36 sm:w-48 lg:w-56 h-[95px] sm:h-[132px] lg:h-[162px] flex-shrink-0 overflow-hidden bg-zinc-900 border border-white/10 cursor-pointer"
+                  className="group relative w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px] flex-shrink-0 overflow-hidden bg-zinc-100 border border-[#101010]/10 cursor-pointer"
                 >
                   <img
                     src={entry.item.url}
@@ -259,32 +235,27 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                     loading="lazy"
                     className="w-full h-full object-cover filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 pointer-events-none select-none"
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full bg-white text-black opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center shadow-lg">
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-300 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-[#101010] text-white opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center shadow-lg">
                       <Eye className="w-4 h-4" />
                     </div>
-                  </div>
-                  <div className="absolute top-2 left-2 z-10 pointer-events-none">
-                    <span className="px-1.5 py-0.5 bg-black/80 text-[9px] font-mono text-white/90 border border-white/15 uppercase tabular-nums">
-                      0{entry.originalIndex + 1}
-                    </span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Row 3: Slides Leftwards */}
-          <div className="relative w-full overflow-hidden h-[95px] sm:h-[132px] lg:h-[162px] flex items-center">
+          {/* Row 3: Slides Leftwards - 3 unique images */}
+          <div className="relative w-full overflow-hidden h-[90px] sm:h-[135px] lg:h-[165px] flex items-center">
             <div
               className="flex items-center gap-2 sm:gap-2.5 animate-marquee w-max"
-              style={{ animationDuration: '29s' }}
+              style={{ animationDuration: '28s' }}
             >
               {row3Loop.map((entry, idx) => (
                 <div
                   key={`r3-${idx}`}
                   onClick={() => handleOpenLightbox(entry.originalIndex)}
-                  className="group relative w-36 sm:w-48 lg:w-56 h-[95px] sm:h-[132px] lg:h-[162px] flex-shrink-0 overflow-hidden bg-zinc-900 border border-white/10 cursor-pointer"
+                  className="group relative w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px] flex-shrink-0 overflow-hidden bg-zinc-100 border border-[#101010]/10 cursor-pointer"
                 >
                   <img
                     src={entry.item.url}
@@ -292,15 +263,10 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                     loading="lazy"
                     className="w-full h-full object-cover filter brightness-95 group-hover:brightness-105 group-hover:scale-105 transition-all duration-500 pointer-events-none select-none"
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/35 transition-colors duration-300 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full bg-white text-black opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center shadow-lg">
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-300 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-[#101010] text-white opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center shadow-lg">
                       <Eye className="w-4 h-4" />
                     </div>
-                  </div>
-                  <div className="absolute top-2 left-2 z-10 pointer-events-none">
-                    <span className="px-1.5 py-0.5 bg-black/80 text-[9px] font-mono text-white/90 border border-white/15 uppercase tabular-nums">
-                      0{entry.originalIndex + 1}
-                    </span>
                   </div>
                 </div>
               ))}

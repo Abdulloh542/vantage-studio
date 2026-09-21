@@ -34,8 +34,8 @@ export function ProjectsPage() {
     <main className="w-full bg-white text-[#101010] pt-28 md:pt-36 pb-24 md:pb-36">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10">
         {/* Header: Editorial Heading Selected Projects & Short Description at Right */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-16 border-b border-[#101010]/12 items-end">
-          <div className="col-span-1 md:col-span-3">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 lg:pb-16 border-b border-[#101010]/12 items-end">
+          <div className="col-span-1 lg:col-span-9">
             <div className="flex items-center gap-2 mb-4">
               <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
               <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
@@ -47,7 +47,7 @@ export function ProjectsPage() {
             </h1>
           </div>
 
-          <div className="col-span-1">
+          <div className="col-span-1 lg:col-span-3">
             <span className="font-mono text-xs text-[#757575] block mb-2">
               CATALOGUE SCOPE
             </span>
@@ -58,9 +58,9 @@ export function ProjectsPage() {
         </div>
 
         {/* Content Layout: Left Rail Category Filters + Main Full-Width Project List */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 pt-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pt-12 lg:pt-16 items-start">
           {/* Left Rail: Category Filters (Horizontal swipeable strip on mobile, vertical sticky rail on desktop) */}
-          <div className="col-span-1 md:sticky md:top-28">
+          <div className="col-span-1 lg:col-span-2 lg:sticky lg:top-28">
             <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-3 md:mb-6">
               FILTER BY TYPOLOGY
             </span>
@@ -91,7 +91,7 @@ export function ProjectsPage() {
           </div>
 
           {/* Main Content: One Full-Width Media Project per Row with Varied Heights */}
-          <div className="col-span-1 md:col-span-3 min-h-[500px]">
+          <div className="col-span-1 lg:col-span-10 min-h-[500px]">
             {filteredProjects.length === 0 ? (
               /* Real Empty State */
               <motion.div
