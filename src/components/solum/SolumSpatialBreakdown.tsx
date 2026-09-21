@@ -28,18 +28,18 @@ export function SolumSpatialBreakdown() {
   const cardScale = useTransform(smoothProgress, [0.04, 0.70], [0.8, 1]);
   const lineOpacity = useTransform(smoothProgress, [0.12, 0.50], [0, 0.9]);
 
-  // Clean, symmetrical diagonal translations that easily fit within any laptop or desktop screen
-  const tlX = useTransform(spread, (v) => `${v * -162}%`);
-  const tlY = useTransform(spread, (v) => `${v * -172}%`);
+  // Clean, symmetrical diagonal translations that provide generous room for larger cards
+  const tlX = useTransform(spread, (v) => `${v * -155}%`);
+  const tlY = useTransform(spread, (v) => `${v * -168}%`);
 
-  const trX = useTransform(spread, (v) => `${v * 162}%`);
-  const trY = useTransform(spread, (v) => `${v * -172}%`);
+  const trX = useTransform(spread, (v) => `${v * 155}%`);
+  const trY = useTransform(spread, (v) => `${v * -168}%`);
 
-  const blX = useTransform(spread, (v) => `${v * -162}%`);
-  const blY = useTransform(spread, (v) => `${v * 172}%`);
+  const blX = useTransform(spread, (v) => `${v * -155}%`);
+  const blY = useTransform(spread, (v) => `${v * 168}%`);
 
-  const brX = useTransform(spread, (v) => `${v * 162}%`);
-  const brY = useTransform(spread, (v) => `${v * 172}%`);
+  const brX = useTransform(spread, (v) => `${v * 155}%`);
+  const brY = useTransform(spread, (v) => `${v * 168}%`);
 
   return (
     <section
@@ -52,75 +52,75 @@ export function SolumSpatialBreakdown() {
         <div className="absolute inset-0 bg-gradient-radial from-zinc-900/40 via-[#0A0A0A] to-[#0A0A0A] pointer-events-none" />
 
         {/* Central Stage Container (Refined balanced luxury scale) */}
-        <div className="relative w-full max-w-[1140px] h-full flex items-center justify-center px-4 sm:px-6">
+        <div className="relative w-full max-w-[1240px] h-full flex items-center justify-center px-4 sm:px-6">
           {/* ========================================================= */}
-          {/* CONNECTING ARROWS (EXACT SYMMETRICAL DIAGONALS)           */}
-          {/* Placed at z-10 BEHIND cards (z-20) so they NEVER pierce photos */}
+          {/* CONNECTING ARROWS (EXACT SYMMETRICAL 45° DIAGONALS)       */}
+          {/* Placed at z-[25] so solid white arrowheads are 100% visible */}
           {/* ========================================================= */}
           <motion.svg
-            viewBox="-500 -300 1000 600"
+            viewBox="-600 -350 1200 700"
             preserveAspectRatio="xMidYMid meet"
             style={{ opacity: shouldReduceMotion ? 0.8 : lineOpacity }}
-            className="absolute inset-0 w-full h-full pointer-events-none z-10"
+            className="absolute inset-0 w-full h-full pointer-events-none z-[25]"
           >
             <defs>
               <marker
                 id="arrowhead-diag"
-                markerWidth="7"
-                markerHeight="7"
-                refX="5"
-                refY="3.5"
+                markerWidth="10"
+                markerHeight="10"
+                refX="8"
+                refY="4"
                 orient="auto"
               >
-                <polygon points="0 1, 6 3.5, 0 6" fill="rgba(255,255,255,0.9)" />
+                <polygon points="0 1, 8 4, 0 7" fill="#FFFFFF" />
               </marker>
             </defs>
 
-            {/* 1. Top-Left Diagonal Arrow (Center Villa corner to Tree Canopy corner) */}
+            {/* 1. Top-Left Diagonal Arrow (Center Villa to Tree Canopy) */}
             <motion.line
-              x1="-214"
-              y1="-120"
-              x2="-260"
-              y2="-158"
-              stroke="rgba(255,255,255,0.75)"
-              strokeWidth="1.5"
-              strokeDasharray="5 5"
+              x1="-252"
+              y1="-142"
+              x2="-294"
+              y2="-184"
+              stroke="rgba(255,255,255,0.85)"
+              strokeWidth="2"
+              strokeDasharray="5 4"
               markerEnd="url(#arrowhead-diag)"
               style={shouldReduceMotion ? undefined : { pathLength: spread }}
             />
-            {/* 2. Top-Right Diagonal Arrow (Center Villa corner to Wall Sculpture corner) */}
+            {/* 2. Top-Right Diagonal Arrow (Center Villa to Wall Sculpture) */}
             <motion.line
-              x1="214"
-              y1="-120"
-              x2="260"
-              y2="-158"
-              stroke="rgba(255,255,255,0.75)"
-              strokeWidth="1.5"
-              strokeDasharray="5 5"
+              x1="252"
+              y1="-142"
+              x2="294"
+              y2="-184"
+              stroke="rgba(255,255,255,0.85)"
+              strokeWidth="2"
+              strokeDasharray="5 4"
               markerEnd="url(#arrowhead-diag)"
               style={shouldReduceMotion ? undefined : { pathLength: spread }}
             />
-            {/* 3. Bottom-Left Diagonal Arrow (Center Villa corner to Pool Landscape corner) */}
+            {/* 3. Bottom-Left Diagonal Arrow (Center Villa to Pool Landscape) */}
             <motion.line
-              x1="-214"
-              y1="120"
-              x2="-260"
-              y2="158"
-              stroke="rgba(255,255,255,0.75)"
-              strokeWidth="1.5"
-              strokeDasharray="5 5"
+              x1="-252"
+              y1="142"
+              x2="-294"
+              y2="184"
+              stroke="rgba(255,255,255,0.85)"
+              strokeWidth="2"
+              strokeDasharray="5 4"
               markerEnd="url(#arrowhead-diag)"
               style={shouldReduceMotion ? undefined : { pathLength: spread }}
             />
-            {/* 4. Bottom-Right Diagonal Arrow (Center Villa corner to Timber Soffit corner) */}
+            {/* 4. Bottom-Right Diagonal Arrow (Center Villa to Timber Soffit) */}
             <motion.line
-              x1="214"
-              y1="120"
-              x2="260"
-              y2="158"
-              stroke="rgba(255,255,255,0.75)"
-              strokeWidth="1.5"
-              strokeDasharray="5 5"
+              x1="252"
+              y1="142"
+              x2="294"
+              y2="184"
+              stroke="rgba(255,255,255,0.85)"
+              strokeWidth="2"
+              strokeDasharray="5 4"
               markerEnd="url(#arrowhead-diag)"
               style={shouldReduceMotion ? undefined : { pathLength: spread }}
             />
@@ -142,7 +142,7 @@ export function SolumSpatialBreakdown() {
                     scale: cardScale,
                   }
             }
-            className="absolute z-20 w-[116px] sm:w-[150px] md:w-[190px] lg:w-[218px] xl:w-[245px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[130px] sm:w-[170px] md:w-[215px] lg:w-[250px] xl:w-[285px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/tree_canopy_detail.webp"
@@ -165,7 +165,7 @@ export function SolumSpatialBreakdown() {
                     scale: cardScale,
                   }
             }
-            className="absolute z-20 w-[116px] sm:w-[150px] md:w-[190px] lg:w-[218px] xl:w-[245px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[130px] sm:w-[170px] md:w-[215px] lg:w-[250px] xl:w-[285px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/sculpture_detail.webp"
@@ -188,7 +188,7 @@ export function SolumSpatialBreakdown() {
                     scale: cardScale,
                   }
             }
-            className="absolute z-20 w-[116px] sm:w-[150px] md:w-[190px] lg:w-[218px] xl:w-[245px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[130px] sm:w-[170px] md:w-[215px] lg:w-[250px] xl:w-[285px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/landscape_detail.webp"
@@ -211,7 +211,7 @@ export function SolumSpatialBreakdown() {
                     scale: cardScale,
                   }
             }
-            className="absolute z-20 w-[116px] sm:w-[150px] md:w-[190px] lg:w-[218px] xl:w-[245px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[130px] sm:w-[170px] md:w-[215px] lg:w-[250px] xl:w-[285px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/ceiling_lighting_detail.webp"
@@ -227,7 +227,7 @@ export function SolumSpatialBreakdown() {
           {/* ========================================================= */}
           <motion.div
             style={shouldReduceMotion ? undefined : { scale: centerScale }}
-            className="relative z-30 w-[230px] sm:w-[300px] md:w-[375px] lg:w-[425px] xl:w-[470px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/35 bg-black shadow-[0_0_80px_rgba(0,0,0,0.95)] group"
+            className="relative z-30 w-[240px] sm:w-[320px] md:w-[400px] lg:w-[450px] xl:w-[500px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/35 bg-black shadow-[0_0_80px_rgba(0,0,0,0.95)] group"
           >
             <img
               src="/images/before_after/villa_after.webp"
