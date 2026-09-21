@@ -90,8 +90,8 @@ async function main() {
     
     // Upload the web-optimized video instead of the 351MB raw file if available
     if (ext === '.mp4') {
-      if (file === 'bunker_37_web.mp4' && !results['heroVideo']) {
-        const res = await uploadFile(fullPath, 'video', 'bunker_37_film');
+      if (file === 'bunker_37_web.mp4') {
+        const res = await uploadFile(fullPath, 'video', 'bunker_37_film_v2');
         results['heroVideo'] = res.secure_url;
       }
       continue;

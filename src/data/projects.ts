@@ -111,7 +111,7 @@ export const PROJECTS: Project[] = [
     services: ['Renovation & Construction', 'AI Architectural Films', 'Exterior CGI'],
     tags: ['All', 'Renovation', 'Architecture', 'CGI', 'AI Film', 'Exterior', 'Heritage'],
     heroImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982051/projects/bunker-37/add_rooftop_on_first_image_202606191833.jpg',
-    heroVideo: 'https://res.cloudinary.com/mvmsbgon/video/upload/v1789982060/projects/bunker-37/bunker_37_film.mp4',
+    heroVideo: 'https://res.cloudinary.com/mvmsbgon/video/upload/v1789983235/projects/bunker-37/bunker_37_film_v2.mp4',
     videoDuration: '4K Architectural Film',
     clientMaterial: 'Historical LiDAR point-cloud scans and municipal landmark conservation blueprints',
     transformationPipeline: [
