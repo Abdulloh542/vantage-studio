@@ -5,7 +5,7 @@ export function SolumSpatialBreakdown() {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Pinned viewport scroll: expands smoothly, stays fully open throughout scroll down, collapses when exiting to top
+  // Pinned viewport scroll: expands smoothly, stays locked and fully open, collapses when exiting to top
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
@@ -13,20 +13,20 @@ export function SolumSpatialBreakdown() {
 
   // Physical liquid spring: silky smooth 60fps/120Hz tracking, zero discrete 'wop' jumps
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 220,
-    damping: 28,
+    stiffness: 240,
+    damping: 30,
     mass: 0.35,
     restDelta: 0.001,
   });
 
-  // Smoothly expands between 4% and 36% of scroll, and STAYS 100% open and visible throughout scroll down!
-  const spread = useTransform(smoothProgress, [0.04, 0.36], [0, 1]);
-  const centerScale = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [0.96, 1, 1, 0.98]);
+  // Smoothly expands between 3% and 28% of scroll, and STAYS 100% open and locked throughout the section!
+  const spread = useTransform(smoothProgress, [0.03, 0.28], [0, 1]);
+  const centerScale = useTransform(smoothProgress, [0, 0.15, 0.85, 1], [0.96, 1, 1, 0.98]);
 
   // Card opacity rises swiftly from 0 to 1 and stays 100% solid
-  const cardOpacity = useTransform(smoothProgress, [0.03, 0.16], [0, 1]);
-  const cardScale = useTransform(smoothProgress, [0.04, 0.36], [0.75, 1]);
-  const lineOpacity = useTransform(smoothProgress, [0.06, 0.22], [0, 0.9]);
+  const cardOpacity = useTransform(smoothProgress, [0.02, 0.12], [0, 1]);
+  const cardScale = useTransform(smoothProgress, [0.03, 0.28], [0.75, 1]);
+  const lineOpacity = useTransform(smoothProgress, [0.04, 0.18], [0, 0.9]);
 
   // Wide translations so all 4 enlarged corner cards CLEAR the center card completely
   const tlX = useTransform(spread, (v) => `${v * -144}%`);
@@ -44,7 +44,7 @@ export function SolumSpatialBreakdown() {
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-[180vh] bg-[#0A0A0A] text-white select-none overflow-visible"
+      className="relative w-full h-[200vh] bg-[#0A0A0A] text-white select-none overflow-visible"
     >
       {/* Pinned Viewport Stage */}
       <div className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex items-center justify-center overflow-hidden">
@@ -55,60 +55,61 @@ export function SolumSpatialBreakdown() {
         <div className="relative w-full max-w-[1700px] h-full flex items-center justify-center px-4 sm:px-6">
           {/* ========================================================= */}
           {/* CONNECTING ARROWS & HAIRLINE LEADER LINES (SVG)           */}
+          {/* Placed at z-10 BEHIND cards (z-20) so they NEVER pierce photos */}
           {/* ========================================================= */}
           <motion.svg
             style={{ opacity: shouldReduceMotion ? 0.8 : lineOpacity }}
-            className="absolute inset-0 w-full h-full pointer-events-none z-15"
+            className="absolute inset-0 w-full h-full pointer-events-none z-10"
           >
             <defs>
               <marker
                 id="arrowhead-tl"
                 markerWidth="8"
                 markerHeight="8"
-                refX="5"
+                refX="6"
                 refY="4"
                 orient="auto"
               >
-                <polygon points="0 1, 8 4, 0 7" fill="rgba(255,255,255,0.85)" />
+                <polygon points="0 1, 7 4, 0 7" fill="rgba(255,255,255,0.9)" />
               </marker>
               <marker
                 id="arrowhead-tr"
                 markerWidth="8"
                 markerHeight="8"
-                refX="5"
+                refX="6"
                 refY="4"
                 orient="auto"
               >
-                <polygon points="0 1, 8 4, 0 7" fill="rgba(255,255,255,0.85)" />
+                <polygon points="0 1, 7 4, 0 7" fill="rgba(255,255,255,0.9)" />
               </marker>
               <marker
                 id="arrowhead-bl"
                 markerWidth="8"
                 markerHeight="8"
-                refX="5"
+                refX="6"
                 refY="4"
                 orient="auto"
               >
-                <polygon points="0 1, 8 4, 0 7" fill="rgba(255,255,255,0.85)" />
+                <polygon points="0 1, 7 4, 0 7" fill="rgba(255,255,255,0.9)" />
               </marker>
               <marker
                 id="arrowhead-br"
                 markerWidth="8"
                 markerHeight="8"
-                refX="5"
+                refX="6"
                 refY="4"
                 orient="auto"
               >
-                <polygon points="0 1, 8 4, 0 7" fill="rgba(255,255,255,0.85)" />
+                <polygon points="0 1, 7 4, 0 7" fill="rgba(255,255,255,0.9)" />
               </marker>
             </defs>
 
-            {/* 4 Directional Connecting Arrow Lines (Center to 4 Corners) with dynamic path length */}
+            {/* 4 Directional Connecting Arrow Lines (Stop cleanly at card edge without overlapping photo) */}
             <motion.line
-              x1="41%"
-              y1="41%"
-              x2="23%"
-              y2="22%"
+              x1="40%"
+              y1="37%"
+              x2="28%"
+              y2="31%"
               stroke="rgba(255,255,255,0.7)"
               strokeWidth="1.5"
               strokeDasharray="5 5"
@@ -116,10 +117,10 @@ export function SolumSpatialBreakdown() {
               style={shouldReduceMotion ? undefined : { pathLength: spread }}
             />
             <motion.line
-              x1="59%"
-              y1="41%"
-              x2="77%"
-              y2="22%"
+              x1="60%"
+              y1="37%"
+              x2="72%"
+              y2="31%"
               stroke="rgba(255,255,255,0.7)"
               strokeWidth="1.5"
               strokeDasharray="5 5"
@@ -127,10 +128,10 @@ export function SolumSpatialBreakdown() {
               style={shouldReduceMotion ? undefined : { pathLength: spread }}
             />
             <motion.line
-              x1="41%"
-              y1="59%"
-              x2="23%"
-              y2="78%"
+              x1="40%"
+              y1="63%"
+              x2="28%"
+              y2="69%"
               stroke="rgba(255,255,255,0.7)"
               strokeWidth="1.5"
               strokeDasharray="5 5"
@@ -138,10 +139,10 @@ export function SolumSpatialBreakdown() {
               style={shouldReduceMotion ? undefined : { pathLength: spread }}
             />
             <motion.line
-              x1="59%"
-              y1="59%"
-              x2="77%"
-              y2="78%"
+              x1="60%"
+              y1="63%"
+              x2="72%"
+              y2="69%"
               stroke="rgba(255,255,255,0.7)"
               strokeWidth="1.5"
               strokeDasharray="5 5"

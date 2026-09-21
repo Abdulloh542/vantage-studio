@@ -101,7 +101,7 @@ function PageTransition() {
   }, [prevLocation]);
 
   return (
-    <div className="flex-1 w-full relative overflow-x-clip min-h-screen">
+    <div className="flex-1 w-full relative min-h-screen">
       {/* 1. OUTGOING PAGE: Fixed underneath at exact scroll position (NO WHITE FLASH!) */}
       {prevLocation && (
         <div
@@ -136,10 +136,8 @@ function PageTransition() {
         style={{
           position: 'relative',
           zIndex: 10,
-          willChange: prevLocation ? 'transform' : 'auto',
-          transform: 'translateZ(0)',
-          WebkitBackfaceVisibility: 'hidden',
-          backfaceVisibility: 'hidden',
+          willChange: prevLocation ? 'transform' : undefined,
+          transform: prevLocation ? 'translateZ(0)' : undefined,
         }}
         className="w-full min-h-screen bg-white text-[#101010]"
       >
@@ -155,7 +153,7 @@ function PageTransition() {
 
 export function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-white text-[#101010] selection:bg-[#101010] selection:text-white relative overflow-x-clip">
+    <div className="min-h-screen flex flex-col bg-white text-[#101010] selection:bg-[#101010] selection:text-white relative">
       {/* Session-only Neutral Full-Page Preloader */}
       <Preloader />
 
