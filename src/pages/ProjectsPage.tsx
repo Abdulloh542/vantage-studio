@@ -1,23 +1,18 @@
 import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
 import { PROJECTS } from '../data/projects';
-import { ArchvizProjectShowcase } from '../components/common/ArchvizProjectShowcase';
+import { ProjectExhibitionCard } from '../components/projects/ProjectExhibitionCard';
+import { VideoLightbox } from '../components/common/VideoLightbox';
 
-const CATEGORIES = ['All', 'Residential', 'Commercial', 'Cultural', 'Hospitality', 'Mixed-Use'];
-
-const ASPECT_RATIOS = [
-  'aspect-[21/9]',
-  'aspect-[16/10]',
-  'aspect-[16/9]',
-  'aspect-[4/3]',
-  'aspect-[21/9]',
-  'aspect-[16/10]',
-];
+const CATEGORIES = ['All', 'Residential', 'Commercial', 'Heritage', 'Hospitality'];
 
 export function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [activeFilm, setActiveFilm] = useState<{
+    url: string;
+    title: string;
+    subtitle?: string;
+  } | null>(null);
 
   const filteredProjects = useMemo(() => {
     if (selectedCategory === 'All') return PROJECTS;
@@ -29,6 +24,19 @@ export function ProjectsPage() {
     setSelectedCategory(cat);
   };
 
+  const handlePlayFilm = (url: string, title: string, subtitle?: string) => {
+    setActiveFilm({ url, title, subtitle });
+  };
+
+  // Pre-fetch specific flagship projects for the curated 'All' editorial exhibition layout
+  const pVolgaPark = PROJECTS.find((p) => p.slug === 'volga-park') || PROJECTS[0];
+  const pBunker = PROJECTS.find((p) => p.slug === 'bunker-37') || PROJECTS[1];
+  const pInsight = PROJECTS.find((p) => p.slug === 'architecture-insight') || PROJECTS[2];
+  const pLotus = PROJECTS.find((p) => p.slug === 'lotus-mall') || PROJECTS[3];
+  const pNavoi = PROJECTS.find((p) => p.slug === 'navoi-plaza') || PROJECTS[4];
+  const pDubai = PROJECTS.find((p) => p.slug === 'collective-dubai-hills') || PROJECTS[5];
+  const pPapes = PROJECTS.find((p) => p.slug === 'papes-residences') || PROJECTS[6];
+  const pPark = PROJECTS.find((p) => p.slug === 'park-seefeld') || PROJECTS[7];
 
   return (
     <main className="w-full bg-white text-[#101010] pt-28 md:pt-36 pb-24 md:pb-36">
@@ -52,13 +60,13 @@ export function ProjectsPage() {
               CATALOGUE SCOPE
             </span>
             <p className="font-sans text-xs sm:text-sm text-[#757575] leading-relaxed">
-              Monographs, architectural CGI, 4K marketing films, and unbuilt spatial collateral delivered for global ateliers.
+              Monographs, architectural CGI, 4K marketing films, and 9:16 vertical cinema delivered for global ateliers.
             </p>
           </div>
         </div>
 
-        {/* Content Layout: Left Rail Category Filters + Main Full-Width Project List */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pt-12 lg:pt-16 items-start">
+        {/* Content Layout: Left Rail Category Filters + Main Staggered Editorial Exhibition */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pt-12 lg:pt-16 items-start">
           {/* Left Rail: Category Filters (Horizontal swipeable strip on mobile, vertical sticky rail on desktop) */}
           <div className="col-span-1 lg:col-span-2 lg:sticky lg:top-28">
             <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-3 md:mb-6">
@@ -67,6 +75,7 @@ export function ProjectsPage() {
             <div className="flex md:flex-col overflow-x-auto md:overflow-x-visible no-scrollbar gap-2 md:gap-0 md:space-y-3 pb-3 md:pb-0 -mx-1 px-1 md:mx-0 md:px-0">
               {CATEGORIES.map((cat) => {
                 const isActive = selectedCategory === cat;
+                const count = cat === 'All' ? PROJECTS.length : PROJECTS.filter((p) => p.category === cat).length;
                 return (
                   <button
                     key={cat}
@@ -82,7 +91,7 @@ export function ProjectsPage() {
                     )}
                     <span>{cat}</span>
                     <span className={`text-[10px] ml-1.5 ${isActive ? 'text-white/70 md:text-[#757575]' : 'text-[#757575]'}`}>
-                      ({cat === 'All' ? PROJECTS.length : PROJECTS.filter((p) => p.category === cat).length})
+                      ({count})
                     </span>
                   </button>
                 );
@@ -90,10 +99,10 @@ export function ProjectsPage() {
             </div>
           </div>
 
-          {/* Main Content: One Full-Width Media Project per Row with Varied Heights */}
-          <div className="col-span-1 lg:col-span-10 min-h-[500px]">
+          {/* Main Editorial Exhibition Grid */}
+          <div className="col-span-1 lg:col-span-10 min-h-[600px]">
             {filteredProjects.length === 0 ? (
-              /* Real Empty State */
+              /* Empty State */
               <motion.div
                 key="empty"
                 initial={{ opacity: 0, y: 16 }}
@@ -115,70 +124,172 @@ export function ProjectsPage() {
                   RESET FILTER
                 </button>
               </motion.div>
+            ) : selectedCategory === 'All' ? (
+              /* Curated Staggered Editorial Exhibition Layout */
+              <motion.div
+                key="curated-all"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-20 md:space-y-28"
+              >
+                {/* 1. Full-Width Panoramic Film Lead (Volga Park) */}
+                {pVolgaPark && (
+                  <div>
+                    <ProjectExhibitionCard
+                      project={pVolgaPark}
+                      index={0}
+                      layoutVariant="lead"
+                      onPlayFilm={handlePlayFilm}
+                    />
+                  </div>
+                )}
+
+                {/* 2. Staggered Asymmetric Pair: Landscape 16:10 + 9:16 Vertical Insight */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                  {pBunker && (
+                    <div className="col-span-12 lg:col-span-7">
+                      <ProjectExhibitionCard
+                        project={pBunker}
+                        index={1}
+                        layoutVariant="split-landscape"
+                        onPlayFilm={handlePlayFilm}
+                      />
+                    </div>
+                  )}
+                  {pInsight && (
+                    <div className="col-span-12 lg:col-span-5 lg:pt-14">
+                      <ProjectExhibitionCard
+                        project={pInsight}
+                        index={2}
+                        layoutVariant="split-vertical"
+                        onPlayFilm={handlePlayFilm}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* 3. Full-Width Commercial Mixed-Use Cinema Landmark (Lotus Mall) */}
+                {pLotus && (
+                  <div>
+                    <ProjectExhibitionCard
+                      project={pLotus}
+                      index={3}
+                      layoutVariant="lead"
+                      onPlayFilm={handlePlayFilm}
+                    />
+                  </div>
+                )}
+
+                {/* 4. Inverted Staggered Pair: 9:16 Vertical Promenade + 16:9 Landscape Oasis */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                  {pNavoi && (
+                    <div className="col-span-12 lg:col-span-5">
+                      <ProjectExhibitionCard
+                        project={pNavoi}
+                        index={4}
+                        layoutVariant="split-vertical"
+                        onPlayFilm={handlePlayFilm}
+                      />
+                    </div>
+                  )}
+                  {pDubai && (
+                    <div className="col-span-12 lg:col-span-7 lg:pt-14">
+                      <ProjectExhibitionCard
+                        project={pDubai}
+                        index={5}
+                        layoutVariant="split-landscape"
+                        onPlayFilm={handlePlayFilm}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {/* 5. Balanced Heritage & Hospitality Staggered Pair */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                  {pPapes && (
+                    <div className="col-span-12 lg:col-span-6">
+                      <ProjectExhibitionCard
+                        project={pPapes}
+                        index={6}
+                        layoutVariant="split-landscape"
+                        onPlayFilm={handlePlayFilm}
+                      />
+                    </div>
+                  )}
+                  {pPark && (
+                    <div className="col-span-12 lg:col-span-6 lg:pt-14">
+                      <ProjectExhibitionCard
+                        project={pPark}
+                        index={7}
+                        layoutVariant="split-landscape"
+                        onPlayFilm={handlePlayFilm}
+                      />
+                    </div>
+                  )}
+                </div>
+              </motion.div>
             ) : (
+              /* Filtered Typology Layout with Dynamic Staggered Geometry */
               <motion.div
                 key={selectedCategory}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-12 sm:space-y-16"
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
               >
-                  {filteredProjects.map((project, idx) => {
-                    if (project.heroVideo) {
-                      return (
-                        <ArchvizProjectShowcase
-                          key={project.slug}
+                {filteredProjects.map((project, idx) => {
+                  const isVertical = project.videoAspectRatio === '9:16';
+                  const isOdd = idx % 2 === 1;
+
+                  if (filteredProjects.length === 1) {
+                    return (
+                      <div key={project.slug} className="col-span-12">
+                        <ProjectExhibitionCard
                           project={project}
                           index={idx}
+                          layoutVariant={isVertical ? 'split-vertical' : 'lead'}
+                          onPlayFilm={handlePlayFilm}
                         />
-                      );
-                    }
-
-                    const aspect = ASPECT_RATIOS[idx % ASPECT_RATIOS.length];
-
-                    return (
-                      <div key={project.slug} className="group py-8 border-b border-[#101010]/12">
-                        <Link to={`/projects/${project.slug}`} className="block select-none">
-                          {/* Image with Deliberately Varied Aspect Ratio */}
-                          <div className={`relative ${aspect} w-full overflow-hidden bg-zinc-100 border border-[#101010]/12`}>
-                            <img
-                              src={project.heroImage}
-                              alt={project.title}
-                              loading="lazy"
-                              className="w-full h-full object-cover transition-transform duration-550 ease-out group-hover:scale-[1.025]"
-                            />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-550" />
-                          </div>
-
-                          {/* Thin White Metadata Strip with Title Left / Year Right */}
-                          <div className="pt-3 flex flex-col sm:flex-row sm:items-baseline justify-between font-mono text-xs text-[#101010] border-b border-[#101010]/12 pb-3 gap-2">
-                            <div className="flex items-baseline gap-3">
-                              <span className="text-[#757575]">0{idx + 1}</span>
-                              <span className="font-semibold uppercase tracking-wider group-hover:underline">
-                                {project.title}
-                              </span>
-                              <span className="text-[#757575] hidden sm:inline">&mdash;</span>
-                              <span className="text-[#757575] font-sans text-xs hidden sm:inline">
-                                {project.location}
-                              </span>
-                            </div>
-
-                            <div className="flex items-center gap-4 text-[#757575]">
-                              <span>{project.category}</span>
-                              <span>&bull;</span>
-                              <span className="tabular-nums">{project.year}</span>
-                              <ArrowRight className="w-3.5 h-3.5 text-[#101010] transform group-hover:translate-x-1.5 transition-transform" />
-                            </div>
-                          </div>
-                        </Link>
                       </div>
                     );
-                  })}
-                </motion.div>
-              )}
+                  }
+
+                  const colSpan = isVertical
+                    ? 'col-span-12 lg:col-span-5'
+                    : isOdd
+                    ? 'col-span-12 lg:col-span-5'
+                    : 'col-span-12 lg:col-span-7';
+
+                  const offsetClass = isOdd ? 'lg:pt-14' : '';
+
+                  return (
+                    <div key={project.slug} className={`${colSpan} ${offsetClass}`}>
+                      <ProjectExhibitionCard
+                        project={project}
+                        index={idx}
+                        layoutVariant={isVertical ? 'split-vertical' : 'split-landscape'}
+                        onPlayFilm={handlePlayFilm}
+                      />
+                    </div>
+                  );
+                })}
+              </motion.div>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Cinema Video Lightbox */}
+      {activeFilm && (
+        <VideoLightbox
+          isOpen={Boolean(activeFilm)}
+          onClose={() => setActiveFilm(null)}
+          videoUrl={activeFilm.url}
+          title={activeFilm.title}
+          subtitle={activeFilm.subtitle}
+        />
+      )}
     </main>
   );
 }
