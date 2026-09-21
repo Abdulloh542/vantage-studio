@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Volume2, VolumeX, Maximize2, ArrowRight, Eye } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize2, ArrowRight, Eye } from 'lucide-react';
 import type { Project } from '../../types';
 import { LightboxModal, type LightboxImage } from './LightboxModal';
 
@@ -11,6 +11,9 @@ interface ArchvizProjectShowcaseProps {
 
 export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcaseProps) {
   const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -66,20 +69,67 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const row2Loop = [...r2Base, ...r2Base];
   const row3Loop = [...r3Base, ...r3Base];
 
-  const toggleSound = () => {
+  const togglePlay = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play().catch(() => {});
+        setIsPlaying(true);
+      } else {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
+  };
+
+  const toggleSound = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
       setIsMuted(videoRef.current.muted);
     }
   };
 
-  const openFullscreenVideo = () => {
+  const openFullscreenVideo = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
     if (videoRef.current) {
       if (videoRef.current.requestFullscreen) {
         videoRef.current.requestFullscreen();
       }
     }
   };
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      setCurrentTime(videoRef.current.currentTime);
+      if (!duration && videoRef.current.duration) {
+        setDuration(videoRef.current.duration);
+      }
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (videoRef.current) {
+      setDuration(videoRef.current.duration);
+    }
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newTime = parseFloat(e.target.value);
+    if (videoRef.current) {
+      videoRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+    }
+  };
+
+  const formatTime = (secs: number) => {
+    if (!secs || isNaN(secs) || secs < 0) return '0:00';
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
+
+  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   const handleOpenLightbox = (idx: number) => {
     setLightboxIndex(idx);
@@ -141,7 +191,12 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 playsInline
                 controls={false}
                 disablePictureInPicture
-                className="w-full h-full object-cover filter brightness-95 contrast-105"
+                onTimeUpdate={handleTimeUpdate}
+                onLoadedMetadata={handleLoadedMetadata}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                onClick={togglePlay}
+                className="w-full h-full object-cover filter brightness-95 contrast-105 cursor-pointer"
               />
             ) : (
               <img
@@ -152,36 +207,99 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
               />
             )}
 
-            {/* Subtle Gradient vignette */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
+            {/* Central Play Indicator when paused */}
+            {project.heroVideo && !isPlaying && (
+              <div
+                onClick={togglePlay}
+                className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer z-10 transition-opacity duration-200"
+              >
+                <div className="w-16 h-16 rounded-full bg-white/95 text-black flex items-center justify-center pl-1 shadow-2xl hover:scale-110 transition-transform">
+                  <Play className="w-7 h-7 fill-current" />
+                </div>
+              </div>
+            )}
 
-            {/* Bottom Left: Title & Location Watermark */}
-            <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-10 pointer-events-none">
-              <span className="font-mono text-xs text-white/90 uppercase tracking-wider block font-semibold">
+            {/* Top Left: Title & Location Tag */}
+            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 pointer-events-none">
+              <span className="px-2.5 py-1 bg-black/65 backdrop-blur-sm text-[11px] font-mono uppercase tracking-wider text-white/90 border border-white/15">
                 {project.title} &bull; {project.location}
-              </span>
-              <span className="font-mono text-[10px] text-white/50 uppercase tracking-widest block">
-                ATELIER DIRECTED VISUALIZATION
               </span>
             </div>
 
-            {/* Bottom Right: Discreet Audio & Fullscreen Controls */}
+            {/* Bottom Controls Bar (Matches user's reference screenshot) */}
             {project.heroVideo && (
-              <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-20 flex items-center gap-2">
-                <button
-                  onClick={toggleSound}
-                  aria-label={isMuted ? 'Enable audio' : 'Mute audio'}
-                  className="w-8 h-8 rounded-full bg-black/75 hover:bg-white hover:text-black text-white border border-white/20 flex items-center justify-center transition-all cursor-pointer shadow-lg"
-                >
-                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                </button>
-                <button
-                  onClick={openFullscreenVideo}
-                  aria-label="Fullscreen video"
-                  className="w-8 h-8 rounded-full bg-black/75 hover:bg-white hover:text-black text-white border border-white/20 flex items-center justify-center transition-all cursor-pointer shadow-lg"
-                >
-                  <Maximize2 className="w-3.5 h-3.5" />
-                </button>
+              <div className="absolute inset-x-0 bottom-0 z-20 pt-12 pb-3 px-3 sm:px-4 bg-gradient-to-t from-black/90 via-black/45 to-transparent flex flex-col gap-2">
+                {/* Upper row: Play/Pause button, elapsed/total time, volume, fullscreen */}
+                <div className="flex items-center justify-between">
+                  {/* Left: Play/Pause + Time */}
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={togglePlay}
+                      aria-label={isPlaying ? 'Pause video' : 'Play video'}
+                      className="w-8 h-8 rounded-full bg-black/60 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm"
+                    >
+                      {isPlaying ? (
+                        <Pause className="w-3.5 h-3.5 fill-current" />
+                      ) : (
+                        <Play className="w-3.5 h-3.5 fill-current translate-x-0.5" />
+                      )}
+                    </button>
+
+                    <div className="font-mono text-xs text-white/90 tracking-wider tabular-nums select-none flex items-center gap-1">
+                      <span>{formatTime(currentTime)}</span>
+                      <span className="text-white/40">/</span>
+                      <span className="text-white/70">{formatTime(duration)}</span>
+                    </div>
+                  </div>
+
+                  {/* Right: Audio & Fullscreen */}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={toggleSound}
+                      aria-label={isMuted ? 'Enable audio' : 'Mute audio'}
+                      className="w-8 h-8 rounded-full bg-black/60 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm"
+                    >
+                      {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                    </button>
+                    <button
+                      onClick={openFullscreenVideo}
+                      aria-label="Fullscreen video"
+                      className="w-8 h-8 rounded-full bg-black/60 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-all cursor-pointer shadow-md backdrop-blur-sm"
+                    >
+                      <Maximize2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Lower row: Interactive Scrubbing / Timeline Bar */}
+                <div className="relative w-full h-3 flex items-center cursor-pointer group/scrubber select-none">
+                  {/* Background Track */}
+                  <div className="w-full h-1 group-hover/scrubber:h-1.5 bg-white/30 rounded-full overflow-hidden transition-all relative">
+                    {/* Played White Progress */}
+                    <div
+                      className="h-full bg-white rounded-full transition-[width] duration-75"
+                      style={{ width: `${progressPercent}%` }}
+                    />
+                  </div>
+
+                  {/* Thumb Indicator on Hover */}
+                  <div
+                    className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-md pointer-events-none opacity-0 group-hover/scrubber:opacity-100 transition-opacity"
+                    style={{ left: `calc(${progressPercent}% - 6px)` }}
+                  />
+
+                  {/* Range Slider for Native Drag & Click Seeking */}
+                  <input
+                    type="range"
+                    min={0}
+                    max={duration || 100}
+                    step="0.1"
+                    value={currentTime}
+                    onChange={handleSeek}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-30"
+                    aria-label="Seek video position"
+                  />
+                </div>
               </div>
             )}
           </div>
