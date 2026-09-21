@@ -55,18 +55,32 @@ export function SolumHero() {
           className="w-full h-full"
         >
           {heroVideoUrl ? (
-            <video
-              src={heroVideoUrl}
-              poster={heroImage}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              controls={false}
-              disablePictureInPicture
-              className="w-full h-full object-cover filter brightness-90 contrast-105 pointer-events-none select-none"
-            />
+            <motion.div
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 1, scale: 1 }
+                  : { opacity: 0, scale: 1.08 }
+              }
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: shouldReduceMotion ? 0.01 : 1.4,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="w-full h-full"
+            >
+              <video
+                src={heroVideoUrl}
+                poster={heroImage}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                controls={false}
+                disablePictureInPicture
+                className="w-full h-full object-cover filter brightness-90 contrast-105 pointer-events-none select-none"
+              />
+            </motion.div>
           ) : (
             <motion.img
               src={heroImage}
@@ -144,7 +158,12 @@ export function SolumHero() {
       {/* ========================================================= */}
       {/* BOTTOM STRIP: Avatars + Logos (NO 4-thumbnail switcher!)   */}
       {/* ========================================================= */}
-      <div className="relative z-30 pb-8 pt-6 px-6 md:px-10 border-t border-white/15">
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-30 pb-8 pt-6 px-6 md:px-10 border-t border-white/15"
+      >
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6">
           {/* Left: Overlapping Avatars + Social Proof */}
           <div className="flex items-center gap-3 w-full md:w-auto">
@@ -172,7 +191,7 @@ export function SolumHero() {
             ))}
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

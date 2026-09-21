@@ -7,26 +7,22 @@ interface PreloaderProps {
 }
 
 export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
-  // Check if user already saw the preloader in this browser session
-  const alreadySeen = typeof window !== 'undefined' && sessionStorage.getItem('vantage_preloader_seen') === '1';
-
-  const [curtainUp, setCurtainUp] = useState(alreadySeen);
-  const [isDone, setIsDone] = useState(alreadySeen);
-  const [progress, setProgress] = useState(alreadySeen ? 100 : 0);
+  const [curtainUp, setCurtainUp] = useState(false);
+  const [isDone, setIsDone] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (alreadySeen) {
-      onComplete?.();
-      return;
+    // Clear any previous session flag so curtain animation always plays
+    try {
+      sessionStorage.removeItem('vantage_preloader_seen');
+    } catch {
+      // ignore
     }
-
-    // Mark as seen for this session so refreshes are immediate
-    sessionStorage.setItem('vantage_preloader_seen', '1');
 
     // Lock scroll during the curtain sequence
     document.body.style.overflow = 'hidden';
 
-    // Rapid progress counter
+    // Rapid architectural progress counter
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -37,18 +33,18 @@ export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
       });
     }, 30);
 
-    // T=400ms: Begin lifting the white canvas upwards smoothly
+    // T=500ms: Begin lifting the white canvas upwards smoothly
     const t1 = setTimeout(() => {
       setCurtainUp(true);
       onSequenceStart?.();
-    }, 450);
+    }, 500);
 
-    // T=950ms: Curtain has fully cleared, unlock body
+    // T=1200ms: Curtain has fully cleared, unlock body
     const t2 = setTimeout(() => {
       setIsDone(true);
       document.body.style.overflow = '';
       onComplete?.();
-    }, 950);
+    }, 1200);
 
     return () => {
       clearInterval(progressInterval);
@@ -56,9 +52,9 @@ export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
       clearTimeout(t2);
       document.body.style.overflow = '';
     };
-  }, [alreadySeen, onSequenceStart, onComplete]);
+  }, [onSequenceStart, onComplete]);
 
-  if (isDone || alreadySeen) {
+  if (isDone) {
     return null;
   }
 
@@ -70,7 +66,7 @@ export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
           initial={{ y: '0%' }}
           animate={curtainUp ? { y: '-100%' } : { y: '0%' }}
           transition={{
-            duration: 0.9,
+            duration: 0.85,
             ease: [0.76, 0, 0.24, 1], // Editorial luxury easing curve
           }}
           className="fixed inset-0 z-[99999] bg-white text-[#101010] flex flex-col justify-between pointer-events-none select-none overflow-hidden"
