@@ -1,0 +1,38 @@
+{
+  "lotus-mall": {
+    "title": "Lotus Mall & 5 Star Hotel",
+    "aspectRatio": "16:9",
+    "videoUrl": "https://res.cloudinary.com/mvmsbgon/video/upload/v1789992494/projects/lotus-mall/lotus-mall_film.mp4",
+    "stills": [
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg",
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992496/projects/lotus-mall/lotus-mall_still_2.jpg",
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992497/projects/lotus-mall/lotus-mall_still_3.jpg",
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992498/projects/lotus-mall/lotus-mall_still_4.jpg",
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992499/projects/lotus-mall/lotus-mall_still_5.jpg"
+    ]
+  },
+  "collective-dubai-hills": {
+    "title": "Collective – Dubai Hills Estate",
+    "aspectRatio": "16:9",
+    "videoUrl": "https://res.cloudinary.com/mvmsbgon/video/upload/v1789992584/projects/collective-dubai-hills/collective-dubai-hills_film.mp4",
+    "stills": [
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992587/projects/collective-dubai-hills/collective-dubai-hills_still_1.jpg",
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992588/projects/collective-dubai-hills/collective-dubai-hills_still_2.jpg",
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992589/projects/collective-dubai-hills/collective-dubai-hills_still_3.jpg",
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992590/projects/collective-dubai-hills/collective-dubai-hills_still_4.jpg",
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992590/projects/collective-dubai-hills/collective-dubai-hills_still_5.jpg"
+    ]
+  },
+  "navoi-plaza": {
+    "title": "Navoi Plaza",
+    "aspectRatio": "9:16",
+    "videoUrl": "https://res.cloudinary.com/mvmsbgon/video/upload/v1789992643/projects/navoi-plaza/navoi-plaza_film.mp4",
+    "stills": [
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992645/projects/navoi-plaza/navoi-plaza_still_1.jpg",
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992646/projects/navoi-plaza/navoi-plaza_still_2.jpg",
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992648/projects/navoi-plaza/navoi-plaza_still_3.jpg",
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992649/projects/navoi-plaza/navoi-plaza_still_4.jpg",
+      "https://res.cloudinary.com/mvmsbgon/image/upload/v1789992651/projects/navoi-plaza/navoi-plaza_still_5.jpg"
+    ]
+  }
+}

@@ -10,10 +10,10 @@ interface SelectedWorkSectionProps {
 export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
   const p1 = projects.find(p => p.slug === 'volga-park') || projects[0];
   const p2 = projects.find(p => p.slug === 'bunker-37') || projects[1];
-  const p3 = projects.find(p => p.slug === 'effect-archi-inside') || projects[2];
-  const p4 = projects.find(p => p.slug === 'berliner-strasse-69') || projects[3];
-  const p5 = projects.find(p => p.slug === 'marlow-on-mill') || projects[4];
-  const p6 = projects.find(p => p.slug === 'venetian-penthouse') || projects[5];
+  const p3 = projects.find(p => p.slug === 'architecture-insight') || projects[2];
+  const p4 = projects.find(p => p.slug === 'lotus-mall') || projects[3];
+  const p5 = projects.find(p => p.slug === 'collective-dubai-hills') || projects[4];
+  const p6 = projects.find(p => p.slug === 'navoi-plaza') || projects[5];
 
   return (
     <section id="selected-work" className="bg-[#FAF9F6] text-[#11110F] py-28 md:py-40 border-t border-[#11110F]/15 overflow-hidden">
@@ -190,7 +190,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
                     />
                     <div className="absolute top-5 left-5 z-10">
                       <span className="px-3 py-1 bg-[#050505]/75 backdrop-blur-md text-[10px] uppercase tracking-[0.2em] text-white border border-white/10 font-mono">
-                        03 — Coastal Pavilion
+                        03 — 9:16 Vertical Cinema
                       </span>
                     </div>
                   </div>
@@ -205,7 +205,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
                 className="lg:col-span-7"
               >
                 <span className="text-[10px] uppercase tracking-[0.25em] text-[#77736C] font-mono block mb-4">
-                  PROJECT 03 // LUXURY RESIDENTIAL
+                  PROJECT 03 // VERTICAL CINEMA &amp; LUXURY RESIDENTIAL
                 </span>
                 <Link to={`/work/${p3.slug}`} className="group">
                   <h3 className="font-display text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight text-[#11110F] leading-[1.02] transition-transform duration-300 group-hover:-translate-y-1 mb-6">
@@ -213,7 +213,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
                   </h3>
                 </Link>
                 <p className="text-base sm:text-lg text-[#11110F]/80 font-light leading-relaxed max-w-xl mb-8">
-                  Eight exclusive cantilevered pavilions overlooking the Pacific Ocean, visualized to secure private equity funding before municipal groundbreaking.
+                  {p3.summary}
                 </p>
                 <div className="grid grid-cols-2 gap-6 border-t border-b border-[#11110F]/15 py-6 mb-8 text-xs font-mono">
                   <div>
@@ -236,7 +236,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
             </div>
           )}
 
-          {/* COMPOSITION 04: Full-Width Video / Film Frame (Berliner Strasse 69) */}
+          {/* COMPOSITION 04: Full-Width Video / Film Frame (Lotus Mall) */}
           {p4 && (
             <motion.div
               initial={{ opacity: 0, x: 60 }}
@@ -259,7 +259,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
                   
                   <div className="absolute top-6 left-6 z-10 flex items-center gap-3">
                     <span className="px-3 py-1 bg-black/75 backdrop-blur-md text-[10px] uppercase tracking-[0.2em] text-white border border-white/10 font-mono">
-                      04 — Commercial Headquarters Film
+                      04 — Mixed-Use &amp; 5-Star Hotel Film
                     </span>
                   </div>
 
@@ -275,7 +275,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
                         {p4.title}
                       </h3>
                       <p className="text-xs text-zinc-300 uppercase tracking-widest mt-1 font-mono">
-                        {p4.location} &bull; Commercial Leasing Campaign
+                        {p4.location} &bull; Retail Galleria &amp; Luxury Hospitality
                       </p>
                     </div>
                     <div className="hidden sm:flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-white font-mono">
@@ -308,7 +308,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
                     />
                     <div className="absolute top-4 left-4 z-10">
                       <span className="px-3 py-1 bg-[#050505]/75 backdrop-blur-md text-[10px] uppercase tracking-[0.2em] text-white border border-white/10 font-mono">
-                        05A — Residential
+                        05A — Resort Residences
                       </span>
                     </div>
                   </div>
@@ -348,7 +348,7 @@ export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
                     />
                     <div className="absolute top-4 left-4 z-10">
                       <span className="px-3 py-1 bg-[#050505]/75 backdrop-blur-md text-[10px] uppercase tracking-[0.2em] text-white border border-white/10 font-mono">
-                        05B — Heritage
+                        05B — 9:16 Vertical Promenade
                       </span>
                     </div>
                   </div>

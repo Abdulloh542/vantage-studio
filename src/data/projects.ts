@@ -233,22 +233,22 @@ export const PROJECTS: Project[] = [
     ],
     featured: true,
     featuredOrder: 2,
-    nextProjectSlug: 'effect-archi-inside'
+    nextProjectSlug: 'architecture-insight'
   },
   {
-    slug: 'effect-archi-inside',
-    title: 'Effect Archi Inside',
+    slug: 'architecture-insight',
+    title: 'Architecture Insight',
     subtitle: '9:16 Vertical Architectural Film / Villa Interior & Exterior',
     location: 'Zurich, Switzerland',
     year: '2026',
-    client: 'Effect Architecture Atelier',
+    client: 'Architecture Insight Atelier',
     architect: 'Studio Archi Inside & Vantage Partners',
     category: 'Residential',
     services: ['9:16 Cinema Film Production', 'Architectural Visualization', 'Interior & Exterior CGI', 'Social Reels Marketing'],
     tags: ['All', 'CGI', 'Architecture', 'AI Film', 'Interior', 'Exterior', 'Residential', '9:16 Vertical'],
     heroImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990854/projects/effect-archi/A_photorealistic__highly__e6837b.jpg',
-    heroVideo: 'https://res.cloudinary.com/mvmsbgon/video/upload/v1789990848/projects/effect-archi/effect_archi_film_9x16.mp4',
-    videoDuration: '52s 9:16 Film',
+    heroVideo: 'https://res.cloudinary.com/mvmsbgon/video/upload/v1789992406/projects/architecture-insight/architecture_insight_film_9x16.mp4',
+    videoDuration: '49s 9:16 Film',
     videoAspectRatio: '9:16',
     clientMaterial: 'Structural axonometric schematics, 3D floor plan geometry, and progressive construction render studies',
     transformationPipeline: [
@@ -259,7 +259,7 @@ export const PROJECTS: Project[] = [
     ],
     summary: 'An avant-garde contemporary private villa harmonizing brutalist concrete, expansive glazed pavilions, and curated interior spatial sequencing.',
     description: [
-      'Commissioned by Effect Architecture Atelier, this project challenged our studio to deliver a complete multi-environment visualization campaign tailored specifically for high-impact 9:16 vertical cinema and social-first spatial storytelling.',
+      'Commissioned by Architecture Insight Atelier, this project challenged our studio to deliver a complete multi-environment visualization campaign tailored specifically for high-impact 9:16 vertical cinema and social-first spatial storytelling.',
       'Starting from architectural 3D floorplans and progressive construction stages, our team modeled the entire hillside estate—from sweeping aerial sunlit terraces to moody midnight chiaroscuro atmospheres.',
       'The resulting campaign features 12 photorealistic architectural plates and an immersive 9:16 vertical film engineered for next-generation mobile and digital gallery showcases.'
     ],
@@ -372,149 +372,281 @@ export const PROJECTS: Project[] = [
     ],
     featured: true,
     featuredOrder: 3,
-    nextProjectSlug: 'berliner-strasse-69'
+    nextProjectSlug: 'lotus-mall'
   },
   {
-    slug: 'berliner-strasse-69',
-    title: 'Berliner Straße 69',
-    subtitle: 'Development Marketing Film & CGI',
-    location: 'Leipzig, Germany',
-    year: '2025',
-    client: 'Saxonia Real Estate Fund',
-    architect: 'Eckert & Klinke Architekten',
+    slug: 'lotus-mall',
+    title: 'Lotus Mall & 5 Star Hotel',
+    subtitle: 'Commercial Mixed-Use & Luxury Hospitality Landmark',
+    location: 'Metropolitan Commercial Center',
+    year: '2026',
+    client: 'Lotus Development Holding',
+    architect: 'Lotus Design Atelier & Vantage Partners',
     category: 'Commercial',
-    services: ['Real Estate Marketing', 'AI Architectural Films', 'Interior & Exterior CGI'],
-    tags: ['All', 'Commercial', 'Architecture', 'CGI', 'AI Film', 'Real Estate', 'Interior'],
-    heroImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=85',
-    videoDuration: '75s Commercial Reel',
-    clientMaterial: '2D CAD elevations, structural column grid and preliminary interior schedule',
+    services: ['Architectural Cinema Film', 'Commercial CGI Visualization', 'Mixed-Use Spatial Stills', 'Investor Marketing Reel'],
+    tags: ['All', 'Commercial', 'Architecture', 'CGI', 'AI Film', 'Exterior', 'Interior', 'Real Estate'],
+    heroImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg',
+    heroVideo: 'https://res.cloudinary.com/mvmsbgon/video/upload/v1789992494/projects/lotus-mall/lotus-mall_film.mp4',
+    videoDuration: '87s Cinema Film',
+    videoAspectRatio: '16:9',
+    clientMaterial: 'Architectural blueprints, site masterplan schematics, and mall circulation geometry',
     transformationPipeline: [
-      'CAD to High-Poly BIM Mesh Conversion',
-      'PBR Specular Material Calibration',
-      'AI Daylight Passage Simulation',
-      'Marketing Teaser & Leasing Deck Production'
+      'BIM & Curved Glass Curtainwall Massing',
+      'Atmospheric Pedestrian & Commercial Daylight Simulation',
+      'Nocturnal Storefront Neon & Facade Uplighting Calibration',
+      '4K Cinematic Drone & Steadicam Cinema Direction'
     ],
-    summary: 'A 14-storey mixed-use office tower and urban public galleria featuring energy-positive glass facades and timber interior courtyards.',
+    summary: 'An iconic multi-level shopping destination and high-end 5-star hotel complex designed with luminous curved glass facades and landscaped pedestrian esplanades.',
     description: [
-      'To attract institutional anchor corporate tenants prior to construction, Saxonia Real Estate required marketing visuals that communicated sustainability, employee wellness, and acoustic serenity.',
-      'We constructed high-detail 3D representations of both the urban street frontage and the multi-level biophilic atrium.',
-      'The marketing film generated over 50 qualified leasing inquiries within 30 days of public release.'
+      'Commissioned to anchor a regional commercial transformation, Lotus Mall & 5 Star Hotel demanded a comprehensive spatial visualization campaign capturing both the kinetic energy of the retail gallerias and the serene elegance of the luxury hospitality tower.',
+      'Our team engineered photorealistic lighting studies spanning bright daytime pedestrian flows through vibrant nocturnal illuminated storefronts, culminating in an 87-second cinematic marketing film.',
+      'The campaign visuals played a decisive role in attracting international flagship retailers and institutional hospitality operators prior to groundbreaking.'
     ],
     stats: [
-      { label: 'Tower GFA', value: '24,000 m²' },
-      { label: 'Floors', value: '14 Storeys' },
-      { label: 'Certification', value: 'DGNB Platinum Target' },
-      { label: 'Pre-Leasing', value: '70% Committed' }
+      { label: 'Gross Floor Area', value: '145,000 m²' },
+      { label: 'Hotel Keys', value: '280 Luxury Suites' },
+      { label: 'Retail Levels', value: '5-Tier Galleria' },
+      { label: 'Deliverables', value: '4K Cinema Film + 5 Hi-Res Plates' }
     ],
     beforeAfter: {
-      beforeImage: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1800&q=80',
-      beforeLabel: '3DS MAX VIEWPORT CAD',
-      afterImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=85',
-      afterLabel: 'FINISHED TURNKEY VISUALIZATION',
-      description: 'Side-by-side comparison showing raw wireframe structural columns transformed into a light-filled corporate headquarters.'
+      beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992497/projects/lotus-mall/lotus-mall_still_3.jpg',
+      beforeLabel: 'SCHEMATIC MASSING VIEW',
+      afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg',
+      afterLabel: 'FINAL CINEMATIC PRODUCTION',
+      description: 'Side-by-side progression from geometric volumetric massing to photorealistic atmospheric lighting and retail promenade finishes.'
     },
     process: [
       {
         step: '01',
-        title: 'BIM Ingestion & Daylight Physics',
-        description: 'Simulating diffused European winter daylight filtering through triple-glazed acoustic curtainwalls.',
-        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
+        title: 'Masterplan & Canopy Alignment',
+        description: 'Modeling structural circulation flow between public retail plazas and private hotel drop-off zones.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992496/projects/lotus-mall/lotus-mall_still_2.jpg'
+      },
+      {
+        step: '02',
+        title: 'Curtainwall Reflection Physics',
+        description: 'Simulating multi-bounce glass reflections, interior illumination warmth, and polished floor highlights.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992497/projects/lotus-mall/lotus-mall_still_3.jpg'
+      },
+      {
+        step: '03',
+        title: 'Cinematic Camera Sequencing',
+        description: 'Directing continuous cinematic drone glides and eye-level pedestrian track shots across the complex.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992498/projects/lotus-mall/lotus-mall_still_4.jpg'
       }
     ],
     gallery: [
       {
-        url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Triple-height atrium lobby with integrated living plant walls and timber seating',
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg',
+        caption: 'Panoramic perspective: Lotus Mall iconic organic curved glass facade and arrival boulevard',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992496/projects/lotus-mall/lotus-mall_still_2.jpg',
+        caption: 'Aerial viewpoint overlooking the central atrium glass dome and landscaped perimeter',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992497/projects/lotus-mall/lotus-mall_still_3.jpg',
+        caption: 'Mid-level galleria perspective featuring illuminated storefronts and public gathering spaces',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992498/projects/lotus-mall/lotus-mall_still_4.jpg',
+        caption: 'Sunset atmospheric still highlighting warm interior illumination and perimeter water reflections',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992499/projects/lotus-mall/lotus-mall_still_5.jpg',
+        caption: '5-Star Hotel luxury podium entrance with grand porte-cochère and bespoke architectural lighting',
         aspectRatio: 'landscape'
       }
     ],
     featured: true,
     featuredOrder: 4,
-    nextProjectSlug: 'marlow-on-mill'
+    nextProjectSlug: 'collective-dubai-hills'
   },
   {
-    slug: 'marlow-on-mill',
-    title: 'Marlow On Mill',
-    subtitle: 'Suburban Terraced Luxury Residences',
-    location: 'Cape Town, South Africa',
-    year: '2025',
-    client: 'Bespoke Landholdings',
-    architect: 'SAOTA Collaborative',
+    slug: 'collective-dubai-hills',
+    title: 'Collective – Dubai Hills Estate',
+    subtitle: 'Resort-Style Oasis Residences & Pool Pavilion',
+    location: 'Dubai Hills Estate, UAE',
+    year: '2026',
+    client: 'Emaar Properties / Collective Living',
+    architect: 'Dubai Hills Master Planning & Vantage Partners',
     category: 'Residential',
-    services: ['Architectural Visualization', 'Interior CGI', 'Real Estate Marketing'],
-    tags: ['All', 'CGI', 'Architecture', 'Real Estate', 'Exterior', 'Interior', 'Residential'],
-    heroImage: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=2400&q=85',
-    summary: 'A bespoke cluster of mountain-facing residences celebrating Table Mountain stone, timber pergolas, and native fynbos landscape architecture.',
+    services: ['Resort Architectural Film', 'Pool & Landscape CGI', 'Luxury Real Estate Showcase', 'AI Architectural Cinema'],
+    tags: ['All', 'Residential', 'Architecture', 'CGI', 'AI Film', 'Exterior', 'Interior', 'Real Estate'],
+    heroImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992587/projects/collective-dubai-hills/collective-dubai-hills_still_1.jpg',
+    heroVideo: 'https://res.cloudinary.com/mvmsbgon/video/upload/v1789992584/projects/collective-dubai-hills/collective-dubai-hills_film.mp4',
+    videoDuration: '140s Cinema Film',
+    videoAspectRatio: '16:9',
+    clientMaterial: 'Architectural landscape blueprints, pool engineering plans, and residential facade elevation drawings',
+    transformationPipeline: [
+      'Landscape & Water Caustics Physics Simulation',
+      'Subtropical Foliage & Palm Vegetation Scattering',
+      'Golden Hour & Twilight Chiaroscuro Calibration',
+      '140-Second Master Walkthrough Direction'
+    ],
+    summary: 'An exclusive resort-style residential sanctuary centered around infinity swimming pools, lush palm terraces, and contemporary private cabanas.',
     description: [
-      'Nestled along the foothills of the Twelve Apostles, Marlow On Mill required imagery that communicated an organic relationship between structure and topography.',
-      'We crafted exterior visuals set during the golden hour, balancing warm interior illumination with the dramatic shadows cast by the mountainside.',
-      'The campaign imagery was featured across international luxury property publications and drove the sale of all residences in off-plan release.'
+      'Situated in the heart of Dubai Hills Estate, Collective was envisioned as a modern oasis marrying social communal living with world-class wellness amenities.',
+      'Our visualization studio crafted an expansive 140-second architectural cinema walkthrough, charting the transitions from sun-drenched daytime poolside tranquility to atmospheric twilight cabana illumination.',
+      'The campaign visuals anchored high-converting international off-plan investment showcases and global marketing rollouts.'
     ],
     stats: [
-      { label: 'Number of Villas', value: '12 Exclusive Residences' },
-      { label: 'Site Area', value: '28,000 m²' },
-      { label: 'Average Price', value: '$4.2M' },
-      { label: 'Time to 100% Sold', value: '4 Months' }
+      { label: 'Amenity Deck', value: '8,500 m²' },
+      { label: 'Lagoon Pool', value: '50m Olympic Length' },
+      { label: 'Residences', value: '460 Modern Units' },
+      { label: 'Film Length', value: '140s 4K Cinema' }
     ],
-    gallery: [
-      {
-        url: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Infinity pool blending with the Atlantic ocean horizon',
-        aspectRatio: 'landscape'
-      }
-    ],
+    beforeAfter: {
+      beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992589/projects/collective-dubai-hills/collective-dubai-hills_still_3.jpg',
+      beforeLabel: 'PRELIMINARY DAYLIGHT POOL PLAN',
+      afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992587/projects/collective-dubai-hills/collective-dubai-hills_still_1.jpg',
+      afterLabel: 'FINAL RESORT PHOTOREALISM',
+      description: 'Progression from basic poolside hardscape layout to dense subtropical botanical foliage and shimmering water caustics.'
+    },
     process: [
       {
         step: '01',
-        title: 'Geographic Sun Study',
-        description: 'Accurately calibrating the mountain ridge shadow profile against time of day to determine the most flattering lighting scenarios.',
-        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
+        title: 'Oasis Landscape & Vegetation Layering',
+        description: 'Populating indigenous desert and subtropical botanical species with organic wind physics.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992588/projects/collective-dubai-hills/collective-dubai-hills_still_2.jpg'
+      },
+      {
+        step: '02',
+        title: 'Pool Surface Wave & Water Refraction',
+        description: 'Simulating true physical water light refraction, turquoise caustics, and subsurface illumination.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992589/projects/collective-dubai-hills/collective-dubai-hills_still_3.jpg'
+      },
+      {
+        step: '03',
+        title: 'Cinematic Twilight Color Grading',
+        description: 'Balancing warm interior cabana fixtures with deep cobalt Arabian nightfall skies.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992590/projects/collective-dubai-hills/collective-dubai-hills_still_4.jpg'
       }
     ],
-    featured: false,
+    gallery: [
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992587/projects/collective-dubai-hills/collective-dubai-hills_still_1.jpg',
+        caption: 'Resort pool deck: Sun loungers, sunken seating lounges, and turquoise lagoon reflections',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992588/projects/collective-dubai-hills/collective-dubai-hills_still_2.jpg',
+        caption: 'Architectural elevation overlooking landscaped courtyards and private residential balconies',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992589/projects/collective-dubai-hills/collective-dubai-hills_still_3.jpg',
+        caption: 'Central clubhouse and social pavilion featuring shaded timber pergolas and water fountains',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992590/projects/collective-dubai-hills/collective-dubai-hills_still_4.jpg',
+        caption: 'Twilight ambiance: Warm architectural spotlights illuminating the pool promenade and palms',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992590/projects/collective-dubai-hills/collective-dubai-hills_still_5.jpg',
+        caption: 'Panoramic view: Collective Dubai Hills Estate nestled within the master-planned parkland',
+        aspectRatio: 'landscape'
+      }
+    ],
+    featured: true,
     featuredOrder: 5,
-    nextProjectSlug: 'venetian-penthouse'
+    nextProjectSlug: 'navoi-plaza'
   },
   {
-    slug: 'venetian-penthouse',
-    title: 'Venetian Penthouse',
-    subtitle: 'Ultra-Luxury Grand Canal Residence',
-    location: 'Venice, Italy',
-    year: '2024',
-    client: 'Serenissima Private Wealth',
-    architect: 'Atelier Matteo Thun',
-    category: 'Residential',
-    services: ['Interior CGI', 'Material & Lighting Studies', 'AI Architectural Film'],
-    tags: ['All', 'Interior', 'CGI', 'Architecture', 'AI Film', 'Animation'],
-    heroImage: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2400&q=85',
-    summary: 'A restored 16th-century Palazzo piano nobile interior combining fresco restoration with minimalist Italian modern furniture and terrazzo floors.',
+    slug: 'navoi-plaza',
+    title: 'Navoi Plaza',
+    subtitle: '9:16 Vertical Architectural Film / Premium Urban Promenade',
+    location: 'Navoi Avenue, Uzbekistan',
+    year: '2026',
+    client: 'Navoi Urban Development',
+    architect: 'Navoi City Planning & Vantage Studio',
+    category: 'Commercial',
+    services: ['9:16 Vertical Cinema Production', 'Architectural Visualization', 'Commercial Retail Walkthrough', 'Social Media Cinema'],
+    tags: ['All', 'Commercial', 'Architecture', 'CGI', 'AI Film', 'Exterior', '9:16 Vertical'],
+    heroImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992645/projects/navoi-plaza/navoi-plaza_still_1.jpg',
+    heroVideo: 'https://res.cloudinary.com/mvmsbgon/video/upload/v1789992643/projects/navoi-plaza/navoi-plaza_film.mp4',
+    videoDuration: '83s 9:16 Reel',
+    videoAspectRatio: '9:16',
+    clientMaterial: 'Urban boulevard site cadastre, commercial retail facade blueprints, and pedestrian plaza drawings',
+    transformationPipeline: [
+      'Urban Boulevard & Promenade BIM Modeling',
+      '9:16 Mobile Portrait Frame Composition',
+      'Evening Architectural Uplighting & Pedestrian Dressing',
+      '4K Vertical Cinema Master Video Production'
+    ],
+    summary: 'A contemporary mixed retail and commercial urban boulevard featuring dynamic architectural facades, illuminated water features, and expansive pedestrian esplanades.',
     description: [
-      'Visualizing Venetian daylight bouncing off canal water requires exceptional mastery of indirect illumination, caustic refraction, and micro-surface roughness.',
-      'Our artists studied archival Venetian lime plaster (marmorino) and Murano blown glass to accurately portray the interplay of morning reflections on hand-plastered ceilings.',
-      'The result is a set of evocative, museum-quality interior stills that read as fine-art photography rather than computer renderings.'
+      'Navoi Plaza introduces a landmark urban promenade blending modern architectural retail pavilions with landscaped public plazas along one of the region’s primary metropolitan avenues.',
+      'Engineered specifically for high-impact 9:16 vertical cinema, this visualization campaign delivers an engaging first-person walking journey through vibrant storefronts, cascading fountains, and evening pedestrian avenues.',
+      'The vertical film format maximized social media engagement, off-plan leasing signups, and municipal investor presentations.'
     ],
     stats: [
-      { label: 'Interior Space', value: '720 m²' },
-      { label: 'Ceiling Height', value: '5.8 m' },
-      { label: 'Lighting Conditions', value: 'Morning Mist / Afternoon Sun / Dusk' },
-      { label: 'Output Resolution', value: '12K Print Quality' }
+      { label: 'Boulevard Length', value: '450 Meters' },
+      { label: 'Retail Pavilions', value: '64 Premium Stores' },
+      { label: 'Format', value: '9:16 Cinema Reel' },
+      { label: 'Outputs', value: '83s Vertical Film + Stills' }
     ],
-    gallery: [
-      {
-        url: 'https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Grand salon with restored timber beams and water reflection highlights',
-        aspectRatio: 'landscape'
-      }
-    ],
+    beforeAfter: {
+      beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992648/projects/navoi-plaza/navoi-plaza_still_3.jpg',
+      beforeLabel: 'SCHEMATIC URBAN MASSING',
+      afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992645/projects/navoi-plaza/navoi-plaza_still_1.jpg',
+      afterLabel: 'FINAL 9:16 NIGHT CINEMA',
+      description: 'Progression from raw boulevard massing geometry to vibrant evening promenade lighting and photoreal textures.'
+    },
     process: [
       {
         step: '01',
-        title: 'Caustic Water Reflections',
-        description: 'Simulating complex wave diffraction from canal boats onto interior coffered ceilings.',
-        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
+        title: 'Plaza Massing & Retail Flow',
+        description: 'Aligning pedestrian pathways, facade heights, and boulevard canopy structures.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992646/projects/navoi-plaza/navoi-plaza_still_2.jpg'
+      },
+      {
+        step: '02',
+        title: 'Illuminated Facade & Fountain Physics',
+        description: 'Simulating dynamic linear LED facade patterns, reflections on polished stone, and ambient city glow.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992648/projects/navoi-plaza/navoi-plaza_still_3.jpg'
+      },
+      {
+        step: '03',
+        title: 'Vertical Gimbal Steadicam Flow',
+        description: 'Directing smooth 9:16 mobile-optimized eye-level camera tracks creating an immersive pedestrian presence.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992649/projects/navoi-plaza/navoi-plaza_still_4.jpg'
       }
     ],
-    featured: false,
+    gallery: [
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992645/projects/navoi-plaza/navoi-plaza_still_1.jpg',
+        caption: 'Nocturnal promenade view: Dynamic LED facade illumination and reflective pedestrian boulevard',
+        aspectRatio: 'portrait'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992646/projects/navoi-plaza/navoi-plaza_still_2.jpg',
+        caption: 'Commercial storefront colonnade featuring high-end boutique display windows and warm interior glow',
+        aspectRatio: 'portrait'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992648/projects/navoi-plaza/navoi-plaza_still_3.jpg',
+        caption: 'Central fountain plaza with cascading illuminated water features and urban seating terraces',
+        aspectRatio: 'portrait'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992649/projects/navoi-plaza/navoi-plaza_still_4.jpg',
+        caption: 'Eye-level pedestrian perspective highlighting architectural canopies and tree-lined walkways',
+        aspectRatio: 'portrait'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992651/projects/navoi-plaza/navoi-plaza_still_5.jpg',
+        caption: 'Upper-level terrace dining pavilion overlooking the active Navoi Avenue boulevard',
+        aspectRatio: 'portrait'
+      }
+    ],
+    featured: true,
     featuredOrder: 6,
     nextProjectSlug: 'papes-residences'
   },

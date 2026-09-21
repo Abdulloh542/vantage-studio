@@ -6,8 +6,8 @@ import { PROJECTS } from '../../data/projects';
 export function SolumRecentProjects() {
   const pLead = PROJECTS.find((p) => p.slug === 'volga-park') || PROJECTS[0];
   const pSupport1 = PROJECTS.find((p) => p.slug === 'bunker-37') || PROJECTS[1];
-  const pSupport2 = PROJECTS.find((p) => p.slug === 'effect-archi-inside') || PROJECTS[2];
-  const pBroad = PROJECTS.find((p) => p.slug === 'berliner-strasse-69') || PROJECTS[3];
+  const pSupport2 = PROJECTS.find((p) => p.slug === 'architecture-insight') || PROJECTS[2];
+  const pBroad = PROJECTS.find((p) => p.slug === 'lotus-mall') || PROJECTS[3];
 
   return (
     <section className="w-full bg-white text-[#101010] py-16 md:py-24 px-6 md:px-10 border-b border-[#101010]/12">
@@ -154,7 +154,7 @@ export function SolumRecentProjects() {
                 EXHIBITION 04
               </span>
               <span className="font-sans text-sm text-[#757575] leading-relaxed block font-light">
-                Corporate headquarters masterplan &amp; 4K cinematic film sequence.
+                Mixed-use retail gallerias &amp; 5-star luxury hospitality landmark film.
               </span>
             </div>
 
