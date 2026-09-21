@@ -16,15 +16,17 @@ export function ProjectExhibitionCard({
   layoutVariant = 'split-landscape',
 }: ProjectExhibitionCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isInView, setIsInView] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
+  const isPlayingRef = useRef(false);
 
   const isVertical = project.videoAspectRatio === '9:16';
 
@@ -38,7 +40,72 @@ export function ProjectExhibitionCard({
     aspectClass = 'aspect-[16/9] md:aspect-[16/10]';
   }
 
-  // Viewport Auto-Play: When user scrolls to this video ("qarab turibdimi auto playga qo'yib qo'yaver")
+  // Ensure DOM element properties defaultMuted and muted are strictly enforced on mount
+  const setVideoRef = useCallback((el: HTMLVideoElement | null) => {
+    videoRef.current = el;
+    if (el) {
+      el.defaultMuted = true;
+      el.muted = true;
+      el.playsInline = true;
+    }
+  }, []);
+
+  // Safe playback helper that avoids unhandled promise rejections and autoplay blocks
+  const safePlay = useCallback(() => {
+    const video = videoRef.current;
+    if (!video || !project.heroVideo) return;
+
+    video.defaultMuted = true;
+    video.muted = isMuted;
+
+    try {
+      playPromiseRef.current = video.play();
+      if (playPromiseRef.current !== undefined) {
+        playPromiseRef.current
+          .then(() => {
+            playPromiseRef.current = null;
+            isPlayingRef.current = true;
+            setIsPlaying(true);
+          })
+          .catch(() => {
+            playPromiseRef.current = null;
+            // Retry with muted=true if browser blocked unmuted audio
+            if (video) {
+              video.muted = true;
+              setIsMuted(true);
+              video.play().then(() => {
+                isPlayingRef.current = true;
+                setIsPlaying(true);
+              }).catch(() => {});
+            }
+          });
+      }
+    } catch {
+      // ignore
+    }
+  }, [project.heroVideo, isMuted]);
+
+  // Safe pause helper that waits for pending play promise to finish first
+  const safePause = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (playPromiseRef.current) {
+      playPromiseRef.current
+        .then(() => {
+          video.pause();
+          isPlayingRef.current = false;
+          setIsPlaying(false);
+        })
+        .catch(() => {});
+    } else {
+      video.pause();
+      isPlayingRef.current = false;
+      setIsPlaying(false);
+    }
+  }, []);
+
+  // Viewport Auto-Play: triggers smoothly when within 250px of viewport
   useEffect(() => {
     const el = containerRef.current;
     if (!el || typeof IntersectionObserver === 'undefined') return;
@@ -47,7 +114,7 @@ export function ProjectExhibitionCard({
       ([entry]) => {
         setIsInView(entry.isIntersecting);
       },
-      { rootMargin: '100px', threshold: 0.15 }
+      { rootMargin: '250px 0px', threshold: [0, 0.1, 0.3] }
     );
 
     observer.observe(el);
@@ -55,16 +122,12 @@ export function ProjectExhibitionCard({
   }, []);
 
   useEffect(() => {
-    if (!videoRef.current || !project.heroVideo) return;
     if (isInView) {
-      videoRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {});
+      safePlay();
     } else {
-      videoRef.current.pause();
-      setIsPlaying(false);
+      safePause();
     }
-  }, [isInView, project.heroVideo]);
+  }, [isInView, safePlay, safePause]);
 
   const resetHideTimer = useCallback(() => {
     if (hideTimeoutRef.current) {
@@ -81,11 +144,7 @@ export function ProjectExhibitionCard({
   const handleMouseEnter = () => {
     setIsHovered(true);
     resetHideTimer();
-    if (project.heroVideo && videoRef.current && videoRef.current.paused) {
-      videoRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {});
-    }
+    safePlay();
   };
 
   const handleMouseMove = () => {
@@ -99,62 +158,74 @@ export function ProjectExhibitionCard({
     }
     setIsHovered(false);
     // Keep playing smoothly if still in viewport, pause if scrolled away
-    if (!isInView && videoRef.current) {
-      videoRef.current.pause();
-      setIsPlaying(false);
+    if (!isInView) {
+      safePause();
     }
   };
 
   const togglePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play().then(() => {
-          setIsPlaying(true);
-          resetHideTimer();
-        }).catch(() => {});
-      } else {
-        videoRef.current.pause();
-        setIsPlaying(false);
-        setIsHovered(true);
-      }
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      safePlay();
+      resetHideTimer();
+    } else {
+      safePause();
+      setIsHovered(true);
     }
   };
 
   const toggleSound = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(videoRef.current.muted);
+    const video = videoRef.current;
+    if (video) {
+      const nextMuted = !video.muted;
+      video.muted = nextMuted;
+      setIsMuted(nextMuted);
     }
   };
 
   const openFullscreen = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if (videoRef.current && videoRef.current.requestFullscreen) {
-      videoRef.current.requestFullscreen();
+    const video = videoRef.current;
+    if (video && video.requestFullscreen) {
+      video.requestFullscreen();
     }
   };
 
   const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      setCurrentTime(videoRef.current.currentTime);
-      if (!duration && videoRef.current.duration) {
-        setDuration(videoRef.current.duration);
+    const video = videoRef.current;
+    if (video) {
+      setCurrentTime(video.currentTime);
+      if (!duration && video.duration) {
+        setDuration(video.duration);
       }
     }
   };
 
   const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration);
+    const video = videoRef.current;
+    if (video) {
+      setDuration(video.duration);
+      if (isInView || isHovered) {
+        safePlay();
+      }
+    }
+  };
+
+  const handleCanPlay = () => {
+    if (isInView || isHovered) {
+      safePlay();
     }
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTime = parseFloat(e.target.value);
-    if (videoRef.current) {
-      videoRef.current.currentTime = newTime;
+    const video = videoRef.current;
+    if (video) {
+      video.currentTime = newTime;
       setCurrentTime(newTime);
       resetHideTimer();
     }
@@ -201,15 +272,17 @@ export function ProjectExhibitionCard({
         {project.heroVideo ? (
           <>
             <video
-              ref={videoRef}
+              ref={setVideoRef}
               src={project.heroVideo}
               poster={project.heroImage}
-              muted={isMuted}
+              autoPlay
+              muted
               loop
               playsInline
-              preload="metadata"
+              preload="auto"
               controls={false}
               disablePictureInPicture
+              onCanPlay={handleCanPlay}
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
               onClick={togglePlay}

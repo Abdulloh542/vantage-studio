@@ -17,10 +17,65 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const [isHovered, setIsHovered] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(index === 0);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
+
+  const setVideoRef = useCallback((el: HTMLVideoElement | null) => {
+    videoRef.current = el;
+    if (el) {
+      el.defaultMuted = true;
+      el.muted = true;
+      el.playsInline = true;
+    }
+  }, []);
+
+  const safePlay = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.defaultMuted = true;
+    video.muted = isMuted;
+
+    try {
+      playPromiseRef.current = video.play();
+      if (playPromiseRef.current !== undefined) {
+        playPromiseRef.current
+          .then(() => {
+            playPromiseRef.current = null;
+            setIsPlaying(true);
+          })
+          .catch(() => {
+            playPromiseRef.current = null;
+            if (video) {
+              video.muted = true;
+              setIsMuted(true);
+              video.play().then(() => setIsPlaying(true)).catch(() => {});
+            }
+          });
+      }
+    } catch {
+      // ignore
+    }
+  }, [isMuted]);
+
+  const safePause = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (playPromiseRef.current) {
+      playPromiseRef.current
+        .then(() => {
+          video.pause();
+          setIsPlaying(false);
+        })
+        .catch(() => {});
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  }, []);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -30,7 +85,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
       ([entry]) => {
         setIsInView(entry.isIntersecting);
       },
-      { rootMargin: '120px', threshold: 0.1 }
+      { rootMargin: '250px 0px', threshold: [0, 0.1, 0.3] }
     );
 
     observer.observe(el);
@@ -38,13 +93,12 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   }, []);
 
   useEffect(() => {
-    if (!videoRef.current) return;
-    if (isInView && isPlaying) {
-      videoRef.current.play().catch(() => {});
+    if (isInView) {
+      safePlay();
     } else {
-      videoRef.current.pause();
+      safePause();
     }
-  }, [isInView, isPlaying]);
+  }, [isInView, safePlay, safePause]);
 
   // Compile all unique high-res stills for the project
   const stills: LightboxImage[] = [];
@@ -133,9 +187,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const handleMouseEnter = () => {
     setIsHovered(true);
     resetHideTimer();
-    if (videoRef.current && videoRef.current.paused) {
-      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
-    }
+    safePlay();
   };
 
   const handleMouseMove = () => {
@@ -147,24 +199,23 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     if (hideTimeoutRef.current) {
       clearTimeout(hideTimeoutRef.current);
     }
-    if (isPlaying) {
-      setIsHovered(false);
+    setIsHovered(false);
+    if (!isInView) {
+      safePause();
     }
   };
 
   const togglePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play().catch(() => {});
-        setIsPlaying(true);
-        resetHideTimer();
-      } else {
-        videoRef.current.pause();
-        setIsPlaying(false);
-        if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
-        setIsHovered(true);
-      }
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      safePlay();
+      resetHideTimer();
+    } else {
+      safePause();
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+      setIsHovered(true);
     }
   };
 
@@ -296,16 +347,19 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
           >
             {project.heroVideo ? (
               <video
-                ref={videoRef}
+                ref={setVideoRef}
                 src={project.heroVideo}
                 poster={project.heroImage}
                 autoPlay
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="auto"
                 controls={false}
                 disablePictureInPicture
+                onCanPlay={() => {
+                  if (isInView || isHovered) safePlay();
+                }}
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
                 onPlay={() => setIsPlaying(true)}
@@ -322,8 +376,8 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
               />
             )}
 
-            {/* Central Play Indicator when paused */}
-            {project.heroVideo && !isPlaying && (
+            {/* Central Play Indicator when paused and not hovered */}
+            {project.heroVideo && !isPlaying && !isHovered && (
               <div
                 onClick={togglePlay}
                 className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer z-10 transition-opacity duration-200"
