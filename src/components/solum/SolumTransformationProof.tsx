@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { BeforeAfterSlider } from '../common/BeforeAfterSlider';
+import { optimizeCloudinaryImage } from '../../utils/media';
 
 interface Scenario {
   id: string;
@@ -32,8 +33,8 @@ const SCENARIOS: Scenario[] = [
   {
     id: 'viewport-to-film',
     tabLabel: 'SCHEMATIC MASSING → FINAL CINEMA STILL',
-    beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992497/projects/lotus-mall/lotus-mall_still_3.jpg',
-    afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg',
+    beforeImage: optimizeCloudinaryImage('https://res.cloudinary.com/mvmsbgon/image/upload/v1789992497/projects/lotus-mall/lotus-mall_still_3.jpg', 1400),
+    afterImage: optimizeCloudinaryImage('https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg', 1400),
     headline: 'From geometric massing to iconic retail & hotel architecture.',
     description: 'Volumetric masterplan models transformed into a luminous commercial destination.',
     projectSlug: 'lotus-mall',
@@ -44,8 +45,8 @@ const SCENARIOS: Scenario[] = [
   {
     id: 'site-to-development',
     tabLabel: 'CONSTRUCTION FRAMEWORK → FINAL NIGHT CGI',
-    beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990863/projects/effect-archi/make_villa_on_time_constr_120220.jpg',
-    afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990851/projects/effect-archi/A_high-end_architectural__aadba3.jpg',
+    beforeImage: optimizeCloudinaryImage('https://res.cloudinary.com/mvmsbgon/image/upload/v1789990863/projects/effect-archi/make_villa_on_time_constr_120220.jpg', 1400),
+    afterImage: optimizeCloudinaryImage('https://res.cloudinary.com/mvmsbgon/image/upload/v1789990851/projects/effect-archi/A_high-end_architectural__aadba3.jpg', 1400),
     headline: 'From on-site construction framework to luminous midnight photorealism.',
     description: 'Progressive construction framework transformed into an evocative midnight architectural masterpiece.',
     projectSlug: 'architecture-insight',

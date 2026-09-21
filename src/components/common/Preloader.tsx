@@ -7,37 +7,48 @@ interface PreloaderProps {
 }
 
 export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
-  const [curtainUp, setCurtainUp] = useState(false);
-  const [isDone, setIsDone] = useState(false);
-  const [progress, setProgress] = useState(0);
+  // Check if user already saw the preloader in this browser session
+  const alreadySeen = typeof window !== 'undefined' && sessionStorage.getItem('vantage_preloader_seen') === '1';
+
+  const [curtainUp, setCurtainUp] = useState(alreadySeen);
+  const [isDone, setIsDone] = useState(alreadySeen);
+  const [progress, setProgress] = useState(alreadySeen ? 100 : 0);
 
   useEffect(() => {
+    if (alreadySeen) {
+      onComplete?.();
+      return;
+    }
+
+    // Mark as seen for this session so refreshes are immediate
+    sessionStorage.setItem('vantage_preloader_seen', '1');
+
     // Lock scroll during the curtain sequence
     document.body.style.overflow = 'hidden';
 
-    // Rapid progress counter for architectural precision
+    // Rapid progress counter
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(progressInterval);
           return 100;
         }
-        return prev + Math.floor(Math.random() * 20) + 15;
+        return prev + Math.floor(Math.random() * 25) + 20;
       });
-    }, 45);
+    }, 30);
 
-    // T=700ms: Begin lifting the white canvas upwards smoothly
+    // T=400ms: Begin lifting the white canvas upwards smoothly
     const t1 = setTimeout(() => {
       setCurtainUp(true);
       onSequenceStart?.();
-    }, 750);
+    }, 450);
 
-    // T=1700ms: Curtain has fully moved offscreen (-100%), unlock body
+    // T=950ms: Curtain has fully cleared, unlock body
     const t2 = setTimeout(() => {
       setIsDone(true);
       document.body.style.overflow = '';
       onComplete?.();
-    }, 1700);
+    }, 950);
 
     return () => {
       clearInterval(progressInterval);
@@ -45,9 +56,9 @@ export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
       clearTimeout(t2);
       document.body.style.overflow = '';
     };
-  }, [onSequenceStart, onComplete]);
+  }, [alreadySeen, onSequenceStart, onComplete]);
 
-  if (isDone) {
+  if (isDone || alreadySeen) {
     return null;
   }
 

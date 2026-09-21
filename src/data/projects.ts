@@ -1,6 +1,7 @@
 import type { Project } from '../types';
+import { optimizeCloudinaryImage } from '../utils/media';
 
-export const PROJECTS: Project[] = [
+const RAW_PROJECTS: Project[] = [
   {
     slug: 'volga-park',
     title: 'Volga Park',
@@ -745,3 +746,21 @@ export const PROJECTS: Project[] = [
     nextProjectSlug: 'volga-park'
   }
 ];
+
+export const PROJECTS: Project[] = RAW_PROJECTS.map((project) => ({
+  ...project,
+  heroImage: optimizeCloudinaryImage(project.heroImage, 1600),
+  beforeAfter: project.beforeAfter ? {
+    ...project.beforeAfter,
+    beforeImage: optimizeCloudinaryImage(project.beforeAfter.beforeImage, 1400),
+    afterImage: optimizeCloudinaryImage(project.beforeAfter.afterImage, 1400),
+  } : undefined,
+  process: project.process.map((step) => ({
+    ...step,
+    image: step.image ? optimizeCloudinaryImage(step.image, 1200) : undefined,
+  })),
+  gallery: project.gallery.map((item) => ({
+    ...item,
+    url: optimizeCloudinaryImage(item.url, 1600),
+  })),
+}));

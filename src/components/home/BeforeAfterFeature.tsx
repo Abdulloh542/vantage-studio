@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { BeforeAfterSlider } from '../common/BeforeAfterSlider';
-import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { BeforeAfterSlider } from '../common/BeforeAfterSlider';
+import { optimizeCloudinaryImage } from '../../utils/media';
+import { ArrowUpRight } from 'lucide-react';
 
 interface ComparisonPair {
   id: string;
@@ -34,9 +35,9 @@ export function BeforeAfterFeature() {
     {
       id: 'viewport-to-final',
       tabLabel: 'Schematic Massing → Final Cinema Still',
-      beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992497/projects/lotus-mall/lotus-mall_still_3.jpg',
+      beforeImage: optimizeCloudinaryImage('https://res.cloudinary.com/mvmsbgon/image/upload/v1789992497/projects/lotus-mall/lotus-mall_still_3.jpg', 1400),
       beforeLabel: 'SCHEMATIC MASSING',
-      afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg',
+      afterImage: optimizeCloudinaryImage('https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg', 1400),
       afterLabel: 'FINAL CINEMA STILL',
       heading: 'From geometric massing to iconic retail & hotel architecture.',
       description: 'Volumetric masterplan models and curtainwall blueprints transformed into a luminous mixed-use commercial and hospitality destination.',
@@ -45,9 +46,9 @@ export function BeforeAfterFeature() {
     {
       id: 'plot-to-development',
       tabLabel: 'Construction Framework → Final Night CGI',
-      beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990863/projects/effect-archi/make_villa_on_time_constr_120220.jpg',
+      beforeImage: optimizeCloudinaryImage('https://res.cloudinary.com/mvmsbgon/image/upload/v1789990863/projects/effect-archi/make_villa_on_time_constr_120220.jpg', 1400),
       beforeLabel: 'CONSTRUCTION PHASE',
-      afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990851/projects/effect-archi/A_high-end_architectural__aadba3.jpg',
+      afterImage: optimizeCloudinaryImage('https://res.cloudinary.com/mvmsbgon/image/upload/v1789990851/projects/effect-archi/A_high-end_architectural__aadba3.jpg', 1400),
       afterLabel: 'FINAL ARCHITECTURAL NIGHT STILL',
       heading: 'From on-site construction framework to luminous midnight photorealism.',
       description: 'Progressive construction framework and structural formwork transformed into an evocative midnight architectural masterpiece with ambient warm lighting.',

@@ -62,6 +62,7 @@ export function SolumHero() {
               muted
               loop
               playsInline
+              preload="metadata"
               controls={false}
               disablePictureInPicture
               className="w-full h-full object-cover filter brightness-90 contrast-105 pointer-events-none select-none"

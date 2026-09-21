@@ -18,7 +18,33 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(index === 0);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { rootMargin: '120px', threshold: 0.1 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+    if (isInView && isPlaying) {
+      videoRef.current.play().catch(() => {});
+    } else {
+      videoRef.current.pause();
+    }
+  }, [isInView, isPlaying]);
 
   // Compile all unique high-res stills for the project
   const stills: LightboxImage[] = [];
@@ -243,7 +269,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
       {/* ─────────────────────────────────────────────────────────────
           2. THE CGI STUDIO MEDIA MATRIX (16:9 or 9:16 DYNAMIC FORMAT)
           ───────────────────────────────────────────────────────────── */}
-      <div className={`grid grid-cols-1 lg:grid-cols-12 ${isVertical ? 'gap-4 lg:gap-8' : 'gap-3 sm:gap-4'} items-stretch`}>
+      <div ref={containerRef} className={`grid grid-cols-1 lg:grid-cols-12 ${isVertical ? 'gap-4 lg:gap-8' : 'gap-3 sm:gap-4'} items-stretch`}>
         {/* LEFT: Cinematic High-Fidelity Video (or Hero Image Fallback) */}
         <div className={isVertical ? "lg:col-span-4 xl:col-span-4 flex flex-col items-center lg:items-start" : "lg:col-span-8 xl:col-span-8 flex flex-col"}>
           <div
@@ -261,10 +287,11 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 ref={videoRef}
                 src={project.heroVideo}
                 poster={project.heroImage}
-                autoPlay
+                autoPlay={index === 0}
                 muted
                 loop
                 playsInline
+                preload={index === 0 ? "metadata" : "none"}
                 controls={false}
                 disablePictureInPicture
                 onTimeUpdate={handleTimeUpdate}

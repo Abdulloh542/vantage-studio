@@ -101,14 +101,11 @@ export function ProjectDetailPage() {
           {project.heroVideo ? (
             project.videoAspectRatio === '9:16' ? (
               <div className="relative w-full h-full flex items-center justify-center bg-black overflow-hidden">
-                <video
-                  src={project.heroVideo}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  controls={false}
-                  className="absolute inset-0 w-full h-full object-cover filter blur-3xl opacity-40 scale-110 pointer-events-none"
+                <img
+                  src={project.heroImage}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover filter blur-3xl opacity-40 scale-110 pointer-events-none select-none"
                 />
                 <video
                   src={project.heroVideo}
@@ -117,6 +114,7 @@ export function ProjectDetailPage() {
                   muted
                   loop
                   playsInline
+                  preload="metadata"
                   controls={false}
                   disablePictureInPicture
                   className="relative z-10 h-full max-h-[80vh] aspect-[9/16] object-cover shadow-2xl border border-white/10"
@@ -130,6 +128,7 @@ export function ProjectDetailPage() {
                 muted
                 loop
                 playsInline
+                preload="metadata"
                 controls={false}
                 disablePictureInPicture
                 className="w-full h-full object-cover filter brightness-95"
