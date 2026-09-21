@@ -83,10 +83,14 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&w=1600&q=85',
     'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1600&q=85',
   ];
-  let fbIdx = 0;
-  while (stills.length < targetMinStills) {
-    addStill(fallbackImages[fbIdx % fallbackImages.length], `Architectural Perspective ${stills.length + 1}`);
-    fbIdx++;
+  // Ensure we reach targetMinStills safely with a fixed finite for-loop (NO infinite loop!)
+  const needed = Math.max(0, targetMinStills - stills.length);
+  for (let i = 0; i < needed; i++) {
+    stills.push({
+      url: fallbackImages[i % fallbackImages.length],
+      caption: `Architectural Perspective ${stills.length + 1}`,
+      title: project.title,
+    });
   }
 
   // Partition stills across 3 tiers (4-4-4 for vertical, 3-3-3 for widescreen)
@@ -105,10 +109,15 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     r3Base = itemsWithIdx.slice(6, 9);
   }
 
+  // Fallback guards to prevent any undefined spread crash
+  const safeR1 = r1Base && r1Base.length > 0 ? r1Base : itemsWithIdx.slice(0, 3);
+  const safeR2 = r2Base && r2Base.length > 0 ? r2Base : itemsWithIdx.slice(3, 6);
+  const safeR3 = r3Base && r3Base.length > 0 ? r3Base : itemsWithIdx.slice(6, 9);
+
   // Duplicate each row array for seamless 0% -> -50% infinite loop
-  const row1Loop = [...r1Base, ...r1Base];
-  const row2Loop = [...r2Base, ...r2Base];
-  const row3Loop = [...r3Base, ...r3Base];
+  const row1Loop = [...safeR1, ...safeR1];
+  const row2Loop = [...safeR2, ...safeR2];
+  const row3Loop = [...safeR3, ...safeR3];
 
   const resetHideTimer = useCallback(() => {
     if (hideTimeoutRef.current) {

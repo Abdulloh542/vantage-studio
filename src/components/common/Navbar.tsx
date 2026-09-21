@@ -36,6 +36,11 @@ export function Navbar() {
     };
   }, [menuOpen]);
 
+  const closeMenu = () => {
+    setMenuOpen(false);
+    document.body.style.overflow = '';
+  };
+
   const mainLinks = [
     { label: 'Home', href: '/' },
     { label: 'About', href: '/about' },
@@ -96,7 +101,7 @@ export function Navbar() {
             <div className="absolute top-5 md:top-6 left-6 md:left-10 z-50">
               <Link
                 to="/"
-                onClick={() => setMenuOpen(false)}
+                onClick={closeMenu}
                 className="font-sans font-bold text-sm md:text-base tracking-[-0.04em] uppercase text-[#101010] hover:opacity-80 transition-opacity inline-block"
               >
                 VANTAGE STUDIO
@@ -135,7 +140,7 @@ export function Navbar() {
                   >
                     <Link
                       to={link.href}
-                      onClick={() => setMenuOpen(false)}
+                      onClick={closeMenu}
                       className={`block font-display text-4xl sm:text-6xl md:text-7xl font-semibold tracking-[-0.06em] leading-[0.95] text-[#101010] transition-opacity duration-180 ${
                         isDimmed ? 'opacity-45' : 'opacity-100'
                       }`}
@@ -167,10 +172,10 @@ export function Navbar() {
               <div className="col-span-1">
                 <span className="text-[#101010] block mb-1 font-medium">LEGAL</span>
                 <div className="flex gap-4">
-                  <Link to="/terms" onClick={() => setMenuOpen(false)} className="hover:text-[#101010] transition-colors">
+                  <Link to="/terms" onClick={closeMenu} className="hover:text-[#101010] transition-colors">
                     Terms
                   </Link>
-                  <Link to="/privacy" onClick={() => setMenuOpen(false)} className="hover:text-[#101010] transition-colors">
+                  <Link to="/privacy" onClick={closeMenu} className="hover:text-[#101010] transition-colors">
                     Privacy
                   </Link>
                 </div>
