@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { PROJECTS } from '../../data/projects';
-import { ArchvizProjectShowcase } from '../common/ArchvizProjectShowcase';
 
 export function SolumRecentProjects() {
   const pLead = PROJECTS.find((p) => p.slug === 'volga-park') || PROJECTS[0];
@@ -43,12 +42,46 @@ export function SolumRecentProjects() {
         </div>
 
         {/* ─────────────────────────────────────────────────────────────
-            FEATURED CINEMATIC ARCHVIZ SHOWCASE (MATCHING USER SCREENSHOT)
-            Large Video Left + 6 Frame Stills Right + 4K Lightbox
+            LEAD EXHIBITION PROJECT (VOLGA PARK)
+            Clean, high-impact architectural image card linking to full case study
             ───────────────────────────────────────────────────────────── */}
-        <div className="w-full">
-          <ArchvizProjectShowcase project={pLead} index={0} />
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full pt-10"
+        >
+          <Link to={`/projects/${pLead.slug}`} className="group block select-none">
+            <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
+              <img
+                src={pLead.heroImage}
+                alt={pLead.title}
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-550 ease-out group-hover:scale-[1.025]"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-550 flex items-center justify-center">
+                <div className="w-14 h-14 rounded-full bg-white/95 text-black flex items-center justify-center pl-0.5 shadow-2xl opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100 transition-all duration-300">
+                  <ArrowRight className="w-5 h-5" />
+                </div>
+              </div>
+              <div className="absolute top-4 left-4 z-10">
+                <span className="px-3 py-1 bg-black/60 backdrop-blur-sm text-[11px] font-mono uppercase tracking-wider text-white border border-white/15">
+                  01 // LEAD EXHIBITION &bull; {pLead.location}
+                </span>
+              </div>
+            </div>
+
+            <div className="pt-4 flex items-center justify-between font-mono text-sm sm:text-base text-[#101010] border-b border-[#101010]/12 pb-3">
+              <span className="font-semibold uppercase tracking-wider group-hover:underline">
+                {pLead.title}
+              </span>
+              <span className="text-xs sm:text-sm text-[#757575] tabular-nums font-normal">
+                {pLead.category} &bull; {pLead.year}
+              </span>
+            </div>
+          </Link>
+        </motion.div>
 
         {/* Asymmetric Supporting Exhibition Rows */}
         <div className="space-y-16 md:space-y-24 pt-16">
