@@ -42,7 +42,7 @@ export function SolumMediaBreak() {
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none z-10">
         <motion.div
           style={{ x: shouldReduceMotion ? '0%' : xMarquee }}
-          className="flex items-center whitespace-nowrap text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-[-0.04em] text-white/95 uppercase will-change-transform"
+          className="flex items-center whitespace-nowrap text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-medium tracking-tight text-white/80 uppercase will-change-transform"
         >
           <span>{marqueeText}</span>
           <span>{marqueeText}</span>

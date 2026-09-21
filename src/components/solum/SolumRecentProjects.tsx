@@ -26,8 +26,8 @@ export function SolumRecentProjects() {
 
           {/* Columns 2-4: Large Heading Beginning in Column Two */}
           <div className="col-span-1 md:col-span-3 flex flex-col sm:flex-row sm:items-baseline justify-between gap-6">
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.06em] text-[#101010] uppercase">
-              SELECTED PROJECTS
+            <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-[#101010]">
+              Selected Projects
             </h2>
             <Link
               to="/projects"

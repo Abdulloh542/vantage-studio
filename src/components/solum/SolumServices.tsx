@@ -8,64 +8,69 @@ interface ServicePanel {
   description: string;
   bullets: string[];
   image: string;
+  category: string;
 }
 
 const SERVICES: ServicePanel[] = [
   {
     number: '01',
-    title: 'Architecture',
+    title: 'Architectural Visualization',
+    category: 'Architectural Visualization',
     description:
-      'From first concept to final structure, we craft photorealistic architectural imagery and masterplans that respond to site, daylight, and material physics, balancing form, atmosphere, and commercial durability.',
+      'Translating architectural designs, masterplans, and unbuilt spatial concepts into high-fidelity photorealistic CGI stills and elevations, calibrated with natural daylight physics and tactile materiality.',
     bullets: [
-      'New building visualization & masterplanning',
-      'Site analysis & environmental daylight studies',
-      'Concept development & schematic 3D design',
-      'Structural & technical BIM CGI drawings',
-      'Permit & planning authority documentation',
+      'Exterior Visualization',
+      'Interior Visualization',
+      '3D Modeling & Spatial Calibration',
+      'Photorealistic Enhancement',
+      'Atmospheric Daylight & Sun Angle Studies',
     ],
-    image: 'https://framerusercontent.com/images/rIjy0DwlLemTQ2s2BTHaMSII2Fg.jpg?width=2400&height=1600',
+    image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990146/projects/volga-park/Architectural_close_view_sunny_day_20260.jpg',
   },
   {
     number: '02',
-    title: 'Interior Design',
+    title: 'AI Architectural Films',
+    category: 'AI Architectural Films',
     description:
-      'We shape the spaces inside a building with the same care given to its architecture, considering natural light, tactile materials, circulation flow, and how people actually live or work in the space day to day.',
+      'Directing cinematic motion narratives and AI-driven camera choreographies that bring unbuilt architecture to life with fluid walkthroughs, soundscapes, and viral social media engagement.',
     bullets: [
-      'Space planning & bespoke layout design',
-      'Material & luxury finish curation',
-      'Custom furniture & architectural fixture design',
-      'Natural & artificial lighting choreography',
-      'Styling & museum-grade final staging',
+      'Cinematic Architectural Films',
+      'AI Walkthroughs & Steadicam Sweeps',
+      'Image-to-Video & Render-to-Video',
+      'Concept Films & Story-Driven Narratives',
+      'Social Media 9:16 Vertical Reels',
     ],
-    image: 'https://framerusercontent.com/images/NK9CCeVqA1QfjxGwAkHn5lv7QR8.jpg?width=1920&height=2880',
+    image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990854/projects/effect-archi/A_photorealistic__highly__e6837b.jpg',
   },
   {
     number: '03',
-    title: 'Space Planning & Consulting',
+    title: 'Real Estate Marketing',
+    category: 'Real Estate Marketing',
     description:
-      'For developers and architects who need expert visual guidance without a full design build, we help optimize unbuilt developments, solve spatial marketing challenges, and advise on key design decisions before ground is broken.',
+      'Empowering property developers and brokers with prestige visual collateral that drives pre-sales, captures high-net-worth buyers, and communicates lifestyle, location, and long-term value.',
     bullets: [
-      'Layout & off-plan circulation assessment',
-      'Pre-construction feasibility consulting',
-      'Zoning & architectural code compliance',
-      'Spatial efficiency & unit mix optimization',
-      'Design direction & cinematic concept consulting',
+      'Property Presentation Films',
+      'Development Marketing Campaigns',
+      'Location & Infrastructure Videos',
+      'Map & Urban Infrastructure Animations',
+      'Pre-Sales Exhibition CGI',
     ],
-    image: 'https://framerusercontent.com/images/yznMxGotqqcgsULHwIRkmlRFPNg.jpg?width=1920&height=2880',
+    image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789991206/projects/lotus-mall/Lotus_Mall_Facade_Golden_Hour.jpg',
   },
   {
     number: '04',
-    title: 'Project Management & Renovation',
+    title: 'Renovation & Construction',
+    category: 'Renovation & Construction',
     description:
-      'We oversee the full visual journey from initial blueprint to final handover, coordinating 3D pipelines, production timelines, and marketing milestones so the vision on paper becomes a sold reality.',
+      'Visualizing architectural transformation, adaptive reuse of historic structures, and step-by-step construction sequencing to build municipal consensus and stakeholder confidence.',
     bullets: [
-      'Production sourcing & pipeline coordination',
-      'Campaign budget & milestone delivery management',
-      'On-site drone supervision & quality control',
-      'Adaptive reuse & historical remodel oversight',
-      'Final 16K master file & cinematic film handover',
+      'Before / After Transformation Films',
+      'Construction Timelapse Simulation',
+      'Renovation Visualization & Adaptive Reuse',
+      'Existing → Proposed Transformation Comparison',
+      'Historical Conservation 3D Documentation',
     ],
-    image: 'https://framerusercontent.com/images/ex3qqvYls9dRO4lkffiTeOs6hI.jpg?width=1920&height=2562',
+    image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982051/projects/bunker-37/add_rooftop_on_first_image_202606191833.jpg',
   },
 ];
 
@@ -75,11 +80,11 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
   return (
     <div
       style={{ zIndex: index + 1 }}
-      className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex flex-col md:flex-row bg-[#121212] overflow-hidden shadow-[0_-8px_20px_rgba(0,0,0,0.7)] md:shadow-[0_-24px_48px_rgba(0,0,0,0.95)]"
+      className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex flex-col md:flex-row bg-[#0d0d0d] overflow-hidden shadow-[0_-8px_20px_rgba(0,0,0,0.7)] md:shadow-[0_-24px_48px_rgba(0,0,0,0.95)] border-t border-white/10"
     >
-      {/* Editorial Content Column (Top flex-1 on mobile, Left 50% on desktop) */}
-      <div className="w-full md:w-1/2 flex-1 md:h-full flex flex-col justify-center px-5 sm:px-10 md:px-16 lg:px-24 py-4 sm:py-8 md:py-16 bg-[#121212] z-10 overflow-y-auto sm:overflow-visible">
-        <div className="max-w-xl space-y-3 sm:space-y-4 md:space-y-6 my-auto">
+      {/* Editorial Content Column */}
+      <div className="w-full md:w-1/2 flex-1 md:h-full flex flex-col justify-center px-6 sm:px-10 md:px-16 lg:px-24 py-6 sm:py-10 md:py-16 bg-[#0d0d0d] z-10 overflow-y-auto sm:overflow-visible">
+        <div className="max-w-xl space-y-3 sm:space-y-4 md:space-y-5 my-auto">
           {/* Number & Phase Tag */}
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0.4, y: 10 }}
@@ -88,22 +93,22 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="flex items-center gap-3"
           >
-            <span className="font-sans text-lg sm:text-xl md:text-2xl text-white/40 block font-normal">
+            <span className="font-sans text-base sm:text-lg text-white/40 block font-normal">
               {service.number}
             </span>
             <span className="w-6 sm:w-8 h-px bg-white/20 inline-block" />
-            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-white/50">
-              Phase 0{index + 1}
+            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-white/60">
+              Discipline 0{index + 1}
             </span>
           </motion.div>
 
-          {/* Title */}
+          {/* Title in Classic Refined Typography */}
           <motion.h3
             initial={shouldReduceMotion ? false : { opacity: 0.4, y: 12 }}
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.45, delay: 0.04, ease: [0.22, 1, 0.36, 1] }}
-            className="font-sans font-bold text-2xl sm:text-3xl md:text-5xl lg:text-5xl xl:text-6xl text-white tracking-tight leading-[1.08]"
+            className="font-sans font-medium text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white tracking-tight leading-[1.15]"
           >
             {service.title}
           </motion.h3>
@@ -114,7 +119,7 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
             whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="font-sans text-white/75 text-xs sm:text-sm md:text-base leading-relaxed font-light line-clamp-3 sm:line-clamp-none"
+            className="font-sans text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed font-normal line-clamp-3 sm:line-clamp-none"
           >
             {service.description}
           </motion.p>
@@ -124,25 +129,36 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
             {service.bullets.map((bullet, bIdx) => (
               <li
                 key={bIdx}
-                className="flex items-center gap-2.5 font-sans text-[11px] sm:text-xs md:text-sm text-white/85"
+                className="flex items-center gap-2.5 font-sans text-xs sm:text-sm text-neutral-300"
               >
-                <span className="w-1.5 h-1.5 bg-white/40 inline-block flex-shrink-0" />
+                <span className="w-1.5 h-1.5 bg-[#2563EB] inline-block flex-shrink-0" />
                 <span className="leading-tight sm:leading-normal">{bullet}</span>
               </li>
             ))}
           </ul>
+
+          <div className="pt-2">
+            <Link
+              to={`/projects?category=${encodeURIComponent(service.category)}`}
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-white hover:text-neutral-300 transition-colors group"
+            >
+              <span>Explore {service.title} Projects</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
         </div>
       </div>
 
-      {/* Media Field (Bottom on mobile, Right 50% on desktop) */}
+      {/* Media Field */}
       <div className="w-full md:w-1/2 h-[36svh] sm:h-[42svh] md:h-full relative overflow-hidden bg-black flex-shrink-0">
         <img
           src={service.image}
           alt={service.title}
           loading={index === 0 ? 'eager' : 'lazy'}
           decoding="async"
-          className="w-full h-full object-cover filter brightness-95 select-none"
+          className="w-full h-full object-cover select-none"
         />
+        <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-black/40 via-transparent to-transparent pointer-events-none" />
       </div>
     </div>
   );
@@ -150,45 +166,38 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
 
 export function SolumServices() {
   return (
-    <section id="services" className="w-full bg-[#121212] text-white select-none relative overflow-visible">
-      {/* ========================================================= */}
-      {/* 1) NORMAL NON-STICKY INTRODUCTION BLOCK                   */}
-      {/* ========================================================= */}
-      <div className="w-full py-16 md:py-24 px-6 sm:px-12 md:px-16 lg:px-24 bg-[#121212]">
+    <section id="services" className="w-full bg-[#0d0d0d] text-white select-none relative overflow-visible">
+      {/* Introduction Block */}
+      <div className="w-full py-16 md:py-24 px-6 sm:px-10 md:px-16 lg:px-24 bg-[#0d0d0d] border-b border-white/10">
         <div className="max-w-[1440px] mx-auto flex flex-col md:flex-row md:items-end justify-between gap-8">
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <span className="w-1.5 h-1.5 bg-white/60 inline-block rounded-full" />
-              <span className="font-mono text-xs uppercase tracking-wider text-white/50 block">
-                02 // SERVICES
+              <span className="w-2 h-2 bg-[#2563EB] inline-block" />
+              <span className="font-mono text-xs uppercase tracking-wider text-neutral-400 block">
+                02 // Core Capabilities
               </span>
             </div>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold uppercase tracking-[-0.04em] text-white">
-              WHAT WE DO.
+            <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight text-white">
+              What We Deliver
             </h2>
-            <p className="font-sans text-sm sm:text-base text-white/70 max-w-xl font-light leading-relaxed">
-              From first concept to final finish, Vantage Studio offers a full range of architecture and visual design services for unbuilt spaces.
+            <p className="font-sans text-sm sm:text-base text-neutral-400 max-w-xl font-normal leading-relaxed">
+              From architectural massing to broadcast-grade 4K films, Vantage Studio provides end-to-end CGI production tailored to global developers and architects.
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-5">
-            <span className="font-mono text-xs text-white/40 uppercase tracking-widest hidden sm:inline-block">
-              VANTAGE STUDIO&reg;
-            </span>
             <Link
               to="/contact"
-              className="solum-btn inline-flex items-center gap-3 px-6 py-3.5 border border-white text-white font-mono text-xs uppercase tracking-wider hover:bg-white hover:text-black transition-colors"
+              className="inline-flex items-center gap-3 px-6 py-3 border border-white text-white font-mono text-xs uppercase tracking-wider hover:bg-white hover:text-black transition-colors"
             >
-              <span>START A PROJECT</span>
+              <span>Start a Project</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
       </div>
 
-      {/* ========================================================= */}
-      {/* 2) VERTICAL SERVICES LIST (Sticky Stacking in Flow)        */}
-      {/* ========================================================= */}
+      {/* Vertical Services List (Sticky Stacking) */}
       <div className="relative w-full overflow-visible">
         {SERVICES.map((service, index) => (
           <ServiceCard key={service.number} service={service} index={index} />

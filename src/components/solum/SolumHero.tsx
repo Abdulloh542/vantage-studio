@@ -3,22 +3,6 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const CLIENT_AVATARS = [
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80',
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=160&q=80',
-  'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=160&q=80',
-  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&q=80',
-];
-
-const CLIENT_LOGOS = [
-  { name: 'FOSTER', label: 'FOSTER' },
-  { name: 'HERZOG', label: 'HERZOG' },
-  { name: 'GENSLER', label: 'GENSLER' },
-  { name: 'PATRIZIA', label: 'PATRIZIA' },
-  { name: 'BROOKFIELD', label: 'BROOKFIELD' },
-  { name: 'CBRE', label: 'CBRE' },
-];
-
 export function SolumHero() {
   const shouldReduceMotion = useReducedMotion();
   const heroRef = useRef<HTMLDivElement>(null);
@@ -36,18 +20,10 @@ export function SolumHero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen w-full bg-[#101010] text-white flex flex-col justify-between overflow-hidden select-none"
+      className="relative min-h-screen w-full bg-[#101010] text-white flex flex-col justify-end pb-16 md:pb-24 overflow-hidden select-none"
     >
-      {/* 4-Column Visible Hairline Grid Overlay (matching screenshot) */}
-      <div className="absolute inset-0 pointer-events-none grid grid-cols-1 md:grid-cols-4 px-6 md:px-10 z-20">
-        <div className="border-r border-white/[0.12] h-full hidden md:block" />
-        <div className="border-r border-white/[0.12] h-full hidden md:block" />
-        <div className="border-r border-white/[0.12] h-full hidden md:block" />
-        <div className="h-full hidden md:block" />
-      </div>
-
       {/* ========================================================= */}
-      {/* 1) HERO BACKGROUND: Ambient Cinematic Video (No controls) */}
+      {/* 1) HERO BACKGROUND: Natural Bright Ambient Cinematic Video */}
       {/* ========================================================= */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
@@ -59,11 +35,11 @@ export function SolumHero() {
               initial={
                 shouldReduceMotion
                   ? { opacity: 1, scale: 1 }
-                  : { opacity: 0, scale: 1.08 }
+                  : { opacity: 0, scale: 1.05 }
               }
               animate={{ opacity: 1, scale: 1 }}
               transition={{
-                duration: shouldReduceMotion ? 0.01 : 1.4,
+                duration: shouldReduceMotion ? 0.01 : 1.2,
                 ease: [0.22, 1, 0.36, 1],
               }}
               className="w-full h-full"
@@ -78,7 +54,7 @@ export function SolumHero() {
                 preload="metadata"
                 controls={false}
                 disablePictureInPicture
-                className="w-full h-full object-cover filter brightness-90 contrast-105 pointer-events-none select-none"
+                className="w-full h-full object-cover pointer-events-none select-none"
               />
             </motion.div>
           ) : (
@@ -88,34 +64,34 @@ export function SolumHero() {
               initial={
                 shouldReduceMotion
                   ? { opacity: 1, scale: 1 }
-                  : { opacity: 0, scale: 1.08 }
+                  : { opacity: 0, scale: 1.05 }
               }
               animate={{ opacity: 1, scale: 1 }}
               transition={{
-                duration: shouldReduceMotion ? 0.01 : 1.4,
+                duration: shouldReduceMotion ? 0.01 : 1.2,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="w-full h-full object-cover filter brightness-90 contrast-105 origin-center will-change-transform"
+              className="w-full h-full object-cover origin-center will-change-transform"
             />
           )}
         </motion.div>
 
-        {/* Subtle Contrast Gradient for perfect readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/45 pointer-events-none" />
+        {/* Minimal soft vignette strictly at bottom to ensure text legibility while keeping video naturally bright */}
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
       </div>
 
       {/* ========================================================= */}
-      {/* CENTER HERO STAGE (Exact layout from user screenshot)     */}
+      {/* 2) HERO STAGE: Clean Classic Typography & Action          */}
       {/* ========================================================= */}
-      <div className="relative z-30 my-auto pt-28 md:pt-36 pb-12 md:pb-16 px-6 md:px-10">
+      <div className="relative z-30 px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12 items-end">
-          {/* Left Stage: Giant Vantage® Wordmark & Subtitle (Columns 1-2) */}
-          <div className="col-span-1 md:col-span-2">
+          {/* Left Stage: Refined Classic Vantage® Wordmark & Subtitle */}
+          <div className="col-span-1 md:col-span-3">
             <motion.h1
-              initial={{ opacity: 0, x: -40 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display text-[clamp(64px,11vw,160px)] font-bold tracking-[-0.06em] leading-[0.88] text-white mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.03em] leading-tight text-white mb-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]"
             >
               Vantage&reg;
             </motion.h1>
@@ -124,16 +100,14 @@ export function SolumHero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="font-sans text-base sm:text-lg lg:text-xl text-white/90 font-light leading-relaxed max-w-md"
+              className="font-sans text-sm sm:text-base md:text-lg text-white font-normal leading-relaxed max-w-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]"
             >
               Architecture and visual studio creating photorealistic CGI and cinematic marketing films for unbuilt spaces.
             </motion.p>
           </div>
 
-          {/* Right Stage: Split Start a Project Button (Columns 3-4) */}
-          <div className="col-span-1 md:col-span-2 md:pl-8 flex flex-col justify-end items-start md:items-end">
-
-            {/* Split Architectural Start a Project Button */}
+          {/* Right Stage: Split Start a Project Button */}
+          <div className="col-span-1 md:col-span-1 flex flex-col justify-end items-start md:items-end">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -143,10 +117,10 @@ export function SolumHero() {
                 to="/contact"
                 className="group inline-flex items-stretch bg-white text-[#101010] hover:bg-[#F4F4F0] transition-all duration-200 shadow-[0_10px_30px_rgba(0,0,0,0.35)] border border-white"
               >
-                <div className="py-3.5 px-6 sm:px-7 font-mono text-xs sm:text-sm font-semibold uppercase tracking-[0.08em] flex items-center">
+                <div className="py-3 px-5 sm:px-6 font-mono text-xs sm:text-sm font-semibold uppercase tracking-[0.08em] flex items-center whitespace-nowrap">
                   Start a Project
                 </div>
-                <div className="w-12 sm:w-14 border-l border-[#101010]/15 flex items-center justify-center bg-white group-hover:bg-[#101010] group-hover:text-white transition-colors duration-200">
+                <div className="w-11 sm:w-12 border-l border-[#101010]/15 flex items-center justify-center bg-white group-hover:bg-[#101010] group-hover:text-white transition-colors duration-200">
                   <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" />
                 </div>
               </Link>
@@ -154,44 +128,6 @@ export function SolumHero() {
           </div>
         </div>
       </div>
-
-      {/* ========================================================= */}
-      {/* BOTTOM STRIP: Avatars + Logos (NO 4-thumbnail switcher!)   */}
-      {/* ========================================================= */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-30 pb-8 pt-6 px-6 md:px-10 border-t border-white/15"
-      >
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-5 sm:gap-6">
-          {/* Left: Overlapping Avatars + Social Proof */}
-          <div className="flex items-center gap-3 w-full md:w-auto">
-            <div className="flex -space-x-2.5 overflow-hidden flex-shrink-0">
-              {CLIENT_AVATARS.map((src, i) => (
-                <img
-                  key={i}
-                  src={src}
-                  alt="Client avatar"
-                  className="inline-block w-7 h-7 sm:w-8 sm:h-8 rounded-full border-2 border-[#101010] object-cover"
-                />
-              ))}
-            </div>
-            <p className="font-sans text-xs sm:text-sm text-white/90 leading-tight">
-              Over 100 clients trust us to shape their unbuilt spaces.
-            </p>
-          </div>
-
-          {/* Center/Right: Monochrome Partner Text Strip (FOSTER, HERZOG, GENSLER, etc.) */}
-          <div className="flex items-center flex-wrap justify-start md:justify-end gap-4 sm:gap-8 font-mono text-xs tracking-widest text-white/70 w-full md:w-auto">
-            {CLIENT_LOGOS.map((logo) => (
-              <span key={logo.name} className="hover:text-white transition-colors cursor-default">
-                {logo.name}
-              </span>
-            ))}
-          </div>
-        </div>
-      </motion.div>
     </section>
   );
 }
