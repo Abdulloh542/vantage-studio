@@ -45,7 +45,10 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     addStill(project.heroImage, 'Lead Master Elevation & Architectural Framing');
   }
 
-  // Fallback high-res stills if project has fewer than 9 images
+  const isVertical = project.videoAspectRatio === '9:16';
+  const targetMinStills = isVertical ? 12 : 9;
+
+  // Fallback high-res stills if project has fewer than targetMinStills images
   const fallbackImages = [
     'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85',
     'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=85',
@@ -55,16 +58,26 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1600&q=85',
   ];
   let fbIdx = 0;
-  while (stills.length < 9) {
+  while (stills.length < targetMinStills) {
     addStill(fallbackImages[fbIdx % fallbackImages.length], `Architectural Perspective ${stills.length + 1}`);
     fbIdx++;
   }
 
-  // Exact 3-3-3 partitioning: 3 unique stills per row without cross-row repetition
+  // Partition stills across 3 tiers (4-4-4 for vertical, 3-3-3 for widescreen)
   const itemsWithIdx = stills.map((item, originalIndex) => ({ item, originalIndex }));
-  const r1Base = itemsWithIdx.slice(0, 3);
-  const r2Base = itemsWithIdx.slice(3, 6);
-  const r3Base = itemsWithIdx.slice(6, 9);
+  let r1Base: typeof itemsWithIdx;
+  let r2Base: typeof itemsWithIdx;
+  let r3Base: typeof itemsWithIdx;
+
+  if (isVertical && itemsWithIdx.length >= 12) {
+    r1Base = itemsWithIdx.slice(0, 4);
+    r2Base = itemsWithIdx.slice(4, 8);
+    r3Base = itemsWithIdx.slice(8, 12);
+  } else {
+    r1Base = itemsWithIdx.slice(0, 3);
+    r2Base = itemsWithIdx.slice(3, 6);
+    r3Base = itemsWithIdx.slice(6, 9);
+  }
 
   // Duplicate each row array for seamless 0% -> -50% infinite loop
   const row1Loop = [...r1Base, ...r1Base];
@@ -228,17 +241,20 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          2. THE CGI STUDIO MEDIA MATRIX (VIDEO LEFT 60% + 6 STILLS RIGHT 40%)
-          Exact layout matching user's reference screenshot
+          2. THE CGI STUDIO MEDIA MATRIX (16:9 or 9:16 DYNAMIC FORMAT)
           ───────────────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-stretch">
-        {/* LEFT: Cinematic High-Fidelity Video (or Hero Image Fallback) - Expanded */}
-        <div className="lg:col-span-8 xl:col-span-8 flex flex-col">
+      <div className={`grid grid-cols-1 lg:grid-cols-12 ${isVertical ? 'gap-4 lg:gap-8' : 'gap-3 sm:gap-4'} items-stretch`}>
+        {/* LEFT: Cinematic High-Fidelity Video (or Hero Image Fallback) */}
+        <div className={isVertical ? "lg:col-span-4 xl:col-span-4 flex flex-col items-center lg:items-start" : "lg:col-span-8 xl:col-span-8 flex flex-col"}>
           <div
             onMouseEnter={handleMouseEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] w-full h-full min-h-[280px] sm:min-h-[440px] lg:min-h-[540px] overflow-hidden bg-black border border-[#101010]/12 group"
+            className={
+              isVertical
+                ? "relative aspect-[9/16] w-full max-w-[360px] sm:max-w-[400px] h-full min-h-[480px] sm:min-h-[560px] lg:min-h-[640px] overflow-hidden bg-black border border-[#101010]/12 group shadow-xl"
+                : "relative aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] w-full h-full min-h-[280px] sm:min-h-[440px] lg:min-h-[540px] overflow-hidden bg-black border border-[#101010]/12 group"
+            }
           >
             {project.heroVideo ? (
               <video
@@ -288,7 +304,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
               }`}
             >
               <span className="px-2.5 py-1 bg-black/65 backdrop-blur-sm text-[11px] font-mono uppercase tracking-wider text-white/90 border border-white/15">
-                {project.title} &bull; {project.location}
+                {isVertical ? '9:16 VERTICAL CINEMA' : `${project.title} \u2022 ${project.location}`}
               </span>
             </div>
 
@@ -377,19 +393,29 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
           </div>
         </div>
 
-        {/* RIGHT: 3-Tier Alternating Infinite Marquee Stills (Seamless borderless stream without background box) */}
-        <div className="lg:col-span-4 xl:col-span-4 flex flex-col justify-between gap-2 sm:gap-2.5 h-full min-h-[280px] sm:min-h-[440px] lg:min-h-[540px] overflow-hidden">
-          {/* Row 1: Slides Left (animate-marquee) - 3 unique images */}
-          <div className="relative w-full overflow-hidden h-[90px] sm:h-[135px] lg:h-[165px] flex items-center">
+        {/* RIGHT: 3-Tier Alternating Infinite Marquee Stills */}
+        <div
+          className={
+            isVertical
+              ? "lg:col-span-8 xl:col-span-8 flex flex-col justify-between gap-3 sm:gap-3.5 h-full min-h-[480px] sm:min-h-[560px] lg:min-h-[640px] overflow-hidden"
+              : "lg:col-span-4 xl:col-span-4 flex flex-col justify-between gap-2 sm:gap-2.5 h-full min-h-[280px] sm:min-h-[440px] lg:min-h-[540px] overflow-hidden"
+          }
+        >
+          {/* Row 1: Slides Left (animate-marquee) */}
+          <div className={`relative w-full overflow-hidden flex items-center ${isVertical ? 'h-[135px] sm:h-[175px] lg:h-[200px]' : 'h-[90px] sm:h-[135px] lg:h-[165px]'}`}>
             <div
               className="flex items-center gap-2 sm:gap-2.5 animate-marquee w-max"
-              style={{ animationDuration: '30s' }}
+              style={{ animationDuration: isVertical ? '38s' : '30s' }}
             >
               {row1Loop.map((entry, idx) => (
                 <div
                   key={`r1-${idx}`}
                   onClick={() => handleOpenLightbox(entry.originalIndex)}
-                  className="group relative w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px] flex-shrink-0 overflow-hidden cursor-pointer"
+                  className={`group relative flex-shrink-0 overflow-hidden cursor-pointer ${
+                    isVertical
+                      ? 'w-44 sm:w-56 lg:w-68 h-[135px] sm:h-[175px] lg:h-[200px]'
+                      : 'w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px]'
+                  }`}
                 >
                   <img
                     src={entry.item.url}
@@ -407,17 +433,21 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
             </div>
           </div>
 
-          {/* Row 2: Slides Rightwards (Reverse direction) - 3 unique images */}
-          <div className="relative w-full overflow-hidden h-[90px] sm:h-[135px] lg:h-[165px] flex items-center">
+          {/* Row 2: Slides Rightwards (Reverse direction) */}
+          <div className={`relative w-full overflow-hidden flex items-center ${isVertical ? 'h-[135px] sm:h-[175px] lg:h-[200px]' : 'h-[90px] sm:h-[135px] lg:h-[165px]'}`}>
             <div
               className="flex items-center gap-2 sm:gap-2.5 animate-marquee-reverse w-max"
-              style={{ animationDuration: '32s' }}
+              style={{ animationDuration: isVertical ? '42s' : '32s' }}
             >
               {row2Loop.map((entry, idx) => (
                 <div
                   key={`r2-${idx}`}
                   onClick={() => handleOpenLightbox(entry.originalIndex)}
-                  className="group relative w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px] flex-shrink-0 overflow-hidden cursor-pointer"
+                  className={`group relative flex-shrink-0 overflow-hidden cursor-pointer ${
+                    isVertical
+                      ? 'w-44 sm:w-56 lg:w-68 h-[135px] sm:h-[175px] lg:h-[200px]'
+                      : 'w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px]'
+                  }`}
                 >
                   <img
                     src={entry.item.url}
@@ -435,17 +465,21 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
             </div>
           </div>
 
-          {/* Row 3: Slides Leftwards - 3 unique images */}
-          <div className="relative w-full overflow-hidden h-[90px] sm:h-[135px] lg:h-[165px] flex items-center">
+          {/* Row 3: Slides Leftwards */}
+          <div className={`relative w-full overflow-hidden flex items-center ${isVertical ? 'h-[135px] sm:h-[175px] lg:h-[200px]' : 'h-[90px] sm:h-[135px] lg:h-[165px]'}`}>
             <div
               className="flex items-center gap-2 sm:gap-2.5 animate-marquee w-max"
-              style={{ animationDuration: '28s' }}
+              style={{ animationDuration: isVertical ? '36s' : '28s' }}
             >
               {row3Loop.map((entry, idx) => (
                 <div
                   key={`r3-${idx}`}
                   onClick={() => handleOpenLightbox(entry.originalIndex)}
-                  className="group relative w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px] flex-shrink-0 overflow-hidden cursor-pointer"
+                  className={`group relative flex-shrink-0 overflow-hidden cursor-pointer ${
+                    isVertical
+                      ? 'w-44 sm:w-56 lg:w-68 h-[135px] sm:h-[175px] lg:h-[200px]'
+                      : 'w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px]'
+                  }`}
                 >
                   <img
                     src={entry.item.url}

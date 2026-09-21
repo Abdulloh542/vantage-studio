@@ -99,17 +99,42 @@ export function ProjectDetailPage() {
           className="absolute inset-0 w-full h-[120%] -top-[10%]"
         >
           {project.heroVideo ? (
-            <video
-              src={project.heroVideo}
-              poster={project.heroImage}
-              autoPlay
-              muted
-              loop
-              playsInline
-              controls={false}
-              disablePictureInPicture
-              className="w-full h-full object-cover filter brightness-95"
-            />
+            project.videoAspectRatio === '9:16' ? (
+              <div className="relative w-full h-full flex items-center justify-center bg-black overflow-hidden">
+                <video
+                  src={project.heroVideo}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  controls={false}
+                  className="absolute inset-0 w-full h-full object-cover filter blur-3xl opacity-40 scale-110 pointer-events-none"
+                />
+                <video
+                  src={project.heroVideo}
+                  poster={project.heroImage}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  controls={false}
+                  disablePictureInPicture
+                  className="relative z-10 h-full max-h-[80vh] aspect-[9/16] object-cover shadow-2xl border border-white/10"
+                />
+              </div>
+            ) : (
+              <video
+                src={project.heroVideo}
+                poster={project.heroImage}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls={false}
+                disablePictureInPicture
+                className="w-full h-full object-cover filter brightness-95"
+              />
+            )
           ) : (
             <img
               src={project.heroImage}

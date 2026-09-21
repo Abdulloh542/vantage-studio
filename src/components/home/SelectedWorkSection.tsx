@@ -10,7 +10,7 @@ interface SelectedWorkSectionProps {
 export function SelectedWorkSection({ projects }: SelectedWorkSectionProps) {
   const p1 = projects.find(p => p.slug === 'volga-park') || projects[0];
   const p2 = projects.find(p => p.slug === 'bunker-37') || projects[1];
-  const p3 = projects.find(p => p.slug === 'australia-residence') || projects[2];
+  const p3 = projects.find(p => p.slug === 'effect-archi-inside') || projects[2];
   const p4 = projects.find(p => p.slug === 'berliner-strasse-69') || projects[3];
   const p5 = projects.find(p => p.slug === 'marlow-on-mill') || projects[4];
   const p6 = projects.find(p => p.slug === 'venetian-penthouse') || projects[5];

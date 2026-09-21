@@ -233,65 +233,141 @@ export const PROJECTS: Project[] = [
     ],
     featured: true,
     featuredOrder: 2,
-    nextProjectSlug: 'australia-residence'
+    nextProjectSlug: 'effect-archi-inside'
   },
   {
-    slug: 'australia-residence',
-    title: 'Residential Development',
-    subtitle: '3D Visualization / AI Walkthrough',
-    location: 'Perth, Western Australia',
-    year: '2025',
-    client: 'Oceanic Land Holdings Pty Ltd',
-    architect: 'Bespoke Coastal Studios',
+    slug: 'effect-archi-inside',
+    title: 'Effect Archi Inside',
+    subtitle: '9:16 Vertical Architectural Film / Villa Interior & Exterior',
+    location: 'Zurich, Switzerland',
+    year: '2026',
+    client: 'Effect Architecture Atelier',
+    architect: 'Studio Archi Inside & Vantage Partners',
     category: 'Residential',
-    services: ['Architectural Visualization', 'AI Walkthrough Videos', 'Real Estate Marketing'],
-    tags: ['All', 'CGI', 'Architecture', 'Real Estate', 'AI Film', 'Animation', 'Exterior', 'Residential'],
-    heroImage: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2400&q=85',
-    videoDuration: '60s AI Walkthrough',
-    clientMaterial: 'Survey site boundary topography and initial landscape architect CAD concepts',
+    services: ['9:16 Cinema Film Production', 'Architectural Visualization', 'Interior & Exterior CGI', 'Social Reels Marketing'],
+    tags: ['All', 'CGI', 'Architecture', 'AI Film', 'Interior', 'Exterior', 'Residential', '9:16 Vertical'],
+    heroImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990854/projects/effect-archi/A_photorealistic__highly__e6837b.jpg',
+    heroVideo: 'https://res.cloudinary.com/mvmsbgon/video/upload/v1789990848/projects/effect-archi/effect_archi_film_9x16.mp4',
+    videoDuration: '52s 9:16 Film',
+    videoAspectRatio: '9:16',
+    clientMaterial: 'Structural axonometric schematics, 3D floor plan geometry, and progressive construction render studies',
     transformationPipeline: [
-      'Coastal Sand & Dune Topography 3D',
-      'Native Australian Coastal Vegetation Modeling',
-      'AI Drone Walkthrough Synthesis',
-      'Social Media Cutdowns for Off-Plan Buyers'
+      'Parametric Villa Massing & Floorplan BIM Modeling',
+      'Daylight, Dusk & Midnight Chiaroscuro Calibration',
+      '9:16 Vertical Frame Composition & Kinetic Steadicam',
+      'High-End Material Texturing & Foliage Integration'
     ],
-    summary: 'A collection of bespoke oceanfront cliffside villas designed to capture panoramic Indian Ocean sunsets through cantilevered glass pavilions.',
+    summary: 'An avant-garde contemporary private villa harmonizing brutalist concrete, expansive glazed pavilions, and curated interior spatial sequencing.',
     description: [
-      'The developer needed to sell multi-million dollar residences off-plan while the site was still an undeveloped coastal sand ridge.',
-      'Our studio generated full 3D terrain topography, simulated endemic Australian coastal flora, and choreographed an AI-assisted drone walkthrough moving seamlessly from the open ocean into private infinity terraces.',
-      'All eight flagship residences were reserved within four months of the visual campaign launch.'
+      'Commissioned by Effect Architecture Atelier, this project challenged our studio to deliver a complete multi-environment visualization campaign tailored specifically for high-impact 9:16 vertical cinema and social-first spatial storytelling.',
+      'Starting from architectural 3D floorplans and progressive construction stages, our team modeled the entire hillside estate—from sweeping aerial sunlit terraces to moody midnight chiaroscuro atmospheres.',
+      'The resulting campaign features 12 photorealistic architectural plates and an immersive 9:16 vertical film engineered for next-generation mobile and digital gallery showcases.'
     ],
     stats: [
-      { label: 'Residences', value: '8 Exclusive Cliff Villas' },
-      { label: 'Site Area', value: '34,000 m²' },
-      { label: 'Average Price', value: '$6.5M AUD' },
-      { label: 'Off-Plan Sellout', value: '100% in 120 Days' }
+      { label: 'Living Area', value: '1,250 m²' },
+      { label: 'Aspect Ratio', value: '9:16 Vertical Reel' },
+      { label: 'Lighting Studies', value: 'Day, Dusk & Midnight' },
+      { label: 'Outputs', value: '12 Stills + 4K Vertical Film' }
     ],
     beforeAfter: {
-      beforeImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=1800&q=80',
-      beforeLabel: 'EMPTY COASTAL PLOT & WIREFRAME',
-      afterImage: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1800&q=85',
-      afterLabel: 'PROPOSED OCEANFRONT VILLA CGI',
-      description: 'From an empty sand contour drawing to an ultra-luxury oceanfront living reality that accelerated buyer deposit commitments.'
+      beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990863/projects/effect-archi/make_villa_on_time_constr_120220.jpg',
+      beforeLabel: 'CONSTRUCTION PHASE & WIREFRAME',
+      afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990851/projects/effect-archi/A_high-end_architectural__aadba3.jpg',
+      afterLabel: 'FINAL ARCHITECTURAL NIGHT STILL',
+      description: 'From on-site construction framework to luminous midnight architectural photorealism.'
     },
     process: [
       {
         step: '01',
-        title: 'Geographic Sun & Wave Simulation',
-        description: 'Calibrating the Western Australian golden hour solar trajectory and coastal atmospheric spray.',
-        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
+        title: '3D Spatial Plan & Massing Study',
+        description: 'Modeling cutaway floorplans, circulation flow, and building orientation relative to hillside terrain.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990861/projects/effect-archi/make_plan_3d_realistic_2K_fb6c40.jpg'
+      },
+      {
+        step: '02',
+        title: 'Construction & Structural Framework',
+        description: 'Visualizing progressive construction phases, reinforced formwork, and earth retaining structures.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990863/projects/effect-archi/make_villa_on_time_constr_120220.jpg'
+      },
+      {
+        step: '03',
+        title: 'Eye-Level Perspective & Daylight',
+        description: 'Calibrating low-angled morning illumination, swimming pool water caustics, and glass transparency.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990864/projects/effect-archi/Photorealistic_architectu_6136ec.jpg'
+      },
+      {
+        step: '04',
+        title: 'Dramatic Autumn Midnight Atmosphere',
+        description: 'Simulating moonlit overcast skies, ambient architectural spotlights, and chiaroscuro foliage shadows.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990858/projects/effect-archi/make_dramatic_autumn_midn_be880a.jpg'
+      },
+      {
+        step: '05',
+        title: 'Vertical 9:16 Cinema Walkthrough',
+        description: 'Directing cinematic vertical fly-throughs, smooth gimbal movements, and immersive soundscapes for social channels.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990854/projects/effect-archi/A_photorealistic__highly__e6837b.jpg'
       }
     ],
     gallery: [
       {
-        url: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Cantilevered infinity terrace blending seamlessly into the Indian Ocean',
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990854/projects/effect-archi/A_photorealistic__highly__e6837b.jpg',
+        caption: 'High-altitude architectural aerial: Cantilevered modern villa situated within forested hillside topography',
         aspectRatio: 'landscape'
       },
       {
-        url: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Living room with rammed-earth feature walls and cedar acoustic ceiling',
-        aspectRatio: 'portrait'
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990851/projects/effect-archi/A_high-end_architectural__aadba3.jpg',
+        caption: 'Midnight illuminated elevation: Warm interior light spilling through double-height panoramic curtain walls',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990858/projects/effect-archi/make_dramatic_autumn_midn_be880a.jpg',
+        caption: 'Dramatic autumn midnight study: Overcast moonlit skies accentuating monolithic concrete massing',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990864/projects/effect-archi/Photorealistic_architectu_6136ec.jpg',
+        caption: 'Eye-level garden perspective: Stone pathways leading to the glass-encased entrance foyer',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990860/projects/effect-archi/make_image_from_eye-level_981555.jpg',
+        caption: 'Terrace approach view: Integrated infinity pool and timber sundeck in crisp morning daylight',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990869/projects/effect-archi/rotate_camera_to_right_st_190dd2.jpg',
+        caption: 'Side facade study: Linear cantilevered eaves and precision-engineered architectural louvers',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990861/projects/effect-archi/make_plan_3d_realistic_2K_fb6c40.jpg',
+        caption: '3D Axonometric floorplan: Cutaway spatial layout displaying open-plan living and private suites',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990863/projects/effect-archi/make_villa_on_time_constr_120220.jpg',
+        caption: 'Progressive construction render: Reinforced formwork and structural foundation progress',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990856/projects/effect-archi/Extract_and_upscale_from__c11a74.jpg',
+        caption: 'Material detail close-up: Textured fair-faced concrete paired with black anodized aluminum frames',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990866/projects/effect-archi/remove_tree_above__and_ma_32e2ab.jpg',
+        caption: 'Canopy clearance perspective: Unobstructed roofline framing surrounding Alpine mountain ridges',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990867/projects/effect-archi/remove_tree_on_middle_2K__25a109.jpg',
+        caption: 'Courtyard transition: Indoor-outdoor continuity connecting living pavilion to wild pine landscaping',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990870/projects/effect-archi/Transform_the_uploaded_vi_200002.jpg',
+        caption: 'Twilight atmosphere render: Ambient warm uplighting highlighting architectural geometry and reflection',
+        aspectRatio: 'landscape'
       }
     ],
     featured: true,

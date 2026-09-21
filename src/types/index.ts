@@ -45,6 +45,7 @@ export interface Project {
   clientMaterial?: string; // e.g. "Architectural drawings / CAD plans / 2 preliminary renders"
   transformationPipeline?: string[]; // e.g. ["3D Visualization", "Photorealistic Enhancement", "Cinematic AI Video", "Final Marketing Edit"]
   videoDuration?: string;
+  videoAspectRatio?: '16:9' | '9:16';
   gallery: GalleryItem[];
   featured: boolean;
   featuredOrder: number;

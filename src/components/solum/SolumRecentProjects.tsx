@@ -7,7 +7,7 @@ import { ArchvizProjectShowcase } from '../common/ArchvizProjectShowcase';
 export function SolumRecentProjects() {
   const pLead = PROJECTS.find((p) => p.slug === 'volga-park') || PROJECTS[0];
   const pSupport1 = PROJECTS.find((p) => p.slug === 'bunker-37') || PROJECTS[1];
-  const pSupport2 = PROJECTS.find((p) => p.slug === 'australia-residence') || PROJECTS[2];
+  const pSupport2 = PROJECTS.find((p) => p.slug === 'effect-archi-inside') || PROJECTS[2];
   const pBroad = PROJECTS.find((p) => p.slug === 'berliner-strasse-69') || PROJECTS[3];
 
   return (
