@@ -377,8 +377,8 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
           </div>
         </div>
 
-        {/* RIGHT: 3-Tier Alternating Infinite Marquee Stills (Compact light background, 3-3-3 distinct images) */}
-        <div className="lg:col-span-4 xl:col-span-4 flex flex-col justify-between gap-2 sm:gap-2.5 h-full min-h-[300px] sm:min-h-[440px] lg:min-h-[540px] overflow-hidden bg-[#F8F8F6] border border-[#101010]/10 p-2 sm:p-2.5">
+        {/* RIGHT: 3-Tier Alternating Infinite Marquee Stills (Seamless borderless stream without background box) */}
+        <div className="lg:col-span-4 xl:col-span-4 flex flex-col justify-between gap-2 sm:gap-2.5 h-full min-h-[280px] sm:min-h-[440px] lg:min-h-[540px] overflow-hidden">
           {/* Row 1: Slides Left (animate-marquee) - 3 unique images */}
           <div className="relative w-full overflow-hidden h-[90px] sm:h-[135px] lg:h-[165px] flex items-center">
             <div
@@ -389,7 +389,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 <div
                   key={`r1-${idx}`}
                   onClick={() => handleOpenLightbox(entry.originalIndex)}
-                  className="group relative w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px] flex-shrink-0 overflow-hidden bg-zinc-100 border border-[#101010]/10 cursor-pointer"
+                  className="group relative w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px] flex-shrink-0 overflow-hidden cursor-pointer"
                 >
                   <img
                     src={entry.item.url}
@@ -417,7 +417,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 <div
                   key={`r2-${idx}`}
                   onClick={() => handleOpenLightbox(entry.originalIndex)}
-                  className="group relative w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px] flex-shrink-0 overflow-hidden bg-zinc-100 border border-[#101010]/10 cursor-pointer"
+                  className="group relative w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px] flex-shrink-0 overflow-hidden cursor-pointer"
                 >
                   <img
                     src={entry.item.url}
@@ -445,7 +445,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 <div
                   key={`r3-${idx}`}
                   onClick={() => handleOpenLightbox(entry.originalIndex)}
-                  className="group relative w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px] flex-shrink-0 overflow-hidden bg-zinc-100 border border-[#101010]/10 cursor-pointer"
+                  className="group relative w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px] flex-shrink-0 overflow-hidden cursor-pointer"
                 >
                   <img
                     src={entry.item.url}
