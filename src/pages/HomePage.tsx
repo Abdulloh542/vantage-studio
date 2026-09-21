@@ -5,6 +5,7 @@ import { SolumRecentProjects } from '../components/solum/SolumRecentProjects';
 import { SolumServices } from '../components/solum/SolumServices';
 import { SolumHowWeWork } from '../components/solum/SolumHowWeWork';
 import { SolumTransformationProof } from '../components/solum/SolumTransformationProof';
+import { SolumSpatialBreakdown } from '../components/solum/SolumSpatialBreakdown';
 import { SolumFAQ } from '../components/solum/SolumFAQ';
 
 export function HomePage() {
@@ -31,6 +32,8 @@ export function HomePage() {
       {/* 07: Transformation Proof (Interactive Before/After Technical Chamber) */}
       <SolumTransformationProof />
 
+      {/* 07b: Spatial Breakdown (4-Direction Exploding Micro-Vignettes from After Master) */}
+      <SolumSpatialBreakdown />
 
       {/* 08: Operational Protocols & FAQ */}
       <SolumFAQ />
