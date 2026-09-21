@@ -2,97 +2,122 @@ import type { Project } from '../types';
 
 export const PROJECTS: Project[] = [
   {
-    slug: 'riviera-residence',
-    title: 'Riviera Residence',
-    subtitle: 'Architectural Film / AI Visualization',
-    location: 'Dushanbe, Tajikistan',
-    year: '2025',
-    client: 'Golden Horizon Developments',
-    architect: 'Milan Design Atelier & Local Partners',
+    slug: 'volga-park',
+    title: 'Volga Park',
+    subtitle: 'Urban Residential Quarter / 4K Architectural Visualization',
+    location: 'Moscow, Russia',
+    year: '2026',
+    client: 'PIK Development Group',
+    architect: 'Vantage Atelier & Masterplan Partners',
     category: 'Residential',
-    services: ['Architectural Visualization', 'AI Film Production', 'Real Estate Marketing'],
-    tags: ['All', 'CGI', 'Architecture', 'Real Estate', 'AI Film', 'Exterior', 'Residential'],
-    heroImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85',
-    heroVideo: 'https://assets.mixkit.co/videos/preview/mixkit-modern-apartment-building-at-dusk-40916-large.mp4',
-    videoDuration: '90s 4K Film',
-    clientMaterial: 'Architectural floor plans, Revit schematics and 2 early concept renders',
+    services: ['Architectural Visualization', 'Urban Landscaping CGI', '4K Cinematic Walkthrough', 'Real Estate Marketing'],
+    tags: ['All', 'CGI', 'Architecture', 'Real Estate', 'Exterior', 'Residential', 'Walkthrough'],
+    heroImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990146/projects/volga-park/Architectural_close_view_sunny_day_20260.jpg',
+    heroVideo: 'https://res.cloudinary.com/mvmsbgon/video/upload/v1789990140/projects/volga-park/volga_park_film_v1.mp4',
+    videoDuration: '58s 4K Film',
+    clientMaterial: 'Architectural BIM blueprints, courtyard landscape schematics, and facade finish palettes',
     transformationPipeline: [
-      '3D BIM & Geometry Optimization',
-      'Photorealistic Lighting & Travertine Texturing',
-      'AI Generative Motion & Environmental Haze',
-      'Cinematic Editing & Orchestral Master Score'
+      'High-Fidelity Facade Geometry & Brickwork Detailing',
+      'Sunlight & Atmospheric Twilight Calibration',
+      'Pedestrian & Courtyard Human Activity Population',
+      'Cinematic 4K Drone & Eye-Level Steadicam Production'
     ],
-    summary: 'A signature multi-tiered residential development designed to introduce Mediterranean terraced living into Central Asia’s growing luxury property market.',
+    summary: 'A dynamic multi-building residential quarter crafted around lush green courtyards, vibrant community recreational areas, and contemporary urban facades.',
     description: [
-      'The developer approached our atelier with just two preliminary concept renders and architectural CAD floor plans. They needed a complete visual marketing campaign to launch international pre-sales.',
-      'From these raw inputs, our team engineered a high-fidelity 3D digital model, populated indigenous botanical landscaping, and calibrated precise summer twilight illumination.',
-      'Using our proprietary AI-assisted motion pipeline, we produced a broadcast-quality 90-second marketing film in three weeks, achieving a 240% pre-launch reservation target within 60 days.'
+      'The developer commissioned our atelier to create a comprehensive, emotive visual marketing campaign for Volga Park—a flagship master-planned residential quarter.',
+      'Starting with architectural schematics and masterplan footprints, our team constructed precise facade materiality, textured clinker brick accents, and modeled active pedestrian pathways.',
+      'We populated the environment with realistic families, children at play, and elderly residents enjoying sun-drenched garden courtyards, concluding in a broadcast-ready 4K cinematic film that anchors pre-sales campaigns.'
     ],
     stats: [
-      { label: 'Total Area', value: '42,000 m²' },
-      { label: 'Units', value: '148 Luxury Residences' },
-      { label: 'GDV', value: '$165M' },
-      { label: 'Outputs', value: '18 CGI Stills + 90s Film' }
+      { label: 'Total Area', value: '185,000 m²' },
+      { label: 'Buildings', value: '6 Residential Blocks' },
+      { label: 'Courtyard Space', value: '35,000 m² Park' },
+      { label: 'Outputs', value: '9 CGI Stills + 4K Walkthrough' }
     ],
     beforeAfter: {
-      beforeImage: '/images/before_after/villa_before.webp',
-      beforeLabel: 'RAW 3D MODEL & VIEWPORT',
-      afterImage: '/images/before_after/villa_after.webp',
-      afterLabel: 'OUR WORK: FINAL DUSK CGI',
-      description: 'The core value argument: our studio took a raw 3D model and transformed it into an emotional, photorealistic twilight marketing experience.'
+      beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990144/projects/volga-park/2.jpg',
+      beforeLabel: 'MASTER FACADE COMPOSITION & MASSING',
+      afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990146/projects/volga-park/Architectural_close_view_sunny_day_20260.jpg',
+      afterLabel: 'ATMOSPHERIC SUNLIT ARCHITECTURAL CLOSE-UP',
+      description: 'From massing layout to emotionally compelling sunlight, tactile materiality, and living human environments.'
     },
     process: [
       {
         step: '01',
-        title: 'Input: 2 Renders + Architectural Plans',
-        description: 'Ingesting basic 2D drawings and client concept renders, establishing accurate camera heights, and auditing masterplan site coordinates.',
-        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
+        title: 'Masterplan & Architectural Elevation',
+        description: 'Ingesting architectural blueprints, defining facade rhythm, fenestration proportions, and solar daylight angles.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990144/projects/volga-park/2.jpg'
       },
       {
         step: '02',
-        title: '3D Visualization & Materiality',
-        description: 'Rebuilding clean 3D geometry, sampling Italian travertine and aged bronze, and simulating exact twilight sun angles.',
-        image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80'
+        title: 'Materiality & Facade Detailing',
+        description: 'Texturing clinker brickwork, champagne mullions, and high-transmission glazing in bright summer lighting.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990146/projects/volga-park/Architectural_close_view_sunny_day_20260.jpg'
       },
       {
         step: '03',
-        title: 'AI Generative Enhancement',
-        description: 'Injecting atmospheric moisture, foliage rustling, and subtle motion micro-details to eradicate artificial sterility.',
-        image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80'
+        title: 'Courtyard Landscaping & Botanical Design',
+        description: 'Populating dense birch and linden trees, flowering shrubbery, and multi-textured pedestrian pathways.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990149/projects/volga-park/Courtyard_facade_composition_tre__4K_202.jpg'
       },
       {
         step: '04',
-        title: 'Cinematic AI Film Production',
-        description: 'Generating steadycam sweeps, drone approaches, and penthouse walkthroughs timed to a custom musical composition.',
-        image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80'
+        title: 'Human Scale & Community Life',
+        description: 'Simulating active neighborhood life with children playing and families enjoying park avenues.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990147/projects/volga-park/Children_playing_in_courtyard_4K_2026080.jpg'
       },
       {
         step: '05',
-        title: 'Final Launch Delivery',
-        description: 'Exporting 8K presentation stills, 4K ProRes master films, and interactive touchscreens for the VIP sales gallery.',
-        image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80'
+        title: 'Cinematic 4K Walkthrough & Delivery',
+        description: 'Directing steadycam sweeps, dynamic fly-throughs, and 8K exhibition stills for the international sales launch.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990222/projects/volga-park/aerial_overview_4k_202c48.jpg'
       }
     ],
     gallery: [
       {
-        url: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Cantilevered balcony terraces overlooking the central courtyard pool',
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990146/projects/volga-park/Architectural_close_view_sunny_day_20260.jpg',
+        caption: 'Architectural close view: Sunlit brick facade and window rhythm on a bright summer afternoon',
         aspectRatio: 'landscape'
       },
       {
-        url: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Double-height living pavilion with floor-to-ceiling minimal glazing',
-        aspectRatio: 'portrait'
-      },
-      {
-        url: 'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Material study: Fluted travertine and brushed champagne anodized mullions',
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990149/projects/volga-park/Courtyard_facade_composition_tre__4K_202.jpg',
+        caption: 'Courtyard facade composition: Harmonious tree line framing the modern residential elevation',
         aspectRatio: 'landscape'
       },
       {
-        url: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Master bedroom suite opening directly onto a private garden terrace',
-        aspectRatio: 'portrait'
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990206/projects/volga-park/Courtyard_view_between_bu_b8ae74.jpg',
+        caption: 'Courtyard perspective between residential towers: Deep urban canyon with lush foliage',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990208/projects/volga-park/Courtyard_view_between_bu_0cbc27.jpg',
+        caption: 'Central promenade view: Pedestrian axis connecting inner gardens and playgrounds',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990147/projects/volga-park/Children_playing_in_courtyard_4K_2026080.jpg',
+        caption: 'Vibrant courtyard community: Children playing in the protected inner park',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990155/projects/volga-park/Elderly_couple_talking_courtyard_4K_2026.jpg',
+        caption: 'Serene neighborhood atmosphere: Elderly residents enjoying warm sunlight on courtyard benches',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990157/projects/volga-park/Family_entering_apartment_building_4K_20.jpg',
+        caption: 'Residential entrance lobby: Family arriving at the high-ceiling glass entrance pavilion',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990144/projects/volga-park/2.jpg',
+        caption: 'Master architectural elevation: Panoramic perspective of Volga Park blocks in natural daylight',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990222/projects/volga-park/aerial_overview_4k_202c48.jpg',
+        caption: 'Cinematic aerial perspective: Comprehensive masterplan layout showcasing rooftop terraces and greenery',
+        aspectRatio: 'landscape'
       }
     ],
     featured: true,
@@ -509,6 +534,6 @@ export const PROJECTS: Project[] = [
     ],
     featured: false,
     featuredOrder: 8,
-    nextProjectSlug: 'riviera-residence'
+    nextProjectSlug: 'volga-park'
   }
 ];

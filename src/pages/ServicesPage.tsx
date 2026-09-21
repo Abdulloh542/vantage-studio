@@ -26,7 +26,7 @@ const SERVICES: ServiceItem[] = [
     pills: ['Interactive CRM', 'UX Research & Strategy', 'Analytics'],
     image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85',
     hasDemo: true,
-    demoUrl: '/projects/riviera-residence',
+    demoUrl: '/projects/volga-park',
   },
   {
     number: '03',

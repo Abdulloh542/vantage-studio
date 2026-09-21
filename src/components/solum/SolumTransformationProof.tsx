@@ -24,7 +24,7 @@ const SCENARIOS: Scenario[] = [
     afterImage: '/images/before_after/villa_after.webp',
     headline: 'From raw 3D viewport model to photorealistic dusk reality.',
     description: 'Engineered physically accurate twilight lighting, pool water caustics, and luxury finishes in 3 weeks.',
-    projectSlug: 'riviera-residence',
+    projectSlug: 'volga-park',
     timeline: '3 WEEKS',
     outputFormat: '16K ARCHIVAL STILLS',
     commercialImpact: '100% PRE-SOLD OFF-PLAN',

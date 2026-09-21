@@ -29,7 +29,7 @@ export function BeforeAfterFeature() {
       afterLabel: 'FINAL CGI',
       heading: 'From preliminary concept render to photorealistic dusk reality.',
       description: 'The client supplied 2 rough preliminary concept renders. Our studio rebuilt lighting physics, layered botanical landscaping, and created high-converting marketing visuals in 3 weeks.',
-      projectSlug: 'riviera-residence',
+      projectSlug: 'volga-park',
     },
     {
       id: 'viewport-to-final',
