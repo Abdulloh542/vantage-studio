@@ -5,7 +5,7 @@ export function SolumSpatialBreakdown() {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Pinned viewport scroll: expands smoothly, stays locked and fully open, collapses when exiting to top
+  // Pinned viewport scroll: expands smoothly, then promptly continues down without freezing
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
@@ -13,87 +13,59 @@ export function SolumSpatialBreakdown() {
 
   // Physical liquid spring: silky smooth 60fps/120Hz tracking, zero discrete 'wop' jumps
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 240,
-    damping: 30,
-    mass: 0.35,
+    stiffness: 180,
+    damping: 26,
+    mass: 0.38,
     restDelta: 0.001,
   });
 
-  // Smoothly expands between 3% and 28% of scroll, and STAYS 100% open and locked throughout the section!
-  const spread = useTransform(smoothProgress, [0.03, 0.28], [0, 1]);
-  const centerScale = useTransform(smoothProgress, [0, 0.15, 0.85, 1], [0.96, 1, 1, 0.98]);
+  // Smoothly expands between 4% and 65% of scroll, then immediately continues down without freeze!
+  const spread = useTransform(smoothProgress, [0.04, 0.65], [0, 1]);
+  const centerScale = useTransform(smoothProgress, [0, 0.3, 0.8, 1], [0.97, 1, 1, 0.98]);
 
-  // Card opacity rises swiftly from 0 to 1 and stays 100% solid
-  const cardOpacity = useTransform(smoothProgress, [0.02, 0.12], [0, 1]);
-  const cardScale = useTransform(smoothProgress, [0.03, 0.28], [0.75, 1]);
-  const lineOpacity = useTransform(smoothProgress, [0.04, 0.18], [0, 0.9]);
+  // Card opacity rises smoothly and stays 100% solid
+  const cardOpacity = useTransform(smoothProgress, [0.04, 0.28], [0, 1]);
+  const cardScale = useTransform(smoothProgress, [0.04, 0.65], [0.78, 1]);
+  const lineOpacity = useTransform(smoothProgress, [0.12, 0.45], [0, 0.9]);
 
-  // Wide translations so all 4 enlarged corner cards CLEAR the center card completely
-  const tlX = useTransform(spread, (v) => `${v * -144}%`);
+  // Symmetrical diagonal translations matching the 33° arrow vectors
+  const tlX = useTransform(spread, (v) => `${v * -148}%`);
   const tlY = useTransform(spread, (v) => `${v * -128}%`);
 
-  const trX = useTransform(spread, (v) => `${v * 144}%`);
+  const trX = useTransform(spread, (v) => `${v * 148}%`);
   const trY = useTransform(spread, (v) => `${v * -128}%`);
 
-  const blX = useTransform(spread, (v) => `${v * -144}%`);
+  const blX = useTransform(spread, (v) => `${v * -148}%`);
   const blY = useTransform(spread, (v) => `${v * 128}%`);
 
-  const brX = useTransform(spread, (v) => `${v * 144}%`);
+  const brX = useTransform(spread, (v) => `${v * 148}%`);
   const brY = useTransform(spread, (v) => `${v * 128}%`);
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-[200vh] bg-[#0A0A0A] text-white select-none overflow-visible"
+      className="relative w-full h-[135vh] bg-[#0A0A0A] text-white select-none overflow-visible"
     >
       {/* Pinned Viewport Stage */}
       <div className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex items-center justify-center overflow-hidden">
         {/* Subtle Ambient Radial Vignette */}
         <div className="absolute inset-0 bg-gradient-radial from-zinc-900/40 via-[#0A0A0A] to-[#0A0A0A] pointer-events-none" />
 
-        {/* Central Stage Container */}
-        <div className="relative w-full max-w-[1700px] h-full flex items-center justify-center px-4 sm:px-6">
+        {/* Central Stage Container (Balanced luxury scale) */}
+        <div className="relative w-full max-w-[1240px] h-full flex items-center justify-center px-4 sm:px-6">
           {/* ========================================================= */}
-          {/* CONNECTING ARROWS & HAIRLINE LEADER LINES (SVG)           */}
+          {/* CONNECTING ARROWS (EXACT SYMMETRICAL 33° DIAGONALS)       */}
           {/* Placed at z-10 BEHIND cards (z-20) so they NEVER pierce photos */}
           {/* ========================================================= */}
           <motion.svg
+            viewBox="0 0 1000 600"
+            preserveAspectRatio="xMidYMid meet"
             style={{ opacity: shouldReduceMotion ? 0.8 : lineOpacity }}
             className="absolute inset-0 w-full h-full pointer-events-none z-10"
           >
             <defs>
               <marker
-                id="arrowhead-tl"
-                markerWidth="8"
-                markerHeight="8"
-                refX="6"
-                refY="4"
-                orient="auto"
-              >
-                <polygon points="0 1, 7 4, 0 7" fill="rgba(255,255,255,0.9)" />
-              </marker>
-              <marker
-                id="arrowhead-tr"
-                markerWidth="8"
-                markerHeight="8"
-                refX="6"
-                refY="4"
-                orient="auto"
-              >
-                <polygon points="0 1, 7 4, 0 7" fill="rgba(255,255,255,0.9)" />
-              </marker>
-              <marker
-                id="arrowhead-bl"
-                markerWidth="8"
-                markerHeight="8"
-                refX="6"
-                refY="4"
-                orient="auto"
-              >
-                <polygon points="0 1, 7 4, 0 7" fill="rgba(255,255,255,0.9)" />
-              </marker>
-              <marker
-                id="arrowhead-br"
+                id="arrowhead-diag"
                 markerWidth="8"
                 markerHeight="8"
                 refX="6"
@@ -104,49 +76,52 @@ export function SolumSpatialBreakdown() {
               </marker>
             </defs>
 
-            {/* 4 Directional Connecting Arrow Lines (Stop cleanly at card edge without overlapping photo) */}
+            {/* 1. Top-Left Diagonal Arrow (Center Villa to Tree Canopy) */}
             <motion.line
-              x1="40%"
-              y1="37%"
-              x2="28%"
-              y2="31%"
-              stroke="rgba(255,255,255,0.7)"
+              x1="350"
+              y1="220"
+              x2="250"
+              y2="155"
+              stroke="rgba(255,255,255,0.75)"
               strokeWidth="1.5"
               strokeDasharray="5 5"
-              markerEnd="url(#arrowhead-tl)"
+              markerEnd="url(#arrowhead-diag)"
               style={shouldReduceMotion ? undefined : { pathLength: spread }}
             />
+            {/* 2. Top-Right Diagonal Arrow (Center Villa to Wall Sculpture) */}
             <motion.line
-              x1="60%"
-              y1="37%"
-              x2="72%"
-              y2="31%"
-              stroke="rgba(255,255,255,0.7)"
+              x1="650"
+              y1="220"
+              x2="750"
+              y2="155"
+              stroke="rgba(255,255,255,0.75)"
               strokeWidth="1.5"
               strokeDasharray="5 5"
-              markerEnd="url(#arrowhead-tr)"
+              markerEnd="url(#arrowhead-diag)"
               style={shouldReduceMotion ? undefined : { pathLength: spread }}
             />
+            {/* 3. Bottom-Left Diagonal Arrow (Center Villa to Poolside Landscape) */}
             <motion.line
-              x1="40%"
-              y1="63%"
-              x2="28%"
-              y2="69%"
-              stroke="rgba(255,255,255,0.7)"
+              x1="350"
+              y1="380"
+              x2="250"
+              y2="445"
+              stroke="rgba(255,255,255,0.75)"
               strokeWidth="1.5"
               strokeDasharray="5 5"
-              markerEnd="url(#arrowhead-bl)"
+              markerEnd="url(#arrowhead-diag)"
               style={shouldReduceMotion ? undefined : { pathLength: spread }}
             />
+            {/* 4. Bottom-Right Diagonal Arrow (Center Villa to Timber Soffit Lighting) */}
             <motion.line
-              x1="60%"
-              y1="63%"
-              x2="72%"
-              y2="69%"
-              stroke="rgba(255,255,255,0.7)"
+              x1="650"
+              y1="380"
+              x2="750"
+              y2="445"
+              stroke="rgba(255,255,255,0.75)"
               strokeWidth="1.5"
               strokeDasharray="5 5"
-              markerEnd="url(#arrowhead-br)"
+              markerEnd="url(#arrowhead-diag)"
               style={shouldReduceMotion ? undefined : { pathLength: spread }}
             />
           </motion.svg>
@@ -167,13 +142,13 @@ export function SolumSpatialBreakdown() {
                     scale: cardScale,
                   }
             }
-            className="absolute z-10 w-[160px] sm:w-[230px] md:w-[310px] lg:w-[380px] xl:w-[420px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[125px] sm:w-[165px] md:w-[205px] lg:w-[245px] xl:w-[275px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_40px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/tree_canopy_detail.webp"
               alt="Detail: Tree Canopy & Balcony"
               loading="eager"
-              className="w-full h-full object-cover filter brightness-110 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
+              className="w-full h-full object-cover filter brightness-105 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
             />
             <div className="absolute inset-0 border border-white/20 rounded-xl sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
           </motion.div>
@@ -190,13 +165,13 @@ export function SolumSpatialBreakdown() {
                     scale: cardScale,
                   }
             }
-            className="absolute z-10 w-[160px] sm:w-[230px] md:w-[310px] lg:w-[380px] xl:w-[420px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[125px] sm:w-[165px] md:w-[205px] lg:w-[245px] xl:w-[275px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_40px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/sculpture_detail.webp"
               alt="Detail: Facade Sculpture"
               loading="eager"
-              className="w-full h-full object-cover filter brightness-110 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
+              className="w-full h-full object-cover filter brightness-105 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
             />
             <div className="absolute inset-0 border border-white/20 rounded-xl sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
           </motion.div>
@@ -213,13 +188,13 @@ export function SolumSpatialBreakdown() {
                     scale: cardScale,
                   }
             }
-            className="absolute z-10 w-[160px] sm:w-[230px] md:w-[310px] lg:w-[380px] xl:w-[420px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[125px] sm:w-[165px] md:w-[205px] lg:w-[245px] xl:w-[275px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_40px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/landscape_detail.webp"
               alt="Detail: Botanical Landscaping"
               loading="eager"
-              className="w-full h-full object-cover filter brightness-110 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
+              className="w-full h-full object-cover filter brightness-105 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
             />
             <div className="absolute inset-0 border border-white/20 rounded-xl sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
           </motion.div>
@@ -236,13 +211,13 @@ export function SolumSpatialBreakdown() {
                     scale: cardScale,
                   }
             }
-            className="absolute z-10 w-[160px] sm:w-[230px] md:w-[310px] lg:w-[380px] xl:w-[420px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_20px_50px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[125px] sm:w-[165px] md:w-[205px] lg:w-[245px] xl:w-[275px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_16px_40px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/ceiling_lighting_detail.webp"
               alt="Detail: Architectural Lighting"
               loading="eager"
-              className="w-full h-full object-cover filter brightness-110 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
+              className="w-full h-full object-cover filter brightness-105 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
             />
             <div className="absolute inset-0 border border-white/20 rounded-xl sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
           </motion.div>
@@ -252,7 +227,7 @@ export function SolumSpatialBreakdown() {
           {/* ========================================================= */}
           <motion.div
             style={shouldReduceMotion ? undefined : { scale: centerScale }}
-            className="relative z-20 w-[280px] sm:w-[400px] md:w-[500px] lg:w-[600px] xl:w-[660px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/35 bg-black shadow-[0_0_90px_rgba(0,0,0,0.95)] group"
+            className="relative z-30 w-[240px] sm:w-[330px] md:w-[410px] lg:w-[470px] xl:w-[510px] aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden border border-white/35 bg-black shadow-[0_0_80px_rgba(0,0,0,0.95)] group"
           >
             <img
               src="/images/before_after/villa_after.webp"
