@@ -20,7 +20,9 @@ export function ProjectExhibitionCard({
   const [isMuted, setIsMuted] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isInView, setIsInView] = useState(false);
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -36,6 +38,34 @@ export function ProjectExhibitionCard({
     aspectClass = 'aspect-[16/9] md:aspect-[16/10]';
   }
 
+  // Viewport Auto-Play: When user scrolls to this video ("qarab turibdimi auto playga qo'yib qo'yaver")
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { rootMargin: '100px', threshold: 0.15 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!videoRef.current || !project.heroVideo) return;
+    if (isInView) {
+      videoRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch(() => {});
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  }, [isInView, project.heroVideo]);
+
   const resetHideTimer = useCallback(() => {
     if (hideTimeoutRef.current) {
       clearTimeout(hideTimeoutRef.current);
@@ -47,11 +77,11 @@ export function ProjectExhibitionCard({
     }
   }, [isPlaying]);
 
-  // Instant playback on mouse hover ("oldiga borsa birdan boshlanadigan qilib")
+  // Instant playback on mouse hover ("mishkani oborsa birdan boshlansin")
   const handleMouseEnter = () => {
     setIsHovered(true);
     resetHideTimer();
-    if (project.heroVideo && videoRef.current) {
+    if (project.heroVideo && videoRef.current && videoRef.current.paused) {
       videoRef.current.play().then(() => {
         setIsPlaying(true);
       }).catch(() => {});
@@ -68,7 +98,8 @@ export function ProjectExhibitionCard({
       clearTimeout(hideTimeoutRef.current);
     }
     setIsHovered(false);
-    if (project.heroVideo && videoRef.current) {
+    // Keep playing smoothly if still in viewport, pause if scrolled away
+    if (!isInView && videoRef.current) {
       videoRef.current.pause();
       setIsPlaying(false);
     }
@@ -147,6 +178,10 @@ export function ProjectExhibitionCard({
     };
   }, []);
 
+  // Slight zoom to eliminate any letterbox black bars on edges (especially Lotus Mall)
+  const isLotusMall = project.slug === 'lotus-mall';
+  const zoomClass = isLotusMall ? 'scale-[1.07]' : 'scale-[1.04]';
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 16 }}
@@ -155,8 +190,9 @@ export function ProjectExhibitionCard({
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className="w-full select-none"
     >
-      {/* 1. CLEAN MEDIA STAGE (Instant play on hover, smooth YouTube controls, zero extra overlay buttons) */}
+      {/* 1. CLEAN MEDIA STAGE (Auto-play in view, instant hover, YouTube controls, zero clutter buttons, zoomed in to remove black borders) */}
       <div
+        ref={containerRef}
         onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -177,7 +213,7 @@ export function ProjectExhibitionCard({
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
               onClick={togglePlay}
-              className="w-full h-full object-cover filter brightness-95 contrast-105 cursor-pointer"
+              className={`w-full h-full object-cover ${zoomClass} origin-center filter brightness-95 contrast-105 cursor-pointer transition-transform duration-300`}
             />
 
             {/* YouTube-like auto-hiding controls bar on hover */}
@@ -250,12 +286,12 @@ export function ProjectExhibitionCard({
             </div>
           </>
         ) : (
-          <Link to={`/projects/${project.slug}`} className="block w-full h-full">
+          <Link to={`/projects/${project.slug}`} className="block w-full h-full overflow-hidden">
             <img
               src={project.heroImage}
               alt={project.title}
               loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02] filter brightness-95"
+              className="w-full h-full object-cover scale-[1.03] origin-center transition-transform duration-700 ease-out group-hover:scale-[1.06] filter brightness-95"
             />
           </Link>
         )}

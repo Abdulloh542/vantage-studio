@@ -299,11 +299,11 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 ref={videoRef}
                 src={project.heroVideo}
                 poster={project.heroImage}
-                autoPlay={index === 0}
+                autoPlay
                 muted
                 loop
                 playsInline
-                preload={index === 0 ? "metadata" : "none"}
+                preload="metadata"
                 controls={false}
                 disablePictureInPicture
                 onTimeUpdate={handleTimeUpdate}
@@ -311,14 +311,14 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
                 onClick={handleContainerClick}
-                className="w-full h-full object-cover filter brightness-95 contrast-105 cursor-pointer"
+                className="w-full h-full object-cover scale-[1.04] origin-center filter brightness-95 contrast-105 cursor-pointer"
               />
             ) : (
               <img
                 src={project.heroImage}
                 alt={project.title}
                 loading="lazy"
-                className="w-full h-full object-cover filter brightness-95"
+                className="w-full h-full object-cover scale-[1.03] origin-center filter brightness-95"
               />
             )}
 
