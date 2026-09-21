@@ -21,12 +21,31 @@ export function ProjectExhibitionCard({
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isInView, setIsInView] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const playPromiseRef = useRef<Promise<void> | null>(null);
   const isPlayingRef = useRef(false);
+
+  useEffect(() => {
+    const handleFsChange = () => {
+      const fsEl = document.fullscreenElement || (document as any).webkitFullscreenElement || (document as any).mozFullScreenElement || (document as any).msFullscreenElement;
+      setIsFullscreen(fsEl === videoRef.current);
+    };
+
+    document.addEventListener('fullscreenchange', handleFsChange);
+    document.addEventListener('webkitfullscreenchange', handleFsChange);
+    document.addEventListener('mozfullscreenchange', handleFsChange);
+    document.addEventListener('MSFullscreenChange', handleFsChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFsChange);
+      document.removeEventListener('webkitfullscreenchange', handleFsChange);
+      document.removeEventListener('mozfullscreenchange', handleFsChange);
+      document.removeEventListener('MSFullscreenChange', handleFsChange);
+    };
+  }, []);
 
   const isVertical = project.videoAspectRatio === '9:16';
 
@@ -189,9 +208,15 @@ export function ProjectExhibitionCard({
 
   const openFullscreen = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    const video = videoRef.current;
-    if (video && video.requestFullscreen) {
-      video.requestFullscreen();
+    const video = videoRef.current as (HTMLVideoElement & { webkitEnterFullscreen?: () => void; webkitRequestFullscreen?: () => void }) | null;
+    if (!video) return;
+
+    if (video.requestFullscreen) {
+      video.requestFullscreen().catch(() => {});
+    } else if (video.webkitEnterFullscreen) {
+      video.webkitEnterFullscreen();
+    } else if (video.webkitRequestFullscreen) {
+      video.webkitRequestFullscreen();
     }
   };
 
@@ -286,7 +311,11 @@ export function ProjectExhibitionCard({
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
               onClick={togglePlay}
-              className={`w-full h-full object-cover ${zoomClass} origin-center filter brightness-95 contrast-105 cursor-pointer transition-transform duration-300`}
+              className={`w-full h-full ${
+                isFullscreen
+                  ? '!object-contain !scale-100 !transform-none bg-black'
+                  : `object-cover ${zoomClass}`
+              } origin-center filter brightness-95 contrast-105 cursor-pointer transition-transform duration-300`}
             />
 
             {/* YouTube-like auto-hiding controls bar on hover */}

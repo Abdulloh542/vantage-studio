@@ -20,8 +20,27 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(index === 0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const playPromiseRef = useRef<Promise<void> | null>(null);
+
+  useEffect(() => {
+    const handleFsChange = () => {
+      const fsEl = document.fullscreenElement || (document as any).webkitFullscreenElement || (document as any).mozFullScreenElement || (document as any).msFullscreenElement;
+      setIsFullscreen(fsEl === videoRef.current);
+    };
+
+    document.addEventListener('fullscreenchange', handleFsChange);
+    document.addEventListener('webkitfullscreenchange', handleFsChange);
+    document.addEventListener('mozfullscreenchange', handleFsChange);
+    document.addEventListener('MSFullscreenChange', handleFsChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFsChange);
+      document.removeEventListener('webkitfullscreenchange', handleFsChange);
+      document.removeEventListener('mozfullscreenchange', handleFsChange);
+      document.removeEventListener('MSFullscreenChange', handleFsChange);
+    };
+  }, []);
 
   const setVideoRef = useCallback((el: HTMLVideoElement | null) => {
     videoRef.current = el;
@@ -248,10 +267,15 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
 
   const openFullscreenVideo = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if (videoRef.current) {
-      if (videoRef.current.requestFullscreen) {
-        videoRef.current.requestFullscreen();
-      }
+    const video = videoRef.current as (HTMLVideoElement & { webkitEnterFullscreen?: () => void; webkitRequestFullscreen?: () => void }) | null;
+    if (!video) return;
+
+    if (video.requestFullscreen) {
+      video.requestFullscreen().catch(() => {});
+    } else if (video.webkitEnterFullscreen) {
+      video.webkitEnterFullscreen();
+    } else if (video.webkitRequestFullscreen) {
+      video.webkitRequestFullscreen();
     }
   };
 
@@ -365,7 +389,11 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
                 onClick={handleContainerClick}
-                className="w-full h-full object-cover scale-[1.04] origin-center filter brightness-95 contrast-105 cursor-pointer"
+                className={`w-full h-full ${
+                  isFullscreen
+                    ? '!object-contain !scale-100 !transform-none bg-black'
+                    : 'object-cover scale-[1.04]'
+                } origin-center filter brightness-95 contrast-105 cursor-pointer`}
               />
             ) : (
               <img

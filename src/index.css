@@ -129,3 +129,46 @@
   animation-play-state: paused;
 }
 
+/* Fullscreen video styling: strictly preserve original aspect ratio (9:16 portrait or 16:9 widescreen) without zoom cropping */
+video:fullscreen {
+  object-fit: contain !important;
+  transform: none !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: #000000 !important;
+}
+
+video:-webkit-full-screen {
+  object-fit: contain !important;
+  transform: none !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: #000000 !important;
+}
+
+video:-moz-full-screen {
+  object-fit: contain !important;
+  transform: none !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: #000000 !important;
+}
+
+video:-ms-fullscreen {
+  object-fit: contain !important;
+  transform: none !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: #000000 !important;
+}
+
+*:fullscreen video {
+  object-fit: contain !important;
+  transform: none !important;
+}
+
+*:-webkit-full-screen video {
+  object-fit: contain !important;
+  transform: none !important;
+}
+

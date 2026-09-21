@@ -24,6 +24,12 @@ export interface GalleryItem {
   aspectRatio?: 'landscape' | 'portrait' | 'wide';
 }
 
+export type ProjectCategory =
+  | 'Architectural Visualization'
+  | 'AI Architectural Films'
+  | 'Real Estate Marketing'
+  | 'Renovation & Construction';
+
 export interface Project {
   slug: string;
   title: string;
@@ -32,7 +38,7 @@ export interface Project {
   year: string;
   client: string;
   architect: string;
-  category: 'Residential' | 'Commercial' | 'Cultural' | 'Hospitality' | 'Mixed-Use' | 'Heritage';
+  category: ProjectCategory;
   services: string[];
   tags: string[]; // For filtering: CGI, Architecture, Real Estate, AI Film, Animation, Interior, Exterior, Renovation
   heroImage: string;
