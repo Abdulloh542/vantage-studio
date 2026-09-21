@@ -98,12 +98,26 @@ export function ProjectDetailPage() {
           style={{ y: shouldReduceMotion ? '0%' : parallaxY }}
           className="absolute inset-0 w-full h-[120%] -top-[10%]"
         >
-          <img
-            src={project.heroImage}
-            alt={project.title}
-            loading="eager"
-            className="w-full h-full object-cover filter brightness-95"
-          />
+          {project.heroVideo ? (
+            <video
+              src={project.heroVideo}
+              poster={project.heroImage}
+              autoPlay
+              muted
+              loop
+              playsInline
+              controls={false}
+              disablePictureInPicture
+              className="w-full h-full object-cover filter brightness-95"
+            />
+          ) : (
+            <img
+              src={project.heroImage}
+              alt={project.title}
+              loading="eager"
+              className="w-full h-full object-cover filter brightness-95"
+            />
+          )}
           <div className="absolute inset-0 bg-black/15 pointer-events-none" />
         </motion.div>
         <div className="absolute bottom-4 left-6 md:left-10 text-white font-mono text-xs uppercase tracking-wider">

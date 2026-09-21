@@ -110,9 +110,9 @@ export const PROJECTS: Project[] = [
     category: 'Heritage',
     services: ['Renovation & Construction', 'AI Architectural Films', 'Exterior CGI'],
     tags: ['All', 'Renovation', 'Architecture', 'CGI', 'AI Film', 'Exterior', 'Heritage'],
-    heroImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=2400&q=85',
-    heroVideo: 'https://assets.mixkit.co/videos/preview/mixkit-silhouette-of-a-person-in-an-art-gallery-41485-large.mp4',
-    videoDuration: '120s Heritage Film',
+    heroImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982051/projects/bunker-37/add_rooftop_on_first_image_202606191833.jpg',
+    heroVideo: 'https://res.cloudinary.com/mvmsbgon/video/upload/v1789982060/projects/bunker-37/bunker_37_film.mp4',
+    videoDuration: '4K Architectural Film',
     clientMaterial: 'Historical LiDAR point-cloud scans and municipal landmark conservation blueprints',
     transformationPipeline: [
       'Point Cloud Photogrammetry Ingestion',
@@ -124,51 +124,76 @@ export const PROJECTS: Project[] = [
     description: [
       'Bunker 37 represented an extraordinary preservation challenge: honoring the historic weight of 2-meter thick reinforced concrete while visualizing light-filled glass insertions and public cultural galleries.',
       'Deploying archival scans and LiDAR point-clouds, our studio built a 1:1 digital twin of the deteriorating structure.',
-      'Through comparative before-and-after studies and a 2-minute cinematic visual essay, we helped the developers secure municipal landmark approval and multi-million euro private endowment funding.'
+      'Through comparative before-and-after studies and a cinematic visual essay, we helped the developers secure municipal landmark approval and multi-million euro private endowment funding.'
     ],
     stats: [
       { label: 'Floor Area', value: '18,500 m²' },
       { label: 'Original Year', value: '1943 (Renovated 2025)' },
       { label: 'Approval Status', value: '100% Landmark Approved' },
-      { label: 'Outputs', value: '14 Stills + Heritage Film' }
+      { label: 'Outputs', value: '7 Stills + 4K Cinema Film' }
     ],
     beforeAfter: {
-      beforeImage: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=1800&q=80',
-      beforeLabel: 'EXISTING CONCRETE BUNKER',
-      afterImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1800&q=85',
-      afterLabel: 'PROPOSED CULTURAL PAVILION',
+      beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982068/projects/bunker-37/create_a_detailed_exploded_axonometric_2.jpg',
+      beforeLabel: 'HISTORIC SCHEMATIC & REINFORCED MASSING',
+      afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982051/projects/bunker-37/add_rooftop_on_first_image_202606191833.jpg',
+      afterLabel: 'PROPOSED CULTURAL ROOFTOP PAVILION',
       description: 'Adaptive reuse visualization: weathering concrete softened by floating glass lanterns and landscaped public courtyards.'
     },
     process: [
       {
         step: '01',
-        title: 'LiDAR Photogrammetry',
-        description: 'Processing 45M point cloud vertices to map every structural fissure in the historic concrete.',
-        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
+        title: 'Structural Axonometric Drawing',
+        description: 'Deconstructing structural volumes, circulation cores, and glass interventions through precise 3D axonometrics.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982068/projects/bunker-37/create_a_detailed_exploded_axonometric_2.jpg'
       },
       {
         step: '02',
-        title: '3D Glass Insertion',
+        title: 'Architectural Concept & Materiality',
         description: 'Modeling low-iron museum glazing in contrast with raw brutalist textures, calibrating light penetration into former defense bunkers.',
-        image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80'
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982065/projects/bunker-37/Create_an_architectural_concept_board_20.jpg'
       },
       {
         step: '03',
-        title: 'AI Historical Dissolve Film',
-        description: 'Creating frame-by-frame generative transitions that show the concrete monolith morphing into the new cultural complex.',
-        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'
+        title: 'Atmospheric Daylight & Chiaroscuro',
+        description: 'Balancing dramatic natural skylight shafts with moody concrete exhibition gallery halls.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982063/projects/bunker-37/ChatGPT_Image_Jun_20__2026__05_23_40_PM.png'
       }
     ],
     gallery: [
       {
-        url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=85',
-        caption: 'The main exhibition nave showing 12-meter high preserved concrete walls',
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982051/projects/bunker-37/add_rooftop_on_first_image_202606191833.jpg',
+        caption: 'Master elevation: brutalist concrete bunker crowned with modern panoramic glass rooftop pavilion',
         aspectRatio: 'landscape'
       },
       {
-        url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Rooftop pavilion glowing as a civic lantern over the Hamburg skyline',
-        aspectRatio: 'portrait'
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982050/projects/bunker-37/1-rasmga_2-rasmdagidek_cafeni_qo_yib_ber.jpg',
+        caption: 'Public rooftop cafe and terrace integration overlooking the urban panorama',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982063/projects/bunker-37/ChatGPT_Image_Jun_20__2026__05_23_40_PM.png',
+        caption: 'Exhibition hall featuring brutalist concrete preservation alongside warm architectural lighting',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982064/projects/bunker-37/ChatGPT_Image_Jun_20__2026__05_23_46_PM.png',
+        caption: 'Atmospheric gallery corridors with monolithic concrete finishes and curated daylight',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982067/projects/bunker-37/Create_an_architectural_concept_board_20.jpg',
+        caption: 'Materiality & moodboard: atmospheric evening lighting and structural concrete studies',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982068/projects/bunker-37/create_a_detailed_exploded_axonometric_2.jpg',
+        caption: 'Exploded axonometric structural drawing detailing spatial layers and structural volumes',
+        aspectRatio: 'landscape'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982065/projects/bunker-37/Create_an_architectural_concept_board_20.jpg',
+        caption: 'Architectural concept board: texture and spatial daylight study',
+        aspectRatio: 'landscape'
       }
     ],
     featured: true,

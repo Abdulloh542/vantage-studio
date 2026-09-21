@@ -355,7 +355,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
 
           <div className="flex items-center justify-between pt-2">
             <span className="font-mono text-xs text-[#757575]">
-              6 STILLS &bull; 1 CINEMATIC REEL
+              {project.gallery ? `${project.gallery.length} ARCHITECTURAL PLATES` : '6 STILLS'} &bull; 1 CINEMATIC REEL
             </span>
             <Link
               to={`/projects/${project.slug}`}
