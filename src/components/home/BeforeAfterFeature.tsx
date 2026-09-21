@@ -22,11 +22,11 @@ export function BeforeAfterFeature() {
   const comparisons: ComparisonPair[] = [
     {
       id: 'client-to-ai',
-      tabLabel: 'Client Render → Final CGI',
-      beforeImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=2200&q=80',
-      beforeLabel: 'SOURCE',
-      afterImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2200&q=85',
-      afterLabel: 'FINAL',
+      tabLabel: '3D Viewport → Final CGI',
+      beforeImage: '/images/before_after/villa_before.webp',
+      beforeLabel: '3D MODEL',
+      afterImage: '/images/before_after/villa_after.webp',
+      afterLabel: 'FINAL CGI',
       heading: 'From preliminary concept render to photorealistic dusk reality.',
       description: 'The client supplied 2 rough preliminary concept renders. Our studio rebuilt lighting physics, layered botanical landscaping, and created high-converting marketing visuals in 3 weeks.',
       projectSlug: 'riviera-residence',

@@ -35,11 +35,11 @@ export const PROJECTS: Project[] = [
       { label: 'Outputs', value: '18 CGI Stills + 90s Film' }
     ],
     beforeAfter: {
-      beforeImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=1800&q=80',
-      beforeLabel: 'CLIENT INPUT: CAD & SKETCH',
-      afterImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85',
+      beforeImage: '/images/before_after/villa_before.webp',
+      beforeLabel: 'RAW 3D MODEL & VIEWPORT',
+      afterImage: '/images/before_after/villa_after.webp',
       afterLabel: 'OUR WORK: FINAL DUSK CGI',
-      description: 'The core value argument: our studio took two early schematic drawings and transformed them into an emotional, photorealistic twilight marketing experience.'
+      description: 'The core value argument: our studio took a raw 3D model and transformed it into an emotional, photorealistic twilight marketing experience.'
     },
     process: [
       {

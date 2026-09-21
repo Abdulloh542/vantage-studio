@@ -19,11 +19,11 @@ interface Scenario {
 const SCENARIOS: Scenario[] = [
   {
     id: 'client-to-cgi',
-    tabLabel: 'CLIENT RENDER → FINAL CGI',
-    beforeImage: 'https://images.unsplash.com/photo-1541888946425-d0fbb186f5f7?auto=format&fit=crop&w=2400&q=80',
-    afterImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85',
-    headline: 'From preliminary concept render to photorealistic dusk reality.',
-    description: 'Rebuilt lighting physics, botanical landscaping, and luxury finishes in 3 weeks.',
+    tabLabel: 'RAW 3D VIEWPORT → FINAL DUSK CGI',
+    beforeImage: '/images/before_after/villa_before.webp',
+    afterImage: '/images/before_after/villa_after.webp',
+    headline: 'From raw 3D viewport model to photorealistic dusk reality.',
+    description: 'Engineered physically accurate twilight lighting, pool water caustics, and luxury finishes in 3 weeks.',
     projectSlug: 'riviera-residence',
     timeline: '3 WEEKS',
     outputFormat: '16K ARCHIVAL STILLS',
