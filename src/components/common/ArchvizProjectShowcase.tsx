@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Play, Pause, Volume2, VolumeX, Maximize2, ArrowRight, Eye } from 'lucide-react';
 import type { Project } from '../../types';
@@ -14,9 +14,11 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const [isPlaying, setIsPlaying] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Compile all unique high-res stills for the project
   const stills: LightboxImage[] = [];
@@ -69,18 +71,70 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const row2Loop = [...r2Base, ...r2Base];
   const row3Loop = [...r3Base, ...r3Base];
 
+  const resetHideTimer = useCallback(() => {
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+    }
+    if (isPlaying) {
+      hideTimeoutRef.current = setTimeout(() => {
+        setIsHovered(false);
+      }, 2400);
+    }
+  }, [isPlaying]);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    resetHideTimer();
+  };
+
+  const handleMouseMove = () => {
+    setIsHovered(true);
+    resetHideTimer();
+  };
+
+  const handleMouseLeave = () => {
+    if (hideTimeoutRef.current) {
+      clearTimeout(hideTimeoutRef.current);
+    }
+    if (isPlaying) {
+      setIsHovered(false);
+    }
+  };
+
   const togglePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     if (videoRef.current) {
       if (videoRef.current.paused) {
         videoRef.current.play().catch(() => {});
         setIsPlaying(true);
+        resetHideTimer();
       } else {
         videoRef.current.pause();
         setIsPlaying(false);
+        if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+        setIsHovered(true);
       }
     }
   };
+
+  const handleContainerClick = () => {
+    if (!isHovered && isPlaying) {
+      setIsHovered(true);
+      resetHideTimer();
+      return;
+    }
+    togglePlay();
+  };
+
+  useEffect(() => {
+    return () => {
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  const isControlsVisible = isHovered || !isPlaying;
 
   const toggleSound = (e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -119,6 +173,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     if (videoRef.current) {
       videoRef.current.currentTime = newTime;
       setCurrentTime(newTime);
+      resetHideTimer();
     }
   };
 
@@ -179,7 +234,12 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-stretch">
         {/* LEFT: Cinematic High-Fidelity Video (or Hero Image Fallback) - Expanded */}
         <div className="lg:col-span-8 xl:col-span-8 flex flex-col">
-          <div className="relative aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] w-full h-full min-h-[280px] sm:min-h-[440px] lg:min-h-[540px] overflow-hidden bg-black border border-[#101010]/12 group">
+          <div
+            onMouseEnter={handleMouseEnter}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="relative aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] w-full h-full min-h-[280px] sm:min-h-[440px] lg:min-h-[540px] overflow-hidden bg-black border border-[#101010]/12 group"
+          >
             {project.heroVideo ? (
               <video
                 ref={videoRef}
@@ -195,7 +255,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 onLoadedMetadata={handleLoadedMetadata}
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
-                onClick={togglePlay}
+                onClick={handleContainerClick}
                 className="w-full h-full object-cover filter brightness-95 contrast-105 cursor-pointer"
               />
             ) : (
@@ -219,16 +279,28 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
               </div>
             )}
 
-            {/* Top Left: Title & Location Tag */}
-            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 pointer-events-none">
+            {/* Top Left: Title & Location Tag (Fades out when controls hide) */}
+            <div
+              className={`absolute top-3 left-3 sm:top-4 sm:left-4 z-10 pointer-events-none transition-all duration-300 ease-out transform ${
+                isControlsVisible
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 -translate-y-2'
+              }`}
+            >
               <span className="px-2.5 py-1 bg-black/65 backdrop-blur-sm text-[11px] font-mono uppercase tracking-wider text-white/90 border border-white/15">
                 {project.title} &bull; {project.location}
               </span>
             </div>
 
-            {/* Bottom Controls Bar (Matches user's reference screenshot) */}
+            {/* Bottom Controls Bar (YouTube-like smooth hover slide under & fade) */}
             {project.heroVideo && (
-              <div className="absolute inset-x-0 bottom-0 z-20 pt-12 pb-3 px-3 sm:px-4 bg-gradient-to-t from-black/90 via-black/45 to-transparent flex flex-col gap-2">
+              <div
+                className={`absolute inset-x-0 bottom-0 z-20 pt-12 pb-3 px-3 sm:px-4 bg-gradient-to-t from-black/90 via-black/45 to-transparent flex flex-col gap-2 transition-all duration-300 ease-out transform ${
+                  isControlsVisible
+                    ? 'opacity-100 translate-y-0 pointer-events-auto'
+                    : 'opacity-0 translate-y-4 pointer-events-none'
+                }`}
+              >
                 {/* Upper row: Play/Pause button, elapsed/total time, volume, fullscreen */}
                 <div className="flex items-center justify-between">
                   {/* Left: Play/Pause + Time */}
