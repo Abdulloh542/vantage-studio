@@ -1,18 +1,13 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { PROJECTS } from '../data/projects';
+import { ArchvizProjectShowcase } from '../components/common/ArchvizProjectShowcase';
 import { ProjectExhibitionCard } from '../components/projects/ProjectExhibitionCard';
-import { VideoLightbox } from '../components/common/VideoLightbox';
 
 const CATEGORIES = ['All', 'Residential', 'Commercial', 'Heritage', 'Hospitality'];
 
 export function ProjectsPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [activeFilm, setActiveFilm] = useState<{
-    url: string;
-    title: string;
-    subtitle?: string;
-  } | null>(null);
 
   const filteredProjects = useMemo(() => {
     if (selectedCategory === 'All') return PROJECTS;
@@ -24,14 +19,10 @@ export function ProjectsPage() {
     setSelectedCategory(cat);
   };
 
-  const handlePlayFilm = (url: string, title: string, subtitle?: string) => {
-    setActiveFilm({ url, title, subtitle });
-  };
-
-  // Pre-fetch specific flagship projects for the curated 'All' editorial exhibition layout
+  // Pre-fetch specific projects
   const pVolgaPark = PROJECTS.find((p) => p.slug === 'volga-park') || PROJECTS[0];
-  const pBunker = PROJECTS.find((p) => p.slug === 'bunker-37') || PROJECTS[1];
-  const pInsight = PROJECTS.find((p) => p.slug === 'architecture-insight') || PROJECTS[2];
+  const pInsight = PROJECTS.find((p) => p.slug === 'architecture-insight') || PROJECTS[1];
+  const pBunker = PROJECTS.find((p) => p.slug === 'bunker-37') || PROJECTS[2];
   const pLotus = PROJECTS.find((p) => p.slug === 'lotus-mall') || PROJECTS[3];
   const pNavoi = PROJECTS.find((p) => p.slug === 'navoi-plaza') || PROJECTS[4];
   const pDubai = PROJECTS.find((p) => p.slug === 'collective-dubai-hills') || PROJECTS[5];
@@ -39,12 +30,12 @@ export function ProjectsPage() {
   const pPark = PROJECTS.find((p) => p.slug === 'park-seefeld') || PROJECTS[7];
 
   return (
-    <main className="w-full bg-white text-[#101010] pt-28 md:pt-36 pb-24 md:pb-36">
+    <main className="w-full bg-white text-[#101010] pt-28 md:pt-36 pb-16 md:pb-24">
       <div className="max-w-[1440px] mx-auto px-6 md:px-10">
         {/* Header: Editorial Heading Selected Projects & Short Description at Right */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 lg:pb-16 border-b border-[#101010]/12 items-end">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-10 lg:pb-12 border-b border-[#101010]/12 items-end">
           <div className="col-span-1 lg:col-span-9">
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-3">
               <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
               <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
                 EXHIBITION ARCHIVE
@@ -66,13 +57,13 @@ export function ProjectsPage() {
         </div>
 
         {/* Content Layout: Left Rail Category Filters + Main Staggered Editorial Exhibition */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 pt-12 lg:pt-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 pt-8 lg:pt-10 items-start">
           {/* Left Rail: Category Filters (Horizontal swipeable strip on mobile, vertical sticky rail on desktop) */}
           <div className="col-span-1 lg:col-span-2 lg:sticky lg:top-28">
-            <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-3 md:mb-6">
+            <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-3 md:mb-5">
               FILTER BY TYPOLOGY
             </span>
-            <div className="flex md:flex-col overflow-x-auto md:overflow-x-visible no-scrollbar gap-2 md:gap-0 md:space-y-3 pb-3 md:pb-0 -mx-1 px-1 md:mx-0 md:px-0">
+            <div className="flex md:flex-col overflow-x-auto md:overflow-x-visible no-scrollbar gap-2 md:gap-0 md:space-y-2.5 pb-2 md:pb-0 -mx-1 px-1 md:mx-0 md:px-0">
               {CATEGORIES.map((cat) => {
                 const isActive = selectedCategory === cat;
                 const count = cat === 'All' ? PROJECTS.length : PROJECTS.filter((p) => p.category === cat).length;
@@ -100,7 +91,7 @@ export function ProjectsPage() {
           </div>
 
           {/* Main Editorial Exhibition Grid */}
-          <div className="col-span-1 lg:col-span-10 min-h-[600px]">
+          <div className="col-span-1 lg:col-span-10 min-h-[500px]">
             {filteredProjects.length === 0 ? (
               /* Empty State */
               <motion.div
@@ -109,7 +100,7 @@ export function ProjectsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.35 }}
-                className="py-32 text-center border border-[#101010]/12 p-12"
+                className="py-24 text-center border border-[#101010]/12 p-12"
               >
                 <span className="font-mono text-xs text-[#757575] uppercase block mb-3">
                   00 // NO ENTRIES FOUND
@@ -125,151 +116,124 @@ export function ProjectsPage() {
                 </button>
               </motion.div>
             ) : selectedCategory === 'All' ? (
-              /* Curated Staggered Editorial Exhibition Layout */
+              /* Curated Editorial Exhibition: First 2 with their photos + Standalone videos without clutter */
               <motion.div
                 key="curated-all"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-20 md:space-y-28"
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-8 sm:space-y-12"
               >
-                {/* 1. Full-Width Panoramic Film Lead (Volga Park) */}
+                {/* 1. First Project: Volga Park with its photos marquee */}
                 {pVolgaPark && (
-                  <div>
+                  <ArchvizProjectShowcase
+                    project={pVolgaPark}
+                    index={0}
+                  />
+                )}
+
+                {/* 2. Second Project: Architecture Insight (9:16 vertical cinema + 12 photos marquee) */}
+                {pInsight && (
+                  <ArchvizProjectShowcase
+                    project={pInsight}
+                    index={1}
+                  />
+                )}
+
+                {/* 3. Bunker 37 (Clean cinematic video, instant hover play, zero button clutter) */}
+                {pBunker && (
+                  <div className="pt-2">
                     <ProjectExhibitionCard
-                      project={pVolgaPark}
-                      index={0}
+                      project={pBunker}
+                      index={2}
                       layoutVariant="lead"
-                      onPlayFilm={handlePlayFilm}
                     />
                   </div>
                 )}
 
-                {/* 2. Staggered Asymmetric Pair: Landscape 16:10 + 9:16 Vertical Insight */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-                  {pBunker && (
-                    <div className="col-span-12 lg:col-span-7">
-                      <ProjectExhibitionCard
-                        project={pBunker}
-                        index={1}
-                        layoutVariant="split-landscape"
-                        onPlayFilm={handlePlayFilm}
-                      />
-                    </div>
-                  )}
-                  {pInsight && (
-                    <div className="col-span-12 lg:col-span-5 lg:pt-14">
-                      <ProjectExhibitionCard
-                        project={pInsight}
-                        index={2}
-                        layoutVariant="split-vertical"
-                        onPlayFilm={handlePlayFilm}
-                      />
-                    </div>
-                  )}
-                </div>
-
-                {/* 3. Full-Width Commercial Mixed-Use Cinema Landmark (Lotus Mall) */}
+                {/* 4. Lotus Mall (Clean full-width cinema, instant hover play, zero button clutter) */}
                 {pLotus && (
-                  <div>
+                  <div className="pt-2">
                     <ProjectExhibitionCard
                       project={pLotus}
                       index={3}
                       layoutVariant="lead"
-                      onPlayFilm={handlePlayFilm}
                     />
                   </div>
                 )}
 
-                {/* 4. Inverted Staggered Pair: 9:16 Vertical Promenade + 16:9 Landscape Oasis */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                {/* 5. Navoi Plaza (9:16 Vertical) + Collective Dubai Hills (16:10 Landscape) - Closer Side-by-Side */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start pt-2">
                   {pNavoi && (
                     <div className="col-span-12 lg:col-span-5">
                       <ProjectExhibitionCard
                         project={pNavoi}
                         index={4}
                         layoutVariant="split-vertical"
-                        onPlayFilm={handlePlayFilm}
                       />
                     </div>
                   )}
                   {pDubai && (
-                    <div className="col-span-12 lg:col-span-7 lg:pt-14">
+                    <div className="col-span-12 lg:col-span-7">
                       <ProjectExhibitionCard
                         project={pDubai}
                         index={5}
                         layoutVariant="split-landscape"
-                        onPlayFilm={handlePlayFilm}
                       />
                     </div>
                   )}
                 </div>
 
-                {/* 5. Balanced Heritage & Hospitality Staggered Pair */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+                {/* 6. Papes Residences + Park Seefeld - Closer Side-by-Side */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start pt-2">
                   {pPapes && (
                     <div className="col-span-12 lg:col-span-6">
                       <ProjectExhibitionCard
                         project={pPapes}
                         index={6}
                         layoutVariant="split-landscape"
-                        onPlayFilm={handlePlayFilm}
                       />
                     </div>
                   )}
                   {pPark && (
-                    <div className="col-span-12 lg:col-span-6 lg:pt-14">
+                    <div className="col-span-12 lg:col-span-6">
                       <ProjectExhibitionCard
                         project={pPark}
                         index={7}
                         layoutVariant="split-landscape"
-                        onPlayFilm={handlePlayFilm}
                       />
                     </div>
                   )}
                 </div>
               </motion.div>
             ) : (
-              /* Filtered Typology Layout with Dynamic Staggered Geometry */
+              /* Filtered Typology Layout with Closer Spacing */
               <motion.div
                 key={selectedCategory}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-8 sm:space-y-10"
               >
                 {filteredProjects.map((project, idx) => {
-                  const isVertical = project.videoAspectRatio === '9:16';
-                  const isOdd = idx % 2 === 1;
-
-                  if (filteredProjects.length === 1) {
+                  // If Volga Park or Architecture Insight, render with photos
+                  if (project.slug === 'volga-park' || project.slug === 'architecture-insight') {
                     return (
-                      <div key={project.slug} className="col-span-12">
-                        <ProjectExhibitionCard
-                          project={project}
-                          index={idx}
-                          layoutVariant={isVertical ? 'split-vertical' : 'lead'}
-                          onPlayFilm={handlePlayFilm}
-                        />
-                      </div>
+                      <ArchvizProjectShowcase
+                        key={project.slug}
+                        project={project}
+                        index={idx}
+                      />
                     );
                   }
 
-                  const colSpan = isVertical
-                    ? 'col-span-12 lg:col-span-5'
-                    : isOdd
-                    ? 'col-span-12 lg:col-span-5'
-                    : 'col-span-12 lg:col-span-7';
-
-                  const offsetClass = isOdd ? 'lg:pt-14' : '';
-
+                  const isVertical = project.videoAspectRatio === '9:16';
                   return (
-                    <div key={project.slug} className={`${colSpan} ${offsetClass}`}>
+                    <div key={project.slug}>
                       <ProjectExhibitionCard
                         project={project}
                         index={idx}
-                        layoutVariant={isVertical ? 'split-vertical' : 'split-landscape'}
-                        onPlayFilm={handlePlayFilm}
+                        layoutVariant={isVertical ? 'split-vertical' : 'lead'}
                       />
                     </div>
                   );
@@ -279,17 +243,6 @@ export function ProjectsPage() {
           </div>
         </div>
       </div>
-
-      {/* Cinema Video Lightbox */}
-      {activeFilm && (
-        <VideoLightbox
-          isOpen={Boolean(activeFilm)}
-          onClose={() => setActiveFilm(null)}
-          videoUrl={activeFilm.url}
-          title={activeFilm.title}
-          subtitle={activeFilm.subtitle}
-        />
-      )}
     </main>
   );
 }

@@ -133,6 +133,9 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const handleMouseEnter = () => {
     setIsHovered(true);
     resetHideTimer();
+    if (videoRef.current && videoRef.current.paused) {
+      videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+    }
   };
 
   const handleMouseMove = () => {
@@ -242,11 +245,11 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const formattedNumber = String(index + 1).padStart(2, '0');
 
   return (
-    <article className="w-full bg-white text-[#101010] py-14 sm:py-20 border-b border-[#101010]/12 select-none">
+    <article className="w-full bg-white text-[#101010] py-8 sm:py-10 border-b border-[#101010]/12 select-none">
       {/* ─────────────────────────────────────────────────────────────
           1. HEADER: MONOGRAM NUMBER & BIG BOLD TITLE (SOLÉ ETTALONG STYLE)
           ───────────────────────────────────────────────────────────── */}
-      <div className="mb-6 sm:mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="mb-4 sm:mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-2 font-mono text-xs uppercase tracking-wider text-[#757575]">
             <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
