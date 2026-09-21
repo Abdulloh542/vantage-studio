@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 
 export function SolumSpatialBreakdown() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -10,45 +10,33 @@ export function SolumSpatialBreakdown() {
     offset: ['start start', 'end end'],
   });
 
-  // Luxurious smooth spring physics so scroll never feels jagged or sudden
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 65,
-    damping: 26,
-    mass: 0.9,
-    restDelta: 0.0005,
-  });
+  // Direct 1:1 scroll tracking (No autonomous spring lag / 'wop' jump)
+  // Reaches full expansion quickly and smoothly between 5% and 45% of scroll
+  const spread = useTransform(scrollYProgress, [0.05, 0.45], [0, 1]);
+  const centerScale = useTransform(scrollYProgress, [0, 0.25, 0.85, 1], [0.95, 1, 1, 0.97]);
 
-  // Spread progress across a wide, steady scroll range (0.06 to 0.72)
-  const spread = useTransform(smoothProgress, [0.06, 0.72], [0, 1]);
-  const centerScale = useTransform(smoothProgress, [0, 0.25, 0.85, 1], [0.95, 1, 1, 0.97]);
+  // Linear fade-in and scale directly mapped to scroll
+  const cardOpacity = useTransform(scrollYProgress, [0.05, 0.22], [0, 1]);
+  const cardScale = useTransform(spread, [0, 1], [0.75, 1]);
+  const lineOpacity = useTransform(scrollYProgress, [0.12, 0.35], [0, 0.85]);
 
-  // Gentle, linear fade-in and scale-up (no sudden pop)
-  const cardOpacity = useTransform(spread, [0, 0.15, 0.85], [0, 0.9, 1]);
-  const cardScale = useTransform(spread, [0, 1], [0.72, 1]);
-  const lineOpacity = useTransform(spread, [0.22, 0.7], [0, 0.85]);
-
-  // Significantly wider translations (156% horizontal, 138% vertical)
-  // Ensures all 4 corner cards CLEAR the center card completely with zero overlap!
-  // Top-Left: Tree Canopy
+  // Wide translations so all 4 corner cards CLEAR the center card completely
   const tlX = useTransform(spread, (v) => `${v * -156}%`);
   const tlY = useTransform(spread, (v) => `${v * -138}%`);
 
-  // Top-Right: Wall Sculpture
   const trX = useTransform(spread, (v) => `${v * 156}%`);
   const trY = useTransform(spread, (v) => `${v * -138}%`);
 
-  // Bottom-Left: Botanical Landscaping
   const blX = useTransform(spread, (v) => `${v * -156}%`);
   const blY = useTransform(spread, (v) => `${v * 138}%`);
 
-  // Bottom-Right: Timber Soffit & Spotlights
   const brX = useTransform(spread, (v) => `${v * 156}%`);
   const brY = useTransform(spread, (v) => `${v * 138}%`);
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-[280vh] bg-[#0A0A0A] text-white select-none overflow-visible"
+      className="relative w-full h-[160vh] bg-[#0A0A0A] text-white select-none overflow-visible"
     >
       {/* Pinned Viewport Stage */}
       <div className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex items-center justify-center overflow-hidden">
