@@ -1,9 +1,26 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'framer-motion';
 
 export function SolumSpatialBreakdown() {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
+
+  // Throttled isMobile tracking without layout thrashing inside render loop
+  const isMobileRef = useRef(false);
+  const [, setRerender] = useState(0);
+
+  useEffect(() => {
+    const update = () => {
+      const mob = window.innerWidth < 768;
+      if (isMobileRef.current !== mob) {
+        isMobileRef.current = mob;
+        setRerender((v) => v + 1);
+      }
+    };
+    update();
+    window.addEventListener('resize', update, { passive: true });
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   // Pinned viewport scroll: compact travel, smoothly expands and promptly continues down
   const { scrollYProgress } = useScroll({
@@ -29,41 +46,18 @@ export function SolumSpatialBreakdown() {
   const lineOpacity = useTransform(smoothProgress, [0.12, 0.50], [0, 0.9]);
 
   // Clean, symmetrical translations: compact vertical layout on mobile (<768px), wide diagonal on desktop (>=768px)
-  const tlX = useTransform(spread, (v) => {
-    const isMob = typeof window !== 'undefined' && window.innerWidth < 768;
-    return `${v * (isMob ? -82 : -155)}%`;
-  });
-  const tlY = useTransform(spread, (v) => {
-    const isMob = typeof window !== 'undefined' && window.innerWidth < 768;
-    return `${v * (isMob ? -185 : -168)}%`;
-  });
+  // Shifted higher up on mobile (-195%) with larger legible cards
+  const tlX = useTransform(spread, (v) => `${v * (isMobileRef.current ? -78 : -155)}%`);
+  const tlY = useTransform(spread, (v) => `${v * (isMobileRef.current ? -195 : -168)}%`);
 
-  const trX = useTransform(spread, (v) => {
-    const isMob = typeof window !== 'undefined' && window.innerWidth < 768;
-    return `${v * (isMob ? 82 : 155)}%`;
-  });
-  const trY = useTransform(spread, (v) => {
-    const isMob = typeof window !== 'undefined' && window.innerWidth < 768;
-    return `${v * (isMob ? -185 : -168)}%`;
-  });
+  const trX = useTransform(spread, (v) => `${v * (isMobileRef.current ? 78 : 155)}%`);
+  const trY = useTransform(spread, (v) => `${v * (isMobileRef.current ? -195 : -168)}%`);
 
-  const blX = useTransform(spread, (v) => {
-    const isMob = typeof window !== 'undefined' && window.innerWidth < 768;
-    return `${v * (isMob ? -82 : -155)}%`;
-  });
-  const blY = useTransform(spread, (v) => {
-    const isMob = typeof window !== 'undefined' && window.innerWidth < 768;
-    return `${v * (isMob ? 185 : 168)}%`;
-  });
+  const blX = useTransform(spread, (v) => `${v * (isMobileRef.current ? -78 : -155)}%`);
+  const blY = useTransform(spread, (v) => `${v * (isMobileRef.current ? 175 : 168)}%`);
 
-  const brX = useTransform(spread, (v) => {
-    const isMob = typeof window !== 'undefined' && window.innerWidth < 768;
-    return `${v * (isMob ? 82 : 155)}%`;
-  });
-  const brY = useTransform(spread, (v) => {
-    const isMob = typeof window !== 'undefined' && window.innerWidth < 768;
-    return `${v * (isMob ? 185 : 168)}%`;
-  });
+  const brX = useTransform(spread, (v) => `${v * (isMobileRef.current ? 78 : 155)}%`);
+  const brY = useTransform(spread, (v) => `${v * (isMobileRef.current ? 175 : 168)}%`);
 
   return (
     <section
@@ -75,8 +69,8 @@ export function SolumSpatialBreakdown() {
         {/* Subtle Ambient Radial Vignette */}
         <div className="absolute inset-0 bg-gradient-radial from-zinc-900/40 via-[#0A0A0A] to-[#0A0A0A] pointer-events-none" />
 
-        {/* Central Stage Container (Refined balanced luxury scale) */}
-        <div className="relative w-full max-w-[1240px] h-full flex items-center justify-center px-4 sm:px-6">
+        {/* Central Stage Container (Shifted slightly higher on mobile for bottom bar clearance) */}
+        <div className="relative w-full max-w-[1240px] h-full flex items-center justify-center -translate-y-6 md:translate-y-0 px-4 sm:px-6">
           {/* ========================================================= */}
           {/* 1. DESKTOP CONNECTING ARROWS (EXACT SYMMETRICAL 45° DIAGONALS) */}
           {/* Placed at z-[25] so solid white arrowheads are 100% visible */}
@@ -175,9 +169,9 @@ export function SolumSpatialBreakdown() {
             {/* 1. Mobile Top-Left Arrow */}
             <motion.line
               x1="-70"
-              y1="-62"
-              x2="-80"
-              y2="-88"
+              y1="-64"
+              x2="-82"
+              y2="-106"
               stroke="rgba(255,255,255,0.85)"
               strokeWidth="1.5"
               strokeDasharray="4 3"
@@ -187,9 +181,9 @@ export function SolumSpatialBreakdown() {
             {/* 2. Mobile Top-Right Arrow */}
             <motion.line
               x1="70"
-              y1="-62"
-              x2="80"
-              y2="-88"
+              y1="-64"
+              x2="82"
+              y2="-106"
               stroke="rgba(255,255,255,0.85)"
               strokeWidth="1.5"
               strokeDasharray="4 3"
@@ -199,9 +193,9 @@ export function SolumSpatialBreakdown() {
             {/* 3. Mobile Bottom-Left Arrow */}
             <motion.line
               x1="-70"
-              y1="62"
-              x2="-80"
-              y2="88"
+              y1="64"
+              x2="-82"
+              y2="92"
               stroke="rgba(255,255,255,0.85)"
               strokeWidth="1.5"
               strokeDasharray="4 3"
@@ -211,9 +205,9 @@ export function SolumSpatialBreakdown() {
             {/* 4. Mobile Bottom-Right Arrow */}
             <motion.line
               x1="70"
-              y1="62"
-              x2="80"
-              y2="88"
+              y1="64"
+              x2="82"
+              y2="92"
               stroke="rgba(255,255,255,0.85)"
               strokeWidth="1.5"
               strokeDasharray="4 3"
@@ -236,17 +230,19 @@ export function SolumSpatialBreakdown() {
                     y: tlY,
                     opacity: cardOpacity,
                     scale: cardScale,
+                    willChange: 'transform, opacity',
                   }
             }
-            className="absolute z-20 w-[115px] sm:w-[150px] md:w-[215px] lg:w-[250px] xl:w-[285px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_10px_24px_rgba(0,0,0,0.85)] sm:shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[135px] sm:w-[165px] md:w-[215px] lg:w-[250px] xl:w-[285px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_6px_16px_rgba(0,0,0,0.75)] md:shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/tree_canopy_detail.webp"
               alt="Detail: Tree Canopy & Balcony"
               loading="eager"
+              decoding="async"
               className="w-full h-full object-cover filter brightness-105 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
             />
-            <div className="absolute inset-0 border border-white/20 rounded-xl sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
+            <div className="absolute inset-0 border border-white/20 rounded-lg sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
           </motion.div>
 
           {/* 2. TOP-RIGHT: Swimmer Wall Sculpture & Facade Travertine */}
@@ -259,17 +255,19 @@ export function SolumSpatialBreakdown() {
                     y: trY,
                     opacity: cardOpacity,
                     scale: cardScale,
+                    willChange: 'transform, opacity',
                   }
             }
-            className="absolute z-20 w-[115px] sm:w-[150px] md:w-[215px] lg:w-[250px] xl:w-[285px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_10px_24px_rgba(0,0,0,0.85)] sm:shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[135px] sm:w-[165px] md:w-[215px] lg:w-[250px] xl:w-[285px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_6px_16px_rgba(0,0,0,0.75)] md:shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/sculpture_detail.webp"
               alt="Detail: Facade Sculpture"
               loading="eager"
+              decoding="async"
               className="w-full h-full object-cover filter brightness-105 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
             />
-            <div className="absolute inset-0 border border-white/20 rounded-xl sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
+            <div className="absolute inset-0 border border-white/20 rounded-lg sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
           </motion.div>
 
           {/* 3. BOTTOM-LEFT: Poolside Flora & Botanical Shrubs */}
@@ -282,17 +280,19 @@ export function SolumSpatialBreakdown() {
                     y: blY,
                     opacity: cardOpacity,
                     scale: cardScale,
+                    willChange: 'transform, opacity',
                   }
             }
-            className="absolute z-20 w-[115px] sm:w-[150px] md:w-[215px] lg:w-[250px] xl:w-[285px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_10px_24px_rgba(0,0,0,0.85)] sm:shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[135px] sm:w-[165px] md:w-[215px] lg:w-[250px] xl:w-[285px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_6px_16px_rgba(0,0,0,0.75)] md:shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/landscape_detail.webp"
               alt="Detail: Botanical Landscaping"
               loading="eager"
+              decoding="async"
               className="w-full h-full object-cover filter brightness-105 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
             />
-            <div className="absolute inset-0 border border-white/20 rounded-xl sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
+            <div className="absolute inset-0 border border-white/20 rounded-lg sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
           </motion.div>
 
           {/* 4. BOTTOM-RIGHT: Timber Soffit & Architectural Spotlights */}
@@ -305,30 +305,40 @@ export function SolumSpatialBreakdown() {
                     y: brY,
                     opacity: cardOpacity,
                     scale: cardScale,
+                    willChange: 'transform, opacity',
                   }
             }
-            className="absolute z-20 w-[115px] sm:w-[150px] md:w-[215px] lg:w-[250px] xl:w-[285px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_10px_24px_rgba(0,0,0,0.85)] sm:shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+            className="absolute z-20 w-[135px] sm:w-[165px] md:w-[215px] lg:w-[250px] xl:w-[285px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_6px_16px_rgba(0,0,0,0.75)] md:shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
           >
             <img
               src="/images/vignettes/ceiling_lighting_detail.webp"
               alt="Detail: Architectural Lighting"
               loading="eager"
+              decoding="async"
               className="w-full h-full object-cover filter brightness-105 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
             />
-            <div className="absolute inset-0 border border-white/20 rounded-xl sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
+            <div className="absolute inset-0 border border-white/20 rounded-lg sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
           </motion.div>
 
           {/* ========================================================= */}
           {/* CENTER MASTER "AFTER" RENDER (MAIN FOCAL POINT)           */}
           {/* ========================================================= */}
           <motion.div
-            style={shouldReduceMotion ? undefined : { scale: centerScale }}
-            className="relative z-30 w-[220px] sm:w-[300px] md:w-[400px] lg:w-[450px] xl:w-[500px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/35 bg-black shadow-[0_0_50px_rgba(0,0,0,0.95)] sm:shadow-[0_0_80px_rgba(0,0,0,0.95)] group"
+            style={
+              shouldReduceMotion
+                ? undefined
+                : {
+                    scale: centerScale,
+                    willChange: 'transform',
+                  }
+            }
+            className="relative z-30 w-[230px] sm:w-[310px] md:w-[400px] lg:w-[450px] xl:w-[500px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/35 bg-black shadow-[0_8px_24px_rgba(0,0,0,0.85)] md:shadow-[0_0_80px_rgba(0,0,0,0.95)] group"
           >
             <img
               src="/images/before_after/villa_after.webp"
               alt="Master Architectural Render"
               loading="eager"
+              decoding="async"
               className="w-full h-full object-cover filter brightness-100 group-hover:scale-102 transition-transform duration-500 pointer-events-none"
             />
             {/* Subtle inner border glow */}

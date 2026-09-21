@@ -41,15 +41,12 @@ export function SmoothScroll() {
       ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
     const lenis = new Lenis({
-      duration: isTouch ? 0.9 : 1.1,
+      duration: isTouch ? 0.8 : 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      syncTouch: true,
-      syncTouchLerp: 0.09,
-      touchInertiaExponent: 1.6,
-      touchMultiplier: 1.0,
+      syncTouch: false, // Enables native 60/120Hz GPU momentum on touch devices, preventing lag on mobile!
       autoResize: true,
     });
 

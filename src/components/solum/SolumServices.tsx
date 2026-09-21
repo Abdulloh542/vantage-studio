@@ -75,7 +75,7 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
   return (
     <div
       style={{ zIndex: index + 1 }}
-      className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex flex-col md:flex-row bg-[#121212] overflow-hidden shadow-[0_-24px_48px_rgba(0,0,0,0.95)]"
+      className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex flex-col md:flex-row bg-[#121212] overflow-hidden shadow-[0_-8px_20px_rgba(0,0,0,0.7)] md:shadow-[0_-24px_48px_rgba(0,0,0,0.95)]"
     >
       {/* Editorial Content Column (Top flex-1 on mobile, Left 50% on desktop) */}
       <div className="w-full md:w-1/2 flex-1 md:h-full flex flex-col justify-center px-5 sm:px-10 md:px-16 lg:px-24 py-4 sm:py-8 md:py-16 bg-[#121212] z-10 overflow-y-auto sm:overflow-visible">
@@ -140,6 +140,7 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
           src={service.image}
           alt={service.title}
           loading={index === 0 ? 'eager' : 'lazy'}
+          decoding="async"
           className="w-full h-full object-cover filter brightness-95 select-none"
         />
       </div>
