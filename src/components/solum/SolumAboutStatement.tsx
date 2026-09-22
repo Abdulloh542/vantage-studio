@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
@@ -8,6 +9,7 @@ interface CapabilityItem {
   category: string;
   deliverables: string[];
   image: string;
+  video?: string;
   description: string;
 }
 
@@ -17,14 +19,16 @@ const CAPABILITIES: CapabilityItem[] = [
     title: 'Architectural Visualization',
     category: 'Architectural Visualization',
     deliverables: [
-      'Exterior & Interior CGI',
+      'Exterior Visualization',
+      'Interior Visualization',
+      '3D Modeling',
       'Photorealistic Enhancement',
-      '3D Spatial Modeling',
-      'Atmospheric Daylight Studies',
     ],
     image:
       'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990146/projects/volga-park/Architectural_close_view_sunny_day_20260.jpg',
-    description: 'Translating architectural blueprints and 3D models into photorealistic spatial renders.',
+    video:
+      'https://res.cloudinary.com/mvmsbgon/video/upload/v1789990140/projects/volga-park/volga_park_film_v1.mp4',
+    description: 'Translating architectural blueprints and designs into photorealistic CGI elevations and daylight renders.',
   },
   {
     id: 'ai-films',
@@ -32,13 +36,15 @@ const CAPABILITIES: CapabilityItem[] = [
     category: 'AI Architectural Films',
     deliverables: [
       'Cinematic Architectural Films',
-      'AI Walkthroughs & Animation',
+      'AI Walkthroughs',
       'Image-to-Video & Render-to-Video',
-      'Social Media 9:16 Reels',
+      'Concept Films',
     ],
     image:
-      'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990854/projects/effect-archi/A_photorealistic__highly__e6837b.jpg',
-    description: 'Dynamic spatial films and AI-directed camera sweeps designed for viral reach.',
+      'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990851/projects/effect-archi/A_high-end_architectural__aadba3.jpg',
+    video:
+      'https://res.cloudinary.com/mvmsbgon/video/upload/v1789992406/projects/architecture-insight/architecture_insight_film_9x16.mp4',
+    description: 'Directing cinematic walkthroughs and AI-driven camera choreographies engineered for viral visual impact.',
   },
   {
     id: 'real-estate',
@@ -46,29 +52,123 @@ const CAPABILITIES: CapabilityItem[] = [
     category: 'Real Estate Marketing',
     deliverables: [
       'Property Presentation Films',
-      'Development Marketing Campaigns',
+      'Development Marketing',
       'Location & Infrastructure Videos',
-      'Map & Urban Masterplan Animations',
+      'Map Animations & Social Reels',
     ],
     image:
-      'https://res.cloudinary.com/mvmsbgon/image/upload/v1789991206/projects/lotus-mall/Lotus_Mall_Facade_Golden_Hour.jpg',
-    description: 'Strategic commercial CGI and marketing visuals that accelerate investor and buyer pre-sales.',
+      'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg',
+    video:
+      'https://res.cloudinary.com/mvmsbgon/video/upload/v1789992494/projects/lotus-mall/lotus-mall_film.mp4',
+    description: 'Prestige commercial and residential CGI campaigns that accelerate pre-sales and secure institutional investors.',
   },
   {
     id: 'renovation',
     title: 'Renovation & Construction',
     category: 'Renovation & Construction',
     deliverables: [
-      'Before / After Transformation Films',
-      'Construction Timelapse Simulation',
-      'Historical Adaptive Reuse',
-      'Existing → Proposed Comparison',
+      'Before / After Films',
+      'Construction Timelapse',
+      'Renovation Visualization',
+      'Existing → Proposed Transformation',
     ],
     image:
       'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982051/projects/bunker-37/add_rooftop_on_first_image_202606191833.jpg',
-    description: 'Visualizing architectural transformations, adaptive reuse, and step-by-step construction.',
+    video:
+      'https://res.cloudinary.com/mvmsbgon/video/upload/v1789983235/projects/bunker-37/bunker_37_film_v2.mp4',
+    description: 'Visualizing architectural transformations, adaptive reuse of historic structures, and construction sequencing.',
   },
 ];
+
+function CapabilityCard({ cap, idx }: { cap: CapabilityItem; idx: number }) {
+  const shouldReduceMotion = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      className="group"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <Link
+        to={`/projects?category=${encodeURIComponent(cap.category)}`}
+        className="block focus:outline-none"
+      >
+        {/* Visual Card Image / Video */}
+        <div className="relative aspect-[4/5] w-full overflow-hidden bg-neutral-900 border border-white/10 group-hover:border-white/30 transition-colors">
+          <img
+            src={cap.image}
+            alt={cap.title}
+            loading="lazy"
+            className={`w-full h-full object-cover transform group-hover:scale-105 transition-all duration-700 ease-out ${
+              cap.video && isHovered ? 'opacity-0' : 'opacity-100'
+            }`}
+          />
+          {cap.video && (
+            <video
+              ref={videoRef}
+              src={cap.video}
+              muted
+              loop
+              playsInline
+              preload="none"
+              className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-300 ${
+                isHovered ? 'opacity-100' : 'opacity-0'
+              }`}
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none" />
+
+          <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/70 group-hover:text-white group-hover:bg-[#2563EB] group-hover:border-transparent transition-all">
+            <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </div>
+        </div>
+
+        {/* Clean Classic Typography Under Card */}
+        <div className="pt-4">
+          <h3 className="font-sans text-base sm:text-lg font-medium text-white group-hover:text-neutral-200 transition-colors">
+            {cap.title}
+          </h3>
+
+          <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light mt-1.5 leading-relaxed line-clamp-2">
+            {cap.description}
+          </p>
+
+          <div className="mt-3 pt-3 border-t border-white/10">
+            <ul className="space-y-1.5">
+              {cap.deliverables.map((item, dIdx) => (
+                <li key={dIdx} className="font-sans text-[11px] sm:text-xs text-neutral-400 flex items-center gap-1.5">
+                  <span className="w-1 h-1 bg-[#2563EB] rounded-full inline-block flex-shrink-0" />
+                  <span className="truncate">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
 
 export function SolumAboutStatement() {
   const shouldReduceMotion = useReducedMotion();
@@ -138,56 +238,7 @@ export function SolumAboutStatement() {
         <div className="pt-16 md:pt-20">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {CAPABILITIES.map((cap, idx) => (
-              <motion.div
-                key={cap.id}
-                initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="group"
-              >
-                <Link
-                  to={`/projects?category=${encodeURIComponent(cap.category)}`}
-                  className="block focus:outline-none"
-                >
-                  {/* Visual Card Image */}
-                  <div className="relative aspect-[4/5] w-full overflow-hidden bg-neutral-900 border border-white/10 group-hover:border-white/30 transition-colors">
-                    <img
-                      src={cap.image}
-                      alt={cap.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                    
-                    <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/70 group-hover:text-white group-hover:bg-[#2563EB] group-hover:border-transparent transition-all">
-                      <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                    </div>
-                  </div>
-
-                  {/* Clean Classic Typography Under Card */}
-                  <div className="pt-4">
-                    <h3 className="font-sans text-base sm:text-lg font-medium text-white group-hover:text-neutral-200 transition-colors">
-                      {cap.title}
-                    </h3>
-                    
-                    <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light mt-1.5 leading-relaxed line-clamp-2">
-                      {cap.description}
-                    </p>
-
-                    <div className="mt-3 pt-3 border-t border-white/10">
-                      <ul className="space-y-1">
-                        {cap.deliverables.slice(0, 3).map((item, dIdx) => (
-                          <li key={dIdx} className="font-sans text-[11px] sm:text-xs text-neutral-400 flex items-center gap-1.5">
-                            <span className="w-1 h-1 bg-[#2563EB] rounded-full inline-block flex-shrink-0" />
-                            <span className="truncate">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
+              <CapabilityCard key={cap.id} cap={cap} idx={idx} />
             ))}
           </div>
         </div>

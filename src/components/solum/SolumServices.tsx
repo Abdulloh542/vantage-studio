@@ -55,7 +55,7 @@ const SERVICES: ServicePanel[] = [
       'Map & Urban Infrastructure Animations',
       'Pre-Sales Exhibition CGI',
     ],
-    image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789991206/projects/lotus-mall/Lotus_Mall_Facade_Golden_Hour.jpg',
+    image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg',
   },
   {
     number: '04',
