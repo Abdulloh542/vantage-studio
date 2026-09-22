@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import { optimizeCloudinaryImage } from '../../utils/media';
 
 interface ServicePanel {
   number: string;
@@ -152,7 +153,7 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
       {/* Media Field */}
       <div className="w-full md:w-1/2 h-[36svh] sm:h-[42svh] md:h-full relative overflow-hidden bg-black flex-shrink-0">
         <img
-          src={service.image}
+          src={optimizeCloudinaryImage(service.image, 1400)}
           alt={service.title}
           loading={index === 0 ? 'eager' : 'lazy'}
           decoding="async"

@@ -11,3 +11,14 @@ export function optimizeCloudinaryImage(url: string, width = 1600): string {
   }
   return url;
 }
+
+export function optimizeCloudinaryVideo(url: string, width = 1280): string {
+  if (!url || typeof url !== 'string' || !url.includes('res.cloudinary.com')) {
+    return url;
+  }
+  if (url.includes('/video/upload/') && !url.includes('/video/upload/q_auto')) {
+    return url.replace('/video/upload/', `/video/upload/q_auto,vc_auto,w_${width}/`);
+  }
+  return url;
+}
+

@@ -1,5 +1,5 @@
 import type { Project } from '../types';
-import { optimizeCloudinaryImage } from '../utils/media';
+import { optimizeCloudinaryImage, optimizeCloudinaryVideo } from '../utils/media';
 
 const RAW_PROJECTS: Project[] = [
   {
@@ -750,6 +750,7 @@ const RAW_PROJECTS: Project[] = [
 export const PROJECTS: Project[] = RAW_PROJECTS.map((project) => ({
   ...project,
   heroImage: optimizeCloudinaryImage(project.heroImage, 1600),
+  heroVideo: project.heroVideo ? optimizeCloudinaryVideo(project.heroVideo, 1280) : undefined,
   beforeAfter: project.beforeAfter ? {
     ...project.beforeAfter,
     beforeImage: optimizeCloudinaryImage(project.beforeAfter.beforeImage, 1400),

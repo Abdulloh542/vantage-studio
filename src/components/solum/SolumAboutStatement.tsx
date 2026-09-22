@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { optimizeCloudinaryImage, optimizeCloudinaryVideo } from '../../utils/media';
 
 interface CapabilityItem {
   id: string;
@@ -117,7 +118,7 @@ function CapabilityCard({ cap, idx }: { cap: CapabilityItem; idx: number }) {
         {/* Visual Card Image / Video */}
         <div className="relative aspect-[4/5] w-full overflow-hidden bg-neutral-900 border border-white/10 group-hover:border-white/30 transition-colors">
           <img
-            src={cap.image}
+            src={optimizeCloudinaryImage(cap.image, 800)}
             alt={cap.title}
             loading="lazy"
             className={`w-full h-full object-cover transform group-hover:scale-105 transition-all duration-700 ease-out ${
@@ -127,7 +128,7 @@ function CapabilityCard({ cap, idx }: { cap: CapabilityItem; idx: number }) {
           {cap.video && (
             <video
               ref={videoRef}
-              src={cap.video}
+              src={optimizeCloudinaryVideo(cap.video, 960)}
               muted
               loop
               playsInline
