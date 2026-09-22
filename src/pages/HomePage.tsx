@@ -4,7 +4,6 @@ import { SolumRecentProjects } from '../components/solum/SolumRecentProjects';
 import { SolumServices } from '../components/solum/SolumServices';
 import { SolumHowWeWork } from '../components/solum/SolumHowWeWork';
 import { SolumTransformationProof } from '../components/solum/SolumTransformationProof';
-import { SolumSpatialBreakdown } from '../components/solum/SolumSpatialBreakdown';
 
 export function HomePage() {
   return (
@@ -24,11 +23,8 @@ export function HomePage() {
       {/* 05: Structured Architectural Evolution (How We Work - 4 phases) */}
       <SolumHowWeWork />
 
-      {/* 06: Transformation Proof (Interactive Before/After Technical Chamber) */}
+      {/* 06: Architectural Transformation & Spatial Decomposition (Unified Before/After + Branching Vignettes) */}
       <SolumTransformationProof />
-
-      {/* 07: Spatial Breakdown (Exploding Micro-Vignettes with Architectural Rope Connectors) */}
-      <SolumSpatialBreakdown />
     </main>
   );
 }
