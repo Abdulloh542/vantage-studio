@@ -1,36 +1,6 @@
-import { useRef, useEffect, useState } from 'react';
-import { motion, useReducedMotion, useInView, animate } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
-
-function CounterNumber({ value, suffix = '' }: { value: number; suffix?: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const shouldReduceMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (shouldReduceMotion) {
-      setCount(value);
-      return;
-    }
-    if (!isInView) return;
-
-    const controls = animate(0, value, {
-      duration: 1.0,
-      ease: [0.22, 1, 0.36, 1],
-      onUpdate: (latest) => setCount(Math.round(latest)),
-    });
-    return () => controls.stop();
-  }, [isInView, value, shouldReduceMotion]);
-
-  return (
-    <span ref={ref} className="tabular-nums">
-      {count}
-      {suffix}
-    </span>
-  );
-}
 
 interface CapabilityItem {
   id: string;
@@ -103,33 +73,12 @@ const CAPABILITIES: CapabilityItem[] = [
 export function SolumAboutStatement() {
   const shouldReduceMotion = useReducedMotion();
 
-  const metrics = [
-    {
-      value: 7,
-      suffix: '+',
-      label: 'Years of Practice',
-      detail: 'Crafting high-fidelity architectural CGI and spatial films.',
-    },
-    {
-      value: 80,
-      suffix: '+',
-      label: 'Projects Completed',
-      detail: 'Across residential, commercial, and masterplan developments.',
-    },
-    {
-      value: 15,
-      suffix: '',
-      label: 'Design Awards',
-      detail: 'Recognized for photorealism, daylight simulation, and cinematic direction.',
-    },
-  ];
-
   return (
     <section className="w-full bg-[#000000] text-white border-b border-white/10 select-none">
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 md:px-16 lg:px-24 py-20 md:py-28">
         
         {/* ========================================================= */}
-        {/* 1) EDITORIAL STATEMENT (Exact Brick Visual reference)     */}
+        {/* 1) EDITORIAL STATEMENT (Brick Visual reference)           */}
         {/* ========================================================= */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 pb-16 md:pb-24 border-b border-white/10">
           
@@ -184,9 +133,9 @@ export function SolumAboutStatement() {
         </div>
 
         {/* ========================================================= */}
-        {/* 2) 4 CORE DISCIPLINES & DELIVERABLES (Brick Visual style) */}
+        {/* 2) 4 CORE DISCIPLINES & DELIVERABLES                      */}
         {/* ========================================================= */}
-        <div className="pt-16 md:pt-20 pb-16 md:pb-24 border-b border-white/10">
+        <div className="pt-16 md:pt-20">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {CAPABILITIES.map((cap, idx) => (
               <motion.div
@@ -241,36 +190,6 @@ export function SolumAboutStatement() {
               </motion.div>
             ))}
           </div>
-        </div>
-
-        {/* ========================================================= */}
-        {/* 3) METRICS STRIP: Clean, Classic, Credible                */}
-        {/* ========================================================= */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10 pt-12 md:pt-16">
-          {metrics.map((m, idx) => (
-            <motion.div
-              key={m.label}
-              initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className={`p-6 sm:p-8 flex flex-col justify-between ${
-                idx === 0 ? 'sm:pl-0' : ''
-              }`}
-            >
-              <div>
-                <div className="font-sans text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-white leading-none mb-3 flex items-baseline">
-                  <CounterNumber value={m.value} suffix={m.suffix} />
-                </div>
-                <div className="font-mono text-xs sm:text-sm text-neutral-400 uppercase tracking-wider font-medium mb-1.5">
-                  {m.label}
-                </div>
-                <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light leading-relaxed max-w-[240px]">
-                  {m.detail}
-                </p>
-              </div>
-            </motion.div>
-          ))}
         </div>
 
       </div>

@@ -111,11 +111,6 @@ export function Footer() {
                   CONTACT
                 </Link>
               </li>
-              <li>
-                <Link to="/404" className="hover:text-neutral-400 transition-colors">
-                  404
-                </Link>
-              </li>
             </ul>
           </div>
 
