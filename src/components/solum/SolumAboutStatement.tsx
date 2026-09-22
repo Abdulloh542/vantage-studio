@@ -145,25 +145,13 @@ function CapabilityCard({ cap, idx }: { cap: CapabilityItem; idx: number }) {
         </div>
 
         {/* Clean Classic Typography Under Card */}
-        <div className="pt-4">
-          <h3 className="font-sans text-base sm:text-lg font-medium text-white group-hover:text-neutral-200 transition-colors">
+        <div className="pt-3 flex items-center justify-between">
+          <h3 className="font-sans text-sm sm:text-base font-medium text-white group-hover:text-neutral-300 transition-colors">
             {cap.title}
           </h3>
-
-          <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light mt-1.5 leading-relaxed line-clamp-2">
-            {cap.description}
-          </p>
-
-          <div className="mt-3 pt-3 border-t border-white/10">
-            <ul className="space-y-1.5">
-              {cap.deliverables.map((item, dIdx) => (
-                <li key={dIdx} className="font-sans text-[11px] sm:text-xs text-neutral-400 flex items-center gap-1.5">
-                  <span className="w-1 h-1 bg-[#2563EB] rounded-full inline-block flex-shrink-0" />
-                  <span className="truncate">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <span className="font-mono text-xs text-neutral-500">
+            0{idx + 1}
+          </span>
         </div>
       </Link>
     </motion.div>

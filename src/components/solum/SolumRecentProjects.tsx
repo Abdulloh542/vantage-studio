@@ -65,11 +65,6 @@ export function SolumRecentProjects() {
                   <ArrowRight className="w-5 h-5" />
                 </div>
               </div>
-              <div className="absolute top-4 left-4 z-10">
-                <span className="px-3 py-1 bg-black/60 backdrop-blur-sm text-[11px] font-mono uppercase tracking-wider text-white border border-white/15">
-                  01 // LEAD EXHIBITION &bull; {pLead.location}
-                </span>
-              </div>
             </div>
 
             <div className="pt-4 flex items-center justify-between font-mono text-sm sm:text-base text-[#101010] border-b border-[#101010]/12 pb-3">
@@ -147,45 +142,38 @@ export function SolumRecentProjects() {
             </motion.div>
           </div>
 
-          {/* Row 3: One Broad Item Below Spanning Full Columns 2 to 4 */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 items-start">
-            <div className="col-span-1 hidden md:block pt-4">
-              <span className="font-mono text-xs sm:text-sm uppercase text-[#757575] font-medium block mb-2">
-                EXHIBITION 04
-              </span>
-              <span className="font-sans text-sm text-[#757575] leading-relaxed block font-light">
-                Mixed-use retail gallerias &amp; 5-star luxury hospitality landmark film.
-              </span>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="col-span-1 md:col-span-3"
-            >
-              <Link to={`/projects/${pBroad.slug}`} className="group block select-none">
-                <div className="relative aspect-[16/10] sm:aspect-[21/9] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
-                  <img
-                    src={pBroad.heroImage}
-                    alt={pBroad.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-550 ease-out group-hover:scale-[1.025]"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-550" />
+          {/* Row 3: One Broad Architectural Landmark (Full Width) */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full"
+          >
+            <Link to={`/projects/${pBroad.slug}`} className="group block select-none">
+              <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
+                <img
+                  src={pBroad.heroImage}
+                  alt={pBroad.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-550 ease-out group-hover:scale-[1.025]"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-550 flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-full bg-white/95 text-black flex items-center justify-center pl-0.5 shadow-2xl opacity-0 group-hover:opacity-100 transform scale-90 group-hover:scale-100 transition-all duration-300">
+                    <ArrowRight className="w-5 h-5" />
+                  </div>
                 </div>
-                <div className="pt-4 flex items-center justify-between font-mono text-sm sm:text-base text-[#101010] border-b border-[#101010]/12 pb-3">
-                  <span className="font-semibold uppercase tracking-wider group-hover:underline">
-                    {pBroad.title}
-                  </span>
-                  <span className="text-xs sm:text-sm text-[#757575] tabular-nums font-normal">
-                    {pBroad.category} &bull; {pBroad.year}
-                  </span>
-                </div>
-              </Link>
-            </motion.div>
-          </div>
+              </div>
+              <div className="pt-4 flex items-center justify-between font-mono text-sm sm:text-base text-[#101010] border-b border-[#101010]/12 pb-3">
+                <span className="font-semibold uppercase tracking-wider group-hover:underline">
+                  {pBroad.title}
+                </span>
+                <span className="text-xs sm:text-sm text-[#757575] tabular-nums font-normal">
+                  {pBroad.category} &bull; {pBroad.year}
+                </span>
+              </div>
+            </Link>
+          </motion.div>
         </div>
       </div>
     </section>

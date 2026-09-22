@@ -124,24 +124,21 @@ export function BeforeAfterSlider({
         </div>
       </div>
 
-      {/* Badges: SOURCE and FINAL */}
-      <div className="absolute top-4 left-4 z-20 pointer-events-none">
-        <span className="px-2.5 py-1 bg-black/70 backdrop-blur-sm text-[10px] uppercase tracking-widest text-zinc-300 font-mono border border-white/10">
-          {beforeLabel}
-        </span>
-      </div>
-      <div className="absolute top-4 right-4 z-20 pointer-events-none">
-        <span className="px-2.5 py-1 bg-black/70 backdrop-blur-sm text-[10px] uppercase tracking-widest text-zinc-300 font-mono border border-white/10">
-          {afterLabel}
-        </span>
-      </div>
-
-      {/* Bottom hint */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <span className="text-[10px] uppercase tracking-widest bg-black/80 px-3 py-1 text-white border border-white/10">
-          Drag or click to compare
-        </span>
-      </div>
+      {/* Badges: SOURCE and FINAL (only if non-empty) */}
+      {beforeLabel ? (
+        <div className="absolute top-4 left-4 z-20 pointer-events-none">
+          <span className="px-2.5 py-1 bg-black/70 backdrop-blur-sm text-[10px] uppercase tracking-widest text-zinc-300 font-mono border border-white/10">
+            {beforeLabel}
+          </span>
+        </div>
+      ) : null}
+      {afterLabel ? (
+        <div className="absolute top-4 right-4 z-20 pointer-events-none">
+          <span className="px-2.5 py-1 bg-black/70 backdrop-blur-sm text-[10px] uppercase tracking-widest text-zinc-300 font-mono border border-white/10">
+            {afterLabel}
+          </span>
+        </div>
+      ) : null}
     </div>
   );
 }
