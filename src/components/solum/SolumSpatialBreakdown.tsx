@@ -5,10 +5,10 @@ export function SolumSpatialBreakdown() {
   const containerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
-  // Trigger expansion automatically when user scrolls to around 35% of the section
-  const isInView = useInView(containerRef, { amount: 0.35, once: false });
+  // Automatically trigger when around 25% of the section is visible in viewport
+  const isInView = useInView(containerRef, { amount: 0.25, once: false });
 
-  // Responsive mobile tracking
+  // Mobile responsive detection
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -22,70 +22,74 @@ export function SolumSpatialBreakdown() {
 
   const isOpen = isInView || shouldReduceMotion;
 
-  // Diagonal offsets for 4 vignettes
+  // Exact pixel offsets for corner cards (well separated so curved ropes are clearly visible)
   const offsets = isMobile
     ? {
-        tl: { x: '-60%', y: '-155%' },
-        tr: { x: '60%', y: '-155%' },
-        bl: { x: '-60%', y: '155%' },
-        br: { x: '60%', y: '155%' },
+        tl: { x: -95, y: -190 },
+        tr: { x: 95, y: -190 },
+        bl: { x: -95, y: 190 },
+        br: { x: 95, y: 190 },
       }
     : {
-        tl: { x: '-135%', y: '-135%' },
-        tr: { x: '135%', y: '-135%' },
-        bl: { x: '-135%', y: '135%' },
-        br: { x: '135%', y: '135%' },
+        tl: { x: -470, y: -225 },
+        tr: { x: 470, y: -225 },
+        bl: { x: -470, y: 225 },
+        br: { x: 470, y: 225 },
       };
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full min-h-[90vh] md:min-h-[95vh] py-16 md:py-24 bg-[#0A0A0A] text-white select-none overflow-hidden flex items-center justify-center border-b border-white/10"
+      className="relative w-full min-h-[85vh] md:min-h-[92vh] py-16 md:py-24 bg-[#0A0A0A] text-white select-none overflow-hidden flex items-center justify-center border-b border-white/10"
     >
-      {/* Subtle Ambient Radial Glow */}
+      {/* Subtle Ambient Radial Vignette */}
       <div className="absolute inset-0 bg-gradient-radial from-zinc-900/40 via-[#0A0A0A] to-[#0A0A0A] pointer-events-none" />
 
-      {/* Central Stage Container */}
-      <div className="relative w-full max-w-[1240px] h-full flex items-center justify-center px-4 sm:px-6">
+      {/* Main Relative Canvas (Coordinate Origin 0,0 is at exact center) */}
+      <div className="relative w-full max-w-[1240px] h-[600px] sm:h-[660px] md:h-[720px] lg:h-[760px] flex items-center justify-center px-4">
         
         {/* ========================================================= */}
-        {/* 1. DESKTOP ROPE CONNECTOR LINES (CURVED ARCHITECTURAL CORDS) */}
+        {/* 1. DESKTOP CURVED ROPE CONNECTOR LINES (NO ARROWS)        */}
         {/* ========================================================= */}
         <svg
-          viewBox="-600 -350 1200 700"
+          viewBox="-600 -360 1200 720"
           preserveAspectRatio="xMidYMid meet"
-          className="hidden md:block absolute inset-0 w-full h-full pointer-events-none z-[25]"
+          className="hidden md:block absolute inset-0 w-full h-full pointer-events-none z-10"
         >
-          <filter id="rope-shadow-desktop" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000000" floodOpacity="0.8" />
-          </filter>
+          <defs>
+            <filter id="rope-glow-desktop" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="3" stdDeviation="4" floodColor="#000000" floodOpacity="0.95" />
+            </filter>
+          </defs>
 
-          {/* Top-Left Curved Rope (Center Villa to Tree Canopy) */}
-          <g filter="url(#rope-shadow-desktop)">
+          {/* 1. Top-Left Curved Rope (Center Villa to Tree Canopy) */}
+          <g filter="url(#rope-glow-desktop)">
             <motion.path
-              d="M -210 -110 C -255 -125, -290 -148, -345 -185"
+              d="M -220 -124 C -275 -105, -315 -125, -360 -163"
               fill="none"
-              stroke="rgba(255,255,255,0.85)"
-              strokeWidth="2"
+              stroke="#FFFFFF"
+              strokeWidth="2.5"
               strokeDasharray="6 3"
               strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={isOpen ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              animate={isOpen ? { pathLength: 1, opacity: 0.9 } : { pathLength: 0, opacity: 0 }}
+              transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             />
+            {/* Center Anchor Knot */}
             <motion.circle
-              cx="-210"
-              cy="-110"
-              r="3.5"
+              cx="-220"
+              cy="-124"
+              r="4.5"
               fill="#FFFFFF"
               initial={{ scale: 0 }}
               animate={isOpen ? { scale: 1 } : { scale: 0 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
             />
+            {/* Corner Card Anchor Knot */}
             <motion.circle
-              cx="-345"
-              cy="-185"
-              r="3.5"
+              cx="-360"
+              cy="-163"
+              r="4.5"
               fill="#FFFFFF"
               initial={{ scale: 0 }}
               animate={isOpen ? { scale: 1 } : { scale: 0 }}
@@ -93,32 +97,32 @@ export function SolumSpatialBreakdown() {
             />
           </g>
 
-          {/* Top-Right Curved Rope (Center Villa to Wall Sculpture) */}
-          <g filter="url(#rope-shadow-desktop)">
+          {/* 2. Top-Right Curved Rope (Center Villa to Wall Sculpture) */}
+          <g filter="url(#rope-glow-desktop)">
             <motion.path
-              d="M 210 -110 C 255 -125, 290 -148, 345 -185"
+              d="M 220 -124 C 275 -105, 315 -125, 360 -163"
               fill="none"
-              stroke="rgba(255,255,255,0.85)"
-              strokeWidth="2"
+              stroke="#FFFFFF"
+              strokeWidth="2.5"
               strokeDasharray="6 3"
               strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={isOpen ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              animate={isOpen ? { pathLength: 1, opacity: 0.9 } : { pathLength: 0, opacity: 0 }}
+              transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             />
             <motion.circle
-              cx="210"
-              cy="-110"
-              r="3.5"
+              cx="220"
+              cy="-124"
+              r="4.5"
               fill="#FFFFFF"
               initial={{ scale: 0 }}
               animate={isOpen ? { scale: 1 } : { scale: 0 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
             />
             <motion.circle
-              cx="345"
-              cy="-185"
-              r="3.5"
+              cx="360"
+              cy="-163"
+              r="4.5"
               fill="#FFFFFF"
               initial={{ scale: 0 }}
               animate={isOpen ? { scale: 1 } : { scale: 0 }}
@@ -126,32 +130,32 @@ export function SolumSpatialBreakdown() {
             />
           </g>
 
-          {/* Bottom-Left Curved Rope (Center Villa to Poolside Landscape) */}
-          <g filter="url(#rope-shadow-desktop)">
+          {/* 3. Bottom-Left Curved Rope (Center Villa to Poolside Landscape) */}
+          <g filter="url(#rope-glow-desktop)">
             <motion.path
-              d="M -210 110 C -255 125, -290 148, -345 185"
+              d="M -220 124 C -275 105, -315 125, -360 163"
               fill="none"
-              stroke="rgba(255,255,255,0.85)"
-              strokeWidth="2"
+              stroke="#FFFFFF"
+              strokeWidth="2.5"
               strokeDasharray="6 3"
               strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={isOpen ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              animate={isOpen ? { pathLength: 1, opacity: 0.9 } : { pathLength: 0, opacity: 0 }}
+              transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             />
             <motion.circle
-              cx="-210"
-              cy="110"
-              r="3.5"
+              cx="-220"
+              cy="124"
+              r="4.5"
               fill="#FFFFFF"
               initial={{ scale: 0 }}
               animate={isOpen ? { scale: 1 } : { scale: 0 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
             />
             <motion.circle
-              cx="-345"
-              cy="185"
-              r="3.5"
+              cx="-360"
+              cy="163"
+              r="4.5"
               fill="#FFFFFF"
               initial={{ scale: 0 }}
               animate={isOpen ? { scale: 1 } : { scale: 0 }}
@@ -159,32 +163,32 @@ export function SolumSpatialBreakdown() {
             />
           </g>
 
-          {/* Bottom-Right Curved Rope (Center Villa to Timber Soffit) */}
-          <g filter="url(#rope-shadow-desktop)">
+          {/* 4. Bottom-Right Curved Rope (Center Villa to Timber Soffit) */}
+          <g filter="url(#rope-glow-desktop)">
             <motion.path
-              d="M 210 110 C 255 125, 290 148, 345 185"
+              d="M 220 124 C 275 105, 315 125, 360 163"
               fill="none"
-              stroke="rgba(255,255,255,0.85)"
-              strokeWidth="2"
+              stroke="#FFFFFF"
+              strokeWidth="2.5"
               strokeDasharray="6 3"
               strokeLinecap="round"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={isOpen ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-              transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              animate={isOpen ? { pathLength: 1, opacity: 0.9 } : { pathLength: 0, opacity: 0 }}
+              transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             />
             <motion.circle
-              cx="210"
-              cy="110"
-              r="3.5"
+              cx="220"
+              cy="124"
+              r="4.5"
               fill="#FFFFFF"
               initial={{ scale: 0 }}
               animate={isOpen ? { scale: 1 } : { scale: 0 }}
-              transition={{ duration: 0.3, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.15 }}
             />
             <motion.circle
-              cx="345"
-              cy="185"
-              r="3.5"
+              cx="360"
+              cy="163"
+              r="4.5"
               fill="#FFFFFF"
               initial={{ scale: 0 }}
               animate={isOpen ? { scale: 1 } : { scale: 0 }}
@@ -194,65 +198,65 @@ export function SolumSpatialBreakdown() {
         </svg>
 
         {/* ========================================================= */}
-        {/* 2. MOBILE ROPE CONNECTOR LINES                             */}
+        {/* 2. MOBILE CURVED ROPE CONNECTOR LINES (NO ARROWS)         */}
         {/* ========================================================= */}
         <svg
-          viewBox="-200 -280 400 560"
+          viewBox="-180 -300 360 600"
           preserveAspectRatio="xMidYMid meet"
-          className="block md:hidden absolute inset-0 w-full h-full pointer-events-none z-[25]"
+          className="block md:hidden absolute inset-0 w-full h-full pointer-events-none z-10"
         >
           {/* Top-Left Mobile Rope */}
           <motion.path
-            d="M -65 -60 C -72 -90, -80 -120, -90 -150"
+            d="M -65 -73 C -80 -105, -95 -125, -95 -145"
             fill="none"
-            stroke="rgba(255,255,255,0.85)"
-            strokeWidth="1.75"
+            stroke="#FFFFFF"
+            strokeWidth="2"
             strokeDasharray="5 3"
             strokeLinecap="round"
             initial={{ pathLength: 0, opacity: 0 }}
-            animate={isOpen ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            animate={isOpen ? { pathLength: 1, opacity: 0.9 } : { pathLength: 0, opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           />
           {/* Top-Right Mobile Rope */}
           <motion.path
-            d="M 65 -60 C 72 -90, 80 -120, 90 -150"
+            d="M 65 -73 C 80 -105, 95 -125, 95 -145"
             fill="none"
-            stroke="rgba(255,255,255,0.85)"
-            strokeWidth="1.75"
+            stroke="#FFFFFF"
+            strokeWidth="2"
             strokeDasharray="5 3"
             strokeLinecap="round"
             initial={{ pathLength: 0, opacity: 0 }}
-            animate={isOpen ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            animate={isOpen ? { pathLength: 1, opacity: 0.9 } : { pathLength: 0, opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           />
           {/* Bottom-Left Mobile Rope */}
           <motion.path
-            d="M -65 60 C -72 90, -80 120, -90 150"
+            d="M -65 73 C -80 105, -95 125, -95 145"
             fill="none"
-            stroke="rgba(255,255,255,0.85)"
-            strokeWidth="1.75"
+            stroke="#FFFFFF"
+            strokeWidth="2"
             strokeDasharray="5 3"
             strokeLinecap="round"
             initial={{ pathLength: 0, opacity: 0 }}
-            animate={isOpen ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            animate={isOpen ? { pathLength: 1, opacity: 0.9 } : { pathLength: 0, opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           />
           {/* Bottom-Right Mobile Rope */}
           <motion.path
-            d="M 65 60 C 72 90, 80 120, 90 150"
+            d="M 65 73 C 80 105, 95 125, 95 145"
             fill="none"
-            stroke="rgba(255,255,255,0.85)"
-            strokeWidth="1.75"
+            stroke="#FFFFFF"
+            strokeWidth="2"
             strokeDasharray="5 3"
             strokeLinecap="round"
             initial={{ pathLength: 0, opacity: 0 }}
-            animate={isOpen ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            animate={isOpen ? { pathLength: 1, opacity: 0.9 } : { pathLength: 0, opacity: 0 }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           />
         </svg>
 
         {/* ========================================================= */}
-        {/* 3. 4 DETAIL VIGNETTES (AUTOMATICALLY EXPAND ON VIEW)      */}
+        {/* 3. 4 DETAIL VIGNETTES (AUTOMATICALLY EXPAND OUTWARDS)     */}
         {/* ========================================================= */}
 
         {/* 1. TOP-LEFT: Tree Canopy & Balcony */}
@@ -263,8 +267,8 @@ export function SolumSpatialBreakdown() {
               ? { x: offsets.tl.x, y: offsets.tl.y, opacity: 1, scale: 1 }
               : { x: 0, y: 0, opacity: 0, scale: 0.65 }
           }
-          transition={{ duration: 0.9, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute z-20 w-[130px] sm:w-[160px] md:w-[210px] lg:w-[245px] xl:w-[275px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_6px_16px_rgba(0,0,0,0.75)] md:shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+          transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[130px] sm:w-[155px] md:w-[220px] lg:w-[240px] aspect-[16/9] rounded-lg sm:rounded-xl overflow-hidden border border-white/30 bg-black shadow-[0_8px_24px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/80"
         >
           <img
             src="/images/vignettes/tree_canopy_detail.webp"
@@ -273,7 +277,7 @@ export function SolumSpatialBreakdown() {
             decoding="async"
             className="w-full h-full object-cover filter brightness-105 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
           />
-          <div className="absolute inset-0 border border-white/20 rounded-lg sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
+          <div className="absolute inset-0 border border-white/20 rounded-lg sm:rounded-xl pointer-events-none group-hover:border-white/60 transition-colors" />
         </motion.div>
 
         {/* 2. TOP-RIGHT: Swimmer Wall Sculpture */}
@@ -284,8 +288,8 @@ export function SolumSpatialBreakdown() {
               ? { x: offsets.tr.x, y: offsets.tr.y, opacity: 1, scale: 1 }
               : { x: 0, y: 0, opacity: 0, scale: 0.65 }
           }
-          transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute z-20 w-[130px] sm:w-[160px] md:w-[210px] lg:w-[245px] xl:w-[275px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_6px_16px_rgba(0,0,0,0.75)] md:shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+          transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[130px] sm:w-[155px] md:w-[220px] lg:w-[240px] aspect-[16/9] rounded-lg sm:rounded-xl overflow-hidden border border-white/30 bg-black shadow-[0_8px_24px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/80"
         >
           <img
             src="/images/vignettes/sculpture_detail.webp"
@@ -294,7 +298,7 @@ export function SolumSpatialBreakdown() {
             decoding="async"
             className="w-full h-full object-cover filter brightness-105 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
           />
-          <div className="absolute inset-0 border border-white/20 rounded-lg sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
+          <div className="absolute inset-0 border border-white/20 rounded-lg sm:rounded-xl pointer-events-none group-hover:border-white/60 transition-colors" />
         </motion.div>
 
         {/* 3. BOTTOM-LEFT: Poolside Landscaping */}
@@ -305,8 +309,8 @@ export function SolumSpatialBreakdown() {
               ? { x: offsets.bl.x, y: offsets.bl.y, opacity: 1, scale: 1 }
               : { x: 0, y: 0, opacity: 0, scale: 0.65 }
           }
-          transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute z-20 w-[130px] sm:w-[160px] md:w-[210px] lg:w-[245px] xl:w-[275px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_6px_16px_rgba(0,0,0,0.75)] md:shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+          transition={{ duration: 0.85, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[130px] sm:w-[155px] md:w-[220px] lg:w-[240px] aspect-[16/9] rounded-lg sm:rounded-xl overflow-hidden border border-white/30 bg-black shadow-[0_8px_24px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/80"
         >
           <img
             src="/images/vignettes/landscape_detail.webp"
@@ -315,7 +319,7 @@ export function SolumSpatialBreakdown() {
             decoding="async"
             className="w-full h-full object-cover filter brightness-105 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
           />
-          <div className="absolute inset-0 border border-white/20 rounded-lg sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
+          <div className="absolute inset-0 border border-white/20 rounded-lg sm:rounded-xl pointer-events-none group-hover:border-white/60 transition-colors" />
         </motion.div>
 
         {/* 4. BOTTOM-RIGHT: Timber Soffit & Lighting */}
@@ -326,8 +330,8 @@ export function SolumSpatialBreakdown() {
               ? { x: offsets.br.x, y: offsets.br.y, opacity: 1, scale: 1 }
               : { x: 0, y: 0, opacity: 0, scale: 0.65 }
           }
-          transition={{ duration: 0.9, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute z-20 w-[130px] sm:w-[160px] md:w-[210px] lg:w-[245px] xl:w-[275px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/30 bg-black shadow-[0_6px_16px_rgba(0,0,0,0.75)] md:shadow-[0_16px_36px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/70"
+          transition={{ duration: 0.85, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-[130px] sm:w-[155px] md:w-[220px] lg:w-[240px] aspect-[16/9] rounded-lg sm:rounded-xl overflow-hidden border border-white/30 bg-black shadow-[0_8px_24px_rgba(0,0,0,0.85)] group transition-all duration-300 hover:border-white/80"
         >
           <img
             src="/images/vignettes/ceiling_lighting_detail.webp"
@@ -336,17 +340,17 @@ export function SolumSpatialBreakdown() {
             decoding="async"
             className="w-full h-full object-cover filter brightness-105 contrast-105 saturate-105 group-hover:scale-105 transition-transform duration-500 pointer-events-none"
           />
-          <div className="absolute inset-0 border border-white/20 rounded-lg sm:rounded-2xl pointer-events-none group-hover:border-white/50 transition-colors" />
+          <div className="absolute inset-0 border border-white/20 rounded-lg sm:rounded-xl pointer-events-none group-hover:border-white/60 transition-colors" />
         </motion.div>
 
         {/* ========================================================= */}
-        {/* 4. CENTER MASTER "AFTER" RENDER (MAIN FOCAL POINT)        */}
+        {/* 4. CENTER MASTER VILLA RENDER (MAIN FOCAL POINT)          */}
         {/* ========================================================= */}
         <motion.div
-          initial={{ scale: 0.92, opacity: 0.8 }}
-          animate={isOpen ? { scale: 1, opacity: 1 } : { scale: 0.92, opacity: 0.8 }}
+          initial={{ scale: 0.94, opacity: 0.9 }}
+          animate={isOpen ? { scale: 1, opacity: 1 } : { scale: 0.94, opacity: 0.9 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-30 w-[220px] sm:w-[300px] md:w-[390px] lg:w-[440px] xl:w-[480px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/35 bg-black shadow-[0_8px_24px_rgba(0,0,0,0.85)] md:shadow-[0_0_80px_rgba(0,0,0,0.95)] group"
+          className="relative z-30 w-[240px] sm:w-[300px] md:w-[440px] lg:w-[460px] aspect-[16/9] rounded-lg sm:rounded-2xl overflow-hidden border border-white/40 bg-black shadow-[0_0_80px_rgba(0,0,0,0.95)] group"
         >
           <img
             src="/images/before_after/villa_after.webp"
@@ -355,7 +359,7 @@ export function SolumSpatialBreakdown() {
             decoding="async"
             className="w-full h-full object-cover filter brightness-100 group-hover:scale-102 transition-transform duration-500 pointer-events-none"
           />
-          <div className="absolute inset-0 border border-white/10 rounded-xl sm:rounded-2xl pointer-events-none" />
+          <div className="absolute inset-0 border border-white/15 rounded-xl sm:rounded-2xl pointer-events-none" />
         </motion.div>
 
       </div>
