@@ -14,13 +14,13 @@ const VIGNETTE_DETAILS: VignetteDetail[] = [
   {
     id: 'tree-canopy',
     num: '01',
-    title: 'Tree Canopy & Balcony Structure',
+    title: 'Tree Canopy & Balcony',
     image: '/images/vignettes/tree_canopy_detail.webp',
   },
   {
     id: 'landscaping',
     num: '02',
-    title: 'Poolside Botanical Landscaping',
+    title: 'Poolside Landscaping',
     image: '/images/vignettes/landscape_detail.webp',
   },
   {
@@ -32,7 +32,7 @@ const VIGNETTE_DETAILS: VignetteDetail[] = [
   {
     id: 'wall-sculpture',
     num: '04',
-    title: 'Wall Sculpture & Travertine Stone',
+    title: 'Wall Sculpture & Stone',
     image: '/images/vignettes/sculpture_detail.webp',
   },
 ];
@@ -133,17 +133,18 @@ export function SolumTransformationProof() {
         {/* ========================================================= */}
         <div
           ref={containerRef}
-          className="relative w-full pt-8 pb-4 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12"
+          className="relative w-full pt-8 pb-4 flex flex-col lg:flex-row items-center justify-start lg:justify-between gap-8 lg:gap-10"
         >
           {/* ========================================================= */}
-          {/* 1. LEFT STAGE: Compact Before / After Comparison Slider Card */}
+          {/* 1. LEFT STAGE: Before / After Comparison Slider Card      */}
+          {/* Positioned to the left, larger and well-balanced          */}
           {/* ========================================================= */}
           <motion.div
             ref={leftCardRef}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={isOpen ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, x: -30 }}
+            animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full lg:w-[50%] xl:w-[52%] max-w-[580px] relative z-20 border border-white/20 bg-black rounded-xl md:rounded-2xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.85)] group"
+            className="w-full lg:w-[62%] xl:w-[64%] max-w-[760px] relative z-20 border border-white/20 bg-black rounded-xl md:rounded-2xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.85)] group flex-shrink-0"
           >
             <BeforeAfterSlider
               beforeImage="/images/before_after/villa_before.webp"
@@ -216,7 +217,7 @@ export function SolumTransformationProof() {
                     animate={isOpen ? { pathLength: 1, opacity: 1 } : { pathLength: 0, opacity: 0 }}
                     transition={{
                       duration: 0.85,
-                      delay: 0.2 + idx * 0.08,
+                      delay: 0.15 + idx * 0.08,
                       ease: [0.16, 1, 0.3, 1],
                     }}
                   />
@@ -228,7 +229,7 @@ export function SolumTransformationProof() {
                     fill="#FFFFFF"
                     initial={{ scale: 0 }}
                     animate={isOpen ? { scale: 1 } : { scale: 0 }}
-                    transition={{ duration: 0.3, delay: 0.2 }}
+                    transition={{ duration: 0.3, delay: 0.15 }}
                   />
                 </g>
               );
@@ -236,9 +237,10 @@ export function SolumTransformationProof() {
           </svg>
 
           {/* ========================================================= */}
-          {/* 3. RIGHT STAGE: 4 Stacked Detail Image Cards (Pure, Large, Prominent) */}
+          {/* 3. RIGHT STAGE: 4 Compact, Balanced Detail Image Cards     */}
+          {/* Proportionally sized so all 4 fit comfortably on screen   */}
           {/* ========================================================= */}
-          <div className="w-full lg:w-[36%] xl:w-[34%] flex flex-col gap-3.5 relative z-20">
+          <div className="w-full lg:w-[220px] xl:w-[240px] flex flex-col gap-2.5 sm:gap-3 relative z-20 flex-shrink-0">
             {VIGNETTE_DETAILS.map((item, idx) => {
               const isHovered = activeHoveredId === item.id;
 
@@ -251,22 +253,22 @@ export function SolumTransformationProof() {
                   className="relative w-full"
                 >
                   <motion.div
-                    initial={{ opacity: 0, x: -100, scale: 0.82 }}
+                    initial={{ opacity: 0, x: -80, scale: 0.85 }}
                     animate={
                       isOpen
                         ? { opacity: 1, x: 0, scale: 1 }
-                        : { opacity: 0, x: -100, scale: 0.82 }
+                        : { opacity: 0, x: -80, scale: 0.85 }
                     }
                     transition={{
-                      duration: 0.85,
-                      delay: 0.2 + idx * 0.1,
+                      duration: 0.8,
+                      delay: 0.15 + idx * 0.08,
                       ease: [0.16, 1, 0.3, 1],
                     }}
                     onMouseEnter={() => setActiveHoveredId(item.id)}
                     onMouseLeave={() => setActiveHoveredId(null)}
-                    className={`group relative w-full aspect-[16/9] rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.85)] ${
+                    className={`group relative w-full aspect-[16/10] rounded-lg sm:rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer shadow-[0_6px_20px_rgba(0,0,0,0.85)] ${
                       isHovered
-                        ? 'border-[#2563EB] shadow-[0_10px_32px_rgba(37,99,235,0.35)] scale-[1.02]'
+                        ? 'border-[#2563EB] shadow-[0_8px_28px_rgba(37,99,235,0.4)] scale-[1.03]'
                         : 'border-white/20 hover:border-white/60'
                     }`}
                   >
@@ -275,23 +277,23 @@ export function SolumTransformationProof() {
                       src={item.image}
                       alt={item.title}
                       loading="lazy"
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 ease-out"
                     />
 
                     {/* Gradient overlay for contrast */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent opacity-75 group-hover:opacity-90 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
 
                     {/* Clean caption bar at bottom */}
-                    <div className="absolute bottom-2.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-[10px] text-[#60A5FA] font-semibold tracking-wider">
+                    <div className="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
+                      <div className="flex items-center gap-1.5 min-w-0 pr-1">
+                        <span className="font-mono text-[9px] text-[#60A5FA] font-semibold tracking-wider">
                           {item.num}
                         </span>
-                        <span className="font-sans text-xs sm:text-sm font-medium text-white tracking-wide">
+                        <span className="font-sans text-[11px] sm:text-xs font-medium text-white tracking-wide truncate">
                           {item.title}
                         </span>
                       </div>
-                      <ArrowUpRight className="w-4 h-4 text-white/50 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                      <ArrowUpRight className="w-3 h-3 text-white/50 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0" />
                     </div>
                   </motion.div>
                 </div>
