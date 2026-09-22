@@ -5,34 +5,34 @@ import { ArrowUpRight } from 'lucide-react';
 
 interface VignetteDetail {
   id: string;
+  num: string;
   title: string;
-  subtitle: string;
   image: string;
 }
 
 const VIGNETTE_DETAILS: VignetteDetail[] = [
   {
     id: 'tree-canopy',
-    title: 'Tree Canopy & Balcony Cantilever',
-    subtitle: 'High-fidelity botanical foliage & perimeter terrace lighting',
+    num: '01',
+    title: 'Tree Canopy & Balcony Structure',
     image: '/images/vignettes/tree_canopy_detail.webp',
   },
   {
     id: 'landscaping',
-    title: 'Poolside Flora & Botanical Landscaping',
-    subtitle: 'Tactile garden textures, wild grasses & ambient evening illumination',
+    num: '02',
+    title: 'Poolside Botanical Landscaping',
     image: '/images/vignettes/landscape_detail.webp',
   },
   {
     id: 'soffit-lighting',
-    title: 'Timber Soffit & Recessed Spotlights',
-    subtitle: 'Warm architectural illumination & wood grain texture fidelity',
+    num: '03',
+    title: 'Timber Soffit & Spotlights',
     image: '/images/vignettes/ceiling_lighting_detail.webp',
   },
   {
     id: 'wall-sculpture',
+    num: '04',
     title: 'Wall Sculpture & Travertine Stone',
-    subtitle: 'Precision 3D art relief, natural stone cladding & chiaroscuro shadow depth',
     image: '/images/vignettes/sculpture_detail.webp',
   },
 ];
@@ -77,7 +77,7 @@ export function SolumTransformationProof() {
       newLines.push({
         startX,
         startY,
-        // Target: middle of the left edge of each vignette card
+        // Target: middle of the left edge of each vignette card wrapper
         endX: r.left - cRect.left,
         endY: r.top + r.height / 2 - cRect.top,
       });
@@ -133,24 +133,24 @@ export function SolumTransformationProof() {
         {/* ========================================================= */}
         <div
           ref={containerRef}
-          className="relative w-full pt-10 pb-4 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12"
+          className="relative w-full pt-8 pb-4 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12"
         >
           {/* ========================================================= */}
-          {/* 1. LEFT STAGE: Before / After Comparison Slider Card      */}
+          {/* 1. LEFT STAGE: Compact Before / After Comparison Slider Card */}
           {/* ========================================================= */}
           <motion.div
             ref={leftCardRef}
-            initial={{ opacity: 0, x: -30 }}
-            animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={isOpen ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full lg:w-[58%] xl:w-[60%] relative z-20 border border-white/20 bg-black rounded-xl md:rounded-2xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.85)] group"
+            className="w-full lg:w-[50%] xl:w-[52%] max-w-[580px] relative z-20 border border-white/20 bg-black rounded-xl md:rounded-2xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.85)] group"
           >
             <BeforeAfterSlider
               beforeImage="/images/before_after/villa_before.webp"
               beforeLabel="SOURCE: 3D VIEWPORT"
               afterImage="/images/before_after/villa_after.webp"
               afterLabel="FINAL: 4K CGI"
-              aspectRatio="aspect-[16/10] sm:aspect-[16/9]"
+              aspectRatio="aspect-[16/10]"
             />
             {/* Subtle corner badge */}
             <div className="absolute bottom-3 left-3 z-20 pointer-events-none">
@@ -236,57 +236,65 @@ export function SolumTransformationProof() {
           </svg>
 
           {/* ========================================================= */}
-          {/* 3. RIGHT STAGE: 4 Stacked Micro-Vignette Detail Cards     */}
+          {/* 3. RIGHT STAGE: 4 Stacked Detail Image Cards (Pure, Large, Prominent) */}
           {/* ========================================================= */}
-          <div className="w-full lg:w-[38%] xl:w-[36%] flex flex-col gap-3 sm:gap-4 relative z-20">
+          <div className="w-full lg:w-[36%] xl:w-[34%] flex flex-col gap-3.5 relative z-20">
             {VIGNETTE_DETAILS.map((item, idx) => {
               const isHovered = activeHoveredId === item.id;
 
               return (
-                <motion.div
+                <div
                   key={item.id}
                   ref={(el) => {
                     cardRefs.current[idx] = el;
                   }}
-                  initial={{ opacity: 0, x: 25 }}
-                  animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: 25 }}
-                  transition={{
-                    duration: 0.7,
-                    delay: 0.25 + idx * 0.1,
-                    ease: [0.16, 1, 0.3, 1],
-                  }}
-                  onMouseEnter={() => setActiveHoveredId(item.id)}
-                  onMouseLeave={() => setActiveHoveredId(null)}
-                  className={`group relative flex items-center gap-3 sm:gap-4 p-2 sm:p-2.5 rounded-xl border transition-all duration-300 cursor-pointer ${
-                    isHovered
-                      ? 'border-[#2563EB] bg-white/[0.06] shadow-[0_8px_24px_rgba(0,0,0,0.9)]'
-                      : 'border-white/15 bg-black/60 hover:border-white/40'
-                  }`}
+                  className="relative w-full"
                 >
-                  {/* Thumbnail Image */}
-                  <div className="relative w-[110px] sm:w-[130px] md:w-[145px] aspect-[16/10] rounded-lg overflow-hidden flex-shrink-0 bg-neutral-900 border border-white/10">
+                  <motion.div
+                    initial={{ opacity: 0, x: -100, scale: 0.82 }}
+                    animate={
+                      isOpen
+                        ? { opacity: 1, x: 0, scale: 1 }
+                        : { opacity: 0, x: -100, scale: 0.82 }
+                    }
+                    transition={{
+                      duration: 0.85,
+                      delay: 0.2 + idx * 0.1,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    onMouseEnter={() => setActiveHoveredId(item.id)}
+                    onMouseLeave={() => setActiveHoveredId(null)}
+                    className={`group relative w-full aspect-[16/9] rounded-xl overflow-hidden border transition-all duration-300 cursor-pointer shadow-[0_8px_24px_rgba(0,0,0,0.85)] ${
+                      isHovered
+                        ? 'border-[#2563EB] shadow-[0_10px_32px_rgba(37,99,235,0.35)] scale-[1.02]'
+                        : 'border-white/20 hover:border-white/60'
+                    }`}
+                  >
+                    {/* Full-bleed crisp detail image */}
                     <img
                       src={item.image}
                       alt={item.title}
                       loading="lazy"
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 pointer-events-none"
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
-                  </div>
 
-                  {/* Text Details */}
-                  <div className="flex-1 min-w-0 pr-1">
-                    <div className="flex items-center justify-between gap-1">
-                      <h4 className="font-sans text-xs sm:text-sm font-medium text-white group-hover:text-[#60A5FA] transition-colors truncate">
-                        {item.title}
-                      </h4>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-white/40 group-hover:text-[#60A5FA] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0" />
+                    {/* Gradient overlay for contrast */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent opacity-75 group-hover:opacity-90 transition-opacity" />
+
+                    {/* Clean caption bar at bottom */}
+                    <div className="absolute bottom-2.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
+                      <div className="flex items-center gap-2">
+                        <span className="font-mono text-[10px] text-[#60A5FA] font-semibold tracking-wider">
+                          {item.num}
+                        </span>
+                        <span className="font-sans text-xs sm:text-sm font-medium text-white tracking-wide">
+                          {item.title}
+                        </span>
+                      </div>
+                      <ArrowUpRight className="w-4 h-4 text-white/50 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                     </div>
-                    <p className="font-sans text-[11px] sm:text-xs text-neutral-400 font-light mt-1 line-clamp-2 leading-relaxed">
-                      {item.subtitle}
-                    </p>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </div>
               );
             })}
           </div>
