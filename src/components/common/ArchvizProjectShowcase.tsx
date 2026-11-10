@@ -238,6 +238,9 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   }, [isPlaying]);
 
   const handleMouseEnter = () => {
+    if (videoRef.current) {
+      setCurrentTime(videoRef.current.currentTime);
+    }
     setIsHovered(true);
     resetHideTimer();
     safePlay();
@@ -314,11 +317,13 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   };
 
   const handleTimeUpdate = () => {
-    if (videoRef.current) {
-      setCurrentTime(videoRef.current.currentTime);
-      if (!duration && videoRef.current.duration) {
-        setDuration(videoRef.current.duration);
-      }
+    const video = videoRef.current;
+    if (!video) return;
+    if (!duration && video.duration) {
+      setDuration(video.duration);
+    }
+    if (isHovered || !isPlaying) {
+      setCurrentTime(video.currentTime);
     }
   };
 
@@ -411,7 +416,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 muted
                 loop
                 playsInline
-                preload="auto"
+                preload="metadata"
                 controls={false}
                 disablePictureInPicture
                 onCanPlay={() => {
@@ -568,8 +573,8 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                   onClick={() => handleOpenLightbox(entry.originalIndex)}
                   className={`group relative flex-shrink-0 overflow-hidden cursor-pointer ${
                     isVertical
-                      ? 'w-44 sm:w-56 lg:w-68 h-[135px] sm:h-[175px] lg:h-[200px]'
-                      : 'w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px]'
+                      ? 'w-44 sm:w-56 lg:w-64 h-[135px] sm:h-[175px] lg:h-[200px]'
+                      : 'w-32 sm:w-44 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px]'
                   }`}
                 >
                   <img
@@ -600,8 +605,8 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                   onClick={() => handleOpenLightbox(entry.originalIndex)}
                   className={`group relative flex-shrink-0 overflow-hidden cursor-pointer ${
                     isVertical
-                      ? 'w-44 sm:w-56 lg:w-68 h-[135px] sm:h-[175px] lg:h-[200px]'
-                      : 'w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px]'
+                      ? 'w-44 sm:w-56 lg:w-64 h-[135px] sm:h-[175px] lg:h-[200px]'
+                      : 'w-32 sm:w-44 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px]'
                   }`}
                 >
                   <img
@@ -632,8 +637,8 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                   onClick={() => handleOpenLightbox(entry.originalIndex)}
                   className={`group relative flex-shrink-0 overflow-hidden cursor-pointer ${
                     isVertical
-                      ? 'w-44 sm:w-56 lg:w-68 h-[135px] sm:h-[175px] lg:h-[200px]'
-                      : 'w-32 sm:w-42 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px]'
+                      ? 'w-44 sm:w-56 lg:w-64 h-[135px] sm:h-[175px] lg:h-[200px]'
+                      : 'w-32 sm:w-44 lg:w-48 h-[90px] sm:h-[135px] lg:h-[165px]'
                   }`}
                 >
                   <img

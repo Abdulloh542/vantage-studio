@@ -36,17 +36,23 @@ export function resumeLenis() {
 
 export function SmoothScroll() {
   useEffect(() => {
-    const isTouch =
+    const isCoarsePointer =
       typeof window !== 'undefined' &&
-      ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+      window.matchMedia &&
+      window.matchMedia('(pointer: coarse)').matches;
+
+    // On touch/mobile devices, use 100% native GPU-accelerated scrolling with zero JS RAF overhead
+    if (isCoarsePointer) {
+      return;
+    }
 
     const lenis = new Lenis({
-      duration: isTouch ? 0.8 : 1.1,
+      duration: 1.05,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      syncTouch: false, // Enables native 60/120Hz GPU momentum on touch devices, preventing lag on mobile!
+      syncTouch: false,
       autoResize: true,
     });
 

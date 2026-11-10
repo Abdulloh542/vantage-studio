@@ -1,13 +1,50 @@
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Play, Pause, Volume2, VolumeX, Maximize2 } from 'lucide-react';
 import { PROJECTS } from '../data/projects';
+import { LightboxModal } from '../components/common/LightboxModal';
 
 export function ProjectDetailPage() {
   const { slug } = useParams<{ slug: string }>();
   const leadImageRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const shouldReduceMotion = useReducedMotion();
+
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  const togglePlay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) {
+      v.play().then(() => setIsPlaying(true)).catch(() => {});
+    } else {
+      v.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const toggleSound = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setIsMuted(v.muted);
+  };
+
+  const openFullscreen = () => {
+    const v = videoRef.current as (HTMLVideoElement & { webkitEnterFullscreen?: () => void; webkitRequestFullscreen?: () => void }) | null;
+    if (!v) return;
+    if (v.requestFullscreen) {
+      v.requestFullscreen().catch(() => {});
+    } else if (v.webkitEnterFullscreen) {
+      v.webkitEnterFullscreen();
+    } else if (v.webkitRequestFullscreen) {
+      v.webkitRequestFullscreen();
+    }
+  };
 
   const project = useMemo(() => {
     return PROJECTS.find((p) => p.slug === slug);
@@ -108,6 +145,7 @@ export function ProjectDetailPage() {
                   className="absolute inset-0 w-full h-full object-cover filter blur-3xl opacity-40 scale-110 pointer-events-none select-none"
                 />
                 <video
+                  ref={videoRef}
                   src={project.heroVideo}
                   poster={project.heroImage}
                   autoPlay
@@ -117,11 +155,15 @@ export function ProjectDetailPage() {
                   preload="metadata"
                   controls={false}
                   disablePictureInPicture
-                  className="relative z-10 h-full max-h-[80vh] aspect-[9/16] object-cover shadow-2xl border border-white/10"
+                  onClick={togglePlay}
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                  className="relative z-10 h-full max-h-[80vh] aspect-[9/16] object-cover shadow-2xl border border-white/10 cursor-pointer"
                 />
               </div>
             ) : (
               <video
+                ref={videoRef}
                 src={project.heroVideo}
                 poster={project.heroImage}
                 autoPlay
@@ -131,7 +173,10 @@ export function ProjectDetailPage() {
                 preload="metadata"
                 controls={false}
                 disablePictureInPicture
-                className="w-full h-full object-cover filter brightness-95"
+                onClick={togglePlay}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+                className="w-full h-full object-cover filter brightness-95 cursor-pointer"
               />
             )
           ) : (
@@ -144,9 +189,34 @@ export function ProjectDetailPage() {
           )}
           <div className="absolute inset-0 bg-black/15 pointer-events-none" />
         </motion.div>
-        <div className="absolute bottom-4 left-6 md:left-10 text-white font-mono text-xs uppercase tracking-wider">
+        <div className="absolute bottom-4 left-6 md:left-10 text-white font-mono text-xs uppercase tracking-wider z-20 pointer-events-none">
           LEAD ELEVATION &bull; {project.title}
         </div>
+        {project.heroVideo && (
+          <div className="absolute bottom-4 right-6 md:right-10 z-20 flex items-center gap-2">
+            <button
+              onClick={togglePlay}
+              aria-label={isPlaying ? 'Pause' : 'Play'}
+              className="w-9 h-9 rounded-full bg-black/65 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm"
+            >
+              {isPlaying ? <Pause className="w-3.5 h-3.5 fill-current" /> : <Play className="w-3.5 h-3.5 fill-current translate-x-0.5" />}
+            </button>
+            <button
+              onClick={toggleSound}
+              aria-label={isMuted ? 'Unmute' : 'Mute'}
+              className="w-9 h-9 rounded-full bg-black/65 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm"
+            >
+              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+            </button>
+            <button
+              onClick={openFullscreen}
+              aria-label="Fullscreen"
+              className="w-9 h-9 rounded-full bg-black/65 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm"
+            >
+              <Maximize2 className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Narrow Narrative Column (4-Column System, Content Starts Column 2) */}
@@ -211,12 +281,18 @@ export function ProjectDetailPage() {
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 className={idx === 0 ? 'md:col-span-2' : 'col-span-1'}
               >
-                <div className={`relative ${idx === 0 ? 'aspect-[21/9]' : 'aspect-[4/3]'} w-full overflow-hidden bg-zinc-100 border border-[#101010]/12`}>
+                <div
+                  onClick={() => {
+                    setLightboxIndex(idx);
+                    setLightboxOpen(true);
+                  }}
+                  className={`relative ${idx === 0 ? 'aspect-[21/9]' : 'aspect-[4/3]'} w-full overflow-hidden bg-zinc-100 border border-[#101010]/12 cursor-pointer group`}
+                >
                   <img
                     src={item.url}
                     alt={item.caption || project.title}
                     loading="lazy"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
                   />
                 </div>
                 <div className="pt-2 flex justify-between font-mono text-xs text-[#757575] border-b border-[#101010]/12 pb-2">
@@ -269,6 +345,21 @@ export function ProjectDetailPage() {
           )}
         </div>
       </div>
+
+      {/* 4K Lightbox Modal for Gallery Plates */}
+      {project.gallery && project.gallery.length > 0 && (
+        <LightboxModal
+          isOpen={lightboxOpen}
+          onClose={() => setLightboxOpen(false)}
+          images={project.gallery.map((g) => ({
+            url: g.url,
+            caption: g.caption,
+            title: project.title,
+          }))}
+          currentIndex={lightboxIndex}
+          onNavigate={(idx) => setLightboxIndex(idx)}
+        />
+      )}
     </main>
   );
 }

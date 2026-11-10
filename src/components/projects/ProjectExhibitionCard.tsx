@@ -183,6 +183,9 @@ export function ProjectExhibitionCard({
 
   // Instant playback on mouse hover ("mishkani oborsa birdan boshlansin")
   const handleMouseEnter = () => {
+    if (videoRef.current) {
+      setCurrentTime(videoRef.current.currentTime);
+    }
     setIsHovered(true);
     resetHideTimer();
     safePlay();
@@ -244,11 +247,12 @@ export function ProjectExhibitionCard({
 
   const handleTimeUpdate = () => {
     const video = videoRef.current;
-    if (video) {
+    if (!video) return;
+    if (!duration && video.duration) {
+      setDuration(video.duration);
+    }
+    if (isHovered || !isPlaying) {
       setCurrentTime(video.currentTime);
-      if (!duration && video.duration) {
-        setDuration(video.duration);
-      }
     }
   };
 
@@ -325,7 +329,7 @@ export function ProjectExhibitionCard({
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               controls={false}
               disablePictureInPicture
               onCanPlay={handleCanPlay}

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { pauseLenis, resumeLenis } from './SmoothScroll';
 
 interface PreloaderProps {
   onSequenceStart?: () => void;
@@ -8,19 +9,24 @@ interface PreloaderProps {
 
 export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
   const [curtainUp, setCurtainUp] = useState(false);
-  const [isDone, setIsDone] = useState(false);
+  const [isDone, setIsDone] = useState(() => {
+    try {
+      return sessionStorage.getItem('vantage_preloader_seen') === '1';
+    } catch {
+      return false;
+    }
+  });
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Clear any previous session flag so curtain animation always plays
-    try {
-      sessionStorage.removeItem('vantage_preloader_seen');
-    } catch {
-      // ignore
+    if (isDone) {
+      onComplete?.();
+      return;
     }
 
     // Lock scroll during the curtain sequence
     document.body.style.overflow = 'hidden';
+    pauseLenis();
 
     // Rapid architectural progress counter
     const progressInterval = setInterval(() => {
@@ -29,30 +35,37 @@ export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
           clearInterval(progressInterval);
           return 100;
         }
-        return prev + Math.floor(Math.random() * 25) + 20;
+        return prev + Math.floor(Math.random() * 25) + 25;
       });
-    }, 30);
+    }, 25);
 
-    // T=500ms: Begin lifting the white canvas upwards smoothly
+    // T=380ms: Begin lifting the white canvas upwards smoothly
     const t1 = setTimeout(() => {
       setCurtainUp(true);
       onSequenceStart?.();
-    }, 500);
+    }, 380);
 
-    // T=1200ms: Curtain has fully cleared, unlock body
+    // T=980ms: Curtain has fully cleared, unlock body
     const t2 = setTimeout(() => {
+      try {
+        sessionStorage.setItem('vantage_preloader_seen', '1');
+      } catch {
+        // ignore
+      }
       setIsDone(true);
       document.body.style.overflow = '';
+      resumeLenis();
       onComplete?.();
-    }, 1200);
+    }, 980);
 
     return () => {
       clearInterval(progressInterval);
       clearTimeout(t1);
       clearTimeout(t2);
       document.body.style.overflow = '';
+      resumeLenis();
     };
-  }, [onSequenceStart, onComplete]);
+  }, [isDone, onSequenceStart, onComplete]);
 
   if (isDone) {
     return null;

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { pauseLenis, resumeLenis } from './SmoothScroll';
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -28,17 +29,21 @@ export function Navbar() {
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
+      pauseLenis();
     } else {
       document.body.style.overflow = '';
+      resumeLenis();
     }
     return () => {
       document.body.style.overflow = '';
+      resumeLenis();
     };
   }, [menuOpen]);
 
   const closeMenu = () => {
     setMenuOpen(false);
     document.body.style.overflow = '';
+    resumeLenis();
   };
 
   const mainLinks = [
@@ -91,6 +96,7 @@ export function Navbar() {
         {menuOpen && (
           <motion.div
             ref={overlayRef}
+            data-lenis-prevent
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -159,8 +165,8 @@ export function Navbar() {
             <div className="pt-8 border-t border-[#101010]/12 grid grid-cols-1 md:grid-cols-4 gap-6 text-xs font-mono text-[#757575]">
               <div className="col-span-1">
                 <span className="text-[#101010] block mb-1 font-medium">ATELIER CONTACT</span>
-                <a href="mailto:commissions@vantagestudio.com" className="hover:text-[#101010] transition-colors">
-                  commissions@vantagestudio.com
+                <a href="mailto:hello@vantagestudio.com" className="hover:text-[#101010] transition-colors">
+                  hello@vantagestudio.com
                 </a>
               </div>
 

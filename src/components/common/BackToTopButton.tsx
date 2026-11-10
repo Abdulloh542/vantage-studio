@@ -15,7 +15,12 @@ export function BackToTopButton() {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const lenis = (window as any).lenis;
+    if (lenis && typeof lenis.scrollTo === 'function') {
+      lenis.scrollTo(0);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (

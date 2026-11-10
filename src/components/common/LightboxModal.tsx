@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { pauseLenis, resumeLenis } from './SmoothScroll';
 
 export interface LightboxImage {
   url: string;
@@ -41,10 +42,12 @@ export function LightboxModal({
 
     window.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
+    pauseLenis();
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
+      resumeLenis();
     };
   }, [isOpen, currentIndex, images.length, onClose, onNavigate]);
 
@@ -53,6 +56,7 @@ export function LightboxModal({
   return (
     <AnimatePresence>
       <motion.div
+        data-lenis-prevent
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}

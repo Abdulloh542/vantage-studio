@@ -49,7 +49,7 @@ export function SolumTransformationProof() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   const shouldReduceMotion = useReducedMotion();
-  const isInView = useInView(containerRef, { amount: 0.2, once: false });
+  const isInView = useInView(containerRef, { amount: 0.15, once: true });
   const [activeHoveredId, setActiveHoveredId] = useState<string | null>(null);
 
   // Dynamic SVG line coordinates connecting Left Before/After card to the 4 Right vignette cards
@@ -87,17 +87,22 @@ export function SolumTransformationProof() {
 
   useEffect(() => {
     calculateLines();
-    const timer = setTimeout(calculateLines, 100);
-    const timer2 = setTimeout(calculateLines, 400);
+    const timer = setTimeout(calculateLines, 150);
+
+    let observer: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined' && containerRef.current) {
+      observer = new ResizeObserver(() => {
+        calculateLines();
+      });
+      observer.observe(containerRef.current);
+    }
 
     window.addEventListener('resize', calculateLines, { passive: true });
-    window.addEventListener('scroll', calculateLines, { passive: true });
 
     return () => {
       clearTimeout(timer);
-      clearTimeout(timer2);
+      if (observer) observer.disconnect();
       window.removeEventListener('resize', calculateLines);
-      window.removeEventListener('scroll', calculateLines);
     };
   }, [calculateLines]);
 
@@ -138,21 +143,25 @@ export function SolumTransformationProof() {
           {/* 1. LEFT STAGE: Before / After Comparison Slider Card      */}
           {/* Positioned to the left, larger and well-balanced          */}
           {/* ========================================================= */}
-          <motion.div
+          <div
             ref={leftCardRef}
-            initial={{ opacity: 0, x: -30 }}
-            animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full lg:w-[62%] xl:w-[64%] max-w-[760px] relative z-20 border border-white/20 bg-black rounded-xl md:rounded-2xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.85)] group flex-shrink-0"
+            className="w-full lg:w-[62%] xl:w-[64%] max-w-[760px] relative z-20 flex-shrink-0"
           >
-            <BeforeAfterSlider
-              beforeImage="/images/before_after/villa_before.webp"
-              beforeLabel=""
-              afterImage="/images/before_after/villa_after.webp"
-              afterLabel=""
-              aspectRatio="aspect-[16/10]"
-            />
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={isOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full border border-white/20 bg-black rounded-xl md:rounded-2xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.85)] group"
+            >
+              <BeforeAfterSlider
+                beforeImage="/images/before_after/villa_before.webp"
+                beforeLabel=""
+                afterImage="/images/before_after/villa_after.webp"
+                afterLabel=""
+                aspectRatio="aspect-[16/10]"
+              />
+            </motion.div>
+          </div>
 
           {/* ========================================================= */}
           {/* 2. DYNAMIC CURVED BRANCHING ROPES (DESKTOP)               */}

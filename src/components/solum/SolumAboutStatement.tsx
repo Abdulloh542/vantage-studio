@@ -88,9 +88,12 @@ function CapabilityCard({ cap, idx }: { cap: CapabilityItem; idx: number }) {
 
   const handleMouseEnter = () => {
     setIsHovered(true);
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play().catch(() => {});
+    const v = videoRef.current;
+    if (v) {
+      if (v.readyState >= 1) {
+        v.currentTime = 0;
+      }
+      v.play().catch(() => {});
     }
   };
 

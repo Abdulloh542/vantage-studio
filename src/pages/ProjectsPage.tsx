@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { PROJECTS } from '../data/projects';
 import { ArchvizProjectShowcase } from '../components/common/ArchvizProjectShowcase';
@@ -14,7 +15,21 @@ const CATEGORIES: ('All' | ProjectCategory)[] = [
 ];
 
 export function ProjectsPage() {
-  const [selectedCategory, setSelectedCategory] = useState<'All' | ProjectCategory>('All');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParam = searchParams.get('category');
+
+  const selectedCategory: 'All' | ProjectCategory =
+    categoryParam && CATEGORIES.includes(categoryParam as ProjectCategory)
+      ? (categoryParam as ProjectCategory)
+      : 'All';
+
+  const setSelectedCategory = (cat: 'All' | ProjectCategory) => {
+    if (cat === 'All') {
+      setSearchParams({}, { replace: true });
+    } else {
+      setSearchParams({ category: cat }, { replace: true });
+    }
+  };
 
   const filteredProjects = useMemo(() => {
     if (selectedCategory === 'All') {

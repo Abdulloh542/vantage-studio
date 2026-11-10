@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Play, Pause, Volume2, VolumeX, Maximize2 } from 'lucide-react';
-import { useState } from 'react';
+import { pauseLenis, resumeLenis } from './SmoothScroll';
 
 interface VideoLightboxProps {
   isOpen: boolean;
@@ -22,6 +22,17 @@ export function VideoLightbox({
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
 
+  const togglePlay = useCallback(() => {
+    if (!videoRef.current) return;
+    if (videoRef.current.paused) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -33,27 +44,19 @@ export function VideoLightbox({
 
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      pauseLenis();
       window.addEventListener('keydown', handleKeyDown);
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
+      resumeLenis();
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
+      resumeLenis();
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen, onClose]);
-
-  const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-      setIsPlaying(true);
-    } else {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    }
-  };
+  }, [isOpen, onClose, togglePlay]);
 
   const toggleMute = () => {
     if (!videoRef.current) return;
