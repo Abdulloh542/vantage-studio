@@ -193,7 +193,7 @@ export function SolumAboutStatement() {
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="font-sans text-lg sm:text-xl md:text-[22px] text-white/95 font-normal leading-relaxed max-w-3xl"
             >
-              Vantage is an international architectural visualization and creative production studio that translates unbuilt architecture into high-end visual solutions and cinematic marketing films.
+              Atlas Studio is an international architectural visualization and creative production studio that translates unbuilt architecture into high-end visual solutions and cinematic marketing films.
             </motion.p>
 
             <motion.p

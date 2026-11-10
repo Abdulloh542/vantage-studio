@@ -70,11 +70,21 @@ export function SolumCallToAction() {
           </Link>
 
           <a
-            href="mailto:hello@vantagestudio.com"
+            href="mailto:hello@atlasstudio.uz"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 border border-white/20 text-white font-mono text-xs uppercase tracking-wider hover:border-white/60 hover:bg-white/5 transition-all duration-200"
           >
             <Mail className="w-3.5 h-3.5 text-neutral-400" />
-            <span>hello@vantagestudio.com</span>
+            <span>hello@atlasstudio.uz</span>
+          </a>
+
+          <a
+            href="https://www.instagram.com/atlas.studio.uz/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 border border-white/20 text-white font-mono text-xs uppercase tracking-wider hover:border-[#F5EDE2] hover:bg-[#F5EDE2] hover:text-[#321E13] transition-all duration-200"
+          >
+            <span>@atlas.studio.uz</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
         </motion.div>
 

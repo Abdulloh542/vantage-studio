@@ -27,7 +27,7 @@ export function MobileMenu({ isOpen, onClose, navLinks, currentPath }: MobileMen
                 V
               </div>
               <span className="text-sm font-semibold tracking-widest uppercase">
-                Vantage Studio
+                Atlas Studio
               </span>
             </Link>
             <button
@@ -76,7 +76,7 @@ export function MobileMenu({ isOpen, onClose, navLinks, currentPath }: MobileMen
             </Link>
             <div className="flex justify-between items-center text-[10px] uppercase tracking-widest text-zinc-500 pt-2">
               <span>London • Zurich • Tashkent</span>
-              <span>hello@vantage.studio</span>
+              <span>hello@atlasstudio.uz</span>
             </div>
           </div>
         </motion.div>

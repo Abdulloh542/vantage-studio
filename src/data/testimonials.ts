@@ -3,7 +3,7 @@ import type { Testimonial } from '../types';
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: 't-1',
-    quote: 'Vantage transformed our complex Revit model into an emotional, high-converting architectural film that secured our prime commercial anchor tenants before groundbreaking.',
+    quote: 'Atlas Studio transformed our complex Revit model into an emotional, high-converting architectural film that secured our prime commercial anchor tenants before groundbreaking.',
     author: 'Marcus von Berg',
     role: 'Managing Director',
     company: 'Patrizia Development Partners',
@@ -23,7 +23,7 @@ export const TESTIMONIALS: Testimonial[] = [
   },
   {
     id: 't-3',
-    quote: 'With just preliminary sketch renders and a floor plan, Vantage delivered a full 4K cinema campaign. We achieved a 100% off-plan sellout for our coastal villas in under 120 days.',
+    quote: 'With just preliminary sketch renders and a floor plan, Atlas Studio delivered a full 4K cinema campaign. We achieved a 100% off-plan sellout for our coastal villas in under 120 days.',
     author: 'David Henderson',
     role: 'Chief Investment Officer',
     company: 'Kauri Pacific Capital',

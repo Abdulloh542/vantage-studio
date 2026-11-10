@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { AtlasLogo } from '../common/AtlasLogo';
 
 export function SolumHero() {
   const shouldReduceMotion = useReducedMotion();
@@ -60,7 +61,7 @@ export function SolumHero() {
           ) : (
             <motion.img
               src={heroImage}
-              alt="Vantage Architecture Living Space"
+              alt="Atlas Studio Architecture Living Space"
               initial={
                 shouldReduceMotion
                   ? { opacity: 1, scale: 1 }
@@ -85,16 +86,20 @@ export function SolumHero() {
       {/* ========================================================= */}
       <div className="relative z-30 px-6 sm:px-10 md:px-16 lg:px-24">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12 items-end">
-          {/* Left Stage: Refined Classic Vantage® Wordmark & Subtitle */}
+          {/* Left Stage: Bespoke Atlas Studio Logo & Subtitle */}
           <div className="col-span-1 md:col-span-3">
-            <motion.h1
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.03em] leading-tight text-white mb-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]"
+              className="mb-5 drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]"
             >
-              Vantage&reg;
-            </motion.h1>
+              <h1 className="sr-only">Atlas Studio</h1>
+              <AtlasLogo
+                variant="stacked"
+                className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto text-white"
+              />
+            </motion.div>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}

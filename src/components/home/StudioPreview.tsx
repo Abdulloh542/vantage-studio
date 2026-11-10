@@ -54,7 +54,7 @@ export function StudioPreview() {
         >
           <img
             src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=85"
-            alt="Vantage Studio Architectural Atelier Loft"
+            alt="Atlas Studio Architectural Atelier Loft"
             loading="lazy"
             className="w-full h-full object-cover filter brightness-90"
           />

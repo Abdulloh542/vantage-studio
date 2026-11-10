@@ -75,7 +75,7 @@ export function ServiceDetailPage() {
 
           <div>
             <span className="text-xs uppercase tracking-widest text-emerald-700 font-semibold block mb-3 font-mono">
-              The Vantage Approach
+              The Atlas Approach
             </span>
             <h3 className="text-2xl sm:text-3xl font-light tracking-tight text-black mb-4">
               Architectural truth with cinematic emotion.

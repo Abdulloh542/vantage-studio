@@ -39,7 +39,7 @@ export function TermsPage() {
               01 // COMMISSIONS &amp; SCOPE
             </h2>
             <p>
-              Vantage Studio undertakes architectural visualization, 3D computational rendering, and cinematic film production under bespoke client commission agreements. All project specifications, milestone delivery dates, and fee schedules are formalized in writing prior to production kickoff.
+              Atlas Studio undertakes architectural visualization, 3D computational rendering, and cinematic film production under bespoke client commission agreements. All project specifications, milestone delivery dates, and fee schedules are formalized in writing prior to production kickoff.
             </p>
           </div>
 
@@ -48,7 +48,7 @@ export function TermsPage() {
               02 // INTELLECTUAL PROPERTY &amp; CLIENT ASSETS
             </h2>
             <p>
-              All architectural blueprints, Revit/BIM models, drawings, and proprietary engineering calculations supplied by the client remain the sole intellectual property of the client. Vantage Studio is granted a limited operational license solely to produce the agreed deliverables.
+              All architectural blueprints, Revit/BIM models, drawings, and proprietary engineering calculations supplied by the client remain the sole intellectual property of the client. Atlas Studio is granted a limited operational license solely to produce the agreed deliverables.
             </p>
           </div>
 

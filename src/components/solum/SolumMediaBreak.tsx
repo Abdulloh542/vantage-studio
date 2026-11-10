@@ -16,7 +16,7 @@ export function SolumMediaBreak() {
   // Scroll-linked horizontal translation: restrained, calm, and slow speed
   const xMarquee = useTransform(scrollYProgress, [0, 1], ['4%', '-14%']);
 
-  const marqueeText = 'VANTAGE STUDIO ◆ VANTAGE STUDIO ◆ VANTAGE STUDIO ◆ VANTAGE STUDIO ◆ ';
+  const marqueeText = 'ATLAS STUDIO ◆ ATLAS STUDIO ◆ ATLAS STUDIO ◆ ATLAS STUDIO ◆ ';
 
   return (
     <section

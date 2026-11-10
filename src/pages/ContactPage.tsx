@@ -81,10 +81,25 @@ export function ContactPage() {
                     Email
                   </span>
                   <a
-                    href="mailto:hello@vantagestudio.com"
+                    href="mailto:hello@atlasstudio.uz"
                     className="font-sans font-semibold text-lg sm:text-xl text-[#101010] hover:underline"
                   >
-                    hello@vantagestudio.com
+                    hello@atlasstudio.uz
+                  </a>
+                </div>
+
+                <div>
+                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1">
+                    Instagram
+                  </span>
+                  <a
+                    href="https://www.instagram.com/atlas.studio.uz/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-sans font-semibold text-lg sm:text-xl text-[#101010] hover:underline inline-flex items-center gap-1.5"
+                  >
+                    <span>@atlas.studio.uz</span>
+                    <span className="text-sm">↗</span>
                   </a>
                 </div>
 
@@ -143,12 +158,12 @@ export function ContactPage() {
                     LinkedIn
                   </a>
                   <a
-                    href="https://instagram.com"
+                    href="https://www.instagram.com/atlas.studio.uz/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:opacity-60 transition-opacity font-semibold tracking-wider uppercase"
                   >
-                    Instagram
+                    Instagram (@atlas.studio.uz)
                   </a>
                 </div>
               </div>
@@ -343,7 +358,7 @@ export function ContactPage() {
               </span>
             </div>
             <a
-              href="mailto:hello@vantagestudio.com?subject=Standard%20NDA%20Request"
+              href="mailto:hello@atlasstudio.uz?subject=Standard%20NDA%20Request"
               className="text-xs font-mono uppercase tracking-wider text-[#101010] underline hover:opacity-70 shrink-0"
             >
               Request Mutual NDA ↗

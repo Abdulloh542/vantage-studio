@@ -182,7 +182,7 @@ export function SolumServices() {
               What We Deliver
             </h2>
             <p className="font-sans text-sm sm:text-base text-neutral-400 max-w-xl font-normal leading-relaxed">
-              From architectural massing to broadcast-grade 4K films, Vantage Studio provides end-to-end CGI production tailored to global developers and architects.
+              From architectural massing to broadcast-grade 4K films, Atlas Studio provides end-to-end CGI production tailored to global developers and architects.
             </p>
           </div>
 

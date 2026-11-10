@@ -96,7 +96,7 @@ export function AboutPage() {
             <motion.img
               style={{ y: shouldReduceMotion ? '0%' : yParallax }}
               src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2400&q=85"
-              alt="Vantage Studio Interior Architecture Loft"
+              alt="Atlas Studio Interior Architecture Loft"
               initial={{ scale: 1.06, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}

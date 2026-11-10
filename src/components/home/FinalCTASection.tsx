@@ -71,10 +71,10 @@ export function FinalCTASection() {
                 <Mail className="w-3.5 h-3.5 text-[#C5A880]" /> DIRECT COMMISSIONS
               </span>
               <a
-                href="mailto:commissions@vantagestudio.com"
+                href="mailto:hello@atlasstudio.uz"
                 className="text-xs md:text-sm text-white/90 hover:text-[#C5A880] transition-colors"
               >
-                commissions@vantagestudio.com
+                hello@atlasstudio.uz
               </a>
             </div>
 

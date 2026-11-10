@@ -72,7 +72,7 @@ export function JournalDetailPage() {
                 {article.category}
               </p>
               <p className="text-xs text-black/60 font-sans leading-relaxed">
-                Published under Vantage Studio’s Research &amp; Technology Fellowship.
+                Published under Atlas Studio’s Research &amp; Technology Fellowship.
               </p>
             </div>
 
@@ -129,7 +129,7 @@ export function JournalDetailPage() {
                 "The unbuilt environment demands an empathetic lens: light is not simply calculated lumens, but the emotional threshold between an architectural diagram and human desire."
               </p>
               <span className="block mt-4 font-mono text-xs uppercase tracking-wider text-black/50">
-                — Vantage Computational Architecture Lab
+                — Atlas Computational Architecture Lab
               </span>
             </div>
 

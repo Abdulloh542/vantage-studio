@@ -39,7 +39,7 @@ export function PrivacyPage() {
               01 // DATA COLLECTION ETHOS
             </h2>
             <p>
-              Vantage Studio operates on a strict minimization principle. We only collect information provided directly through our project brief forms, contract agreements, or direct correspondence for the sole purpose of evaluating commissions and delivering architectural visualization services.
+              Atlas Studio operates on a strict minimization principle. We only collect information provided directly through our project brief forms, contract agreements, or direct correspondence for the sole purpose of evaluating commissions and delivering architectural visualization services.
             </p>
           </div>
 
@@ -66,7 +66,7 @@ export function PrivacyPage() {
               04 // PRIVACY CONTACT
             </h2>
             <p>
-              For data access, correction, or deletion requests under GDPR or international privacy laws, contact our data protection desk directly at privacy@vantagestudio.com.
+              For data access, correction, or deletion requests under GDPR or international privacy laws, contact our data protection desk directly at privacy@atlasstudio.uz.
             </p>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { pauseLenis, resumeLenis } from './SmoothScroll';
+import { AtlasLogo } from './AtlasLogo';
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -57,14 +58,15 @@ export function Navbar() {
   return (
     <>
       {/* Pure Transparent Header (No Blur, No Dark Gradient Bar) */}
-      {/* Top Left Wordmark with Direct Fixed mix-blend-difference */}
+      {/* Top Left Bespoke Atlas Studio Wordmark with Direct Fixed mix-blend-difference */}
       {!menuOpen && (
-        <div className="fixed top-0 left-0 z-[70] py-5 md:py-6 px-6 md:px-10 pointer-events-none select-none mix-blend-difference">
+        <div className="fixed top-0 left-0 z-[70] py-4 md:py-5 px-6 md:px-10 pointer-events-none select-none mix-blend-difference">
           <Link
             to="/"
-            className="pointer-events-auto font-sans font-bold text-sm md:text-base tracking-[-0.04em] uppercase text-white hover:opacity-80 transition-opacity inline-block"
+            aria-label="Atlas Studio Home"
+            className="pointer-events-auto text-white hover:opacity-80 transition-opacity inline-flex items-center"
           >
-            VANTAGE STUDIO
+            <AtlasLogo variant="stacked" className="h-8 sm:h-9 md:h-10 w-auto" />
           </Link>
         </div>
       )}
@@ -104,13 +106,14 @@ export function Navbar() {
             className="fixed inset-0 z-[60] bg-white text-[#101010] flex flex-col justify-between pt-28 pb-10 px-6 md:px-10 overflow-y-auto select-none"
           >
             {/* Top Left Logo inside White Overlay */}
-            <div className="absolute top-5 md:top-6 left-6 md:left-10 z-50">
+            <div className="absolute top-4 md:top-5 left-6 md:left-10 z-50">
               <Link
                 to="/"
                 onClick={closeMenu}
-                className="font-sans font-bold text-sm md:text-base tracking-[-0.04em] uppercase text-[#101010] hover:opacity-80 transition-opacity inline-block"
+                aria-label="Atlas Studio Home"
+                className="text-[#321E13] hover:opacity-80 transition-opacity inline-flex items-center"
               >
-                VANTAGE STUDIO
+                <AtlasLogo variant="stacked" className="h-8 sm:h-9 md:h-10 w-auto" />
               </Link>
             </div>
 
@@ -165,14 +168,21 @@ export function Navbar() {
             <div className="pt-8 border-t border-[#101010]/12 grid grid-cols-1 md:grid-cols-4 gap-6 text-xs font-mono text-[#757575]">
               <div className="col-span-1">
                 <span className="text-[#101010] block mb-1 font-medium">ATELIER CONTACT</span>
-                <a href="mailto:hello@vantagestudio.com" className="hover:text-[#101010] transition-colors">
-                  hello@vantagestudio.com
+                <a href="mailto:hello@atlasstudio.uz" className="hover:text-[#101010] transition-colors">
+                  hello@atlasstudio.uz
                 </a>
               </div>
 
               <div className="col-span-1">
-                <span className="text-[#101010] block mb-1 font-medium">HUBS</span>
-                <span>London &bull; Zurich &bull; Tashkent</span>
+                <span className="text-[#101010] block mb-1 font-medium">INSTAGRAM</span>
+                <a
+                  href="https://www.instagram.com/atlas.studio.uz/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#101010] transition-colors"
+                >
+                  @atlas.studio.uz ↗
+                </a>
               </div>
 
               <div className="col-span-1">
@@ -189,7 +199,7 @@ export function Navbar() {
 
               <div className="col-span-1 text-left md:text-right">
                 <span className="text-[#101010] block mb-1 font-medium">&copy; 2026</span>
-                <span className="block mt-1">Vantage Studio All Rights Reserved.</span>
+                <span className="block mt-1">Atlas Studio All Rights Reserved.</span>
               </div>
             </div>
           </motion.div>
