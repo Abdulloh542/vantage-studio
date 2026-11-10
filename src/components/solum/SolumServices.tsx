@@ -41,7 +41,7 @@ const SERVICES: ServicePanel[] = [
       'Concept Films & Story-Driven Narratives',
       'Social Media 9:16 Vertical Reels',
     ],
-    image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990854/projects/effect-archi/A_photorealistic__highly__e6837b.jpg',
+    image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992590/projects/collective-dubai-hills/collective-dubai-hills_still_4.jpg',
   },
   {
     number: '03',
@@ -56,7 +56,7 @@ const SERVICES: ServicePanel[] = [
       'Map & Urban Infrastructure Animations',
       'Pre-Sales Exhibition CGI',
     ],
-    image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg',
+    image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992496/projects/lotus-mall/lotus-mall_still_2.jpg',
   },
   {
     number: '04',

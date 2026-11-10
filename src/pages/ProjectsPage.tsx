@@ -226,27 +226,24 @@ export function ProjectsPage() {
                   </div>
                 )}
 
-                {/* 5. Navoi Plaza (9:16 Vertical) + Collective Dubai Hills (16:10 Landscape) - Side-by-Side */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start pt-2">
-                  {pNavoi && (
-                    <div className="col-span-12 lg:col-span-5">
-                      <ProjectExhibitionCard
-                        project={pNavoi}
-                        index={4}
-                        layoutVariant="split-vertical"
-                      />
-                    </div>
-                  )}
-                  {pDubai && (
-                    <div className="col-span-12 lg:col-span-7">
-                      <ProjectExhibitionCard
-                        project={pDubai}
-                        index={5}
-                        layoutVariant="split-landscape"
-                      />
-                    </div>
-                  )}
-                </div>
+                {/* 5. Navoi Plaza (9:16 Vertical Cinema + 9:16 Vertical Stills Showcase) */}
+                {pNavoi && (
+                  <ArchvizProjectShowcase
+                    project={pNavoi}
+                    index={4}
+                  />
+                )}
+
+                {/* 6. Collective Dubai Hills (Full 16:9 Landscape Cinema) */}
+                {pDubai && (
+                  <div className="pt-2">
+                    <ProjectExhibitionCard
+                      project={pDubai}
+                      index={5}
+                      layoutVariant="lead"
+                    />
+                  </div>
+                )}
 
                 {/* 6. Papes Residences + Park Seefeld - Side-by-Side */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start pt-2">
@@ -280,8 +277,12 @@ export function ProjectsPage() {
                 className="space-y-8 sm:space-y-12"
               >
                 {filteredProjects.map((project, idx) => {
-                  // If Volga Park or Architecture Insight, render with full photos showcase
-                  if (project.slug === 'volga-park' || project.slug === 'architecture-insight') {
+                  // If Volga Park, Architecture Insight, or Navoi Plaza, render with full photos showcase
+                  if (
+                    project.slug === 'volga-park' ||
+                    project.slug === 'architecture-insight' ||
+                    project.slug === 'navoi-plaza'
+                  ) {
                     return (
                       <ArchvizProjectShowcase
                         key={project.slug}

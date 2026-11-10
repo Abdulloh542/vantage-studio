@@ -58,7 +58,7 @@ const CAPABILITIES: CapabilityItem[] = [
       'Map Animations & Social Reels',
     ],
     image:
-      'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg',
+      'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992496/projects/lotus-mall/lotus-mall_still_2.jpg',
     video:
       'https://res.cloudinary.com/mvmsbgon/video/upload/v1789992494/projects/lotus-mall/lotus-mall_film.mp4',
     description: 'Prestige commercial and residential CGI campaigns that accelerate pre-sales and secure institutional investors.',

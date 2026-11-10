@@ -53,7 +53,7 @@ export function SolumRecentProjects() {
           className="w-full pt-10"
         >
           <Link to={`/projects/${pLead.slug}`} className="group block select-none">
-            <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
+            <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
               <img
                 src={pLead.heroImage}
                 alt={pLead.title}
@@ -92,7 +92,7 @@ export function SolumRecentProjects() {
               className="col-span-1 md:col-span-2"
             >
               <Link to={`/projects/${pSupport1.slug}`} className="group block select-none">
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
+                <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
                   <img
                     src={pSupport1.heroImage}
                     alt={pSupport1.title}
@@ -112,23 +112,34 @@ export function SolumRecentProjects() {
               </Link>
             </motion.div>
 
-            {/* Supporting Item 2: Col 3 & 4 (Offset with vertical gap) */}
+            {/* Supporting Item 2: Col 3 & 4 (9:16 Vertical Project displayed as dual uncropped 9:16 plates) */}
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="col-span-1 md:col-span-2 md:pt-16"
+              className="col-span-1 md:col-span-2 md:pt-12"
             >
               <Link to={`/projects/${pSupport2.slug}`} className="group block select-none">
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
-                  <img
-                    src={pSupport2.heroImage}
-                    alt={pSupport2.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-550 ease-out group-hover:scale-[1.025]"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-550" />
+                <div className="grid grid-cols-2 gap-3 w-full">
+                  <div className="relative aspect-[9/16] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
+                    <img
+                      src={pSupport2.gallery?.[1]?.url || pSupport2.heroImage}
+                      alt={pSupport2.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-550 ease-out group-hover:scale-[1.025]"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-550" />
+                  </div>
+                  <div className="relative aspect-[9/16] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
+                    <img
+                      src={pSupport2.gallery?.[3]?.url || pSupport2.heroImage}
+                      alt={`${pSupport2.title} daylight`}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-550 ease-out group-hover:scale-[1.025]"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-550" />
+                  </div>
                 </div>
                 <div className="pt-4 flex items-center justify-between font-mono text-sm sm:text-base text-[#101010] border-b border-[#101010]/12 pb-3">
                   <span className="font-semibold uppercase tracking-wider group-hover:underline">
@@ -142,7 +153,7 @@ export function SolumRecentProjects() {
             </motion.div>
           </div>
 
-          {/* Row 3: One Broad Architectural Landmark (Full Width) */}
+          {/* Row 3: One Broad Architectural Landmark (Full Width 16:9) */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -151,7 +162,7 @@ export function SolumRecentProjects() {
             className="w-full"
           >
             <Link to={`/projects/${pBroad.slug}`} className="group block select-none">
-              <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
+              <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12">
                 <img
                   src={pBroad.heroImage}
                   alt={pBroad.title}

@@ -159,7 +159,7 @@ const RAW_PROJECTS: Project[] = [
       { label: 'Outputs', value: '9 Stills + 4K Cinema Film' }
     ],
     beforeAfter: {
-      beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982068/projects/bunker-37/create_a_detailed_exploded_axonometric_2.jpg',
+      beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982065/projects/bunker-37/Create_an_architectural_concept_board_20.jpg',
       beforeLabel: 'HISTORIC SCHEMATIC & REINFORCED MASSING',
       afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982051/projects/bunker-37/add_rooftop_on_first_image_202606191833.jpg',
       afterLabel: 'PROPOSED CULTURAL ROOFTOP PAVILION',
@@ -168,9 +168,9 @@ const RAW_PROJECTS: Project[] = [
     process: [
       {
         step: '01',
-        title: 'Structural Axonometric Drawing',
-        description: 'Deconstructing structural volumes, circulation cores, and glass interventions through precise 3D axonometrics.',
-        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982068/projects/bunker-37/create_a_detailed_exploded_axonometric_2.jpg'
+        title: 'Urban Context & Existing Elevation',
+        description: 'Documenting existing structural volumes, facade proportions, and street-level integration.',
+        image: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990867/projects/effect-archi/remove_tree_on_middle_2K__25a109.jpg'
       },
       {
         step: '02',
@@ -197,6 +197,11 @@ const RAW_PROJECTS: Project[] = [
         aspectRatio: 'landscape'
       },
       {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990867/projects/effect-archi/remove_tree_on_middle_2K__25a109.jpg',
+        caption: 'Street-level residential elevation showcasing cantilevered balconies and white render facade',
+        aspectRatio: 'landscape'
+      },
+      {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982063/projects/bunker-37/ChatGPT_Image_Jun_20__2026__05_23_40_PM.png',
         caption: 'Exhibition hall featuring brutalist concrete preservation alongside warm architectural lighting',
         aspectRatio: 'landscape'
@@ -204,16 +209,6 @@ const RAW_PROJECTS: Project[] = [
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982064/projects/bunker-37/ChatGPT_Image_Jun_20__2026__05_23_46_PM.png',
         caption: 'Atmospheric gallery corridors with monolithic concrete finishes and curated daylight',
-        aspectRatio: 'landscape'
-      },
-      {
-        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982067/projects/bunker-37/Create_an_architectural_concept_board_20.jpg',
-        caption: 'Materiality & moodboard: atmospheric evening lighting and structural concrete studies',
-        aspectRatio: 'landscape'
-      },
-      {
-        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982068/projects/bunker-37/create_a_detailed_exploded_axonometric_2.jpg',
-        caption: 'Exploded axonometric structural drawing detailing spatial layers and structural volumes',
         aspectRatio: 'landscape'
       },
       {
@@ -313,62 +308,62 @@ const RAW_PROJECTS: Project[] = [
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990854/projects/effect-archi/A_photorealistic__highly__e6837b.jpg',
         caption: 'High-altitude architectural aerial: Cantilevered modern villa situated within forested hillside topography',
-        aspectRatio: 'landscape'
+        aspectRatio: 'portrait'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990851/projects/effect-archi/A_high-end_architectural__aadba3.jpg',
         caption: 'Midnight illuminated elevation: Warm interior light spilling through double-height panoramic curtain walls',
-        aspectRatio: 'landscape'
+        aspectRatio: 'portrait'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990858/projects/effect-archi/make_dramatic_autumn_midn_be880a.jpg',
         caption: 'Dramatic autumn midnight study: Overcast moonlit skies accentuating monolithic concrete massing',
-        aspectRatio: 'landscape'
+        aspectRatio: 'portrait'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990864/projects/effect-archi/Photorealistic_architectu_6136ec.jpg',
         caption: 'Eye-level garden perspective: Stone pathways leading to the glass-encased entrance foyer',
-        aspectRatio: 'landscape'
+        aspectRatio: 'portrait'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990860/projects/effect-archi/make_image_from_eye-level_981555.jpg',
         caption: 'Terrace approach view: Integrated infinity pool and timber sundeck in crisp morning daylight',
-        aspectRatio: 'landscape'
+        aspectRatio: 'portrait'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990869/projects/effect-archi/rotate_camera_to_right_st_190dd2.jpg',
         caption: 'Side facade study: Linear cantilevered eaves and precision-engineered architectural louvers',
-        aspectRatio: 'landscape'
+        aspectRatio: 'portrait'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990861/projects/effect-archi/make_plan_3d_realistic_2K_fb6c40.jpg',
         caption: '3D Axonometric floorplan: Cutaway spatial layout displaying open-plan living and private suites',
-        aspectRatio: 'landscape'
+        aspectRatio: 'portrait'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990863/projects/effect-archi/make_villa_on_time_constr_120220.jpg',
         caption: 'Progressive construction render: Reinforced formwork and structural foundation progress',
-        aspectRatio: 'landscape'
+        aspectRatio: 'portrait'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990856/projects/effect-archi/Extract_and_upscale_from__c11a74.jpg',
         caption: 'Material detail close-up: Textured fair-faced concrete paired with black anodized aluminum frames',
-        aspectRatio: 'landscape'
+        aspectRatio: 'portrait'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990866/projects/effect-archi/remove_tree_above__and_ma_32e2ab.jpg',
         caption: 'Canopy clearance perspective: Unobstructed roofline framing surrounding Alpine mountain ridges',
-        aspectRatio: 'landscape'
-      },
-      {
-        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990867/projects/effect-archi/remove_tree_on_middle_2K__25a109.jpg',
-        caption: 'Courtyard transition: Indoor-outdoor continuity connecting living pavilion to wild pine landscaping',
-        aspectRatio: 'landscape'
+        aspectRatio: 'portrait'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990870/projects/effect-archi/Transform_the_uploaded_vi_200002.jpg',
         caption: 'Twilight atmosphere render: Ambient warm uplighting highlighting architectural geometry and reflection',
-        aspectRatio: 'landscape'
+        aspectRatio: 'portrait'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982068/projects/bunker-37/create_a_detailed_exploded_axonometric_2.jpg',
+        caption: 'Exploded axonometric structural drawing detailing spatial layers and structural volumes of the villa',
+        aspectRatio: 'portrait'
       }
     ],
     featured: true,
@@ -386,7 +381,7 @@ const RAW_PROJECTS: Project[] = [
     category: 'Real Estate Marketing',
     services: ['Property Presentation Films', 'Development Marketing', 'Location & Infrastructure Videos', 'Cinematic Architectural Films'],
     tags: ['All', 'Real Estate Marketing', 'Property Presentation Films', 'Development Marketing', 'Location & Infrastructure Videos', 'Commercial'],
-    heroImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg',
+    heroImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992496/projects/lotus-mall/lotus-mall_still_2.jpg',
     heroVideo: 'https://res.cloudinary.com/mvmsbgon/video/upload/v1789992494/projects/lotus-mall/lotus-mall_film.mp4',
     videoDuration: '87s Cinema Film',
     videoAspectRatio: '16:9',
@@ -411,10 +406,10 @@ const RAW_PROJECTS: Project[] = [
     ],
     beforeAfter: {
       beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992497/projects/lotus-mall/lotus-mall_still_3.jpg',
-      beforeLabel: 'SCHEMATIC MASSING VIEW',
-      afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg',
-      afterLabel: 'FINAL CINEMATIC PRODUCTION',
-      description: 'Side-by-side progression from geometric volumetric massing to photorealistic atmospheric lighting and retail promenade finishes.'
+      beforeLabel: 'INTERIOR ATRIUM PERSPECTIVE',
+      afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992496/projects/lotus-mall/lotus-mall_still_2.jpg',
+      afterLabel: 'FINAL EXTERIOR MASTER ELEVATION',
+      description: 'Side-by-side progression from interior atrium structural glazing to the completed luxury hotel and retail exterior elevation.'
     },
     process: [
       {
@@ -438,28 +433,23 @@ const RAW_PROJECTS: Project[] = [
     ],
     gallery: [
       {
-        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992495/projects/lotus-mall/lotus-mall_still_1.jpg',
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992496/projects/lotus-mall/lotus-mall_still_2.jpg',
         caption: 'Panoramic perspective: Lotus Mall iconic organic curved glass facade and arrival boulevard',
         aspectRatio: 'landscape'
       },
       {
-        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992496/projects/lotus-mall/lotus-mall_still_2.jpg',
-        caption: 'Aerial viewpoint overlooking the central atrium glass dome and landscaped perimeter',
-        aspectRatio: 'landscape'
-      },
-      {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992497/projects/lotus-mall/lotus-mall_still_3.jpg',
-        caption: 'Mid-level galleria perspective featuring illuminated storefronts and public gathering spaces',
+        caption: 'Grand entrance lobby featuring double-height structural glazing and sculpted V-columns',
         aspectRatio: 'landscape'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992498/projects/lotus-mall/lotus-mall_still_4.jpg',
-        caption: 'Sunset atmospheric still highlighting warm interior illumination and perimeter water reflections',
+        caption: 'Skyline terrace lounge overlooking the metropolitan panorama at golden hour',
         aspectRatio: 'landscape'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992499/projects/lotus-mall/lotus-mall_still_5.jpg',
-        caption: '5-Star Hotel luxury podium entrance with grand porte-cochère and bespoke architectural lighting',
+        caption: '5-Star Hotel luxury rooftop garden terrace with palm landscaping and outdoor dining',
         aspectRatio: 'landscape'
       }
     ],
@@ -570,7 +560,7 @@ const RAW_PROJECTS: Project[] = [
     category: 'AI Architectural Films',
     services: ['Cinematic Architectural Films', 'AI Walkthroughs', 'Social Media Reels', 'Render-to-Video'],
     tags: ['All', 'AI Architectural Films', 'Cinematic Architectural Films', 'AI Walkthroughs', 'Render-to-Video', 'Social Media Reels', '9:16 Vertical'],
-    heroImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992645/projects/navoi-plaza/navoi-plaza_still_1.jpg',
+    heroImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992648/projects/navoi-plaza/navoi-plaza_still_3.jpg',
     heroVideo: 'https://res.cloudinary.com/mvmsbgon/video/upload/v1789992643/projects/navoi-plaza/navoi-plaza_film.mp4',
     videoDuration: '83s 9:16 Reel',
     videoAspectRatio: '9:16',
@@ -594,11 +584,11 @@ const RAW_PROJECTS: Project[] = [
       { label: 'Outputs', value: '83s Vertical Film + Stills' }
     ],
     beforeAfter: {
-      beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992648/projects/navoi-plaza/navoi-plaza_still_3.jpg',
-      beforeLabel: 'SCHEMATIC URBAN MASSING',
-      afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992645/projects/navoi-plaza/navoi-plaza_still_1.jpg',
+      beforeImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992645/projects/navoi-plaza/navoi-plaza_still_1.jpg',
+      beforeLabel: 'EXCAVATION & SITE FOUNDATION',
+      afterImage: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992648/projects/navoi-plaza/navoi-plaza_still_3.jpg',
       afterLabel: 'FINAL 9:16 NIGHT CINEMA',
-      description: 'Progression from raw boulevard massing geometry to vibrant evening promenade lighting and photoreal textures.'
+      description: 'Progression from raw site foundation and tower construction to vibrant evening promenade lighting and photoreal twin towers.'
     },
     process: [
       {
@@ -622,28 +612,28 @@ const RAW_PROJECTS: Project[] = [
     ],
     gallery: [
       {
-        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992645/projects/navoi-plaza/navoi-plaza_still_1.jpg',
-        caption: 'Nocturnal promenade view: Dynamic LED facade illumination and reflective pedestrian boulevard',
-        aspectRatio: 'portrait'
-      },
-      {
-        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992646/projects/navoi-plaza/navoi-plaza_still_2.jpg',
-        caption: 'Commercial storefront colonnade featuring high-end boutique display windows and warm interior glow',
-        aspectRatio: 'portrait'
-      },
-      {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992648/projects/navoi-plaza/navoi-plaza_still_3.jpg',
-        caption: 'Central fountain plaza with cascading illuminated water features and urban seating terraces',
+        caption: 'Nocturnal aerial elevation: Illuminated Navoi Plaza twin towers against the twilight mountain horizon',
         aspectRatio: 'portrait'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992649/projects/navoi-plaza/navoi-plaza_still_4.jpg',
-        caption: 'Eye-level pedestrian perspective highlighting architectural canopies and tree-lined walkways',
+        caption: 'Daylight boulevard perspective highlighting architectural podium retail and tree-lined walkways',
         aspectRatio: 'portrait'
       },
       {
         url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992651/projects/navoi-plaza/navoi-plaza_still_5.jpg',
-        caption: 'Upper-level terrace dining pavilion overlooking the active Navoi Avenue boulevard',
+        caption: 'Navoi Avenue approach view with mountain backdrop and contemporary high-rise facade rhythm',
+        aspectRatio: 'portrait'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992646/projects/navoi-plaza/navoi-plaza_still_2.jpg',
+        caption: 'Tower crane structural construction phase along Navoi Avenue',
+        aspectRatio: 'portrait'
+      },
+      {
+        url: 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992645/projects/navoi-plaza/navoi-plaza_still_1.jpg',
+        caption: 'Initial site excavation and urban masterplan footprint preparation',
         aspectRatio: 'portrait'
       }
     ],

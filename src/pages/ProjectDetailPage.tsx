@@ -1,13 +1,13 @@
 import { useMemo, useRef, useState } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Play, Pause, Volume2, VolumeX, Maximize2 } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, Play, Pause, Volume2, VolumeX, Maximize2, Eye } from 'lucide-react';
 import { PROJECTS } from '../data/projects';
 import { LightboxModal } from '../components/common/LightboxModal';
+import { BeforeAfterSlider } from '../components/common/BeforeAfterSlider';
 
 export function ProjectDetailPage() {
   const { slug } = useParams<{ slug: string }>();
-  const leadImageRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
@@ -64,15 +64,11 @@ export function ProjectDetailPage() {
     return PROJECTS[currentIndex + 1];
   }, [currentIndex]);
 
-  const { scrollYProgress } = useScroll({
-    target: leadImageRef,
-    offset: ['start end', 'end start'],
-  });
-  const parallaxY = useTransform(scrollYProgress, [0, 1], ['-5%', '5%']);
-
   if (!project) {
     return <Navigate to="/projects" replace />;
   }
+
+  const isVertical = project.videoAspectRatio === '9:16';
 
   return (
     <main className="w-full bg-white text-[#101010] pt-28 md:pt-36">
@@ -126,42 +122,99 @@ export function ProjectDetailPage() {
         </div>
       </div>
 
-      {/* Full-Bleed Lead Image with Restrained Parallax */}
-      <div
-        ref={leadImageRef}
-        className="relative w-full h-[55vh] sm:h-[70vh] lg:h-[80vh] overflow-hidden bg-zinc-900 my-16 border-t border-b border-[#101010]/12"
-      >
-        <motion.div
-          style={{ y: shouldReduceMotion ? '0%' : parallaxY }}
-          className="absolute inset-0 w-full h-[120%] -top-[10%]"
-        >
-          {project.heroVideo ? (
-            project.videoAspectRatio === '9:16' ? (
-              <div className="relative w-full h-full flex items-center justify-center bg-black overflow-hidden">
-                <img
-                  src={project.heroImage}
-                  alt=""
-                  aria-hidden="true"
-                  className="absolute inset-0 w-full h-full object-cover filter blur-3xl opacity-40 scale-110 pointer-events-none select-none"
-                />
-                <video
-                  ref={videoRef}
-                  src={project.heroVideo}
-                  poster={project.heroImage}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  controls={false}
-                  disablePictureInPicture
-                  onClick={togglePlay}
-                  onPlay={() => setIsPlaying(true)}
-                  onPause={() => setIsPlaying(false)}
-                  className="relative z-10 h-full max-h-[80vh] aspect-[9/16] object-cover shadow-2xl border border-white/10 cursor-pointer"
-                />
+      {/* True-Aspect-Ratio Lead Cinema Stage (Zero Cropping for both 9:16 and 16:9) */}
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10 my-12 md:my-16">
+        {isVertical ? (
+          /* 9:16 VERTICAL STAGE: Uncropped 9:16 Video on Left + 3 Featured Uncropped 9:16 Plates on Right */
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            <div className="lg:col-span-4 flex justify-center">
+              <div className="relative aspect-[9/16] w-full max-w-[400px] lg:max-w-none overflow-hidden bg-black border border-[#101010]/15 shadow-xl">
+                {project.heroVideo ? (
+                  <video
+                    ref={videoRef}
+                    src={project.heroVideo}
+                    poster={project.heroImage}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    controls={false}
+                    disablePictureInPicture
+                    onClick={togglePlay}
+                    onPlay={() => setIsPlaying(true)}
+                    onPause={() => setIsPlaying(false)}
+                    className="w-full h-full object-cover cursor-pointer"
+                  />
+                ) : (
+                  <img
+                    src={project.heroImage}
+                    alt={project.title}
+                    loading="eager"
+                    className="w-full h-full object-cover"
+                  />
+                )}
+                <div className="absolute top-3 left-3 px-2.5 py-1 bg-black/65 backdrop-blur-sm text-[11px] font-mono uppercase tracking-wider text-white/90 border border-white/15 pointer-events-none">
+                  9:16 VERTICAL CINEMA
+                </div>
+                {project.heroVideo && (
+                  <div className="absolute bottom-3 right-3 z-20 flex items-center gap-2">
+                    <button
+                      onClick={togglePlay}
+                      aria-label={isPlaying ? 'Pause' : 'Play'}
+                      className="w-9 h-9 rounded-full bg-black/65 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm"
+                    >
+                      {isPlaying ? <Pause className="w-3.5 h-3.5 fill-current" /> : <Play className="w-3.5 h-3.5 fill-current translate-x-0.5" />}
+                    </button>
+                    <button
+                      onClick={toggleSound}
+                      aria-label={isMuted ? 'Unmute' : 'Mute'}
+                      className="w-9 h-9 rounded-full bg-black/65 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm"
+                    >
+                      {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                    </button>
+                    <button
+                      onClick={openFullscreen}
+                      aria-label="Fullscreen"
+                      className="w-9 h-9 rounded-full bg-black/65 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm"
+                    >
+                      <Maximize2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                )}
               </div>
-            ) : (
+            </div>
+
+            {/* Right: 2 Featured Full-Height 9:16 Plates side by side (100% uncropped) */}
+            <div className="lg:col-span-8 grid grid-cols-2 gap-4 sm:gap-6">
+              {(project.gallery || []).slice(0, 2).map((g, idx) => (
+                <div
+                  key={g.url + idx}
+                  onClick={() => {
+                    setLightboxIndex(idx);
+                    setLightboxOpen(true);
+                  }}
+                  className="group relative aspect-[9/16] w-full overflow-hidden bg-zinc-100 border border-[#101010]/12 cursor-pointer shadow-sm"
+                >
+                  <img
+                    src={g.url}
+                    alt={g.caption || project.title}
+                    loading="eager"
+                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-[#101010]/90 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center shadow-lg">
+                      <Eye className="w-4 h-4" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          /* 16:9 WIDESCREEN STAGE: Full 16:9 Uncropped Cinema Frame */
+          <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-900 border border-[#101010]/15 shadow-lg">
+            {project.heroVideo ? (
               <video
                 ref={videoRef}
                 src={project.heroVideo}
@@ -178,43 +231,43 @@ export function ProjectDetailPage() {
                 onPause={() => setIsPlaying(false)}
                 className="w-full h-full object-cover filter brightness-95 cursor-pointer"
               />
-            )
-          ) : (
-            <img
-              src={project.heroImage}
-              alt={project.title}
-              loading="eager"
-              className="w-full h-full object-cover filter brightness-95"
-            />
-          )}
-          <div className="absolute inset-0 bg-black/15 pointer-events-none" />
-        </motion.div>
-        <div className="absolute bottom-4 left-6 md:left-10 text-white font-mono text-xs uppercase tracking-wider z-20 pointer-events-none">
-          LEAD ELEVATION &bull; {project.title}
-        </div>
-        {project.heroVideo && (
-          <div className="absolute bottom-4 right-6 md:right-10 z-20 flex items-center gap-2">
-            <button
-              onClick={togglePlay}
-              aria-label={isPlaying ? 'Pause' : 'Play'}
-              className="w-9 h-9 rounded-full bg-black/65 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm"
-            >
-              {isPlaying ? <Pause className="w-3.5 h-3.5 fill-current" /> : <Play className="w-3.5 h-3.5 fill-current translate-x-0.5" />}
-            </button>
-            <button
-              onClick={toggleSound}
-              aria-label={isMuted ? 'Unmute' : 'Mute'}
-              className="w-9 h-9 rounded-full bg-black/65 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm"
-            >
-              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-            </button>
-            <button
-              onClick={openFullscreen}
-              aria-label="Fullscreen"
-              className="w-9 h-9 rounded-full bg-black/65 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm"
-            >
-              <Maximize2 className="w-3.5 h-3.5" />
-            </button>
+            ) : (
+              <img
+                src={project.heroImage}
+                alt={project.title}
+                loading="eager"
+                className="w-full h-full object-cover filter brightness-95"
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-4 left-6 md:left-8 text-white font-mono text-xs uppercase tracking-wider z-20 pointer-events-none">
+              LEAD ELEVATION &bull; {project.title}
+            </div>
+            {project.heroVideo && (
+              <div className="absolute bottom-4 right-6 md:right-8 z-20 flex items-center gap-2">
+                <button
+                  onClick={togglePlay}
+                  aria-label={isPlaying ? 'Pause' : 'Play'}
+                  className="w-9 h-9 rounded-full bg-black/65 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm"
+                >
+                  {isPlaying ? <Pause className="w-3.5 h-3.5 fill-current" /> : <Play className="w-3.5 h-3.5 fill-current translate-x-0.5" />}
+                </button>
+                <button
+                  onClick={toggleSound}
+                  aria-label={isMuted ? 'Unmute' : 'Mute'}
+                  className="w-9 h-9 rounded-full bg-black/65 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm"
+                >
+                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                </button>
+                <button
+                  onClick={openFullscreen}
+                  aria-label="Fullscreen"
+                  className="w-9 h-9 rounded-full bg-black/65 hover:bg-white text-white hover:text-black border border-white/20 flex items-center justify-center transition-colors cursor-pointer backdrop-blur-sm"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -261,46 +314,107 @@ export function ProjectDetailPage() {
         </div>
       </div>
 
-      {/* Alternating Full-Bleed and Grid Gallery from CMS */}
+      {/* Interactive Before / After Transformation Section (True 9:16 or 16:9 Aspect Ratio) */}
+      {project.beforeAfter && (
+        <div className="max-w-[1440px] mx-auto px-6 md:px-10 pb-20">
+          <div className="border-t border-[#101010]/12 pt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className={isVertical ? 'lg:col-span-5 space-y-4' : 'lg:col-span-4 space-y-4'}>
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-[#101010] inline-block" />
+                <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
+                  ARCHITECTURAL TRANSFORMATION
+                </span>
+              </div>
+              <h3 className="font-display text-2xl sm:text-3xl font-semibold tracking-tight text-[#101010] uppercase">
+                From Massing to Photorealism
+              </h3>
+              <p className="font-sans text-xs sm:text-sm text-[#757575] leading-relaxed">
+                {project.beforeAfter.description}
+              </p>
+            </div>
+            <div className={isVertical ? 'lg:col-span-7 flex justify-center' : 'lg:col-span-8'}>
+              <div
+                className={
+                  isVertical
+                    ? 'w-full max-w-[380px] border border-[#101010]/15 overflow-hidden shadow-lg'
+                    : 'w-full border border-[#101010]/15 overflow-hidden shadow-lg'
+                }
+              >
+                <BeforeAfterSlider
+                  beforeImage={project.beforeAfter.beforeImage}
+                  beforeLabel=""
+                  afterImage={project.beforeAfter.afterImage}
+                  afterLabel=""
+                  aspectRatio={isVertical ? 'aspect-[9/16]' : 'aspect-[16/9]'}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Monograph Gallery (True 9:16 Portrait Grid for Vertical Plates, True 16:9 Grid for Widescreen Plates) */}
       {project.gallery && project.gallery.length > 0 && (
-        <div className="max-w-[1440px] mx-auto px-6 md:px-10 pb-24 space-y-12">
-          <div className="border-b border-[#101010]/12 pb-4">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-10 pb-24 space-y-10">
+          <div className="border-b border-[#101010]/12 pb-4 flex items-center justify-between">
             <span className="font-mono text-xs uppercase tracking-wider text-[#101010]">
               MONOGRAPH GALLERY ({project.gallery.length} PLATES)
             </span>
+            <span className="font-mono text-xs text-[#757575] uppercase">
+              CLICK ANY PLATE FOR 4K FULLSCREEN
+            </span>
           </div>
 
-          {/* Gallery Items with 15% view opacity 0/y28px reveal */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {project.gallery.map((item, idx) => (
-              <motion.div
-                key={item.url + idx}
-                initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className={idx === 0 ? 'md:col-span-2' : 'col-span-1'}
-              >
-                <div
-                  onClick={() => {
-                    setLightboxIndex(idx);
-                    setLightboxOpen(true);
-                  }}
-                  className={`relative ${idx === 0 ? 'aspect-[21/9]' : 'aspect-[4/3]'} w-full overflow-hidden bg-zinc-100 border border-[#101010]/12 cursor-pointer group`}
+          <div
+            className={
+              isVertical
+                ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8'
+                : 'grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8'
+            }
+          >
+            {project.gallery.map((item, idx) => {
+              const isPortraitItem = item.aspectRatio === 'portrait' || isVertical;
+              const spanClass = !isVertical && idx === 0 ? 'md:col-span-2' : 'col-span-1';
+
+              return (
+                <motion.div
+                  key={item.url + idx}
+                  initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.12 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className={spanClass}
                 >
-                  <img
-                    src={item.url}
-                    alt={item.caption || project.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-                  />
-                </div>
-                <div className="pt-2 flex justify-between font-mono text-xs text-[#757575] border-b border-[#101010]/12 pb-2">
-                  <span>PLATE 0{idx + 1}</span>
-                  <span>{item.caption || project.title}</span>
-                </div>
-              </motion.div>
-            ))}
+                  <div
+                    onClick={() => {
+                      setLightboxIndex(idx);
+                      setLightboxOpen(true);
+                    }}
+                    className={`relative ${
+                      isPortraitItem ? 'aspect-[9/16]' : 'aspect-[16/9]'
+                    } w-full overflow-hidden bg-zinc-100 border border-[#101010]/12 cursor-pointer group`}
+                  >
+                    <img
+                      src={item.url}
+                      alt={item.caption || project.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full bg-[#101010]/90 text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center shadow-lg">
+                        <Eye className="w-4 h-4" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="pt-2.5 flex justify-between gap-4 font-mono text-xs text-[#757575] border-b border-[#101010]/12 pb-2.5">
+                    <span className="shrink-0 text-[#101010] font-medium">
+                      PLATE {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <span className="truncate text-right">{item.caption || project.title}</span>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       )}

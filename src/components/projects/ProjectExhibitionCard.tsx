@@ -48,14 +48,14 @@ export function ProjectExhibitionCard({
 
   const isVertical = project.videoAspectRatio === '9:16';
 
-  // Determine aspect ratio class based on layout variant and video aspect ratio
-  let aspectClass = 'aspect-[16/10]';
+  // Determine aspect ratio class based on layout variant and video aspect ratio (strictly true 9:16 or 16:9 so nothing is cropped)
+  let aspectClass = 'aspect-[16/9]';
   if (isVertical || layoutVariant === 'split-vertical') {
     aspectClass = 'aspect-[9/16] max-w-[400px] mx-auto';
   } else if (layoutVariant === 'lead') {
-    aspectClass = 'aspect-[16/9] sm:aspect-[21/9]';
+    aspectClass = 'aspect-[16/9]';
   } else if (layoutVariant === 'wide') {
-    aspectClass = 'aspect-[16/9] md:aspect-[16/10]';
+    aspectClass = 'aspect-[16/9]';
   }
 
   // Ensure DOM element properties defaultMuted and muted are strictly enforced on mount
@@ -300,9 +300,9 @@ export function ProjectExhibitionCard({
     };
   }, []);
 
-  // Slight zoom to eliminate any letterbox black bars on edges (especially Lotus Mall)
+  // Slight zoom only for Lotus Mall to trim thin letterbox edge; keep 9:16 and 16:9 uncropped
   const isLotusMall = project.slug === 'lotus-mall';
-  const zoomClass = isLotusMall ? 'scale-[1.07]' : 'scale-[1.04]';
+  const zoomClass = isLotusMall ? 'scale-[1.04]' : 'scale-100';
 
   return (
     <motion.article
