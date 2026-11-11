@@ -2,17 +2,18 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { AtlasLogo } from '../common/AtlasLogo';
 
 export function SolumHero() {
   const shouldReduceMotion = useReducedMotion();
   const heroRef = useRef<HTMLDivElement>(null);
 
+  // Parallax strictly limited to 6%
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
-  const mediaY = useTransform(scrollYProgress, [0, 1], ['0%', '8%']);
-  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
+  const parallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '6%']);
 
   const heroImage = '/videos/hero_poster.webp';
   const heroVideoUrl = '/videos/hero.mp4';
@@ -20,104 +21,111 @@ export function SolumHero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen w-full bg-[#101010] text-white flex flex-col justify-end pb-12 sm:pb-16 md:pb-20 overflow-hidden select-none"
+      className="relative min-h-screen w-full bg-[#101010] text-white flex flex-col justify-end pb-16 md:pb-24 overflow-hidden select-none"
     >
       {/* ========================================================= */}
-      {/* 1) HERO BACKGROUND: Bright Ambient Cinematic Video        */}
+      {/* 1) HERO BACKGROUND: Natural Bright Ambient Cinematic Video */}
       {/* ========================================================= */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
-          style={
-            shouldReduceMotion
-              ? undefined
-              : { y: mediaY, scale: mediaScale }
-          }
-          className="w-full h-full will-change-transform"
+          style={{ y: shouldReduceMotion ? '0%' : parallaxY }}
+          className="w-full h-full"
         >
-          <motion.div
-            initial={shouldReduceMotion ? false : { scale: 1.05 }}
-            animate={{ scale: 1 }}
-            transition={{
-              duration: 1.2,
-              delay: 0.3,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            className="w-full h-full will-change-transform"
-          >
-            <video
-              src={heroVideoUrl}
-              poster={heroImage}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              controls={false}
-              disablePictureInPicture
-              className="w-full h-full object-cover pointer-events-none select-none"
+          {heroVideoUrl ? (
+            <motion.div
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 1, scale: 1 }
+                  : { opacity: 0, scale: 1.05 }
+              }
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: shouldReduceMotion ? 0.01 : 1.2,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="w-full h-full"
+            >
+              <video
+                src={heroVideoUrl}
+                poster={heroImage}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                controls={false}
+                disablePictureInPicture
+                className="w-full h-full object-cover pointer-events-none select-none"
+              />
+            </motion.div>
+          ) : (
+            <motion.img
+              src={heroImage}
+              alt="Atlas Studio Architecture Living Space"
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 1, scale: 1 }
+                  : { opacity: 0, scale: 1.05 }
+              }
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: shouldReduceMotion ? 0.01 : 1.2,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="w-full h-full object-cover origin-center will-change-transform"
             />
-          </motion.div>
+          )}
         </motion.div>
 
-        {/* Top & bottom subtle gradients so top-left Navbar logo and bottom Hero text are 100% legible */}
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/55 via-black/20 to-transparent pointer-events-none" />
-        <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/75 via-black/30 to-transparent pointer-events-none" />
+        {/* Minimal soft vignette strictly at bottom to ensure text legibility while keeping video naturally bright */}
+        <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
       </div>
 
       {/* ========================================================= */}
-      {/* 2) HERO STAGE: Who We Are / What We Do & Atlas CTA Button */}
+      {/* 2) HERO STAGE: Clean Classic Typography & Action          */}
       {/* ========================================================= */}
-      <div className="relative z-30 max-w-[1440px] w-full mx-auto px-5 sm:px-8 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-end">
-          {/* Left Stage: Main Value Statement (No Duplicate Logo) */}
-          <div className="md:col-span-8 lg:col-span-9">
+      <div className="relative z-30 px-6 sm:px-10 md:px-16 lg:px-24">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12 items-end">
+          {/* Left Stage: Bespoke Atlas Studio Logo & Subtitle */}
+          <div className="col-span-1 md:col-span-3">
             <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="flex items-center gap-2.5 mb-3"
+              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="mb-5 drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]"
             >
-              <span className="w-1.5 h-1.5 bg-white inline-block" />
-              <span className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.22em] text-white/90">
-                Architectural Visualization &amp; Spatial CGI Studio
-              </span>
+              <h1 className="sr-only">Atlas Studio</h1>
+              <AtlasLogo
+                variant="stacked"
+                className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto text-white"
+              />
             </motion.div>
 
-            <motion.h1
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="font-logo text-[clamp(2.2rem,5.2vw,4.6rem)] font-normal uppercase tracking-[0.03em] leading-[1.02] text-white mb-4 drop-shadow-[0_4px_20px_rgba(0,0,0,0.75)]"
-            >
-              Photorealistic 3D CGI, Interactive Spaces &amp; Cinema Films
-            </motion.h1>
-
             <motion.p
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              className="font-sans text-sm sm:text-base md:text-lg text-white/90 font-normal leading-relaxed max-w-2xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.75)]"
+              transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="font-sans text-sm sm:text-base md:text-lg text-white font-normal leading-relaxed max-w-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]"
             >
-              We transform architectural blueprints and 3D models into high-converting 4K renders, 9:16 vertical reels, and cinematic walkthroughs for unbuilt real estate.
+              Architecture and visual studio creating photorealistic CGI and cinematic marketing films for unbuilt spaces.
             </motion.p>
           </div>
 
-          {/* Right Stage: Signature Atlas Studio Split Architectural Button */}
-          <div className="md:col-span-4 lg:col-span-3 flex flex-col justify-end items-start md:items-end">
+          {/* Right Stage: Split Start a Project Button */}
+          <div className="col-span-1 md:col-span-1 flex flex-col justify-end items-start md:items-end">
             <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.62, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-wrap items-center gap-3"
+              transition={{ duration: 0.7, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
               <Link
                 to="/contact"
-                className="group inline-flex items-stretch bg-white text-[#101010] hover:bg-[#F5EDE2] transition-all duration-200 shadow-[0_10px_30px_rgba(0,0,0,0.35)] border border-white"
+                className="group inline-flex items-stretch bg-white text-[#101010] hover:bg-[#F4F4F0] transition-all duration-200 shadow-[0_10px_30px_rgba(0,0,0,0.35)] border border-white"
               >
-                <div className="py-3.5 px-5 sm:px-6 font-mono text-xs sm:text-sm font-semibold uppercase tracking-[0.08em] flex items-center whitespace-nowrap">
+                <div className="py-3 px-5 sm:px-6 font-mono text-xs sm:text-sm font-semibold uppercase tracking-[0.08em] flex items-center whitespace-nowrap">
                   Start a Project
                 </div>
-                <div className="w-11 sm:w-12 border-l border-[#101010]/15 flex items-center justify-center bg-white group-hover:bg-[#321E13] group-hover:text-white transition-colors duration-200">
+                <div className="w-11 sm:w-12 border-l border-[#101010]/15 flex items-center justify-center bg-white group-hover:bg-[#101010] group-hover:text-white transition-colors duration-200">
                   <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" />
                 </div>
               </Link>

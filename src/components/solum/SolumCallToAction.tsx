@@ -34,11 +34,11 @@ export function SolumCallToAction() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="font-logo text-3xl sm:text-5xl md:text-6xl font-normal uppercase tracking-[0.04em] text-white max-w-3xl leading-[1.06]"
+          className="font-sans text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight text-white max-w-3xl leading-[1.08]"
         >
           Have an unbuilt vision?
           <span className="block text-neutral-400 font-light mt-2 sm:mt-3">
-            Let&apos;s bring it to reality.
+            Let's bring it to reality.
           </span>
         </motion.h2>
 

@@ -1,8 +1,5 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
-import { optimizeCloudinaryImage } from '../utils/media';
-import { RevealFrame } from '../components/common/RevealFrame';
 
 interface ServiceItem {
   number: string;
@@ -17,124 +14,101 @@ interface ServiceItem {
 const SERVICES: ServiceItem[] = [
   {
     number: '01',
-    title: 'Visual Content & 4K CGI',
-    tagline:
-      'Photorealistic exterior & interior renders, 4K cinema animations, and 9:16 social reels that turn architectural blueprints into experiences that sell.',
-    pills: ['4K CGI Rendering', 'Cinematic Walkthroughs', '9:16 Reels'],
-    image: optimizeCloudinaryImage(
-      'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990146/projects/volga-park/Architectural_close_view_sunny_day_20260.jpg',
-      2200
-    ),
+    title: 'Visual Content',
+    tagline: 'CGI for real estate: photorealistic renders, animation and virtual tours that turn concepts into experiences that sell.',
+    pills: ['CGI Rendering', 'CGI Animations', 'Virtual Tours'],
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85',
+  },
+  {
+    number: '02',
+    title: 'Sales Experiences',
+    tagline: 'Interactive platforms that turn browsers into buyers. Move beyond static renders. Give buyers the power to explore, customize, and commit before construction.',
+    pills: ['Interactive CRM', 'UX Research & Strategy', 'Analytics'],
+    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85',
     hasDemo: true,
     demoUrl: '/projects/volga-park',
   },
   {
-    number: '02',
-    title: 'Real Estate Sales Campaigns',
-    tagline:
-      'High-converting visual packages for residential towers, commercial malls, and resort masterplans — giving buyers and investors the confidence to commit before construction.',
-    pills: ['Property Launch Films', 'Masterplan Visualization', 'Investor Decks'],
-    image: optimizeCloudinaryImage(
-      'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992496/projects/lotus-mall/lotus-mall_still_2.jpg',
-      2200
-    ),
-    hasDemo: true,
-    demoUrl: '/projects/lotus-mall',
-  },
-  {
     number: '03',
-    title: 'Renovation & Before/After Transformation',
-    tagline:
-      'From raw construction sites, CAD floorplans, or historic structures to completed luxury architecture — side-by-side transformation studies and timelapse films.',
-    pills: ['3D Floorplan Cutaways', 'Before / After Films', 'Adaptive Reuse CGI'],
-    image: optimizeCloudinaryImage(
-      'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982051/projects/bunker-37/add_rooftop_on_first_image_202606191833.jpg',
-      2200
-    ),
-    hasDemo: true,
-    demoUrl: '/projects/bunker-37',
+    title: 'Brand Identity',
+    tagline: 'Strategic design systems that define market presence. Great projects deserve great branding.',
+    pills: ['Visual Identity', 'Brand Storytelling', 'Web Design & Development'],
+    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=2400&q=85',
   },
 ];
 
 export function ServicesPage() {
   return (
-    <main className="w-full bg-[#F5EDE2] text-[#321E13] pt-28 md:pt-36 pb-24 md:pb-36 select-none">
-      <div className="max-w-[1440px] mx-auto px-5 sm:px-8 md:px-12">
+    <main className="w-full bg-[#0A0A0A] text-white pt-28 md:pt-36 pb-24 md:pb-36 select-none">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-12">
         {/* ========================================================= */}
-        {/* 1) HERO INTRO                                             */}
+        {/* 1) HERO INTRO (CLEAN & SPACIOUS)                          */}
         {/* ========================================================= */}
-        <div className="max-w-4xl mb-14 sm:mb-20 space-y-5">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 bg-[#321E13]" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#321E13]/70">
-              Atlas Studio // Capabilities &amp; Deliverables
-            </span>
-          </div>
-
+        <div className="max-w-4xl mb-12 sm:mb-16 space-y-4">
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="font-logo text-4xl sm:text-6xl lg:text-7xl font-normal uppercase tracking-[0.04em] text-[#321E13] leading-[1.02]"
+            className="font-display text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.08]"
           >
-            What We Deliver
+            Comprehensive digital solutions that transform real estate from concept to close.
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-sm sm:text-base lg:text-lg text-[#321E13]/75 font-normal max-w-2xl leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="font-sans text-sm sm:text-base lg:text-lg text-white/60 font-light max-w-2xl leading-relaxed"
           >
-            From photorealistic 3D architectural stills to 4K cinema walkthroughs and 9:16 vertical reels — engineered by our dedicated visualization studio.
+            From photorealistic visualization to interactive platforms that accelerate sales, we&apos;re your end-to-end digital partner.
           </motion.p>
         </div>
 
         {/* ========================================================= */}
-        {/* 2) MINIMALISTIC CINEMATIC CARDS WITH CURTAIN REVEAL        */}
+        {/* 2) MINIMALISTIC CINEMATIC CARDS (EXACT MATCH REFERENCE)    */}
         {/* ========================================================= */}
-        <div className="space-y-8 sm:space-y-12">
+        <div className="space-y-6 sm:space-y-8">
           {SERVICES.map((service, index) => (
-            <RevealFrame
+            <motion.div
               key={service.number}
-              shutterColor="#EAE2D6"
-              delay={0}
-              className="group relative w-full overflow-hidden min-h-[380px] sm:min-h-[450px] lg:min-h-[520px] flex flex-col justify-end p-6 sm:p-10 lg:p-12 border border-[#321E13]/15 bg-zinc-950 shadow-xl"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative w-full rounded-2xl sm:rounded-3xl overflow-hidden min-h-[380px] sm:min-h-[440px] lg:min-h-[500px] flex flex-col justify-end p-6 sm:p-10 lg:p-12 border border-white/10 bg-zinc-950 shadow-2xl transition-all duration-500 hover:border-white/20"
             >
-              {/* Background Architectural Render (scale-[1.035] trims any letterbox edge) */}
+              {/* Background Architectural Render */}
               <img
                 src={service.image}
                 alt={service.title}
                 loading={index === 0 ? 'eager' : 'lazy'}
-                className="absolute inset-0 w-full h-full object-cover scale-[1.035] group-hover:scale-[1.065] transition-transform duration-700 ease-out pointer-events-none"
+                className="absolute inset-0 w-full h-full object-cover filter brightness-[0.80] contrast-[1.05] group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
               />
 
-              {/* Bottom Gradient Overlay for Text Readability */}
-              <div className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none" />
+              {/* Bottom Gradient Overlay (Leaves top 60% open & crisp) */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
 
-              {/* Bottom-Aligned Content */}
+              {/* Bottom-Aligned Content: Title + Tagline + Pills Left, CTA Right */}
               <div className="relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+                {/* Left Side: Title, Tagline & Minimal Pills */}
                 <div className="max-w-2xl space-y-3">
-                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#F5EDE2]/80">
-                    Service // {service.number}
-                  </span>
-                  <h2 className="font-logo text-3xl sm:text-4xl lg:text-5xl font-normal uppercase text-white tracking-[0.03em]">
-                    {service.title}
+                  <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+                    {service.number} {service.title}
                   </h2>
 
-                  <p className="font-sans text-sm sm:text-base text-white/90 font-normal leading-relaxed">
+                  <p className="font-sans text-sm sm:text-base text-white/90 font-light leading-relaxed">
                     {service.tagline}
                   </p>
 
-                  {/* Architectural Tags Row */}
-                  <div className="pt-2 flex flex-wrap items-center gap-2">
+                  {/* Pills Row */}
+                  <div className="pt-1 flex flex-wrap items-center gap-2">
                     {service.pills.map((pill, pIdx) => (
                       <span
                         key={pill}
-                        className={`px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider ${
+                        className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-sans tracking-wide transition-colors cursor-default ${
                           pIdx === 0
-                            ? 'bg-[#F5EDE2] text-[#321E13] font-semibold'
-                            : 'bg-black/50 backdrop-blur-md border border-white/25 text-white/90'
+                            ? 'bg-white text-black font-medium'
+                            : 'bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/20 text-white/90'
                         }`}
                       >
                         {pill}
@@ -143,57 +117,47 @@ export function ServicesPage() {
                   </div>
                 </div>
 
-                {/* Right Side: Atlas Studio Sharp Architectural Buttons */}
-                <div className="flex flex-wrap items-center gap-3 flex-shrink-0 self-start lg:self-end">
+                {/* Right Side: Clean Pill Buttons */}
+                <div className="flex items-center gap-3 flex-shrink-0 self-start lg:self-end">
                   {service.hasDemo && (
                     <Link
                       to={service.demoUrl || '/projects'}
-                      className="px-5 py-3 bg-black/55 hover:bg-black/80 backdrop-blur-md border border-white/35 text-xs font-mono uppercase tracking-[0.14em] text-white transition-all duration-200"
+                      className="px-5 py-2.5 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/30 text-xs sm:text-sm font-sans font-medium text-white transition-all duration-200"
                     >
-                      View Case Study
+                      View Demo
                     </Link>
                   )}
 
                   <Link
                     to="/contact"
-                    className="group/btn inline-flex items-stretch bg-[#F5EDE2] hover:bg-white text-[#321E13] border border-[#F5EDE2] transition-all duration-200"
+                    className="px-6 py-2.5 rounded-full bg-white hover:bg-white/90 text-black text-xs sm:text-sm font-sans font-medium transition-all duration-200 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                   >
-                    <span className="px-5 py-3 font-mono text-xs font-semibold uppercase tracking-[0.14em]">
-                      Start a Project
-                    </span>
-                    <span className="w-10 border-l border-[#321E13]/20 flex items-center justify-center bg-[#321E13] text-[#F5EDE2]">
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
+                    Start a project
                   </Link>
                 </div>
               </div>
-            </RevealFrame>
+            </motion.div>
           ))}
         </div>
 
         {/* ========================================================= */}
         {/* 3) CLOSING FOOTER STATEMENT                               */}
         {/* ========================================================= */}
-        <div className="mt-16 sm:mt-24 pt-12 border-t border-[#321E13]/15 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-1.5">
-            <h3 className="font-logo text-2xl sm:text-4xl lg:text-5xl font-normal uppercase tracking-[0.03em] text-[#321E13] leading-tight">
-              Ready To Visualize Your Next Project?
+        <div className="mt-16 sm:mt-24 pt-10 border-t border-white/10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="space-y-1">
+            <h3 className="font-display text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+              Making the invisible, unforgettable.
             </h3>
-            <p className="font-sans text-xs sm:text-sm text-[#321E13]/70">
-              Send us your drawings or 3D model for a bespoke production proposal.
+            <p className="font-sans text-xs sm:text-sm text-white/50 font-light">
+              We craft platforms and visual identities that accelerate sales from concept to close.
             </p>
           </div>
 
           <Link
             to="/contact"
-            className="inline-flex items-stretch bg-[#321E13] hover:bg-[#101010] text-[#F5EDE2] transition-colors duration-200 self-start md:self-auto"
+            className="px-7 py-3 rounded-full bg-white hover:bg-white/90 text-black font-sans text-xs sm:text-sm font-medium transition-all duration-200 self-start md:self-auto"
           >
-            <span className="px-6 py-3.5 font-mono text-xs font-semibold uppercase tracking-[0.16em]">
-              Talk To Us
-            </span>
-            <span className="w-11 border-l border-[#F5EDE2]/20 flex items-center justify-center">
-              <ArrowRight className="w-4 h-4" />
-            </span>
+            Start a project &rarr;
           </Link>
         </div>
       </div>

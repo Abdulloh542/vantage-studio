@@ -645,20 +645,20 @@ const RAW_PROJECTS: Project[] = [
 
 export const PROJECTS: Project[] = RAW_PROJECTS.map((project) => ({
   ...project,
-  heroImage: optimizeCloudinaryImage(project.heroImage, 2200),
-  heroVideo: project.heroVideo ? optimizeCloudinaryVideo(project.heroVideo, 1440) : undefined,
+  heroImage: optimizeCloudinaryImage(project.heroImage, 1600),
+  heroVideo: project.heroVideo ? optimizeCloudinaryVideo(project.heroVideo, 1280) : undefined,
   beforeAfter: project.beforeAfter ? {
     ...project.beforeAfter,
-    beforeImage: optimizeCloudinaryImage(project.beforeAfter.beforeImage, 1800),
-    afterImage: optimizeCloudinaryImage(project.beforeAfter.afterImage, 1800),
+    beforeImage: optimizeCloudinaryImage(project.beforeAfter.beforeImage, 1400),
+    afterImage: optimizeCloudinaryImage(project.beforeAfter.afterImage, 1400),
   } : undefined,
   process: project.process.map((step) => ({
     ...step,
-    image: step.image ? optimizeCloudinaryImage(step.image, 1600) : undefined,
+    image: step.image ? optimizeCloudinaryImage(step.image, 1200) : undefined,
   })),
   gallery: project.gallery.map((item) => ({
     ...item,
-    url: optimizeCloudinaryImage(item.url, 2200),
+    url: optimizeCloudinaryImage(item.url, 1600),
   })),
 }));
 

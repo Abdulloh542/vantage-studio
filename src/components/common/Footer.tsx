@@ -39,7 +39,7 @@ export function Footer() {
                 href="https://www.instagram.com/atlasstudio.uz/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-4 py-2 bg-white/[0.06] hover:bg-[#F5EDE2] text-white hover:text-[#321E13] border border-white/15 transition-all duration-200 text-xs font-mono tracking-wider group"
+                className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-white/[0.06] hover:bg-[#F5EDE2] text-white hover:text-[#321E13] border border-white/15 transition-all duration-200 text-xs font-mono tracking-wider group"
               >
                 <svg
                   viewBox="0 0 24 24"
