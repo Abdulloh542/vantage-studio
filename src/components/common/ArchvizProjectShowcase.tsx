@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom';
 import { Play, Pause, Volume2, VolumeX, Maximize2, ArrowRight, Eye } from 'lucide-react';
 import type { Project } from '../../types';
 import { LightboxModal, type LightboxImage } from './LightboxModal';
+import {
+  registerVideoPlayer,
+  notifyVideoHoverEnter,
+  notifyVideoHoverLeave,
+  notifyVideoManualPlay,
+} from '../../utils/videoCoordinator';
 
 interface ArchvizProjectShowcaseProps {
   project: Project;
@@ -11,22 +17,36 @@ interface ArchvizProjectShowcaseProps {
 
 export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcaseProps) {
   const [isMuted, setIsMuted] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isInView, setIsInView] = useState(index === 0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoStageRef = useRef<HTMLDivElement | null>(null);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const requestIdRef = useRef(0);
+  const wantPlayRef = useRef(false);
+  const manuallyPausedRef = useRef(false);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
+  const isMutedRef = useRef(true);
+
+  const coordinatorId = `showcase-${project.slug}-${index}`;
 
   useEffect(() => {
     const handleFsChange = () => {
-      const fsEl = document.fullscreenElement || (document as any).webkitFullscreenElement || (document as any).mozFullScreenElement || (document as any).msFullscreenElement;
+      const doc = document as Document & {
+        webkitFullscreenElement?: Element;
+        mozFullScreenElement?: Element;
+        msFullscreenElement?: Element;
+      };
+      const fsEl =
+        doc.fullscreenElement ||
+        doc.webkitFullscreenElement ||
+        doc.mozFullScreenElement ||
+        doc.msFullscreenElement;
       setIsFullscreen(fsEl === videoRef.current);
     };
 
@@ -46,26 +66,40 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     videoRef.current = el;
     if (el) {
       el.defaultMuted = true;
-      el.muted = true;
+      el.muted = isMutedRef.current;
       el.playsInline = true;
     }
   }, []);
 
-  // Safe playback helper that avoids unhandled promise rejections, race conditions, and autoplay blocks
   const safePlay = useCallback(() => {
     const video = videoRef.current;
     if (!video || !project.heroVideo) return;
 
-    const currentId = ++requestIdRef.current;
+    wantPlayRef.current = true;
     video.defaultMuted = true;
-    video.muted = isMuted;
+    video.muted = isMutedRef.current;
+
+    if (video.preload !== 'auto') {
+      video.preload = 'auto';
+    }
+
+    if (!video.paused && !video.ended) {
+      setIsPlaying(true);
+      return;
+    }
+
+    if (playPromiseRef.current) {
+      return;
+    }
 
     try {
       const promise = video.play();
       if (promise !== undefined) {
+        playPromiseRef.current = promise;
         promise
           .then(() => {
-            if (currentId !== requestIdRef.current) {
+            playPromiseRef.current = null;
+            if (!wantPlayRef.current) {
               video.pause();
               setIsPlaying(false);
             } else {
@@ -73,85 +107,78 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
             }
           })
           .catch((err) => {
+            playPromiseRef.current = null;
             if (err?.name === 'AbortError') return;
-            if (currentId === requestIdRef.current) {
-              video.muted = true;
+            if (wantPlayRef.current && videoRef.current) {
+              videoRef.current.defaultMuted = true;
+              videoRef.current.muted = true;
+              isMutedRef.current = true;
               setIsMuted(true);
-              video.play().then(() => {
-                if (currentId === requestIdRef.current) {
-                  setIsPlaying(true);
-                } else {
-                  video.pause();
-                  setIsPlaying(false);
-                }
-              }).catch(() => {});
+              const retry = videoRef.current.play();
+              if (retry !== undefined) {
+                playPromiseRef.current = retry;
+                retry
+                  .then(() => {
+                    playPromiseRef.current = null;
+                    if (!wantPlayRef.current) {
+                      videoRef.current?.pause();
+                      setIsPlaying(false);
+                    } else {
+                      setIsPlaying(true);
+                    }
+                  })
+                  .catch(() => {
+                    playPromiseRef.current = null;
+                  });
+              }
             }
           });
       }
     } catch {
-      // ignore
+      playPromiseRef.current = null;
     }
-  }, [project.heroVideo, isMuted]);
+  }, [project.heroVideo]);
 
-  // Safe pause helper that invalidates any in-flight play request immediately
   const safePause = useCallback(() => {
+    wantPlayRef.current = false;
     const video = videoRef.current;
     if (!video) return;
 
-    ++requestIdRef.current;
-    try {
-      video.pause();
-    } catch {
-      // ignore
+    if (!playPromiseRef.current) {
+      try {
+        if (!video.paused) {
+          video.pause();
+        }
+      } catch {
+        // ignore
+      }
     }
     setIsPlaying(false);
   }, []);
 
-  // Viewport Auto-Play: triggers smoothly when video enters viewport on scroll,
-  // pauses when scrolled out, and resumes when scrolled back in.
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el || typeof IntersectionObserver === 'undefined') {
-      safePlay();
-      return;
-    }
+    if (!project.heroVideo) return;
+    return registerVideoPlayer({
+      id: coordinatorId,
+      getElement: () => videoStageRef.current,
+      play: safePlay,
+      pause: safePause,
+      isManuallyPaused: () => manuallyPausedRef.current,
+    });
+  }, [coordinatorId, project.heroVideo, safePlay, safePause]);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      {
-        root: null,
-        rootMargin: '50px 0px 50px 0px',
-        threshold: 0.15,
-      }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [safePlay]);
-
-  // Pause when browser tab is inactive / minimized to save CPU and battery
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
         safePause();
-      } else if (isInView) {
+      } else if (wantPlayRef.current && !manuallyPausedRef.current) {
         safePlay();
       }
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, [isInView, safePlay, safePause]);
-
-  useEffect(() => {
-    if (isInView) {
-      safePlay();
-    } else {
-      safePause();
-    }
-  }, [isInView, safePlay, safePause]);
+  }, [safePlay, safePause]);
 
   // Compile all unique high-res stills for the project
   const stills: LightboxImage[] = [];
@@ -180,9 +207,6 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
 
   const isVertical = project.videoAspectRatio === '9:16';
 
-  // Partition stills across tiers:
-  // - For 9:16 vertical projects: 2 tall rows of true 9:16 vertical portrait plates (zero cropping!)
-  // - For 16:9 widescreen projects: 3 tiers of true 16:9 landscape plates
   const itemsWithIdx = stills.map((item, originalIndex) => ({ item, originalIndex }));
 
   const ensureMinItems = (arr: typeof itemsWithIdx, minLen: number) => {
@@ -211,7 +235,6 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     safeR3 = ensureMinItems(itemsWithIdx.slice(third * 2).length > 0 ? itemsWithIdx.slice(third * 2) : itemsWithIdx, 4);
   }
 
-  // Duplicate each row array for seamless 0% -> -50% infinite loop
   const row1Loop = [...safeR1, ...safeR1];
   const row2Loop = [...safeR2, ...safeR2];
   const row3Loop = [...safeR3, ...safeR3];
@@ -220,20 +243,21 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     if (hideTimeoutRef.current) {
       clearTimeout(hideTimeoutRef.current);
     }
-    if (isPlaying) {
-      hideTimeoutRef.current = setTimeout(() => {
+    hideTimeoutRef.current = setTimeout(() => {
+      if (!videoRef.current?.paused) {
         setIsHovered(false);
-      }, 2400);
-    }
-  }, [isPlaying]);
+      }
+    }, 2400);
+  }, []);
 
   const handleMouseEnter = () => {
+    manuallyPausedRef.current = false;
     if (videoRef.current) {
       setCurrentTime(videoRef.current.currentTime);
     }
     setIsHovered(true);
     resetHideTimer();
-    safePlay();
+    notifyVideoHoverEnter(coordinatorId);
   };
 
   const handleMouseMove = () => {
@@ -246,9 +270,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
       clearTimeout(hideTimeoutRef.current);
     }
     setIsHovered(false);
-    if (!isInView) {
-      safePause();
-    }
+    notifyVideoHoverLeave(coordinatorId);
   };
 
   const togglePlay = (e?: React.MouseEvent) => {
@@ -256,9 +278,11 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) {
-      safePlay();
+      manuallyPausedRef.current = false;
+      notifyVideoManualPlay(coordinatorId);
       resetHideTimer();
     } else {
+      manuallyPausedRef.current = true;
       safePause();
       if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
       setIsHovered(true);
@@ -287,14 +311,19 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   const toggleSound = (e?: React.MouseEvent) => {
     e?.stopPropagation();
     if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(videoRef.current.muted);
+      const nextMuted = !videoRef.current.muted;
+      videoRef.current.muted = nextMuted;
+      isMutedRef.current = nextMuted;
+      setIsMuted(nextMuted);
     }
   };
 
   const openFullscreenVideo = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    const video = videoRef.current as (HTMLVideoElement & { webkitEnterFullscreen?: () => void; webkitRequestFullscreen?: () => void }) | null;
+    const video = videoRef.current as (HTMLVideoElement & {
+      webkitEnterFullscreen?: () => void;
+      webkitRequestFullscreen?: () => void;
+    }) | null;
     if (!video) return;
 
     if (video.requestFullscreen) {
@@ -318,8 +347,19 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   };
 
   const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration);
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.duration) {
+      setDuration(video.duration);
+    }
+    if (wantPlayRef.current && video.paused) {
+      safePlay();
+    }
+  };
+
+  const handleCanPlay = () => {
+    if (wantPlayRef.current && videoRef.current?.paused) {
+      safePlay();
     }
   };
 
@@ -351,7 +391,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
   return (
     <article className="w-full bg-white text-[#101010] py-8 sm:py-10 border-b border-[#101010]/12 select-none">
       {/* ─────────────────────────────────────────────────────────────
-          1. HEADER: MONOGRAM NUMBER & BIG BOLD TITLE (SOLÉ ETTALONG STYLE)
+          1. HEADER: MONOGRAM NUMBER & BIG BOLD TITLE
           ───────────────────────────────────────────────────────────── */}
       <div className="mb-4 sm:mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
@@ -385,10 +425,11 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
       {/* ─────────────────────────────────────────────────────────────
           2. THE CGI STUDIO MEDIA MATRIX (16:9 or 9:16 DYNAMIC FORMAT)
           ───────────────────────────────────────────────────────────── */}
-      <div ref={containerRef} className={`grid grid-cols-1 lg:grid-cols-12 ${isVertical ? 'gap-4 lg:gap-8' : 'gap-3 sm:gap-4'} items-stretch`}>
+      <div className={`grid grid-cols-1 lg:grid-cols-12 ${isVertical ? 'gap-4 lg:gap-8' : 'gap-3 sm:gap-4'} items-stretch`}>
         {/* LEFT: Cinematic High-Fidelity Video (or Hero Image Fallback) */}
         <div className={isVertical ? "lg:col-span-4 xl:col-span-4 flex flex-col items-center lg:items-start" : "lg:col-span-8 xl:col-span-8 flex flex-col"}>
           <div
+            ref={videoStageRef}
             onMouseEnter={handleMouseEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -406,12 +447,11 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload={index === 0 ? 'auto' : 'metadata'}
                 controls={false}
                 disablePictureInPicture
-                onCanPlay={() => {
-                  if (isInView || isHovered) safePlay();
-                }}
+                onCanPlay={handleCanPlay}
+                onLoadedData={handleCanPlay}
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
                 onPlay={() => setIsPlaying(true)}
@@ -439,10 +479,10 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
             {project.heroVideo && !isPlaying && !isHovered && (
               <div
                 onClick={togglePlay}
-                className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer z-10 transition-opacity duration-200"
+                className="absolute inset-0 flex items-center justify-center bg-black/25 cursor-pointer z-10 transition-opacity duration-200"
               >
-                <div className="w-16 h-16 rounded-full bg-white/95 text-black flex items-center justify-center pl-1 shadow-2xl hover:scale-110 transition-transform">
-                  <Play className="w-7 h-7 fill-current" />
+                <div className="w-15 h-15 rounded-full bg-white/95 text-black flex items-center justify-center pl-1 shadow-2xl hover:scale-110 transition-transform">
+                  <Play className="w-6 h-6 fill-current" />
                 </div>
               </div>
             )}
@@ -471,7 +511,6 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
               >
                 {/* Upper row: Play/Pause button, elapsed/total time, volume, fullscreen */}
                 <div className="flex items-center justify-between">
-                  {/* Left: Play/Pause + Time */}
                   <div className="flex items-center gap-3">
                     <button
                       onClick={togglePlay}
@@ -492,7 +531,6 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
                     </div>
                   </div>
 
-                  {/* Right: Audio & Fullscreen */}
                   <div className="flex items-center gap-2">
                     <button
                       onClick={toggleSound}
@@ -513,22 +551,18 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
 
                 {/* Lower row: Interactive Scrubbing / Timeline Bar */}
                 <div className="relative w-full h-3 flex items-center cursor-pointer group/scrubber select-none">
-                  {/* Background Track */}
                   <div className="w-full h-1 group-hover/scrubber:h-1.5 bg-white/30 rounded-full overflow-hidden transition-all relative">
-                    {/* Played White Progress */}
                     <div
                       className="h-full bg-white rounded-full transition-[width] duration-75"
                       style={{ width: `${progressPercent}%` }}
                     />
                   </div>
 
-                  {/* Thumb Indicator on Hover */}
                   <div
                     className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-md pointer-events-none opacity-0 group-hover/scrubber:opacity-100 transition-opacity"
                     style={{ left: `calc(${progressPercent}% - 6px)` }}
                   />
 
-                  {/* Range Slider for Native Drag & Click Seeking */}
                   <input
                     type="range"
                     min={0}
@@ -545,7 +579,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
           </div>
         </div>
 
-        {/* RIGHT: True-Aspect-Ratio Infinite Marquee Stills (2 Tall 9:16 Rows for Vertical, 3 16:9 Rows for Widescreen) */}
+        {/* RIGHT: True-Aspect-Ratio Infinite Marquee Stills */}
         <div
           className={
             isVertical
@@ -613,7 +647,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
             </div>
           </div>
 
-          {/* Row 3: Slides Leftwards (Only for 16:9 widescreen projects so 9:16 vertical plates stay tall & uncropped in 2 rows) */}
+          {/* Row 3: Slides Leftwards (Only for 16:9 widescreen projects) */}
           {!isVertical && (
             <div className="relative w-full overflow-hidden flex items-center h-[92px] sm:h-[140px] lg:h-[172px]">
               <div
@@ -646,10 +680,9 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
       </div>
 
       {/* ─────────────────────────────────────────────────────────────
-          3. EDITORIAL PROJECT SYNOPSIS & DELIVERABLES (MATCHING SCREENSHOT)
+          3. EDITORIAL PROJECT SYNOPSIS & DELIVERABLES
           ───────────────────────────────────────────────────────────── */}
       <div className="pt-8 sm:pt-10 grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 items-start">
-        {/* Left: Lead Summary (Bold modern typography) */}
         <div className="md:col-span-6 lg:col-span-7 space-y-4">
           <p className="font-sans text-base sm:text-lg md:text-xl font-normal text-[#101010] leading-snug">
             {project.summary}
@@ -660,7 +693,6 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
             </p>
           )}
 
-          {/* Scope / Deliverables Tags */}
           <div className="pt-2 flex flex-wrap gap-2">
             {project.services.map((srv) => (
               <span
@@ -673,9 +705,7 @@ export function ArchvizProjectShowcase({ project, index }: ArchvizProjectShowcas
           </div>
         </div>
 
-        {/* Right: Commercial Metrics & Full Case Study CTA */}
         <div className="md:col-span-6 lg:col-span-5 flex flex-col justify-between h-full space-y-6 md:pl-6 md:border-l border-[#101010]/12">
-          {/* Key Metrics Grid */}
           <div className="grid grid-cols-2 gap-4 divide-x divide-[#101010]/10 border-t border-b border-[#101010]/10 py-4">
             {project.stats && project.stats.slice(0, 2).map((st) => (
               <div key={st.label} className="pl-3 first:pl-0">

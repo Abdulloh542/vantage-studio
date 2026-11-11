@@ -1,29 +1,108 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { AtlasLogo } from '../common/AtlasLogo';
+import {
+  registerVideoPlayer,
+  notifyVideoHoverEnter,
+  notifyVideoHoverLeave,
+} from '../../utils/videoCoordinator';
 
 export function SolumHero() {
   const shouldReduceMotion = useReducedMotion();
   const [mountVideo, setMountVideo] = useState(false);
   const [videoPlaying, setVideoPlaying] = useState(false);
 
-  // Defer video network stream until right after initial paint & curtain lift start
-  // so initial load, fonts, and CSS paint at 120fps with zero main-thread contention.
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const wantPlayRef = useRef(true);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
+
+  const coordinatorId = 'home-hero-main';
+
   useEffect(() => {
     if (shouldReduceMotion) return;
     const timer = window.setTimeout(() => {
       setMountVideo(true);
-    }, 180);
+    }, 150);
     return () => window.clearTimeout(timer);
   }, [shouldReduceMotion]);
+
+  const safePlay = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    wantPlayRef.current = true;
+    video.defaultMuted = true;
+    video.muted = true;
+
+    if (!video.paused && !video.ended) {
+      setVideoPlaying(true);
+      return;
+    }
+
+    if (playPromiseRef.current) return;
+
+    try {
+      const promise = video.play();
+      if (promise !== undefined) {
+        playPromiseRef.current = promise;
+        promise
+          .then(() => {
+            playPromiseRef.current = null;
+            if (!wantPlayRef.current) {
+              video.pause();
+            } else {
+              setVideoPlaying(true);
+            }
+          })
+          .catch(() => {
+            playPromiseRef.current = null;
+          });
+      }
+    } catch {
+      playPromiseRef.current = null;
+    }
+  }, []);
+
+  const safePause = useCallback(() => {
+    wantPlayRef.current = false;
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (!playPromiseRef.current) {
+      try {
+        if (!video.paused) {
+          video.pause();
+        }
+      } catch {
+        // ignore
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!mountVideo || shouldReduceMotion) return;
+    return registerVideoPlayer({
+      id: coordinatorId,
+      getElement: () => sectionRef.current,
+      play: safePlay,
+      pause: safePause,
+      isManuallyPaused: () => false,
+    });
+  }, [mountVideo, shouldReduceMotion, safePlay, safePause]);
 
   const heroImage = '/videos/hero_poster.webp';
   const heroVideoUrl = '/videos/hero.mp4';
 
   return (
-    <section className="relative min-h-screen w-full bg-[#101010] text-white flex flex-col justify-end pb-16 md:pb-24 overflow-hidden select-none">
+    <section
+      ref={sectionRef}
+      onMouseEnter={() => notifyVideoHoverEnter(coordinatorId)}
+      onMouseLeave={() => notifyVideoHoverLeave(coordinatorId)}
+      className="relative min-h-screen w-full bg-[#101010] text-white flex flex-col justify-end pb-16 md:pb-24 overflow-hidden select-none"
+    >
       {/* ========================================================= */}
       {/* 1) HERO BACKGROUND: Instant Poster + Seamless Ambient Video */}
       {/* ========================================================= */}
@@ -39,6 +118,7 @@ export function SolumHero() {
 
         {mountVideo && !shouldReduceMotion && (
           <video
+            ref={videoRef}
             src={heroVideoUrl}
             poster={heroImage}
             autoPlay
@@ -49,7 +129,12 @@ export function SolumHero() {
             controls={false}
             disablePictureInPicture
             onPlaying={() => setVideoPlaying(true)}
-            onCanPlay={() => setVideoPlaying(true)}
+            onCanPlay={() => {
+              setVideoPlaying(true);
+              if (wantPlayRef.current && videoRef.current?.paused) {
+                safePlay();
+              }
+            }}
             className={`absolute inset-0 w-full h-full object-cover pointer-events-none select-none transition-opacity duration-500 ${
               videoPlaying ? 'opacity-100' : 'opacity-0'
             }`}

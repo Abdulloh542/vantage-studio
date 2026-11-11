@@ -3,34 +3,55 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Play, Pause, Volume2, VolumeX, Maximize2, ArrowUpRight } from 'lucide-react';
 import type { Project } from '../../types';
+import {
+  registerVideoPlayer,
+  notifyVideoHoverEnter,
+  notifyVideoHoverLeave,
+  notifyVideoManualPlay,
+} from '../../utils/videoCoordinator';
 
 interface ProjectExhibitionCardProps {
   project: Project;
   index: number;
   layoutVariant?: 'lead' | 'wide' | 'split-landscape' | 'split-vertical';
+  idPrefix?: string;
 }
 
 export function ProjectExhibitionCard({
   project,
   index,
   layoutVariant = 'split-landscape',
+  idPrefix = 'exhibition',
 }: ProjectExhibitionCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [isInView, setIsInView] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const requestIdRef = useRef(0);
+  const wantPlayRef = useRef(false);
+  const manuallyPausedRef = useRef(false);
+  const playPromiseRef = useRef<Promise<void> | null>(null);
+  const isMutedRef = useRef(true);
+
+  const coordinatorId = `${idPrefix}-${project.slug}-${index}`;
 
   useEffect(() => {
     const handleFsChange = () => {
-      const fsEl = document.fullscreenElement || (document as any).webkitFullscreenElement || (document as any).mozFullScreenElement || (document as any).msFullscreenElement;
+      const doc = document as Document & {
+        webkitFullscreenElement?: Element;
+        mozFullScreenElement?: Element;
+        msFullscreenElement?: Element;
+      };
+      const fsEl =
+        doc.fullscreenElement ||
+        doc.webkitFullscreenElement ||
+        doc.mozFullScreenElement ||
+        doc.msFullscreenElement;
       setIsFullscreen(fsEl === videoRef.current);
     };
 
@@ -48,41 +69,51 @@ export function ProjectExhibitionCard({
 
   const isVertical = project.videoAspectRatio === '9:16';
 
-  // Determine aspect ratio class based on layout variant and video aspect ratio (strictly true 9:16 or 16:9 so nothing is cropped)
   let aspectClass = 'aspect-[16/9]';
   if (isVertical || layoutVariant === 'split-vertical') {
     aspectClass = 'aspect-[9/16] max-w-[400px] mx-auto';
-  } else if (layoutVariant === 'lead') {
-    aspectClass = 'aspect-[16/9]';
-  } else if (layoutVariant === 'wide') {
+  } else if (layoutVariant === 'lead' || layoutVariant === 'wide') {
     aspectClass = 'aspect-[16/9]';
   }
 
-  // Ensure DOM element properties defaultMuted and muted are strictly enforced on mount
   const setVideoRef = useCallback((el: HTMLVideoElement | null) => {
     videoRef.current = el;
     if (el) {
       el.defaultMuted = true;
-      el.muted = true;
+      el.muted = isMutedRef.current;
       el.playsInline = true;
     }
   }, []);
 
-  // Safe playback helper that avoids unhandled promise rejections, race conditions, and autoplay blocks
   const safePlay = useCallback(() => {
     const video = videoRef.current;
     if (!video || !project.heroVideo) return;
 
-    const currentId = ++requestIdRef.current;
+    wantPlayRef.current = true;
     video.defaultMuted = true;
-    video.muted = isMuted;
+    video.muted = isMutedRef.current;
+
+    if (video.preload !== 'auto') {
+      video.preload = 'auto';
+    }
+
+    if (!video.paused && !video.ended) {
+      setIsPlaying(true);
+      return;
+    }
+
+    if (playPromiseRef.current) {
+      return;
+    }
 
     try {
       const promise = video.play();
       if (promise !== undefined) {
+        playPromiseRef.current = promise;
         promise
           .then(() => {
-            if (currentId !== requestIdRef.current) {
+            playPromiseRef.current = null;
+            if (!wantPlayRef.current) {
               video.pause();
               setIsPlaying(false);
             } else {
@@ -90,105 +121,98 @@ export function ProjectExhibitionCard({
             }
           })
           .catch((err) => {
+            playPromiseRef.current = null;
             if (err?.name === 'AbortError') return;
-            if (currentId === requestIdRef.current) {
-              video.muted = true;
+            if (wantPlayRef.current && videoRef.current) {
+              videoRef.current.defaultMuted = true;
+              videoRef.current.muted = true;
+              isMutedRef.current = true;
               setIsMuted(true);
-              video.play().then(() => {
-                if (currentId === requestIdRef.current) {
-                  setIsPlaying(true);
-                } else {
-                  video.pause();
-                  setIsPlaying(false);
-                }
-              }).catch(() => {});
+              const retry = videoRef.current.play();
+              if (retry !== undefined) {
+                playPromiseRef.current = retry;
+                retry
+                  .then(() => {
+                    playPromiseRef.current = null;
+                    if (!wantPlayRef.current) {
+                      videoRef.current?.pause();
+                      setIsPlaying(false);
+                    } else {
+                      setIsPlaying(true);
+                    }
+                  })
+                  .catch(() => {
+                    playPromiseRef.current = null;
+                  });
+              }
             }
           });
       }
     } catch {
-      // ignore
+      playPromiseRef.current = null;
     }
-  }, [project.heroVideo, isMuted]);
+  }, [project.heroVideo]);
 
-  // Safe pause helper that invalidates any in-flight play request immediately
   const safePause = useCallback(() => {
+    wantPlayRef.current = false;
     const video = videoRef.current;
     if (!video) return;
 
-    ++requestIdRef.current;
-    try {
-      video.pause();
-    } catch {
-      // ignore
+    if (!playPromiseRef.current) {
+      try {
+        if (!video.paused) {
+          video.pause();
+        }
+      } catch {
+        // ignore
+      }
     }
     setIsPlaying(false);
   }, []);
 
-  // Viewport Auto-Play: triggers smoothly when video is in viewport on scroll,
-  // pauses when scrolled out, and resumes when scrolled back in.
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el || typeof IntersectionObserver === 'undefined') {
-      safePlay();
-      return;
-    }
+    if (!project.heroVideo) return;
+    return registerVideoPlayer({
+      id: coordinatorId,
+      getElement: () => containerRef.current,
+      play: safePlay,
+      pause: safePause,
+      isManuallyPaused: () => manuallyPausedRef.current,
+    });
+  }, [coordinatorId, project.heroVideo, safePlay, safePause]);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      {
-        root: null,
-        rootMargin: '50px 0px 50px 0px',
-        threshold: 0.15,
-      }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [safePlay]);
-
-  // Pause when browser tab is inactive / minimized to save CPU and battery
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
         safePause();
-      } else if (isInView) {
+      } else if (wantPlayRef.current && !manuallyPausedRef.current) {
         safePlay();
       }
     };
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, [isInView, safePlay, safePause]);
-
-  useEffect(() => {
-    if (isInView) {
-      safePlay();
-    } else {
-      safePause();
-    }
-  }, [isInView, safePlay, safePause]);
+  }, [safePlay, safePause]);
 
   const resetHideTimer = useCallback(() => {
     if (hideTimeoutRef.current) {
       clearTimeout(hideTimeoutRef.current);
     }
-    if (isPlaying) {
-      hideTimeoutRef.current = setTimeout(() => {
+    hideTimeoutRef.current = setTimeout(() => {
+      if (!videoRef.current?.paused) {
         setIsHovered(false);
-      }, 2400);
-    }
-  }, [isPlaying]);
+      }
+    }, 2400);
+  }, []);
 
-  // Instant playback on mouse hover ("mishkani oborsa birdan boshlansin")
   const handleMouseEnter = () => {
+    manuallyPausedRef.current = false;
     if (videoRef.current) {
       setCurrentTime(videoRef.current.currentTime);
     }
     setIsHovered(true);
     resetHideTimer();
-    safePlay();
+    notifyVideoHoverEnter(coordinatorId);
   };
 
   const handleMouseMove = () => {
@@ -201,10 +225,7 @@ export function ProjectExhibitionCard({
       clearTimeout(hideTimeoutRef.current);
     }
     setIsHovered(false);
-    // Keep playing smoothly if still in viewport, pause if scrolled away
-    if (!isInView) {
-      safePause();
-    }
+    notifyVideoHoverLeave(coordinatorId);
   };
 
   const togglePlay = (e?: React.MouseEvent) => {
@@ -213,10 +234,13 @@ export function ProjectExhibitionCard({
     if (!video) return;
 
     if (video.paused) {
-      safePlay();
+      manuallyPausedRef.current = false;
+      notifyVideoManualPlay(coordinatorId);
       resetHideTimer();
     } else {
+      manuallyPausedRef.current = true;
       safePause();
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
       setIsHovered(true);
     }
   };
@@ -227,13 +251,17 @@ export function ProjectExhibitionCard({
     if (video) {
       const nextMuted = !video.muted;
       video.muted = nextMuted;
+      isMutedRef.current = nextMuted;
       setIsMuted(nextMuted);
     }
   };
 
   const openFullscreen = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    const video = videoRef.current as (HTMLVideoElement & { webkitEnterFullscreen?: () => void; webkitRequestFullscreen?: () => void }) | null;
+    const video = videoRef.current as (HTMLVideoElement & {
+      webkitEnterFullscreen?: () => void;
+      webkitRequestFullscreen?: () => void;
+    }) | null;
     if (!video) return;
 
     if (video.requestFullscreen) {
@@ -259,15 +287,17 @@ export function ProjectExhibitionCard({
   const handleLoadedMetadata = () => {
     const video = videoRef.current;
     if (video) {
-      setDuration(video.duration);
-      if (isInView || isHovered) {
+      if (video.duration) {
+        setDuration(video.duration);
+      }
+      if (wantPlayRef.current && video.paused) {
         safePlay();
       }
     }
   };
 
   const handleCanPlay = () => {
-    if (isInView || isHovered) {
+    if (wantPlayRef.current && videoRef.current?.paused) {
       safePlay();
     }
   };
@@ -290,7 +320,7 @@ export function ProjectExhibitionCard({
   };
 
   const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
-  const isControlsVisible = isHovered;
+  const isControlsVisible = isHovered || !isPlaying;
 
   useEffect(() => {
     return () => {
@@ -300,7 +330,6 @@ export function ProjectExhibitionCard({
     };
   }, []);
 
-  // Slight zoom only for Lotus Mall to trim thin letterbox edge; keep 9:16 and 16:9 uncropped
   const isLotusMall = project.slug === 'lotus-mall';
   const zoomClass = isLotusMall ? 'scale-[1.04]' : 'scale-100';
 
@@ -312,7 +341,7 @@ export function ProjectExhibitionCard({
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className="w-full select-none"
     >
-      {/* 1. CLEAN MEDIA STAGE (Auto-play in view, instant hover, YouTube controls, zero clutter buttons, zoomed in to remove black borders) */}
+      {/* 1. CLEAN MEDIA STAGE (Auto-play in view, instant hover, YouTube controls) */}
       <div
         ref={containerRef}
         onMouseEnter={handleMouseEnter}
@@ -333,6 +362,8 @@ export function ProjectExhibitionCard({
               controls={false}
               disablePictureInPicture
               onCanPlay={handleCanPlay}
+              onLoadedData={handleCanPlay}
+              onPlay={() => setIsPlaying(true)}
               onPlaying={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
               onTimeUpdate={handleTimeUpdate}
@@ -344,6 +375,31 @@ export function ProjectExhibitionCard({
                   : `object-cover ${zoomClass}`
               } origin-center filter brightness-95 contrast-105 cursor-pointer transition-transform duration-300`}
             />
+
+            {/* Central Play Indicator when paused and not hovered */}
+            {!isPlaying && !isHovered && (
+              <div
+                onClick={togglePlay}
+                className="absolute inset-0 flex items-center justify-center bg-black/25 cursor-pointer z-10 transition-opacity duration-200"
+              >
+                <div className="w-14 h-14 rounded-full bg-white/95 text-black flex items-center justify-center pl-1 shadow-2xl hover:scale-110 transition-transform">
+                  <Play className="w-6 h-6 fill-current" />
+                </div>
+              </div>
+            )}
+
+            {/* Top Left: Title & Location Tag (Slides in on hover) */}
+            <div
+              className={`absolute top-3 left-3 sm:top-4 sm:left-4 z-10 pointer-events-none transition-all duration-300 ease-out transform ${
+                isHovered
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 -translate-y-2'
+              }`}
+            >
+              <span className="px-2.5 py-1 bg-black/65 backdrop-blur-sm text-[11px] font-mono uppercase tracking-wider text-white/90 border border-white/15">
+                {isVertical ? '9:16 VERTICAL CINEMA' : `${project.title} \u2022 ${project.location}`}
+              </span>
+            </div>
 
             {/* YouTube-like auto-hiding controls bar on hover */}
             <div

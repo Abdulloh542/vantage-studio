@@ -131,6 +131,7 @@ export function ProjectDetailPage() {
               <div className="relative aspect-[9/16] w-full max-w-[400px] lg:max-w-none overflow-hidden bg-black border border-[#101010]/15 shadow-xl">
                 {project.heroVideo ? (
                   <video
+                    key={project.slug}
                     ref={videoRef}
                     src={project.heroVideo}
                     poster={project.heroImage}
@@ -138,11 +139,17 @@ export function ProjectDetailPage() {
                     muted
                     loop
                     playsInline
-                    preload="metadata"
+                    preload="auto"
                     controls={false}
                     disablePictureInPicture
                     onClick={togglePlay}
+                    onCanPlay={(e) => {
+                      if (isPlaying && e.currentTarget.paused) {
+                        e.currentTarget.play().catch(() => {});
+                      }
+                    }}
                     onPlay={() => setIsPlaying(true)}
+                    onPlaying={() => setIsPlaying(true)}
                     onPause={() => setIsPlaying(false)}
                     className="w-full h-full object-cover cursor-pointer"
                   />
@@ -216,6 +223,7 @@ export function ProjectDetailPage() {
           <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-900 border border-[#101010]/15 shadow-lg">
             {project.heroVideo ? (
               <video
+                key={project.slug}
                 ref={videoRef}
                 src={project.heroVideo}
                 poster={project.heroImage}
@@ -223,11 +231,17 @@ export function ProjectDetailPage() {
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="auto"
                 controls={false}
                 disablePictureInPicture
                 onClick={togglePlay}
+                onCanPlay={(e) => {
+                  if (isPlaying && e.currentTarget.paused) {
+                    e.currentTarget.play().catch(() => {});
+                  }
+                }}
                 onPlay={() => setIsPlaying(true)}
+                onPlaying={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
                 className="w-full h-full object-cover filter brightness-95 cursor-pointer"
               />
