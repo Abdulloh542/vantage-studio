@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { optimizeCloudinaryImage } from '../utils/media';
@@ -5,11 +6,11 @@ import { optimizeCloudinaryImage } from '../utils/media';
 interface RateRow {
   id: string;
   label: string;
-  detail?: string;
+  info: string;
+  oldPrice?: string;
   price: string;
-  unitNote: string;
-  badge?: string;
-  highlighted?: boolean;
+  saveBadge?: string;
+  ourPick?: boolean;
 }
 
 interface PricingGroup {
@@ -30,43 +31,38 @@ const PRICING_GROUPS: PricingGroup[] = [
   {
     id: 'films-by-seconds',
     titleDark: 'Films',
-    titleMuted: 'priced by seconds',
-    leftColumnHeader: 'Duration',
-    rightColumnHeader: 'Rate',
+    titleMuted: 'priced by length',
+    leftColumnHeader: 'Length',
+    rightColumnHeader: 'Price*',
     rows: [
       {
         id: 'film-30s',
-        label: '15 – 30 s',
-        detail: 'Teaser or vertical social cut',
-        price: '$690',
-        unitNote: '~$23 / sec',
+        label: '30 s',
+        info: '30-second 4K architectural teaser or 9:16 vertical reel. Includes 3D scene setup from your Genplan, camera motion, sound design, and color grading.',
+        oldPrice: '$1,190',
+        price: '$890',
+        saveBadge: 'You save $300',
       },
       {
         id: 'film-60s',
         label: '60 s',
-        detail: 'Full exterior & interior walkthrough',
-        price: '$1,290',
-        unitNote: '~$21 / sec · Save 15%',
-        badge: 'POPULAR',
-        highlighted: true,
+        info: '60-second complete 4K architectural walkthrough covering exterior elevations, courtyard life, and key interiors (16:9 widescreen or 9:16 vertical).',
+        oldPrice: '$1,790',
+        price: '$1,490',
+        saveBadge: 'You save $300',
+        ourPick: true,
       },
       {
         id: 'film-90-120s',
         label: '90 – 120 s',
-        detail: 'Masterplan & lifestyle cinema film',
-        price: '$2,190',
-        unitNote: '~$18 / sec · Save 25%',
-      },
-      {
-        id: 'film-150s',
-        label: '150 s +',
-        detail: 'Multi-block quarter or resort film',
-        price: '$2,950',
-        unitNote: 'Custom sequence',
+        info: '90 to 120-second flagship masterplan cinema film with aerial drone sweeps, daylight-to-dusk transitions, and custom spatial soundscape.',
+        oldPrice: '$3,590',
+        price: '$2,490',
+        saveBadge: 'You save $1,100',
       },
     ],
     footnote:
-      'Every film includes 3D scene preparation from your drawings, camera choreography, sound design, and 4K delivery in 16:9 or 9:16.',
+      'Every film is delivered in crisp 4K with full commercial rights. We build the 3D scene directly from your 2D Genplan, CAD drawings, or 3D model.',
     sampleLink: {
       label: 'Watch 58s film',
       href: '/projects/volga-park',
@@ -74,58 +70,54 @@ const PRICING_GROUPS: PricingGroup[] = [
   },
   {
     id: 'archviz-video-types',
-    titleDark: 'ArchViz & real estate videos',
-    titleMuted: 'by format & style',
-    leftColumnHeader: 'Video format',
-    rightColumnHeader: 'Rate',
+    titleDark: 'Real estate & ArchViz',
+    titleMuted: 'video formats',
+    leftColumnHeader: 'Project',
+    rightColumnHeader: 'Price*',
     rows: [
       {
         id: 'video-reel-9x16',
-        label: '9:16 Vertical Social Reel',
-        detail: '45–60s mobile-first film for Instagram & pre-sales',
-        price: '$890',
-        unitNote: 'Ready for Reels',
+        label: '9:16 Social Reel',
+        info: 'High-retention vertical 4K architectural film tailored for Instagram Reels, TikTok, and mobile-first developer pre-sales.',
+        price: '$790',
+        saveBadge: 'Credited if you upgrade',
       },
       {
         id: 'video-genplan-3d',
-        label: 'Genplan → 3D Growth Film',
-        detail: '2D CAD plan rising into 3D massing & final render',
-        price: '$1,350',
-        unitNote: 'Signature transition',
+        label: 'Genplan → 3D Growth',
+        info: 'Signature Atlas Studio transition: your 2D blueprint or Genplan rises step-by-step into 3D structural massing and final photorealistic architecture.',
+        oldPrice: '$1,690',
+        price: '$1,290',
+        saveBadge: 'You save $400',
       },
       {
         id: 'video-property-tour',
-        label: 'Real Estate Property Presentation',
-        detail: '60–90s arrival, courtyard, lobby & residence tour',
-        price: '$1,650',
-        unitNote: 'Full pre-sales film',
-        badge: 'MOST CHOSEN',
-        highlighted: true,
+        label: 'Walk-through Villa / House',
+        info: 'Complete eye-level and aerial walkthrough of a private residence or villa — exterior approach, garden terrace, pool caustics, and living spaces.',
+        oldPrice: '$2,490',
+        price: '$1,890',
+        saveBadge: 'You save $600',
+        ourPick: true,
       },
       {
         id: 'video-before-after',
-        label: 'Before / After Renovation Film',
-        detail: 'Existing site or structure dissolving into proposed CGI',
-        price: '$1,450',
-        unitNote: 'Photo / LiDAR matched',
+        label: 'Before / After Transformation',
+        info: 'Existing construction site, drone plate, or historic building dissolving seamlessly into your finished 3D architectural proposal.',
+        oldPrice: '$2,190',
+        price: '$1,590',
+        saveBadge: 'You save $600',
       },
       {
-        id: 'video-drone-match',
-        label: 'Drone Aerial 3D Composite',
-        detail: 'Unbuilt 3D architecture tracked into real drone footage',
-        price: '$1,100',
-        unitNote: '3D camera tracking',
-      },
-      {
-        id: 'video-day-night',
-        label: 'Day-to-Night Lighting Study',
-        detail: 'Continuous sun path from morning daylight to dusk glow',
-        price: '$650',
-        unitNote: 'Standalone or add-on',
+        id: 'video-full-tower',
+        label: 'Full Tower / Quarter Launch',
+        info: 'Comprehensive real estate launch film for multi-block residential quarters, commercial plazas, shopping malls, and 5-star resorts.',
+        oldPrice: '$4,900',
+        price: '$3,900',
+        saveBadge: 'You save $1,000',
       },
     ],
     footnote:
-      'Have only a 2D Genplan or AutoCAD file? We model the 3D architecture, terrain, and landscaping directly from your drawings.',
+      'Need both 16:9 widescreen for sales galleries and 9:16 vertical for Instagram? We frame and render both aspect ratios from the same 3D scene.',
     sampleLink: {
       label: 'See 9:16 & 16:9 works',
       href: '/projects',
@@ -136,206 +128,262 @@ const PRICING_GROUPS: PricingGroup[] = [
     titleDark: 'Launch packages',
     titleMuted: 'images and film together',
     leftColumnHeader: 'Package',
-    rightColumnHeader: 'Rate',
+    rightColumnHeader: 'Price*',
     rows: [
       {
         id: 'pkg-essential',
         label: 'Essential',
-        detail: '5 × 4K views + 30s vertical reel',
+        info: '5 photorealistic 4K renders + 30s vertical 9:16 film + complete 3D modeling from your 2D Genplan or DWG drawings.',
+        oldPrice: '$1,990',
         price: '$1,490',
-        unitNote: 'Save $300',
+        saveBadge: 'You save $500',
       },
       {
         id: 'pkg-signature',
         label: 'Signature',
-        detail: '10 × 4K views + 60s 4K film + 9:16 cutdown',
-        price: '$2,490',
-        unitNote: 'Save $550',
-        badge: 'POPULAR',
-        highlighted: true,
+        info: '10 photorealistic 4K exterior & interior renders + 60s 4K walkthrough film + 9:16 social cutdown + full 3D architectural build.',
+        oldPrice: '$3,190',
+        price: '$2,290',
+        saveBadge: 'You save $900',
+        ourPick: true,
       },
       {
         id: 'pkg-flagship',
         label: 'Flagship',
-        detail: '20 × 4K views + 90–120s cinema film + 2 reels',
+        info: '20 photorealistic 4K renders + 90–120s widescreen 4K cinema film + 2 vertical social reels for full off-plan project launches.',
+        oldPrice: '$5,200',
         price: '$3,900',
-        unitNote: 'Save $900',
+        saveBadge: 'You save $1,300',
       },
     ],
     footnote:
-      'One unified 3D architectural build powers both your still renders and your motion films — keeping lighting and materials 100% consistent.',
+      'One unified 3D architectural model powers both your still renders and your motion films — keeping materials and lighting 100% consistent.',
   },
   {
     id: 'still-images',
     titleDark: 'Images',
     titleMuted: 'new views from your plans',
     leftColumnHeader: 'Views',
-    rightColumnHeader: 'Rate',
+    rightColumnHeader: 'Price*',
     rows: [
       {
         id: 'img-1',
         label: '1',
-        detail: 'Single exterior or interior 4K view',
+        info: 'Single 4K photorealistic exterior or interior render built from your CAD plans or 3D model, including 2 revision rounds.',
         price: '$250',
-        unitNote: '$250 / view',
-      },
-      {
-        id: 'img-5',
-        label: '5',
-        detail: 'Villa or facade approval set',
-        price: '$950',
-        unitNote: '$190 / view · Save 24%',
+        saveBadge: 'Credited if you upgrade',
       },
       {
         id: 'img-10',
         label: '10',
-        detail: 'Complete exterior & interior presentation',
-        price: '$1,600',
-        unitNote: '$160 / view · Save 36%',
-        badge: 'POPULAR',
-        highlighted: true,
+        info: '10 high-resolution 4K exterior & interior views across sunny daylight, golden hour, and nocturnal lighting.',
+        oldPrice: '$1,100',
+        price: '$850',
+        saveBadge: 'You save $250',
       },
       {
         id: 'img-20',
         label: '20',
-        detail: 'Residential quarter or commercial complex',
-        price: '$2,600',
-        unitNote: '$130 / view · Save 48%',
+        info: '20 photorealistic 4K views covering building elevations, courtyards, entrance lobbies, and interior apartment layouts.',
+        oldPrice: '$1,900',
+        price: '$1,350',
+        saveBadge: 'You save $550',
+      },
+      {
+        id: 'img-30',
+        label: '30',
+        info: '30 comprehensive 4K marketing views for full residential developments, villas, or commercial masterplans.',
+        oldPrice: '$2,500',
+        price: '$1,750',
+        saveBadge: 'You save $750',
+        ourPick: true,
       },
       {
         id: 'img-monthly',
         label: '12 a month',
-        detail: 'Ongoing studio partner for developers',
-        price: '$1,800 / month',
-        unitNote: '$150 / view · Pause anytime',
+        info: 'Ongoing studio subscription for active developers and architectural practices — 12 fresh 4K views every month, pause or cancel anytime.',
+        price: '$1,490 / month',
+        saveBadge: 'You save $610 / mo',
       },
     ],
     footnote:
-      'All still packages include 3D modeling from your 2D Genplan/DWG, physical material texturing, daylight or twilight lighting, and 2 revision rounds.',
+      'All still packages include 3D modeling from your 2D Genplan/DWG, physical material calibration, landscaping, and 2 revision rounds.',
   },
 ];
 
 export function PricingPage() {
+  const [openInfoId, setOpenInfoId] = useState<string | null>(null);
+
   const bannerImage = optimizeCloudinaryImage(
     'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992590/projects/collective-dubai-hills/collective-dubai-hills_still_4.jpg',
     1600
   );
 
   return (
-    <main className="w-full bg-white text-[#101010] pt-28 md:pt-36 select-none">
+    <main className="w-full bg-[#F2EFE9] text-[#141413] pt-28 md:pt-36 select-none">
       {/* ========================================================= */}
-      {/* 1) MINIMALIST EDITORIAL HERO                              */}
+      {/* 1) MINIMALIST EDITORIAL HERO ("Our prices")               */}
       {/* ========================================================= */}
-      <section className="max-w-[1180px] mx-auto px-6 sm:px-10 pb-14 md:pb-20">
+      <section className="max-w-[1220px] mx-auto px-5 sm:px-10 pb-14 md:pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
           <div className="lg:col-span-5">
-            <h1 className="font-sans text-5xl sm:text-6xl md:text-7xl font-medium tracking-[-0.045em] leading-[0.96]">
-              <span className="block text-[#101010]">Our</span>
-              <span className="block text-[#8E8E8A]">prices</span>
+            <h1 className="font-sans text-6xl sm:text-7xl md:text-[84px] font-normal tracking-[-0.045em] leading-[0.94]">
+              <span className="block text-[#141413]">Our</span>
+              <span className="block text-[#8C8982]">prices</span>
             </h1>
           </div>
 
           <div className="lg:col-span-7">
-            <p className="font-sans text-xs sm:text-sm text-[#666662] leading-relaxed max-w-md">
-              Transparent rates whether you need a 30-second architectural reel, a full real estate launch film, or 4K views built directly from your 2D Genplan.
+            <p className="font-sans text-xs sm:text-sm text-[#605E59] leading-relaxed max-w-md">
+              Clear rates from your 2D Genplan or 3D model. Choose by film length, architectural video format, or number of 4K views — with first 3D previews in 1–2 days.
             </p>
           </div>
         </div>
       </section>
 
       {/* ========================================================= */}
-      {/* 2) STACKED HORIZONTAL RATE TABLES                         */}
+      {/* 2) STACKED HORIZONTAL CARDS (EXACT REFERENCE DESIGN)      */}
       {/* ========================================================= */}
-      <section className="max-w-[1180px] mx-auto px-6 sm:px-10 pb-20 md:pb-28 space-y-20 md:space-y-24">
+      <section className="max-w-[1220px] mx-auto px-5 sm:px-10 pb-24 md:pb-32 space-y-24 md:space-y-32">
         {PRICING_GROUPS.map((group) => (
           <div
             key={group.id}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pt-8 border-t border-[#101010]/10"
+            className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
           >
-            {/* Left Category Label */}
-            <div className="lg:col-span-5 lg:sticky lg:top-28">
-              <h2 className="font-sans text-xl sm:text-2xl font-medium tracking-[-0.03em] leading-[1.2]">
-                <span className="text-[#101010]">{group.titleDark} </span>
-                <span className="text-[#8E8E8A] font-normal">{group.titleMuted}</span>
+            {/* Left Category Heading */}
+            <div className="lg:col-span-5 lg:sticky lg:top-28 pt-1">
+              <h2 className="font-sans text-2xl sm:text-3xl md:text-[32px] font-normal tracking-[-0.035em] leading-[1.15]">
+                <span className="text-[#141413]">{group.titleDark} </span>
+                <span className="text-[#8C8982]">{group.titleMuted}</span>
               </h2>
             </div>
 
-            {/* Right Horizontal Rows Stack */}
+            {/* Right Stack of Rounded Horizontal Cards */}
             <div className="lg:col-span-7">
-              {/* Small Column Captions */}
-              <div className="flex items-center justify-between px-4 pb-2 text-[11px] font-mono uppercase tracking-wider text-[#8E8E8A]">
+              {/* Top Column Labels ("Length / Project" & "Price*") */}
+              <div className="flex items-center justify-between px-3 pb-3 text-xs font-sans text-[#78756E]">
                 <span>{group.leftColumnHeader}</span>
                 <span>{group.rightColumnHeader}</span>
               </div>
 
-              {/* Rows */}
-              <div className="space-y-2.5">
-                {group.rows.map((row) => (
-                  <Link
-                    key={row.id}
-                    to={`/contact?package=${encodeURIComponent(row.id)}`}
-                    className={`group relative flex items-center justify-between gap-4 px-5 sm:px-6 py-4 sm:py-5 rounded-xl transition-all duration-200 ${
-                      row.highlighted
-                        ? 'bg-[#F4F1EC] border border-[#101010]/20 hover:border-[#101010]'
-                        : 'bg-[#F8F8F7] border border-[#101010]/[0.07] hover:bg-[#F2F2F0] hover:border-[#101010]/25'
-                    }`}
-                  >
-                    {/* Optional Top-Left Pill Badge */}
-                    {row.badge && (
-                      <span className="absolute -top-2.5 left-5 px-2 py-0.5 rounded bg-[#101010] text-white font-mono text-[9px] font-semibold uppercase tracking-widest">
-                        {row.badge}
-                      </span>
-                    )}
+              {/* Cards Stack */}
+              <div className="space-y-3.5">
+                {group.rows.map((row) => {
+                  const isInfoOpen = openInfoId === row.id;
 
-                    {/* Left: Title & Subtle Scope Note */}
-                    <div className="min-w-0 pr-2">
-                      <div className="flex items-center gap-2">
-                        <span className="font-sans text-base sm:text-lg md:text-xl font-medium tracking-[-0.02em] text-[#101010]">
-                          {row.label}
-                        </span>
-                        <ArrowUpRight className="w-3.5 h-3.5 text-[#8E8E8A] opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                      </div>
-                      {row.detail && (
-                        <span className="block font-sans text-xs text-[#757572] mt-0.5 truncate sm:whitespace-normal">
-                          {row.detail}
+                  return (
+                    <div
+                      key={row.id}
+                      style={
+                        row.ourPick
+                          ? {
+                              background:
+                                'linear-gradient(125deg, #F6E2D3 0%, #FAF5F0 38%, #F9E3DC 72%, #EBE2F4 100%)',
+                            }
+                          : undefined
+                      }
+                      className={`group relative rounded-[20px] transition-all duration-200 ${
+                        row.ourPick
+                          ? 'border border-white shadow-[0_10px_30px_rgba(20,20,19,0.06)] hover:shadow-[0_14px_36px_rgba(20,20,19,0.10)]'
+                          : 'bg-[#FAF9F6] border border-white/90 shadow-[0_2px_10px_rgba(20,20,19,0.025)] hover:bg-white hover:shadow-[0_8px_24px_rgba(20,20,19,0.06)]'
+                      }`}
+                    >
+                      {/* "Our pick" Floating Black Pill Badge */}
+                      {row.ourPick && (
+                        <span className="absolute -top-3 left-6 z-10 px-3 py-1 rounded-full bg-[#141413] text-white font-sans text-[11px] font-medium tracking-[-0.01em] shadow-sm">
+                          Our pick
                         </span>
                       )}
-                    </div>
 
-                    {/* Right: Price & Per-Second / Saving Note */}
-                    <div className="text-right shrink-0">
-                      <div className="font-sans text-lg sm:text-xl md:text-2xl font-medium tracking-[-0.03em] text-[#101010] tabular-nums">
-                        {row.price}
+                      {/* Main Card Horizontal Row */}
+                      <div className="flex items-center justify-between gap-4 px-6 sm:px-9 py-6 sm:py-8 min-h-[116px] sm:min-h-[142px]">
+                        {/* Left: Big Clean Label + Circular "i" Info Button */}
+                        <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
+                          <Link
+                            to={`/contact?package=${encodeURIComponent(row.id)}`}
+                            className="font-sans text-2xl sm:text-4xl md:text-[40px] font-normal tracking-[-0.035em] text-[#141413] leading-none hover:opacity-75 transition-opacity"
+                          >
+                            {row.label}
+                          </Link>
+
+                          <button
+                            type="button"
+                            aria-label={`Details for ${row.label}`}
+                            onClick={() => setOpenInfoId(isInfoOpen ? null : row.id)}
+                            onMouseEnter={() => setOpenInfoId(row.id)}
+                            onMouseLeave={() => setOpenInfoId((prev) => (prev === row.id ? null : prev))}
+                            className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white border border-black/[0.06] shadow-[0_2px_6px_rgba(0,0,0,0.08)] flex items-center justify-center text-[#141413] hover:scale-105 transition-transform cursor-pointer shrink-0"
+                          >
+                            <span className="font-serif italic text-xs sm:text-[13px] font-semibold leading-none">
+                              i
+                            </span>
+                          </button>
+                        </div>
+
+                        {/* Right: Strikethrough Old Price + Big Price + Mint-Green Savings Pill */}
+                        <Link
+                          to={`/contact?package=${encodeURIComponent(row.id)}`}
+                          className="text-right shrink-0 flex flex-col items-end"
+                        >
+                          {row.oldPrice && (
+                            <span className="font-sans text-xs sm:text-base text-[#8C8982] line-through decoration-[#8C8982]/80 tabular-nums leading-none mb-1.5">
+                              {row.oldPrice}
+                            </span>
+                          )}
+
+                          <span className="font-sans text-2xl sm:text-4xl md:text-[42px] font-normal tracking-[-0.035em] text-[#141413] tabular-nums leading-none">
+                            {row.price}
+                          </span>
+
+                          {row.saveBadge && (
+                            <span className="mt-2.5 px-3 py-1 rounded-full bg-[#DFECE5] text-[#1E4E36] font-sans text-[11px] sm:text-xs font-medium tracking-[-0.01em] leading-none">
+                              {row.saveBadge}
+                            </span>
+                          )}
+                        </Link>
                       </div>
-                      <div className="font-mono text-[10px] sm:text-[11px] text-[#757572] tabular-nums mt-0.5">
-                        {row.unitNote}
-                      </div>
+
+                      {/* Expandable / Hover Info Drawer */}
+                      {isInfoOpen && (
+                        <div className="px-6 sm:px-9 pb-5 pt-0">
+                          <div className="p-3.5 sm:p-4 rounded-xl bg-white/90 border border-black/[0.06] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-sans text-[#4A4843] leading-relaxed">
+                            <span>{row.info}</span>
+                            <Link
+                              to={`/contact?package=${encodeURIComponent(row.id)}`}
+                              className="inline-flex items-center gap-1 font-medium text-[#141413] underline shrink-0"
+                            >
+                              <span>Select this</span>
+                              <ArrowUpRight className="w-3.5 h-3.5" />
+                            </Link>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </Link>
-                ))}
+                  );
+                })}
               </div>
 
-              {/* Footnote & Optional Action Row */}
-              <div className="mt-4 px-1 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <p className="font-sans text-xs text-[#757572] leading-relaxed max-w-md">
+              {/* Footnote & Pill Buttons Under Stack */}
+              <div className="mt-5 px-2 space-y-4">
+                <p className="font-sans text-xs text-[#6E6B64] leading-relaxed max-w-lg">
                   {group.footnote}
                 </p>
 
-                <div className="flex items-center gap-2.5 shrink-0">
+                <div className="flex flex-wrap items-center gap-2.5">
                   {group.sampleLink && (
                     <Link
                       to={group.sampleLink.href}
-                      className="px-3.5 py-1.5 rounded-full border border-[#101010]/15 text-[11px] font-sans font-medium text-[#101010] hover:border-[#101010] transition-colors"
+                      className="px-4 py-2 rounded-full bg-white border border-black/[0.08] text-xs font-sans font-medium text-[#141413] hover:border-black/30 transition-colors"
                     >
                       {group.sampleLink.label}
                     </Link>
                   )}
                   <Link
                     to={`/contact?package=${encodeURIComponent(group.id)}`}
-                    className="px-4 py-1.5 rounded-full bg-[#101010] text-white text-[11px] font-sans font-medium hover:bg-black/85 transition-colors inline-flex items-center gap-1"
+                    className="px-4 py-2 rounded-full bg-[#141413] text-white text-xs font-sans font-medium hover:bg-black/80 transition-colors inline-flex items-center gap-1.5"
                   >
-                    <span>Book scope</span>
-                    <span>↗</span>
+                    <span>Start a project</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>
@@ -357,8 +405,8 @@ export function PricingPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/65 to-black/75 pointer-events-none" />
 
-        <div className="relative z-10 max-w-[1180px] mx-auto px-6 sm:px-10 py-20 sm:py-28">
-          <h2 className="font-sans text-3xl sm:text-5xl md:text-6xl font-medium tracking-[-0.04em] leading-[1.04] max-w-2xl mb-10">
+        <div className="relative z-10 max-w-[1220px] mx-auto px-5 sm:px-10 py-20 sm:py-28">
+          <h2 className="font-sans text-3xl sm:text-5xl md:text-6xl font-normal tracking-[-0.04em] leading-[1.04] max-w-2xl mb-10">
             <span className="text-white block">9 CGI stills and a 4K film</span>
             <span className="text-white/55 block">
               delivered in 7 days for pre-sales launch
@@ -374,7 +422,7 @@ export function PricingPage() {
 
               <div className="flex flex-wrap items-center gap-8 sm:gap-12 pt-2">
                 <div>
-                  <div className="font-sans text-2xl sm:text-3xl font-medium text-white tabular-nums">
+                  <div className="font-sans text-2xl sm:text-3xl font-normal text-white tabular-nums">
                     9
                   </div>
                   <div className="font-mono text-[10px] uppercase tracking-wider text-white/55 mt-0.5">
@@ -383,7 +431,7 @@ export function PricingPage() {
                 </div>
 
                 <div>
-                  <div className="font-sans text-2xl sm:text-3xl font-medium text-white tabular-nums">
+                  <div className="font-sans text-2xl sm:text-3xl font-normal text-white tabular-nums">
                     58s
                   </div>
                   <div className="font-mono text-[10px] uppercase tracking-wider text-white/55 mt-0.5">
@@ -392,7 +440,7 @@ export function PricingPage() {
                 </div>
 
                 <div>
-                  <div className="font-sans text-2xl sm:text-3xl font-medium text-white tabular-nums">
+                  <div className="font-sans text-2xl sm:text-3xl font-normal text-white tabular-nums">
                     48h
                   </div>
                   <div className="font-mono text-[10px] uppercase tracking-wider text-white/55 mt-0.5">
@@ -404,7 +452,7 @@ export function PricingPage() {
               <div className="pt-2">
                 <Link
                   to="/projects/volga-park"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-white/25 text-xs font-sans text-white hover:bg-white hover:text-[#101010] transition-colors"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full border border-white/25 text-xs font-sans text-white hover:bg-white hover:text-[#141413] transition-colors"
                 >
                   <span>View Volga Park case study</span>
                   <span>↗</span>
@@ -418,19 +466,19 @@ export function PricingPage() {
       {/* ========================================================= */}
       {/* 4) HOW PAYMENT WORKS & WHEN YOU GET PREVIEWS (50% / 1-2d) */}
       {/* ========================================================= */}
-      <section className="max-w-[1180px] mx-auto px-6 sm:px-10 py-20 sm:py-28">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-14 border-b border-[#101010]/10">
+      <section className="max-w-[1220px] mx-auto px-5 sm:px-10 py-20 sm:py-28">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-14 border-b border-black/10">
           <div className="lg:col-span-5">
-            <h2 className="font-sans text-xl sm:text-2xl font-medium tracking-[-0.03em] leading-[1.2]">
-              <span className="text-[#101010] block">How payment works</span>
-              <span className="text-[#8E8E8A] font-normal block">
+            <h2 className="font-sans text-xl sm:text-2xl font-normal tracking-[-0.03em] leading-[1.2]">
+              <span className="text-[#141413] block">How payment works</span>
+              <span className="text-[#8C8982] block">
                 and when you get your previews
               </span>
             </h2>
           </div>
 
           <div className="lg:col-span-7">
-            <p className="font-sans text-xs sm:text-sm text-[#666662] leading-relaxed max-w-md">
+            <p className="font-sans text-xs sm:text-sm text-[#605E59] leading-relaxed max-w-md">
               Every project begins with a review of your Genplan or 3D files. You approve camera angles and 3D geometry first, and only pay the remaining balance when your final 4K visuals are ready.
             </p>
           </div>
@@ -439,53 +487,60 @@ export function PricingPage() {
         {/* 3 Minimalist Milestone Columns */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 pt-12 pb-20">
           <div>
-            <div className="font-sans text-4xl sm:text-5xl font-medium tracking-[-0.04em] text-[#101010] tabular-nums">
+            <div className="font-sans text-5xl sm:text-6xl font-normal tracking-[-0.04em] text-[#141413] tabular-nums">
               50%
             </div>
-            <div className="font-sans text-xs sm:text-sm text-[#757572] mt-2">
+            <div className="font-sans text-xs sm:text-sm text-[#6E6B64] mt-2">
               To start 3D modeling &amp; scene setup
             </div>
           </div>
 
           <div>
-            <div className="font-sans text-4xl sm:text-5xl font-medium tracking-[-0.04em] text-[#101010] tabular-nums">
+            <div className="font-sans text-5xl sm:text-6xl font-normal tracking-[-0.04em] text-[#141413] tabular-nums">
               1–2 days
             </div>
-            <div className="font-sans text-xs sm:text-sm text-[#757572] mt-2">
+            <div className="font-sans text-xs sm:text-sm text-[#6E6B64] mt-2">
               First 3D camera &amp; massing previews
             </div>
           </div>
 
           <div>
-            <div className="font-sans text-4xl sm:text-5xl font-medium tracking-[-0.04em] text-[#101010] tabular-nums">
+            <div className="font-sans text-5xl sm:text-6xl font-normal tracking-[-0.04em] text-[#141413] tabular-nums">
               50%
             </div>
-            <div className="font-sans text-xs sm:text-sm text-[#757572] mt-2">
+            <div className="font-sans text-xs sm:text-sm text-[#6E6B64] mt-2">
               On final 4K visual approval
             </div>
           </div>
         </div>
 
-        {/* Minimalist Bottom Project Invitation Card */}
-        <div className="p-8 sm:p-12 rounded-2xl bg-[#F6F5F2] border border-[#101010]/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
-          <div className="space-y-2 max-w-md">
-            <h3 className="font-sans text-2xl sm:text-3xl font-medium tracking-[-0.035em] leading-[1.12]">
-              <span className="text-[#101010] block">Your project could be next</span>
-              <span className="text-[#8E8E8A] block">send your Genplan for a 24h quote</span>
+        {/* Bottom Project Invitation Card with Pastel Mesh Gradient */}
+        <div
+          style={{
+            background:
+              'linear-gradient(125deg, #F6E2D3 0%, #FAF5F0 40%, #EBE2F4 100%)',
+          }}
+          className="p-8 sm:p-12 rounded-[24px] border border-white shadow-[0_10px_30px_rgba(20,20,19,0.05)] flex flex-col md:flex-row items-start md:items-center justify-between gap-8"
+        >
+          <div className="space-y-1.5 max-w-md">
+            <h3 className="font-sans text-3xl sm:text-4xl font-normal tracking-[-0.035em] leading-[1.08]">
+              <span className="text-[#141413] block">Your project</span>
+              <span className="text-[#141413] block">could be next</span>
+              <span className="text-[#8C8982] block">send your Genplan today</span>
             </h3>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
             <Link
               to="/contact"
-              className="px-6 py-3 rounded-full bg-[#101010] text-white font-sans text-xs sm:text-sm font-medium hover:bg-black/85 transition-colors inline-flex items-center gap-2"
+              className="px-6 py-3 rounded-full bg-[#141413] text-white font-sans text-xs sm:text-sm font-medium hover:bg-black/80 transition-colors inline-flex items-center gap-2"
             >
               <span>Start a project</span>
               <ArrowUpRight className="w-4 h-4" />
             </Link>
             <Link
               to="/projects"
-              className="px-5 py-3 rounded-full bg-white border border-[#101010]/15 text-[#101010] font-sans text-xs sm:text-sm font-medium hover:border-[#101010] transition-colors"
+              className="px-5 py-3 rounded-full bg-white border border-black/[0.08] text-[#141413] font-sans text-xs sm:text-sm font-medium hover:border-black/30 transition-colors"
             >
               See selected work
             </Link>
