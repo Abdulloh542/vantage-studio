@@ -1,72 +1,68 @@
-import { type ReactNode } from 'react';
+import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 
 interface RevealFrameProps {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
-  innerClassName?: string;
-  delay?: number;
+  /**
+   * Background color of the sliding reveal shutter.
+   * Defaults to the warm cream/alabaster surface (`#F5EDE2`).
+   */
   shutterColor?: string;
+  /**
+   * Optional stagger delay in seconds.
+   */
+  delay?: number;
 }
 
 /**
- * Omnya Lab-inspired Scroll-Down Curtain Reveal Frame:
- * - As the user scrolls down, a smooth architectural shutter lifts upward (y: 0% -> -102%)
- *   while the inner media settles from scale(1.07) -> scale(1.0) with cubic-bezier(0.16, 1, 0.3, 1).
- * - Content underneath is always opacity: 1 so it can never remain hidden or fail to appear.
+ * Fast, Snappy Scroll-Down Image Reveal (`RevealFrame`)
+ * - The shutter (`::after` equivalent) starts at `y: 0%` covering the frame and quickly lifts to `y: -102%`
+ *   in 0.42s when entering the viewport, while the inner media settles from `scale(1.04)` to `scale(1)`.
+ * - Underlying media is ALWAYS `opacity: 1`, so images never stay hidden or dim.
  */
-export function RevealFrame({
+export const RevealFrame: React.FC<RevealFrameProps> = ({
   children,
   className = '',
-  innerClassName = 'w-full h-full',
+  shutterColor = '#F5EDE2',
   delay = 0,
-  shutterColor = '#EDEAE4',
-}: RevealFrameProps) {
+}) => {
   const shouldReduceMotion = useReducedMotion();
 
   if (shouldReduceMotion) {
-    return (
-      <div className={`relative overflow-hidden ${className}`}>
-        <div className={innerClassName}>{children}</div>
-      </div>
-    );
+    return <div className={`relative overflow-hidden ${className}`}>{children}</div>;
   }
 
   return (
     <motion.div
-      initial={{ y: 28 }}
-      whileInView={{ y: 0 }}
-      viewport={{ once: true, amount: 0.08, margin: '0px 0px -40px 0px' }}
-      transition={{
-        duration: 0.9,
-        delay,
-        ease: [0.16, 1, 0.3, 1],
-      }}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.06, margin: '0px 0px -10px 0px' }}
       className={`relative overflow-hidden ${className}`}
     >
-      {/* Inner Media Scale Settle */}
       <motion.div
-        initial={{ scale: 1.07 }}
-        whileInView={{ scale: 1 }}
-        viewport={{ once: true, amount: 0.08, margin: '0px 0px -40px 0px' }}
+        variants={{
+          hidden: { scale: 1.04 },
+          visible: { scale: 1 },
+        }}
         transition={{
-          duration: 1.15,
+          duration: 0.52,
           delay,
           ease: [0.16, 1, 0.3, 1],
         }}
-        className={innerClassName}
+        className="w-full h-full will-change-transform"
       >
         {children}
       </motion.div>
 
-      {/* Top- Lifting Curtain Shutter (GPU-composited translate3d) */}
       <motion.div
         aria-hidden="true"
-        initial={{ y: '0%' }}
-        whileInView={{ y: '-102%' }}
-        viewport={{ once: true, amount: 0.08, margin: '0px 0px -40px 0px' }}
+        variants={{
+          hidden: { y: '0%' },
+          visible: { y: '-102%' },
+        }}
         transition={{
-          duration: 0.82,
+          duration: 0.42,
           delay,
           ease: [0.76, 0, 0.24, 1],
         }}
@@ -75,4 +71,4 @@ export function RevealFrame({
       />
     </motion.div>
   );
-}
+};

@@ -36,10 +36,10 @@ export function Footer() {
             {/* Official Instagram Badge Link */}
             <div>
               <a
-                href="https://www.instagram.com/atlas.studio.uz/"
+                href="https://www.instagram.com/atlasstudio.uz/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-white/[0.06] hover:bg-[#F5EDE2] text-white hover:text-[#321E13] border border-white/15 transition-all duration-200 text-xs font-mono tracking-wider group"
+                className="inline-flex items-center gap-2.5 px-4 py-2 bg-white/[0.06] hover:bg-[#F5EDE2] text-white hover:text-[#321E13] border border-white/15 transition-all duration-200 text-xs font-mono tracking-wider group"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -54,7 +54,7 @@ export function Footer() {
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                   <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
                 </svg>
-                <span>@atlas.studio.uz</span>
+                <span>@atlasstudio.uz</span>
                 <span className="opacity-60 group-hover:translate-x-0.5 transition-transform">↗</span>
               </a>
             </div>
@@ -62,7 +62,7 @@ export function Footer() {
             {/* Social Slashes (Ig / Be / X / Ln) */}
             <div className="flex items-center gap-2.5 text-xs sm:text-sm font-sans text-neutral-400">
               <a
-                href="https://www.instagram.com/atlas.studio.uz/"
+                href="https://www.instagram.com/atlasstudio.uz/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white font-medium hover:text-[#F5EDE2] transition-colors"
@@ -158,12 +158,12 @@ export function Footer() {
 
             <div>
               <a
-                href="https://www.instagram.com/atlas.studio.uz/"
+                href="https://www.instagram.com/atlasstudio.uz/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-white transition-colors inline-block text-neutral-400"
               >
-                instagram.com/atlas.studio.uz ↗
+                instagram.com/atlasstudio.uz ↗
               </a>
             </div>
 

@@ -34,11 +34,11 @@ export function SolumCallToAction() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-          className="font-sans text-3xl sm:text-5xl md:text-6xl font-normal tracking-tight text-white max-w-3xl leading-[1.08]"
+          className="font-logo text-3xl sm:text-5xl md:text-6xl font-normal uppercase tracking-[0.04em] text-white max-w-3xl leading-[1.06]"
         >
           Have an unbuilt vision?
           <span className="block text-neutral-400 font-light mt-2 sm:mt-3">
-            Let's bring it to reality.
+            Let&apos;s bring it to reality.
           </span>
         </motion.h2>
 
@@ -78,12 +78,12 @@ export function SolumCallToAction() {
           </a>
 
           <a
-            href="https://www.instagram.com/atlas.studio.uz/"
+            href="https://www.instagram.com/atlasstudio.uz/"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 border border-white/20 text-white font-mono text-xs uppercase tracking-wider hover:border-[#F5EDE2] hover:bg-[#F5EDE2] hover:text-[#321E13] transition-all duration-200"
           >
-            <span>@atlas.studio.uz</span>
+            <span>@atlasstudio.uz</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
         </motion.div>

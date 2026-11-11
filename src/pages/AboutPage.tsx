@@ -45,64 +45,64 @@ export function AboutPage() {
     { year: '01', title: 'Send Your Plans', detail: 'Share your DWG floor plans, SketchUp/Revit model, or reference moodboard. We review and scope within 24 hours.' },
     { year: '02', title: 'First Views in 1–2 Days', detail: 'We build the 3D scene and send camera angle previews so you can approve composition and framing early.' },
     { year: '03', title: 'Materials & Lighting', detail: 'We apply your exact facade finishes, landscaping, and time-of-day lighting with fast interactive feedback rounds.' },
-    { year: '04', title: 'Final 4K Stills & Film', detail: 'High-resolution 4K renders and cinematic walkthrough films delivered ready for billboards, web, and @atlas.studio.uz reels.' },
+    { year: '04', title: 'Final 4K Stills & Film', detail: 'High-resolution 4K renders and cinematic walkthrough films delivered ready for billboards, web, and @atlasstudio.uz reels.' },
   ];
 
   return (
-    <main className="w-full bg-[#EDEAE4] text-[#111111] pt-28 md:pt-36">
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+    <main className="w-full bg-[#F5EDE2] text-[#321E13] pt-28 md:pt-36">
+      <div className="max-w-[1440px] mx-auto px-5 sm:px-8 md:px-12">
         {/* Two-Tone Editorial Hero */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-16 md:pb-20 border-b border-[#111111]/12 items-end">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-16 md:pb-20 border-b border-[#321E13]/15 items-end">
           <div className="md:col-span-8">
             <div className="flex items-center gap-2.5 mb-4">
-              <span className="w-2 h-2 rounded-full bg-[#B86B4B]" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#6B6761]">
-                Atlas Studio // Monograph & Process
+              <span className="w-2 h-2 bg-[#321E13]" />
+              <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#321E13]/70">
+                Atlas Studio // Monograph &amp; Process
               </span>
             </div>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display text-4xl sm:text-6xl lg:text-7xl font-normal tracking-[-0.035em] text-[#111111] leading-[1.04]"
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="font-logo text-4xl sm:text-6xl lg:text-7xl font-normal uppercase tracking-[0.04em] text-[#321E13] leading-[1.02]"
             >
-              Our studio, <span className="text-[#87837D]">one team.</span>
+              Our Studio, One Team
             </motion.h1>
           </div>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             className="md:col-span-4"
           >
-            <span className="font-mono text-xs text-[#87837D] block mb-2 uppercase tracking-wider">
+            <span className="font-mono text-xs text-[#321E13]/65 block mb-2 uppercase tracking-wider">
               Tashkent · Dubai · Global
             </span>
-            <p className="font-sans text-sm sm:text-base text-[#6B6761] leading-relaxed">
+            <p className="font-sans text-sm sm:text-base text-[#321E13]/75 leading-relaxed">
               We work with developers, architects, and agencies worldwide — turning unbuilt plans into photorealistic 4K CGI and cinema films.
             </p>
           </motion.div>
         </div>
 
         {/* Full-Bleed Architectural Showcase with Curtain Reveal */}
-        <div className="py-14 md:py-20 border-b border-[#111111]/12">
+        <div className="py-14 md:py-20 border-b border-[#321E13]/15">
           <RevealFrame
-            shutterColor="#DFDBD2"
-            className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-[10px] bg-zinc-900 border border-[#111111]/12"
+            shutterColor="#EAE2D6"
+            className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden bg-zinc-900 border border-[#321E13]/15"
           >
             <img
               src={optimizeCloudinaryImage(
                 'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992587/projects/collective-dubai-hills/collective-dubai-hills_still_1.jpg',
-                2000
+                2200
               )}
               alt="Atlas Studio Architectural Visualization Showcase"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover scale-[1.035]"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent pointer-events-none" />
             <div className="absolute bottom-4 left-5 right-5 flex items-center justify-between font-mono text-[11px] text-white/90 uppercase tracking-[0.18em]">
               <span>ATLAS STUDIO // ARCHITECTURAL CGI</span>
-              <span>@ATLAS.STUDIO.UZ</span>
+              <span>@ATLASSTUDIO.UZ</span>
             </div>
           </RevealFrame>
         </div>

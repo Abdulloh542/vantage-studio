@@ -44,6 +44,7 @@ export default {
         mono: ['Geist Mono', 'JetBrains Mono', 'ui-monospace', 'monospace'],
         display: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         editorial: ['Inter', 'system-ui', 'sans-serif'],
+        logo: ['"Cormorant Garamond"', 'Georgia', 'serif'],
       },
       letterSpacing: {
         tighter: '-0.04em',

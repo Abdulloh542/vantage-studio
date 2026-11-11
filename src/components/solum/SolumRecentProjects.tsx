@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { PROJECTS } from '../../data/projects';
 import type { Project } from '../../types';
 import { RevealFrame } from '../common/RevealFrame';
@@ -10,14 +9,12 @@ interface SelectedProjectCardProps {
   project: Project;
   index: number;
   layoutClass: string;
-  revealDelay?: number;
 }
 
 function SelectedProjectCard({
   project,
   index,
   layoutClass,
-  revealDelay = 0,
 }: SelectedProjectCardProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -49,18 +46,19 @@ function SelectedProjectCard({
         className="block select-none"
       >
         <RevealFrame
-          shutterColor="#EDEAE4"
-          delay={revealDelay}
-          className={`relative w-full overflow-hidden rounded-[6px] bg-[#E2DDD5] border border-[#111111]/[0.08] ${
+          shutterColor="#F5EDE2"
+          delay={0}
+          className={`relative w-full overflow-hidden bg-[#EAE2D6] border border-[#321E13]/12 ${
             isVertical ? 'aspect-[9/16]' : 'aspect-[16/9]'
           }`}
         >
-          {/* Base High-Res Architectural Still */}
+          {/* Crisp, Un-Dimmed High-Resolution Architectural Render (scale-[1.035] trims any raw letterbox edge) */}
           <img
             src={project.heroImage}
             alt={project.title}
             loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.035]"
+            decoding="async"
+            className="w-full h-full object-cover scale-[1.035] group-hover:scale-[1.065] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
           />
 
           {/* Live Hover Cinema Video Preview */}
@@ -72,66 +70,64 @@ function SelectedProjectCard({
               loop
               playsInline
               preload="none"
-              className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-opacity duration-500 ${
+              className={`absolute inset-0 w-full h-full object-cover scale-[1.035] pointer-events-none transition-opacity duration-300 ${
                 isHovered ? 'opacity-100' : 'opacity-0'
               }`}
             />
           )}
 
-          {/* Subtle Gradient & Format Badge */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500 pointer-events-none" />
-
-          <div className="absolute top-3.5 left-3.5 right-3.5 flex items-center justify-between pointer-events-none">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/45 backdrop-blur-md text-[10px] font-mono uppercase tracking-[0.16em] text-white/95 border border-white/15">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#C48B71]" />
+          {/* Clean Architectural Corner Tags (Zero Dark Full-Frame Overlay) */}
+          <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#F5EDE2]/95 text-[10px] font-mono font-medium uppercase tracking-[0.14em] text-[#321E13] border border-[#321E13]/15 shadow-sm">
+              <span className="w-1.5 h-1.5 bg-[#321E13]" />
               {project.videoDuration || (isVertical ? '9:16 Reel' : '4K Film')}
             </span>
-            <span className="px-2.5 py-1 rounded-full bg-white/85 backdrop-blur-md text-[10px] font-mono uppercase tracking-[0.14em] text-[#111111]">
+            <span className="px-2.5 py-1 bg-[#321E13] text-[10px] font-mono font-medium uppercase tracking-[0.14em] text-[#F5EDE2]">
               0{index + 1}
             </span>
           </div>
 
-          {/* Omnya Lab Circular "View" Hover Pill */}
+          {/* Atlas Studio Architectural Hover Badge */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="px-5 py-2.5 rounded-full bg-[#EDEAE4]/95 text-[#111111] font-sans text-xs font-medium tracking-[-0.01em] shadow-[0_14px_34px_rgba(0,0,0,0.28)] flex items-center gap-1.5 opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]">
-              <span>View case study</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-[#B86B4B]" />
+            <div className="px-5 py-2.5 bg-[#F5EDE2] text-[#321E13] border border-[#321E13] font-mono text-xs font-semibold uppercase tracking-[0.12em] shadow-xl flex items-center gap-2 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-250">
+              <span>View Project</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
             </div>
           </div>
         </RevealFrame>
 
-        {/* Omnya Lab Minimalist Editorial Metadata Bar */}
-        <div className="pt-3.5 pb-3 border-b border-[#111111]/12 flex items-baseline justify-between gap-4">
+        {/* Clean Architectural Metadata Bar */}
+        <div className="pt-3.5 pb-3 border-b border-[#321E13]/15 flex items-baseline justify-between gap-4">
           <div className="min-w-0">
-            <h3 className="font-sans text-base sm:text-lg font-medium tracking-[-0.02em] text-[#111111] group-hover:text-[#B86B4B] transition-colors duration-200 truncate">
+            <h3 className="font-logo text-xl sm:text-2xl font-medium uppercase tracking-[0.03em] text-[#321E13] group-hover:opacity-75 transition-opacity truncate">
               {project.title}
             </h3>
-            <p className="font-sans text-xs text-[#6B6761] truncate mt-0.5">
+            <p className="font-sans text-xs text-[#321E13]/65 truncate mt-0.5">
               {project.subtitle}
             </p>
           </div>
-          <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#87837D] whitespace-nowrap shrink-0">
-            {project.location.split(',')[0]} — {project.year}
+          <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#321E13]/70 whitespace-nowrap shrink-0">
+            {project.location.split(',')[0]} &mdash; {project.year}
           </span>
         </div>
 
-        {/* Mini Architectural Plate Strip (3 Secondary Renders from Project) */}
+        {/* Secondary Architectural Plates Preview Strip */}
         {secondaryThumbs.length > 0 && (
           <div className="pt-2.5 flex items-center justify-between gap-2">
-            <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#87837D]">
-              +{project.gallery.length} Architectural Plates
+            <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#321E13]/60">
+              +{project.gallery.length} High-Res Plates
             </span>
             <div className="flex items-center gap-1.5">
               {secondaryThumbs.map((img, idx) => (
                 <div
                   key={idx}
-                  className="w-9 h-6 rounded-[3px] overflow-hidden border border-[#111111]/10 bg-[#DFDBD2]"
+                  className="w-10 h-6 overflow-hidden border border-[#321E13]/15 bg-[#EAE2D6]"
                 >
                   <img
                     src={img.url}
                     alt={`${project.title} render ${idx + 2}`}
                     loading="lazy"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover scale-[1.04]"
                   />
                 </div>
               ))}
@@ -144,7 +140,6 @@ function SelectedProjectCard({
 }
 
 export function SolumRecentProjects() {
-  // All 6 authentic Atlas Studio projects in curated architectural order
   const volga = PROJECTS.find((p) => p.slug === 'volga-park') || PROJECTS[0];
   const archInsight = PROJECTS.find((p) => p.slug === 'architecture-insight') || PROJECTS[2];
   const lotus = PROJECTS.find((p) => p.slug === 'lotus-mall') || PROJECTS[3];
@@ -155,47 +150,39 @@ export function SolumRecentProjects() {
   const curatedList: Array<{
     project: Project;
     layoutClass: string;
-    revealDelay: number;
   }> = [
     {
       // 01: Volga Park (16:9) — Wide left anchor (Cols 1-7)
       project: volga,
       layoutClass: 'md:col-span-7',
-      revealDelay: 0,
     },
     {
       // 02: Architecture Insight (9:16 Vertical) — Right offset gallery piece (Cols 9-12)
       project: archInsight,
-      layoutClass: 'md:col-span-4 md:col-start-9 md:mt-24',
-      revealDelay: 0.08,
+      layoutClass: 'md:col-span-4 md:col-start-9 md:mt-20',
     },
     {
       // 03: Navoi Plaza (9:16 Vertical) — Left inset vertical tower study (Cols 1-4)
       project: navoi,
-      layoutClass: 'md:col-span-4 md:col-start-1 md:mt-6',
-      revealDelay: 0.04,
+      layoutClass: 'md:col-span-4 md:col-start-1 md:mt-4',
     },
     {
       // 04: Lotus Mall & 5 Star Hotel (16:9) — Right sweeping commercial landmark (Cols 6-12)
       project: lotus,
-      layoutClass: 'md:col-span-7 md:col-start-6 md:mt-20',
-      revealDelay: 0.1,
+      layoutClass: 'md:col-span-7 md:col-start-6 md:mt-16',
     },
     {
       // 05: Bunker 37 (16:9) — Left-center cultural monument (Cols 1-6)
       project: bunker,
-      layoutClass: 'md:col-span-6 md:col-start-1 md:mt-12',
-      revealDelay: 0.04,
+      layoutClass: 'md:col-span-6 md:col-start-1 md:mt-8',
     },
     {
       // 06: Collective Dubai Hills (16:9) — Right-offset resort showcase (Cols 7-12)
       project: collective,
-      layoutClass: 'md:col-span-6 md:col-start-7 md:mt-32',
-      revealDelay: 0.1,
+      layoutClass: 'md:col-span-6 md:col-start-7 md:mt-24',
     },
   ];
 
-  // Collect 16 authentic renders across all 6 projects for Omnya Lab's dual-row sliding work banner
   const allRenders = PROJECTS.flatMap((p) =>
     p.gallery.slice(0, 3).map((g) => ({
       url: g.url,
@@ -206,181 +193,167 @@ export function SolumRecentProjects() {
   const bottomRowRenders = [...allRenders.slice(8, 16), ...allRenders.slice(8, 16)];
 
   return (
-    <section
-      style={{
-        backgroundColor: '#EDEAE4',
-        backgroundImage:
-          'radial-gradient(120% 70% at 12% -10%, rgba(232, 208, 172, 0.32), transparent 60%), radial-gradient(90% 60% at 100% 110%, rgba(214, 196, 168, 0.22), transparent 60%)',
-      }}
-      className="relative z-10 w-full text-[#111111] pt-20 md:pt-32 pb-20 md:pb-28 border-b border-[#111111]/10 overflow-hidden"
-    >
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+    <section className="relative z-10 w-full bg-[#F5EDE2] text-[#321E13] pt-16 sm:pt-20 md:pt-28 pb-16 sm:pb-20 md:pb-28 border-b border-[#321E13]/12 overflow-hidden">
+      <div className="max-w-[1440px] mx-auto px-5 sm:px-8 md:px-12">
         {/* ========================================================= */}
-        {/* 1) OMNYA LAB STATEMENT INTRO ("Show your project...")     */}
+        {/* 1) WHAT WE DO — CLEAR STUDIO IDENTITY & CAPABILITIES       */}
         {/* ========================================================= */}
-        <div className="max-w-4xl pb-20 md:pb-28 border-b border-[#111111]/10">
-          <div className="flex items-center gap-2.5 mb-5">
-            <span className="w-2 h-2 rounded-full bg-[#B86B4B]" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#6B6761]">
-              Atlas Studio // Spatial CGI & Architectural Film
-            </span>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 pb-16 md:pb-24 border-b border-[#321E13]/15 items-start">
+          {/* Left Rail: What We Do */}
+          <div className="md:col-span-3">
+            <div className="flex items-center gap-2.5">
+              <span className="w-2 h-2 bg-[#321E13] inline-block" />
+              <span className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-[#321E13] font-semibold">
+                WHAT WE DO
+              </span>
+            </div>
+            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.16em] text-[#321E13]/60">
+              Atlas Studio // Archviz &amp; CGI
+            </p>
           </div>
 
-          <h2 className="font-display text-[clamp(2.25rem,5.2vw,4.5rem)] font-normal tracking-[-0.035em] leading-[1.06] text-[#111111]">
-            <span className="inline-block overflow-hidden py-1 align-bottom mr-[0.22em]">
-              <motion.span
-                initial={{ y: '110%' }}
-                whileInView={{ y: '0%' }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-block"
+          {/* Right Stage: Clear Answer to Who We Are & What We Do */}
+          <div className="md:col-span-9 space-y-6">
+            <h2 className="font-logo text-[clamp(2rem,4.4vw,3.75rem)] font-normal uppercase tracking-[0.03em] leading-[1.06] text-[#321E13]">
+              We turn architectural plans and 3D models into photorealistic 4K imagery and cinema films.
+            </h2>
+
+            <p className="font-sans text-sm sm:text-base md:text-lg text-[#321E13]/80 leading-relaxed max-w-3xl">
+              Atlas Studio is an architectural visualization and creative production studio. We partner with real estate developers, architects, and property brands to visualize unbuilt exteriors, interiors, and masterplans — so buyers and investors feel the space and commit before construction begins.
+            </p>
+
+            {/* 4 Clear Service Pillars */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+              {[
+                '01 // Exterior & Interior CGI',
+                '02 // 4K Walkthrough Films',
+                '03 // 9:16 Vertical Reels',
+                '04 // Before & After Studies',
+              ].map((item) => (
+                <div
+                  key={item}
+                  className="px-3.5 py-2.5 bg-white/60 border border-[#321E13]/15 font-mono text-[11px] uppercase tracking-[0.1em] text-[#321E13] font-medium"
+                >
+                  {item}
+                </div>
+              ))}
+            </div>
+
+            {/* Bespoke Atlas Studio Architectural Buttons (No Omnya Brown Pills) */}
+            <div className="pt-2 flex flex-wrap items-center gap-4">
+              <Link
+                to="/contact"
+                className="group inline-flex items-stretch bg-[#321E13] text-[#F5EDE2] hover:bg-[#101010] transition-colors duration-200 border border-[#321E13]"
               >
-                Show your project
-              </motion.span>
-            </span>
-            <span className="inline-block overflow-hidden py-1 align-bottom text-[#87837D]">
-              <motion.span
-                initial={{ y: '110%' }}
-                whileInView={{ y: '0%' }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.75, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-block"
+                <span className="py-3 px-5 sm:px-6 font-mono text-xs uppercase tracking-[0.14em] font-semibold flex items-center">
+                  Start a Project
+                </span>
+                <span className="w-10 sm:w-11 border-l border-[#F5EDE2]/20 flex items-center justify-center group-hover:bg-white group-hover:text-[#101010] transition-colors duration-200">
+                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                </span>
+              </Link>
+
+              <Link
+                to="/projects"
+                className="solum-btn px-5 sm:px-6 py-3 border border-[#321E13] text-xs font-mono uppercase tracking-[0.14em] font-semibold text-[#321E13] hover:bg-[#321E13] hover:text-[#F5EDE2] transition-colors duration-200"
               >
-                the way it will be
-              </motion.span>
-            </span>
-          </h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 font-sans text-base sm:text-lg text-[#6B6761] leading-relaxed max-w-2xl"
-          >
-            3D architectural visualizations, 9:16 vertical reels, and 4K cinema walkthroughs so buyers and investors feel the space — and say yes before the concrete is poured.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-8 flex flex-wrap items-center gap-3.5"
-          >
-            <Link
-              to="/contact"
-              className="group inline-flex items-center gap-2 rounded-full bg-[#B86B4B] hover:bg-[#A35B3D] text-white px-6 py-3 text-xs sm:text-sm font-medium tracking-[-0.01em] transition-all duration-300"
-            >
-              <span>Start a project</span>
-              <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Link>
-            <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 rounded-full border border-[#111111]/20 hover:border-[#111111] bg-white/50 hover:bg-white text-[#111111] px-6 py-3 text-xs sm:text-sm font-medium tracking-[-0.01em] transition-all duration-300"
-            >
-              <span>See our work ({PROJECTS.length})</span>
-            </Link>
-          </motion.div>
-
-          <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.18em] text-[#87837D]">
-            Photorealistic 4K CGI &middot; First views in 1–2 days &middot; Full launch in 1 week
-          </p>
+                <span>All Projects ({PROJECTS.length})</span>
+                <span className="btn-arrow ml-3">
+                  <ArrowRight className="w-4 h-4 inline-block" />
+                </span>
+              </Link>
+            </div>
+          </div>
         </div>
 
         {/* ========================================================= */}
-        {/* 2) SELECTED WORK HEADER                                   */}
+        {/* 2) SELECTED PROJECTS HEADER                               */}
         {/* ========================================================= */}
-        <div className="pt-14 md:pt-20 pb-10 md:pb-14 flex items-baseline justify-between border-b border-[#111111]/10">
+        <div className="pt-12 md:pt-16 pb-8 md:pb-12 flex flex-col sm:flex-row sm:items-baseline justify-between gap-4 border-b border-[#321E13]/15">
           <div className="flex items-center gap-3">
-            <span className="w-2 h-2 rounded-full bg-[#111111]" />
-            <h2 className="font-sans text-xl sm:text-2xl font-medium tracking-[-0.02em] text-[#111111]">
-              Selected work
+            <span className="w-2 h-2 bg-[#321E13]" />
+            <h2 className="font-logo text-2xl sm:text-4xl font-normal uppercase tracking-[0.04em] text-[#321E13]">
+              Selected Projects
             </h2>
           </div>
-          <span className="font-mono text-xs sm:text-sm text-[#6B6761] tabular-nums">
-            0{curatedList.length} Featured Commissions
+          <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#321E13]/70 tabular-nums">
+            0{curatedList.length} Featured Commissions // 16:9 &amp; 9:16 Archive
           </span>
         </div>
 
         {/* ========================================================= */}
         {/* 3) ASYMMETRIC 12-COLUMN EXHIBITION GRID (ALL 6 PROJECTS)  */}
         {/* ========================================================= */}
-        <div className="pt-12 md:pt-16 grid grid-cols-1 md:grid-cols-12 gap-y-16 md:gap-y-20 md:gap-x-8 items-start">
+        <div className="pt-10 md:pt-14 grid grid-cols-1 md:grid-cols-12 gap-y-14 md:gap-y-16 md:gap-x-8 items-start">
           {curatedList.map((item, idx) => (
             <SelectedProjectCard
               key={item.project.slug}
               project={item.project}
               index={idx}
               layoutClass={item.layoutClass}
-              revealDelay={item.revealDelay}
             />
           ))}
         </div>
 
         {/* ========================================================= */}
-        {/* 4) OMNYA LAB DUAL-ROW SLIDING "SEE ALL THE WORK" BANNER   */}
+        {/* 4) DUAL-ROW SLIDING ARCHIVE BANNER                        */}
         {/* ========================================================= */}
-        <div className="mt-20 md:mt-28">
+        <div className="mt-16 md:mt-24">
           <Link
             to="/projects"
-            aria-label="See all the work"
-            className="group relative block w-full h-[260px] sm:h-[320px] md:h-[360px] rounded-[10px] overflow-hidden border border-[#111111]/12 bg-[#141413]"
+            aria-label="Explore All Projects"
+            className="group relative block w-full h-[240px] sm:h-[300px] md:h-[340px] overflow-hidden border border-[#321E13]/20 bg-[#141413]"
           >
             {/* Dual Counter-Scrolling Render Rows */}
-            <div className="absolute inset-0 flex flex-col justify-between gap-2.5 py-2.5 opacity-65 group-hover:opacity-80 transition-opacity duration-500">
+            <div className="absolute inset-0 flex flex-col justify-between gap-2.5 py-2.5 opacity-75 group-hover:opacity-90 transition-opacity duration-500">
               {/* Row 1: Slides Left */}
-              <div className="flex items-center gap-2.5 w-max animate-[marqueeLeft_42s_linear_infinite]">
+              <div className="flex items-center gap-2.5 w-max animate-[marqueeLeft_40s_linear_infinite]">
                 {topRowRenders.map((item, i) => (
                   <div
                     key={`top-${i}`}
-                    className="h-[115px] sm:h-[145px] md:h-[162px] aspect-[16/10] rounded-[5px] overflow-hidden shrink-0 bg-zinc-900"
+                    className="h-[105px] sm:h-[135px] md:h-[152px] aspect-[16/10] overflow-hidden shrink-0 bg-zinc-900"
                   >
                     <img
                       src={item.url}
                       alt={item.title}
                       loading="lazy"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover scale-[1.04]"
                     />
                   </div>
                 ))}
               </div>
 
               {/* Row 2: Slides Right */}
-              <div className="flex items-center gap-2.5 w-max animate-[marqueeRight_46s_linear_infinite]">
+              <div className="flex items-center gap-2.5 w-max animate-[marqueeRight_44s_linear_infinite]">
                 {bottomRowRenders.map((item, i) => (
                   <div
                     key={`bot-${i}`}
-                    className="h-[115px] sm:h-[145px] md:h-[162px] aspect-[16/10] rounded-[5px] overflow-hidden shrink-0 bg-zinc-900"
+                    className="h-[105px] sm:h-[135px] md:h-[152px] aspect-[16/10] overflow-hidden shrink-0 bg-zinc-900"
                   >
                     <img
                       src={item.url}
                       alt={item.title}
                       loading="lazy"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover scale-[1.04]"
                     />
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Radial Dark Vignette Overlay */}
-            <div
-              style={{
-                background:
-                  'radial-gradient(ellipse at center, rgba(17,17,17,0.68) 0%, rgba(17,17,17,0.38) 55%, rgba(17,17,17,0.62) 100%)',
-              }}
-              className="absolute inset-0 pointer-events-none"
-            />
+            {/* Subtle Center Backdrop for Button */}
+            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300 pointer-events-none" />
 
-            {/* Centered Text & Circular Arrow Button */}
-            <div className="relative z-10 h-full flex items-center justify-center gap-4 px-6 text-white">
-              <span className="font-display text-2xl sm:text-4xl md:text-5xl font-normal tracking-[-0.03em]">
-                See all the work
-              </span>
-              <span className="w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-[#B86B4B] group-hover:bg-white group-hover:text-[#111111] text-white flex items-center justify-center transition-all duration-300 shadow-lg group-hover:scale-105">
-                <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </span>
+            {/* Centered Atlas Studio Architectural Button */}
+            <div className="relative z-10 h-full flex items-center justify-center px-6">
+              <div className="inline-flex items-stretch bg-[#F5EDE2] text-[#321E13] border border-[#321E13] shadow-2xl group-hover:bg-white transition-colors duration-200">
+                <span className="px-6 sm:px-8 py-3.5 sm:py-4 font-logo text-xl sm:text-2xl md:text-3xl uppercase tracking-[0.06em]">
+                  Explore All Projects
+                </span>
+                <span className="w-12 sm:w-14 border-l border-[#321E13]/20 flex items-center justify-center bg-[#321E13] text-[#F5EDE2]">
+                  <ArrowUpRight className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </div>
             </div>
           </Link>
         </div>

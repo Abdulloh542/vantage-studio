@@ -1,22 +1,18 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { AtlasLogo } from '../common/AtlasLogo';
 
 export function SolumHero() {
   const shouldReduceMotion = useReducedMotion();
   const heroRef = useRef<HTMLDivElement>(null);
 
-  // Smooth scroll-linked hero depth (Omnya Lab style)
   const { scrollYProgress } = useScroll({
     target: heroRef,
     offset: ['start start', 'end start'],
   });
-  const mediaY = useTransform(scrollYProgress, [0, 1], ['0%', '10%']);
-  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.06]);
-  const copyY = useTransform(scrollYProgress, [0, 1], ['0%', '-18%']);
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.78], [1, 0]);
+  const mediaY = useTransform(scrollYProgress, [0, 1], ['0%', '8%']);
+  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]);
 
   const heroImage = '/videos/hero_poster.webp';
   const heroVideoUrl = '/videos/hero.mp4';
@@ -24,7 +20,7 @@ export function SolumHero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen w-full bg-[#111111] text-white flex flex-col justify-end pb-16 md:pb-20 overflow-hidden select-none"
+      className="relative min-h-screen w-full bg-[#101010] text-white flex flex-col justify-end pb-12 sm:pb-16 md:pb-20 overflow-hidden select-none"
     >
       {/* ========================================================= */}
       {/* 1) HERO BACKGROUND: Bright Ambient Cinematic Video        */}
@@ -39,11 +35,11 @@ export function SolumHero() {
           className="w-full h-full will-change-transform"
         >
           <motion.div
-            initial={shouldReduceMotion ? false : { scale: 1.07 }}
+            initial={shouldReduceMotion ? false : { scale: 1.05 }}
             animate={{ scale: 1 }}
             transition={{
-              duration: 1.45,
-              delay: 0.35,
+              duration: 1.2,
+              delay: 0.3,
               ease: [0.16, 1, 0.3, 1],
             }}
             className="w-full h-full will-change-transform"
@@ -63,104 +59,72 @@ export function SolumHero() {
           </motion.div>
         </motion.div>
 
-        {/* Soft bottom vignette for crisp editorial legibility */}
-        <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/65 via-black/25 to-transparent pointer-events-none" />
+        {/* Top & bottom subtle gradients so top-left Navbar logo and bottom Hero text are 100% legible */}
+        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/55 via-black/20 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/75 via-black/30 to-transparent pointer-events-none" />
       </div>
 
       {/* ========================================================= */}
-      {/* 2) HERO STAGE: Atlas Studio Logo, Statement & Action      */}
+      {/* 2) HERO STAGE: Who We Are / What We Do & Atlas CTA Button */}
       {/* ========================================================= */}
-      <motion.div
-        style={
-          shouldReduceMotion
-            ? undefined
-            : { y: copyY, opacity: copyOpacity }
-        }
-        className="relative z-30 px-6 sm:px-10 md:px-14 lg:px-20 will-change-transform"
-      >
+      <div className="relative z-30 max-w-[1440px] w-full mx-auto px-5 sm:px-8 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-end">
-          {/* Left Stage: Bespoke Atlas Studio Logo & Subtitle */}
-          <div className="md:col-span-8">
-            <div className="overflow-hidden mb-5 py-1 drop-shadow-[0_4px_20px_rgba(0,0,0,0.75)]">
-              <motion.div
-                initial={shouldReduceMotion ? false : { y: '105%' }}
-                animate={{ y: '0%' }}
-                transition={{
-                  duration: 0.9,
-                  delay: 0.52,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              >
-                <h1 className="sr-only">Atlas Studio — Architectural Visualization & Spatial CGI</h1>
-                <AtlasLogo
-                  variant="stacked"
-                  className="h-20 sm:h-24 md:h-28 lg:h-32 w-auto text-white"
-                />
-              </motion.div>
-            </div>
+          {/* Left Stage: Main Value Statement (No Duplicate Logo) */}
+          <div className="md:col-span-8 lg:col-span-9">
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="flex items-center gap-2.5 mb-3"
+            >
+              <span className="w-1.5 h-1.5 bg-white inline-block" />
+              <span className="font-mono text-[11px] sm:text-xs uppercase tracking-[0.22em] text-white/90">
+                Architectural Visualization &amp; Spatial CGI Studio
+              </span>
+            </motion.div>
+
+            <motion.h1
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="font-logo text-[clamp(2.2rem,5.2vw,4.6rem)] font-normal uppercase tracking-[0.03em] leading-[1.02] text-white mb-4 drop-shadow-[0_4px_20px_rgba(0,0,0,0.75)]"
+            >
+              Photorealistic 3D CGI, Interactive Spaces &amp; Cinema Films
+            </motion.h1>
 
             <motion.p
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.85,
-                delay: 0.68,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="font-sans text-sm sm:text-base md:text-lg text-white/90 font-normal leading-relaxed max-w-xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.75)]"
+              transition={{ duration: 0.8, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              className="font-sans text-sm sm:text-base md:text-lg text-white/90 font-normal leading-relaxed max-w-2xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.75)]"
             >
-              Architecture and visual studio creating photorealistic 3D CGI, interactive experiences, and cinematic films so buyers feel your space before it is built.
+              We transform architectural blueprints and 3D models into high-converting 4K renders, 9:16 vertical reels, and cinematic walkthroughs for unbuilt real estate.
             </motion.p>
           </div>
 
-          {/* Right Stage: Minimalist Pill & Action Buttons */}
-          <div className="md:col-span-4 flex flex-wrap md:justify-end items-center gap-3">
+          {/* Right Stage: Signature Atlas Studio Split Architectural Button */}
+          <div className="md:col-span-4 lg:col-span-3 flex flex-col justify-end items-start md:items-end">
             <motion.div
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+              initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.76,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              transition={{ duration: 0.7, delay: 0.62, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-wrap items-center gap-3"
             >
               <Link
                 to="/contact"
-                className="group inline-flex items-center gap-2.5 rounded-full bg-[#B86B4B] hover:bg-[#A35B3D] text-white px-6 py-3.5 text-xs sm:text-sm font-medium tracking-[-0.01em] transition-all duration-300 shadow-[0_12px_32px_rgba(0,0,0,0.3)]"
+                className="group inline-flex items-stretch bg-white text-[#101010] hover:bg-[#F5EDE2] transition-all duration-200 shadow-[0_10px_30px_rgba(0,0,0,0.35)] border border-white"
               >
-                <span>Start a project</span>
-                <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
-              <Link
-                to="/projects"
-                className="group inline-flex items-center gap-2 rounded-full bg-white/12 hover:bg-white/22 backdrop-blur-md border border-white/25 text-white px-5 py-3.5 text-xs sm:text-sm font-medium tracking-[-0.01em] transition-all duration-300"
-              >
-                <span>See our work</span>
+                <div className="py-3.5 px-5 sm:px-6 font-mono text-xs sm:text-sm font-semibold uppercase tracking-[0.08em] flex items-center whitespace-nowrap">
+                  Start a Project
+                </div>
+                <div className="w-11 sm:w-12 border-l border-[#101010]/15 flex items-center justify-center bg-white group-hover:bg-[#321E13] group-hover:text-white transition-colors duration-200">
+                  <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-200" />
+                </div>
               </Link>
             </motion.div>
           </div>
         </div>
-
-        {/* Omnya Lab Minimalist Bottom Scroll Indicator */}
-        <div className="mt-10 pt-5 border-t border-white/15 flex items-center justify-between text-[11px] font-mono uppercase tracking-[0.2em] text-white/75">
-          <span>Photorealistic 4K CGI · First views in 1–2 days</span>
-          <div className="flex items-center gap-3">
-            <span>Scroll</span>
-            <span className="relative w-[1px] h-7 bg-white/25 overflow-hidden inline-block">
-              <motion.span
-                animate={{ y: ['-100%', '100%'] }}
-                transition={{
-                  duration: 1.8,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-                className="block w-full h-full bg-white"
-              />
-            </span>
-          </div>
-        </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
