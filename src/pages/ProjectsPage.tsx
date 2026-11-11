@@ -45,8 +45,6 @@ export function ProjectsPage() {
   const pLotus = PROJECTS.find((p) => p.slug === 'lotus-mall') || PROJECTS[3];
   const pNavoi = PROJECTS.find((p) => p.slug === 'navoi-plaza') || PROJECTS[4];
   const pDubai = PROJECTS.find((p) => p.slug === 'collective-dubai-hills') || PROJECTS[5];
-  const pPapes = PROJECTS.find((p) => p.slug === 'papes-residences') || PROJECTS[6];
-  const pPark = PROJECTS.find((p) => p.slug === 'park-seefeld') || PROJECTS[7];
 
   return (
     <main className="w-full bg-white text-[#101010] pt-28 md:pt-36 pb-16 md:pb-24">
@@ -244,28 +242,6 @@ export function ProjectsPage() {
                     />
                   </div>
                 )}
-
-                {/* 6. Papes Residences + Park Seefeld - Side-by-Side */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start pt-2">
-                  {pPapes && (
-                    <div className="col-span-12 lg:col-span-6">
-                      <ProjectExhibitionCard
-                        project={pPapes}
-                        index={6}
-                        layoutVariant="split-landscape"
-                      />
-                    </div>
-                  )}
-                  {pPark && (
-                    <div className="col-span-12 lg:col-span-6">
-                      <ProjectExhibitionCard
-                        project={pPark}
-                        index={7}
-                        layoutVariant="split-landscape"
-                      />
-                    </div>
-                  )}
-                </div>
               </motion.div>
             ) : (
               /* Filtered Category Layout */

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { optimizeCloudinaryImage } from '../utils/media';
+import { RevealFrame } from '../components/common/RevealFrame';
 
 export function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -23,8 +25,10 @@ export function ContactPage() {
       description:
         'Revit, SketchUp, Rhino, or 2D CAD floor plans and elevations. No 3D model? We build it directly from your drawings.',
       formats: '.DWG · .SKP · .RVT · .FBX · .PDF',
-      image:
-        'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=80',
+      image: optimizeCloudinaryImage(
+        'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990861/projects/effect-archi/make_plan_3d_realistic_2K_fb6c40.jpg',
+        900
+      ),
     },
     {
       step: '02',
@@ -32,8 +36,10 @@ export function ContactPage() {
       description:
         'Facade materials, wood veneers, concrete finishes, metal coatings, and paint codes (RAL / Pantone) or reference photos.',
       formats: 'Material Board · Manufacturer Codes · Photos',
-      image:
-        'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1000&q=80',
+      image: optimizeCloudinaryImage(
+        'https://res.cloudinary.com/mvmsbgon/image/upload/v1789982065/projects/bunker-37/Create_an_architectural_concept_board_20.jpg',
+        900
+      ),
     },
     {
       step: '03',
@@ -41,8 +47,10 @@ export function ContactPage() {
       description:
         'Target time-of-day: golden hour dusk, soft overcast daylight, twilight blue hour, or nocturnal interior illumination.',
       formats: 'Moodboard · Reference Renders · Style Guide',
-      image:
-        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80',
+      image: optimizeCloudinaryImage(
+        'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990146/projects/volga-park/Architectural_close_view_sunny_day_20260.jpg',
+        900
+      ),
     },
     {
       step: '04',
@@ -50,86 +58,82 @@ export function ContactPage() {
       description:
         'Drone aerial plates, site photos for photorealistic composite matching, and preferred camera view directions.',
       formats: 'Drone 4K Stills · GPS Coordinates · Marked Plans',
-      image:
-        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80',
+      image: optimizeCloudinaryImage(
+        'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990222/projects/volga-park/aerial_overview_4k_202c48.jpg',
+        900
+      ),
     },
   ];
 
   return (
-    <main className="w-full bg-white text-[#101010] select-none">
+    <main className="w-full bg-[#EDEAE4] text-[#111111] select-none">
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 1: SOLUM CONTACT & MINIMALIST FORM
+          SECTION 1: OMNYA × ATLAS STUDIO CONTACT & MINIMALIST FORM
           ───────────────────────────────────────────────────────────── */}
-      <section className="pt-28 md:pt-36 pb-20 md:pb-28 border-b border-[#101010]/12">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-10">
+      <section className="pt-28 md:pt-36 pb-20 md:pb-28 border-b border-[#111111]/12">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-            {/* Left Column: Heading & Key Details */}
-            <div className="lg:col-span-6 lg:pr-8 lg:border-r border-[#101010]/12 space-y-12">
+            {/* Left Column: Two-Tone Editorial Heading & Key Details */}
+            <div className="lg:col-span-6 lg:pr-8 lg:border-r border-[#111111]/12 space-y-12">
               <div>
-                <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[108px] font-semibold tracking-[-0.06em] text-[#101010] leading-[0.9] uppercase mb-6">
-                  Contact
+                <div className="flex items-center gap-2.5 mb-4">
+                  <span className="w-2 h-2 rounded-full bg-[#B86B4B]" />
+                  <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#6B6761]">
+                    Direct Studio Line // Response Within 24h
+                  </span>
+                </div>
+                <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal tracking-[-0.04em] text-[#111111] leading-[1.02] mb-5">
+                  Talk <span className="text-[#87837D]">to us</span>
                 </h1>
-                <p className="font-sans text-sm sm:text-base text-[#757575] leading-relaxed max-w-md">
-                  We believe that great architecture is about creating spaces that inspire, connect, and endure.
+                <p className="font-sans text-sm sm:text-base text-[#6B6761] leading-relaxed max-w-md">
+                  Send us your floor plans, 3D model, or brief. We reply within 24 hours with a clear timeline and first camera views in 1–2 days.
                 </p>
               </div>
 
               {/* Coordinates List */}
-              <div className="space-y-8 pt-2">
+              <div className="space-y-7 pt-2">
                 <div>
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1">
+                  <span className="font-mono text-xs uppercase tracking-wider text-[#87837D] block mb-1">
                     Email
                   </span>
                   <a
                     href="mailto:hello@atlasstudio.uz"
-                    className="font-sans font-semibold text-lg sm:text-xl text-[#101010] hover:underline"
+                    className="font-sans font-medium text-lg sm:text-xl text-[#111111] hover:text-[#B86B4B] transition-colors"
                   >
                     hello@atlasstudio.uz
                   </a>
                 </div>
 
                 <div>
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1">
+                  <span className="font-mono text-xs uppercase tracking-wider text-[#87837D] block mb-1">
                     Instagram
                   </span>
                   <a
                     href="https://www.instagram.com/atlas.studio.uz/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-sans font-semibold text-lg sm:text-xl text-[#101010] hover:underline inline-flex items-center gap-1.5"
+                    className="font-sans font-medium text-lg sm:text-xl text-[#111111] hover:text-[#B86B4B] transition-colors inline-flex items-center gap-1.5"
                   >
                     <span>@atlas.studio.uz</span>
-                    <span className="text-sm">↗</span>
+                    <span className="text-sm text-[#B86B4B]">↗</span>
                   </a>
                 </div>
 
                 <div>
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1">
-                    Phone
+                  <span className="font-mono text-xs uppercase tracking-wider text-[#87837D] block mb-1">
+                    Studio Hubs
                   </span>
-                  <a
-                    href="tel:+442079460920"
-                    className="font-sans font-semibold text-lg sm:text-xl text-[#101010] hover:underline"
-                  >
-                    +44 (0) 20 7946 0920
-                  </a>
-                </div>
-
-                <div>
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1">
-                    Address
-                  </span>
-                  <p className="font-sans font-semibold text-lg sm:text-xl text-[#101010]">
-                    18 Berkeley Square, Mayfair, London W1J 6BQ
+                  <p className="font-sans font-medium text-lg sm:text-xl text-[#111111]">
+                    Tashkent &middot; Dubai &middot; Global Delivery
                   </p>
                 </div>
 
                 <div>
-                  <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-1">
+                  <span className="font-mono text-xs uppercase tracking-wider text-[#87837D] block mb-1">
                     Office hours
                   </span>
-                  <p className="font-sans font-semibold text-lg sm:text-xl text-[#101010]">
-                    Monday to Friday: 9:00 AM – 6:00 PM
+                  <p className="font-sans font-medium text-base sm:text-lg text-[#6B6761]">
+                    Monday to Saturday: 9:00 AM – 7:00 PM
                   </p>
                 </div>
               </div>
@@ -138,30 +142,14 @@ export function ContactPage() {
             {/* Right Column: Follow Us & Clean Form */}
             <div className="lg:col-span-6 lg:pl-4">
               {/* Follow Us Bar */}
-              <div className="flex items-center justify-between pb-5 mb-8 border-b border-[#101010]/12 text-xs font-mono text-[#757575]">
-                <span>Follow us:</span>
-                <div className="flex items-center gap-5 text-xs sm:text-sm text-[#101010]">
-                  <a
-                    href="https://x.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:opacity-60 transition-opacity font-semibold tracking-wider uppercase"
-                  >
-                    𝕏
-                  </a>
-                  <a
-                    href="https://linkedin.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:opacity-60 transition-opacity font-semibold tracking-wider uppercase"
-                  >
-                    LinkedIn
-                  </a>
+              <div className="flex items-center justify-between pb-5 mb-8 border-b border-[#111111]/12 text-xs font-mono text-[#6B6761]">
+                <span>Direct channels:</span>
+                <div className="flex items-center gap-5 text-xs sm:text-sm text-[#111111]">
                   <a
                     href="https://www.instagram.com/atlas.studio.uz/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:opacity-60 transition-opacity font-semibold tracking-wider uppercase"
+                    className="hover:text-[#B86B4B] transition-colors font-medium tracking-wider uppercase"
                   >
                     Instagram (@atlas.studio.uz)
                   </a>
@@ -170,17 +158,17 @@ export function ContactPage() {
 
               {/* Minimalist Form */}
               {submitted ? (
-                <div className="bg-[#F9F9F8] p-10 md:p-14 border border-[#101010]/12 text-center">
-                  <CheckCircle2 className="w-10 h-10 text-[#101010] mx-auto mb-4" />
-                  <h3 className="font-display text-2xl md:text-3xl font-semibold uppercase text-[#101010] mb-2 tracking-tight">
-                    Inquiry Received
+                <div className="bg-white/75 backdrop-blur-sm p-10 md:p-14 rounded-[10px] border border-[#111111]/12 text-center">
+                  <CheckCircle2 className="w-10 h-10 text-[#B86B4B] mx-auto mb-4" />
+                  <h3 className="font-display text-2xl md:text-3xl font-normal text-[#111111] mb-2 tracking-tight">
+                    Inquiry received
                   </h3>
-                  <p className="font-sans text-xs sm:text-sm text-[#757575] leading-relaxed mb-8 max-w-md mx-auto">
-                    Thank you. An atelier director will review your project details and respond within 24 hours with a production proposal.
+                  <p className="font-sans text-xs sm:text-sm text-[#6B6761] leading-relaxed mb-8 max-w-md mx-auto">
+                    Thank you. An Atlas Studio director will review your project details and respond within 24 hours with a production proposal.
                   </p>
                   <button
                     onClick={() => setSubmitted(false)}
-                    className="px-6 py-3 bg-[#101010] text-white text-xs font-mono uppercase tracking-wider hover:bg-black transition-colors cursor-pointer"
+                    className="px-6 py-3 rounded-full bg-[#111111] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#B86B4B] transition-colors cursor-pointer"
                   >
                     Send Another Message
                   </button>
@@ -189,7 +177,7 @@ export function ContactPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Name */}
                   <div>
-                    <label className="block font-sans text-xs text-[#757575] mb-2">
+                    <label className="block font-sans text-xs text-[#6B6761] mb-2">
                       Name
                     </label>
                     <input
@@ -197,14 +185,14 @@ export function ContactPage() {
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="John Doe"
-                      className="w-full bg-[#F9F9F8] border border-[#101010]/10 px-4 py-3 text-sm font-sans text-[#101010] placeholder-[#757575]/50 focus:outline-none focus:border-[#101010] transition-colors rounded-none"
+                      placeholder="Your name or studio"
+                      className="w-full bg-white/75 border border-[#111111]/15 px-4 py-3.5 text-sm font-sans text-[#111111] placeholder-[#87837D] focus:outline-none focus:border-[#B86B4B] transition-colors rounded-[6px]"
                     />
                   </div>
 
                   {/* Email */}
                   <div>
-                    <label className="block font-sans text-xs text-[#757575] mb-2">
+                    <label className="block font-sans text-xs text-[#6B6761] mb-2">
                       Email
                     </label>
                     <input
@@ -212,30 +200,30 @@ export function ContactPage() {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="hello@email.com"
-                      className="w-full bg-[#F9F9F8] border border-[#101010]/10 px-4 py-3 text-sm font-sans text-[#101010] placeholder-[#757575]/50 focus:outline-none focus:border-[#101010] transition-colors rounded-none"
+                      placeholder="hello@company.com"
+                      className="w-full bg-white/75 border border-[#111111]/15 px-4 py-3.5 text-sm font-sans text-[#111111] placeholder-[#87837D] focus:outline-none focus:border-[#B86B4B] transition-colors rounded-[6px]"
                     />
                   </div>
 
                   {/* Service */}
                   <div>
-                    <label className="block font-sans text-xs text-[#757575] mb-2">
+                    <label className="block font-sans text-xs text-[#6B6761] mb-2">
                       Service
                     </label>
                     <div className="relative">
                       <select
                         value={formData.service}
                         onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                        className="w-full bg-[#F9F9F8] border border-[#101010]/10 px-4 py-3 text-sm font-sans text-[#101010] focus:outline-none focus:border-[#101010] transition-colors rounded-none appearance-none cursor-pointer"
+                        className="w-full bg-white/75 border border-[#111111]/15 px-4 py-3.5 text-sm font-sans text-[#111111] focus:outline-none focus:border-[#B86B4B] transition-colors rounded-[6px] appearance-none cursor-pointer"
                       >
-                        <option value="">Select service</option>
+                        <option value="">Select deliverable</option>
                         <option value="exterior">3D Architectural Visualization (Exteriors &amp; Stills)</option>
                         <option value="interior">Interior CGI &amp; Spatial Lighting Staging</option>
-                        <option value="animation">4K Cinematic Animation &amp; Drone Motion</option>
-                        <option value="vr">Interactive 360 / VR Presentation</option>
+                        <option value="animation">4K Cinematic Animation &amp; 9:16 Reels</option>
+                        <option value="vr">Interactive 3D / Masterplan Presentation</option>
                         <option value="masterplan">Full-Scale Real Estate Marketing Package</option>
                       </select>
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-xs text-[#757575]">
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-xs text-[#6B6761]">
                         ▼
                       </div>
                     </div>
@@ -243,37 +231,35 @@ export function ContactPage() {
 
                   {/* Message */}
                   <div>
-                    <label className="block font-sans text-xs text-[#757575] mb-2">
-                      Message
+                    <label className="block font-sans text-xs text-[#6B6761] mb-2">
+                      Project brief
                     </label>
                     <textarea
                       rows={5}
                       required
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Project inquiry..."
-                      className="w-full bg-[#F9F9F8] border border-[#101010]/10 px-4 py-3 text-sm font-sans text-[#101010] placeholder-[#757575]/50 focus:outline-none focus:border-[#101010] transition-colors rounded-none resize-none"
+                      placeholder="Tell us about your project, location, and target launch date..."
+                      className="w-full bg-white/75 border border-[#111111]/15 px-4 py-3.5 text-sm font-sans text-[#111111] placeholder-[#87837D] focus:outline-none focus:border-[#B86B4B] transition-colors rounded-[6px] resize-none"
                     />
                   </div>
 
-                  {/* Full-width Solum Submit Button */}
+                  {/* Submit Button */}
                   <div>
                     <button
                       type="submit"
-                      className="w-full flex items-center justify-between bg-[#101010] text-white px-5 py-3.5 text-xs font-mono uppercase tracking-wider hover:bg-black transition-colors group cursor-pointer"
+                      className="w-full flex items-center justify-between rounded-full bg-[#B86B4B] hover:bg-[#A35B3D] text-white px-6 py-4 text-xs font-mono uppercase tracking-wider transition-colors group cursor-pointer shadow-sm"
                     >
                       <span className="font-semibold">Send Message</span>
-                      <div className="w-6 h-6 border border-white/30 group-hover:border-white flex items-center justify-center transition-colors">
-                        <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
-                      </div>
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </button>
-                    <p className="font-sans text-xs text-[#757575] mt-3">
+                    <p className="font-sans text-xs text-[#6B6761] mt-3">
                       By submitting, you agree to our{' '}
-                      <Link to="/terms" className="underline text-[#101010] hover:opacity-75">
+                      <Link to="/terms" className="underline text-[#111111] hover:opacity-75">
                         Terms
                       </Link>{' '}
                       and{' '}
-                      <Link to="/privacy" className="underline text-[#101010] hover:opacity-75">
+                      <Link to="/privacy" className="underline text-[#111111] hover:opacity-75">
                         Privacy policy
                       </Link>
                       .
@@ -287,61 +273,61 @@ export function ContactPage() {
       </section>
 
       {/* ─────────────────────────────────────────────────────────────
-          SECTION 2: VISUAL "WHAT WE NEED FROM YOU" (MINIMALIST CARDS WITH IMAGES)
-          Direct visual answers with real imagery, concise punchy copy, no clutter
+          SECTION 2: VISUAL "FROM YOUR PLAN TO THE FINAL IMAGE"
           ───────────────────────────────────────────────────────────── */}
-      <section className="py-20 md:py-28 bg-[#FFFFFF]">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-10">
+      <section className="py-20 md:py-28 bg-[#EDEAE4]">
+        <div className="max-w-[1440px] mx-auto px-6 md:px-12">
           {/* Minimalist Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-[#101010]/12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-[#111111]/12">
             <div>
-              <span className="font-mono text-xs uppercase tracking-wider text-[#757575] block mb-2">
+              <span className="font-mono text-xs uppercase tracking-wider text-[#87837D] block mb-2">
                 // PROJECT INITIATION
               </span>
-              <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-[-0.05em] text-[#101010] uppercase leading-none">
-                What We Need From You.
+              <h2 className="font-display text-3xl sm:text-5xl font-normal tracking-[-0.035em] text-[#111111] leading-tight">
+                What we need <span className="text-[#87837D]">from you</span>
               </h2>
             </div>
-            <p className="font-sans text-xs sm:text-sm text-[#757575] max-w-sm leading-relaxed">
+            <p className="font-sans text-xs sm:text-sm text-[#6B6761] max-w-sm leading-relaxed">
               Everything required to initiate your 3D architectural renders. Concise, visual, and protected under strict NDA.
             </p>
           </div>
 
-          {/* 4 Architectural Visual Cards with Real Images */}
+          {/* 4 Architectural Visual Cards with Real Atlas Studio Renders & Curtain Reveal */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-10">
-            {requirements.map((item) => (
+            {requirements.map((item, idx) => (
               <div
                 key={item.step}
-                className="group bg-[#FFFFFF] border border-[#101010]/12 flex flex-col justify-between overflow-hidden hover:border-[#101010] transition-colors duration-200"
+                className="group bg-white/65 border border-[#111111]/12 rounded-[8px] flex flex-col justify-between overflow-hidden hover:border-[#111111]/40 transition-colors duration-200"
               >
-                {/* Visual Image Header with Number Badge */}
                 <div>
-                  <div className="relative aspect-[16/11] overflow-hidden bg-[#F4F4F0]">
+                  <RevealFrame
+                    shutterColor="#DFDBD2"
+                    delay={idx * 0.07}
+                    className="relative aspect-[16/11] overflow-hidden bg-[#E2DDD5]"
+                  >
                     <img
                       src={item.image}
                       alt={item.title}
                       loading="lazy"
-                      className="w-full h-full object-cover grayscale contrast-105 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 ease-out"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ease-out"
                     />
-                    <div className="absolute top-3 left-3 px-2.5 py-1 bg-[#101010] text-white font-mono text-xs font-semibold">
+                    <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-[#111111]/85 backdrop-blur-sm text-white font-mono text-[11px] font-medium">
                       {item.step}
                     </div>
-                  </div>
+                  </RevealFrame>
 
-                  {/* Concise Title & Punchy Description */}
                   <div className="p-5 sm:p-6">
-                    <h3 className="font-display text-lg sm:text-xl font-semibold uppercase text-[#101010] tracking-tight mb-2.5">
+                    <h3 className="font-display text-lg sm:text-xl font-medium text-[#111111] tracking-tight mb-2">
                       {item.title}
                     </h3>
-                    <p className="font-sans text-xs sm:text-sm text-[#757575] leading-relaxed">
+                    <p className="font-sans text-xs sm:text-sm text-[#6B6761] leading-relaxed">
                       {item.description}
                     </p>
                   </div>
                 </div>
 
-                {/* Bottom Accepted Formats Badge */}
-                <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-3 border-t border-[#101010]/10">
-                  <span className="font-mono text-[11px] text-[#101010] font-medium block">
+                <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-3 border-t border-[#111111]/10">
+                  <span className="font-mono text-[11px] text-[#111111] font-medium block">
                     {item.formats}
                   </span>
                 </div>
@@ -350,16 +336,16 @@ export function ContactPage() {
           </div>
 
           {/* Mutual NDA Safeguard Footer Banner */}
-          <div className="mt-12 p-6 border border-[#101010]/12 bg-[#F9F9F8] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="mt-12 p-6 rounded-[8px] border border-[#111111]/12 bg-white/55 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex items-center gap-3.5">
-              <ShieldCheck className="w-5 h-5 text-[#101010] shrink-0" />
-              <span className="font-sans text-xs sm:text-sm text-[#101010] font-medium">
-                All client 3D models, architectural drawings, and scheme proposals are strictly safeguarded under bilateral NDA.
+              <ShieldCheck className="w-5 h-5 text-[#B86B4B] shrink-0" />
+              <span className="font-sans text-xs sm:text-sm text-[#111111] font-medium">
+                All client 3D models, architectural drawings, and unbuilt scheme proposals are strictly safeguarded under bilateral NDA.
               </span>
             </div>
             <a
               href="mailto:hello@atlasstudio.uz?subject=Standard%20NDA%20Request"
-              className="text-xs font-mono uppercase tracking-wider text-[#101010] underline hover:opacity-70 shrink-0"
+              className="text-xs font-mono uppercase tracking-wider text-[#111111] underline hover:text-[#B86B4B] shrink-0"
             >
               Request Mutual NDA ↗
             </a>

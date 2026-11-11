@@ -1,6 +1,5 @@
 import { useLayoutEffect, useRef } from 'react';
 import { Routes, Route, Navigate, useLocation, type Location } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
 import { Navbar } from './components/common/Navbar';
 import { Footer } from './components/common/Footer';
 import { ScrollToTop } from './components/common/ScrollToTop';
@@ -22,7 +21,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 function AppRoutes({ location }: { location: Location }) {
   return (
     <Routes location={location}>
-      {/* Core SOLUM Routes */}
+      {/* Core SOLUM / Atlas Studio Routes */}
       <Route path="/" element={<HomePage />} />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/projects" element={<ProjectsPage />} />
@@ -51,14 +50,14 @@ function AppRoutes({ location }: { location: Location }) {
 }
 
 /**
- * Lightweight, Stutter-Free Page Transition:
- * - Resets scroll position cleanly inside useLayoutEffect on pathname change.
- * - Uses a single DOM tree (no duplicate video/DOM mounting) and opacity-only transition
- *   so CSS position:sticky sections (like What We Deliver) work with zero transform conflicts.
+ * Stutter-Free Page Container:
+ * - Resets scroll position synchronously inside useLayoutEffect on pathname change
+ *   while the `<Preloader />` curtain covers the viewport at `y: 0%`.
+ * - Never sets `opacity: 0` or persistent transforms on the page container,
+ *   guaranteeing 0 invisible elements and 100% compatibility with `position: sticky`.
  */
 function PageTransition() {
   const location = useLocation();
-  const shouldReduceMotion = useReducedMotion();
   const isFirstMountRef = useRef(true);
 
   useLayoutEffect(() => {
@@ -71,40 +70,29 @@ function PageTransition() {
   }, [location.pathname]);
 
   return (
-    <div className="flex-1 w-full relative min-h-screen">
-      <motion.div
-        key={location.pathname}
-        initial={shouldReduceMotion ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{
-          duration: 0.35,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        className="w-full min-h-screen bg-white text-[#101010]"
-      >
-        <AppRoutes location={location} />
-      </motion.div>
+    <div className="flex-1 w-full relative min-h-screen bg-[#EDEAE4] text-[#111111]">
+      <AppRoutes location={location} />
     </div>
   );
 }
 
 export function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-white text-[#101010] selection:bg-[#101010] selection:text-white relative">
-      {/* Session-only Neutral Full-Page Preloader */}
+    <div className="min-h-screen flex flex-col bg-[#EDEAE4] text-[#111111] selection:bg-[#111111] selection:text-white relative">
+      {/* Universal Omnya Lab × Atlas Studio Curtain Transition on initial load & every route change */}
       <Preloader />
 
       {/* Lenis smooth scroll & scroll restoration */}
       <SmoothScroll />
       <ScrollToTop />
 
-      {/* Fixed Transparent Header & Accessible Fullscreen Overlay Menu */}
+      {/* Fixed Header & Accessible Fullscreen Overlay Menu */}
       <Navbar />
 
-      {/* Global Page Transition: Vertical Travel (What We Do stacking style) */}
+      {/* Main Route Viewport */}
       <PageTransition />
 
-      {/* Solum 4-Column Footer & Back to Top */}
+      {/* 4-Column Architectural Footer & Back to Top */}
       <Footer />
       <BackToTopButton />
     </div>

@@ -15,8 +15,8 @@
   }
 
   html {
-    background-color: #FFFFFF;
-    color: #101010;
+    background-color: #EDEAE4;
+    color: #111111;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum";
     text-rendering: optimizeLegibility;
@@ -106,7 +106,15 @@
   0% { transform: translate3d(0%, 0, 0); }
   100% { transform: translate3d(-50%, 0, 0); }
 }
+@keyframes marqueeLeft {
+  0% { transform: translate3d(0%, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
 @keyframes marquee-reverse {
+  0% { transform: translate3d(-50%, 0, 0); }
+  100% { transform: translate3d(0%, 0, 0); }
+}
+@keyframes marqueeRight {
   0% { transform: translate3d(-50%, 0, 0); }
   100% { transform: translate3d(0%, 0, 0); }
 }

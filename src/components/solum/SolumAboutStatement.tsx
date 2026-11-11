@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { optimizeCloudinaryImage, optimizeCloudinaryVideo } from '../../utils/media';
+import { RevealFrame } from '../common/RevealFrame';
 
 interface CapabilityItem {
   id: string;
@@ -81,8 +82,14 @@ const CAPABILITIES: CapabilityItem[] = [
   },
 ];
 
+const METRICS = [
+  { value: '1–2', label: 'days to first views' },
+  { value: '5', label: 'days to finished images' },
+  { value: '1', label: 'week to a full campaign' },
+  { value: '1', label: 'studio for every deliverable' },
+];
+
 function CapabilityCard({ cap, idx }: { cap: CapabilityItem; idx: number }) {
-  const shouldReduceMotion = useReducedMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -105,11 +112,7 @@ function CapabilityCard({ cap, idx }: { cap: CapabilityItem; idx: number }) {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
+    <div
       className="group"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -118,8 +121,12 @@ function CapabilityCard({ cap, idx }: { cap: CapabilityItem; idx: number }) {
         to={`/projects?category=${encodeURIComponent(cap.category)}`}
         className="block focus:outline-none"
       >
-        {/* Visual Card Image / Video */}
-        <div className="relative aspect-[4/5] w-full overflow-hidden bg-neutral-900 border border-white/10 group-hover:border-white/30 transition-colors">
+        {/* Visual Card Image / Video with Curtain Reveal */}
+        <RevealFrame
+          shutterColor="#141413"
+          delay={idx * 0.08}
+          className="relative aspect-[4/5] w-full overflow-hidden rounded-[6px] bg-neutral-900 border border-white/10 group-hover:border-white/30 transition-colors"
+        >
           <img
             src={optimizeCloudinaryImage(cap.image, 800)}
             alt={cap.title}
@@ -143,14 +150,14 @@ function CapabilityCard({ cap, idx }: { cap: CapabilityItem; idx: number }) {
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none" />
 
-          <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/70 group-hover:text-white group-hover:bg-[#2563EB] group-hover:border-transparent transition-all">
+          <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/70 group-hover:text-white group-hover:bg-[#B86B4B] group-hover:border-transparent transition-all">
             <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </div>
-        </div>
+        </RevealFrame>
 
         {/* Clean Classic Typography Under Card */}
-        <div className="pt-3 flex items-center justify-between">
-          <h3 className="font-sans text-sm sm:text-base font-medium text-white group-hover:text-neutral-300 transition-colors">
+        <div className="pt-3.5 flex items-center justify-between border-b border-white/10 pb-3">
+          <h3 className="font-sans text-sm sm:text-base font-medium text-white group-hover:text-[#C48B71] transition-colors">
             {cap.title}
           </h3>
           <span className="font-mono text-xs text-neutral-500">
@@ -158,7 +165,7 @@ function CapabilityCard({ cap, idx }: { cap: CapabilityItem; idx: number }) {
           </span>
         </div>
       </Link>
-    </motion.div>
+    </div>
   );
 }
 
@@ -166,34 +173,35 @@ export function SolumAboutStatement() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="w-full bg-[#000000] text-white border-b border-white/10 select-none">
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 md:px-16 lg:px-24 py-20 md:py-28">
-        
+    <section className="w-full bg-[#0E0E0D] text-white border-b border-white/10 select-none">
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 md:px-12 py-20 md:py-28">
         {/* ========================================================= */}
-        {/* 1) EDITORIAL STATEMENT (Brick Visual reference)           */}
+        {/* 1) EDITORIAL STATEMENT                                    */}
         {/* ========================================================= */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 pb-16 md:pb-24 border-b border-white/10">
-          
-          {/* Left Column: Blue Indicator + What We Do */}
+          {/* Left Column: Terracotta Indicator + What We Make */}
           <div className="md:col-span-4 lg:col-span-3">
             <div className="flex items-center gap-3">
-              <span className="w-3.5 h-3.5 bg-[#2563EB] inline-block" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#C48B71] inline-block" />
               <h2 className="font-sans text-xl sm:text-2xl font-medium text-white tracking-tight">
-                What We Do
+                What we make
               </h2>
             </div>
           </div>
 
-          {/* Right Column: Classic, Eye-Pleasing Editorial Text */}
+          {/* Right Column: Editorial Text */}
           <div className="md:col-span-8 lg:col-span-9 space-y-5">
             <motion.p
               initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="font-sans text-lg sm:text-xl md:text-[22px] text-white/95 font-normal leading-relaxed max-w-3xl"
+              className="font-display text-2xl sm:text-3xl md:text-4xl text-white font-normal tracking-[-0.025em] leading-[1.18] max-w-3xl"
             >
-              Atlas Studio is an international architectural visualization and creative production studio that translates unbuilt architecture into high-end visual solutions and cinematic marketing films.
+              From your floor plan to the{' '}
+              <span className="text-[#9E9990]">
+                final photorealistic image &amp; cinema film.
+              </span>
             </motion.p>
 
             <motion.p
@@ -201,9 +209,9 @@ export function SolumAboutStatement() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="font-sans text-sm sm:text-base text-neutral-400 font-normal leading-relaxed max-w-3xl"
+              className="font-sans text-sm sm:text-base text-neutral-400 font-normal leading-relaxed max-w-2xl"
             >
-              Driven by a team of highly skilled 3D artists, art directors, and powered by cutting-edge visual technology, we deliver innovative and refined visual narratives, with the capacity and competence required for large-scale, prestige developments.
+              Atlas Studio works with developers, architects, and agencies across Europe, Central Asia, and the Gulf. Send us a DWG, BIM model, or sketch — we handle 3D modeling, materials, lighting, and camera direction in one team.
             </motion.p>
 
             <motion.div
@@ -215,7 +223,7 @@ export function SolumAboutStatement() {
             >
               <Link
                 to="/about"
-                className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-wider text-white pb-1 border-b border-white hover:text-neutral-400 hover:border-neutral-400 transition-colors group"
+                className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono uppercase tracking-wider text-white pb-1 border-b border-white/40 hover:text-[#C48B71] hover:border-[#C48B71] transition-colors group"
               >
                 <span>More about our studio</span>
                 <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -235,6 +243,27 @@ export function SolumAboutStatement() {
           </div>
         </div>
 
+        {/* ========================================================= */}
+        {/* 3) OMNYA LAB TURNAROUND METRICS STRIP                     */}
+        {/* ========================================================= */}
+        <div className="mt-16 md:mt-24 pt-12 border-t border-white/10 grid grid-cols-2 lg:grid-cols-4 gap-8">
+          {METRICS.map((m, i) => (
+            <div key={i} className="space-y-2">
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#C48B71]" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500">
+                  0{i + 1}
+                </span>
+              </div>
+              <div className="font-display text-4xl sm:text-5xl font-normal tracking-[-0.03em] text-white tabular-nums">
+                {m.value}
+              </div>
+              <div className="font-sans text-xs sm:text-sm text-neutral-400">
+                {m.label}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

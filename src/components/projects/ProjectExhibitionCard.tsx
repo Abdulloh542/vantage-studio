@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { Play, Pause, Volume2, VolumeX, Maximize2, ArrowUpRight } from 'lucide-react';
 import type { Project } from '../../types';
+import { RevealFrame } from '../common/RevealFrame';
 
 interface ProjectExhibitionCardProps {
   project: Project;
@@ -305,21 +305,19 @@ export function ProjectExhibitionCard({
   const zoomClass = isLotusMall ? 'scale-[1.04]' : 'scale-100';
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="w-full select-none"
-    >
-      {/* 1. CLEAN MEDIA STAGE (Auto-play in view, instant hover, YouTube controls, zero clutter buttons, zoomed in to remove black borders) */}
-      <div
-        ref={containerRef}
-        onMouseEnter={handleMouseEnter}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        className={`relative ${aspectClass} w-full overflow-hidden bg-[#101010] border border-[#101010]/12 shadow-sm group`}
+    <article className="w-full select-none">
+      {/* 1. CLEAN MEDIA STAGE WITH OMNYA CURTAIN REVEAL */}
+      <RevealFrame
+        shutterColor="#EDEAE4"
+        className={`relative ${aspectClass} w-full overflow-hidden rounded-[6px] bg-[#101010] border border-[#101010]/12 shadow-sm group`}
       >
+        <div
+          ref={containerRef}
+          onMouseEnter={handleMouseEnter}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          className="relative w-full h-full"
+        >
         {project.heroVideo ? (
           <>
             <video
@@ -424,7 +422,8 @@ export function ProjectExhibitionCard({
             />
           </Link>
         )}
-      </div>
+        </div>
+      </RevealFrame>
 
       {/* 2. EDITORIAL METADATA STRIP BELOW (Pure Clean Architectural Typography) */}
       <div className="pt-3 pb-2 border-b border-[#101010]/12 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 font-mono text-xs text-[#101010]">
@@ -455,6 +454,6 @@ export function ProjectExhibitionCard({
           </Link>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }

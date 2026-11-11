@@ -639,100 +639,6 @@ const RAW_PROJECTS: Project[] = [
     ],
     featured: true,
     featuredOrder: 6,
-    nextProjectSlug: 'papes-residences'
-  },
-  {
-    slug: 'papes-residences',
-    title: 'Papes Residences',
-    subtitle: '18th-Century Baroque Palace Restoration',
-    location: 'Vienna, Austria',
-    year: '2025',
-    client: 'Habsburg Heritage Trust',
-    architect: 'Atelier Baumschlager',
-    category: 'Renovation & Construction',
-    services: ['Renovation Visualization', 'Existing → Proposed Transformation', 'Before / After Films', 'Construction Timelapse'],
-    tags: ['All', 'Renovation & Construction', 'Renovation Visualization', 'Existing → Proposed Transformation', 'Before / After Films', 'Construction Timelapse'],
-    heroImage: 'https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=2400&q=85',
-    heroVideo: 'https://assets.mixkit.co/videos/preview/mixkit-silhouette-of-a-person-in-an-art-gallery-41485-large.mp4',
-    summary: 'Restoring an iconic 18th-century Austrian aristocratic palace into ultra-prime residences, balancing guilded heritage stuccowork with discreet contemporary living.',
-    description: [
-      'Papes Residences required visualizations that could convince strict Vienna landmark preservation authorities while inspiring international private buyers.',
-      'We modeled restored parquet chevron flooring, intricate plaster cornices, and discreet geothermal radiant heating integration with microscopic optical fidelity.',
-      'The campaign imagery was praised by the municipal heritage board and accelerated the full off-plan commitment of all 18 private palace wings.'
-    ],
-    stats: [
-      { label: 'Palace GFA', value: '14,200 m²' },
-      { label: 'Residences', value: '18 Private Wings' },
-      { label: 'Valuation', value: '€120M' },
-      { label: 'Planning Status', value: 'Landmark Approved' }
-    ],
-    beforeAfter: {
-      beforeImage: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&w=1800&q=80',
-      beforeLabel: 'PRE-RESTORATION SURVEY',
-      afterImage: 'https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=1800&q=85',
-      afterLabel: 'FINAL RESTORED FAÇADE',
-      description: 'Side-by-side comparison revealing damaged neoclassical masonry contrasted with our restored lime-wash facade and evening lantern lighting.'
-    },
-    gallery: [
-      {
-        url: 'https://images.unsplash.com/photo-1541123437800-1bb1317badc2?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Restored grand courtyard facade at blue hour with gas lantern lighting',
-        aspectRatio: 'landscape'
-      }
-    ],
-    process: [
-      {
-        step: '01',
-        title: 'Archival Fresco Documentation',
-        description: 'Digitally mapping 18th-century Austrian Baroque ceiling frescoes from high-resolution archival photogrammetry.',
-        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
-      }
-    ],
-    featured: false,
-    featuredOrder: 7,
-    nextProjectSlug: 'park-seefeld'
-  },
-  {
-    slug: 'park-seefeld',
-    title: 'Park Seefeld',
-    subtitle: 'Alpine Wellness Resort & Chalet Village',
-    location: 'Tyrol, Austria',
-    year: '2024',
-    client: 'Alpen Hospitality Group',
-    architect: 'Baumann & Partner',
-    category: 'Architectural Visualization',
-    services: ['Exterior Visualization', 'Interior Visualization', '3D Modeling', 'Photorealistic Enhancement'],
-    tags: ['All', 'Architectural Visualization', 'Exterior Visualization', 'Interior Visualization', '3D Modeling', 'Photorealistic Enhancement'],
-    heroImage: 'https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=2400&q=85',
-    summary: 'A year-round mountain retreat pairing traditional Tyrolean stone masonry with expansive panoramic glazing and thermal open-air pools.',
-    description: [
-      'Park Seefeld required winter visualization that captured the crisp warmth of heated timber interiors against snow-covered alpine peaks.',
-      'We engineered custom procedural snow accumulation shaders that accurately nestled onto roof overhangs, pine needles, and stone ledges.',
-      'The campaign imagery established an ultra-luxury hospitality brand identity 18 months prior to opening.'
-    ],
-    stats: [
-      { label: 'Chalets & Suites', value: '45 Private Residences' },
-      { label: 'Spa Area', value: '3,800 m² Thermal Spa' },
-      { label: 'Altitude', value: '1,200 m Above Sea Level' },
-      { label: 'Visuals', value: '16 Stills + Winter Cinematic' }
-    ],
-    gallery: [
-      {
-        url: 'https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=1600&q=85',
-        caption: 'Heated outdoor infinity pool steaming into sub-zero evening air',
-        aspectRatio: 'landscape'
-      }
-    ],
-    process: [
-      {
-        step: '01',
-        title: 'Snow & Frost Shader Engineering',
-        description: 'Calibrating subsurface scattering to replicate fresh powder and ice formation.',
-        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80'
-      }
-    ],
-    featured: false,
-    featuredOrder: 8,
     nextProjectSlug: 'volga-park'
   }
 ];
@@ -755,3 +661,8 @@ export const PROJECTS: Project[] = RAW_PROJECTS.map((project) => ({
     url: optimizeCloudinaryImage(item.url, 1600),
   })),
 }));
+
+export function getProjectBySlug(slug: string): Project | undefined {
+  return PROJECTS.find((p) => p.slug === slug);
+}
+
