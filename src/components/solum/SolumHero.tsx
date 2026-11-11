@@ -1,81 +1,60 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { AtlasLogo } from '../common/AtlasLogo';
 
 export function SolumHero() {
   const shouldReduceMotion = useReducedMotion();
-  const heroRef = useRef<HTMLDivElement>(null);
+  const [mountVideo, setMountVideo] = useState(false);
+  const [videoPlaying, setVideoPlaying] = useState(false);
 
-  // Parallax strictly limited to 6%
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ['start start', 'end start'],
-  });
-  const parallaxY = useTransform(scrollYProgress, [0, 1], ['0%', '6%']);
+  // Defer video network stream until right after initial paint & curtain lift start
+  // so initial load, fonts, and CSS paint at 120fps with zero main-thread contention.
+  useEffect(() => {
+    if (shouldReduceMotion) return;
+    const timer = window.setTimeout(() => {
+      setMountVideo(true);
+    }, 180);
+    return () => window.clearTimeout(timer);
+  }, [shouldReduceMotion]);
 
   const heroImage = '/videos/hero_poster.webp';
   const heroVideoUrl = '/videos/hero.mp4';
 
   return (
-    <section
-      ref={heroRef}
-      className="relative min-h-screen w-full bg-[#101010] text-white flex flex-col justify-end pb-16 md:pb-24 overflow-hidden select-none"
-    >
+    <section className="relative min-h-screen w-full bg-[#101010] text-white flex flex-col justify-end pb-16 md:pb-24 overflow-hidden select-none">
       {/* ========================================================= */}
-      {/* 1) HERO BACKGROUND: Natural Bright Ambient Cinematic Video */}
+      {/* 1) HERO BACKGROUND: Instant Poster + Seamless Ambient Video */}
       {/* ========================================================= */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <motion.div
-          style={{ y: shouldReduceMotion ? '0%' : parallaxY }}
-          className="w-full h-full"
-        >
-          {heroVideoUrl ? (
-            <motion.div
-              initial={
-                shouldReduceMotion
-                  ? { opacity: 1, scale: 1 }
-                  : { opacity: 0, scale: 1.05 }
-              }
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                duration: shouldReduceMotion ? 0.01 : 1.2,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="w-full h-full"
-            >
-              <video
-                src={heroVideoUrl}
-                poster={heroImage}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                controls={false}
-                disablePictureInPicture
-                className="w-full h-full object-cover pointer-events-none select-none"
-              />
-            </motion.div>
-          ) : (
-            <motion.img
-              src={heroImage}
-              alt="Atlas Studio Architecture Living Space"
-              initial={
-                shouldReduceMotion
-                  ? { opacity: 1, scale: 1 }
-                  : { opacity: 0, scale: 1.05 }
-              }
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                duration: shouldReduceMotion ? 0.01 : 1.2,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="w-full h-full object-cover origin-center will-change-transform"
-            />
-          )}
-        </motion.div>
+      <div className="absolute inset-0 z-0 overflow-hidden bg-[#101010]">
+        {/* Preloaded static poster painted immediately at frame 0 — zero blank flash */}
+        <img
+          src={heroImage}
+          alt="Atlas Studio Architecture Living Space"
+          fetchPriority="high"
+          decoding="sync"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+        />
+
+        {mountVideo && !shouldReduceMotion && (
+          <video
+            src={heroVideoUrl}
+            poster={heroImage}
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            controls={false}
+            disablePictureInPicture
+            onPlaying={() => setVideoPlaying(true)}
+            onCanPlay={() => setVideoPlaying(true)}
+            className={`absolute inset-0 w-full h-full object-cover pointer-events-none select-none transition-opacity duration-500 ${
+              videoPlaying ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        )}
 
         {/* Minimal soft vignette strictly at bottom to ensure text legibility while keeping video naturally bright */}
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
@@ -89,9 +68,9 @@ export function SolumHero() {
           {/* Left Stage: Bespoke Atlas Studio Logo & Subtitle */}
           <div className="col-span-1 md:col-span-3">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="mb-5 drop-shadow-[0_4px_16px_rgba(0,0,0,0.85)]"
             >
               <h1 className="sr-only">Atlas Studio</h1>
@@ -102,9 +81,9 @@ export function SolumHero() {
             </motion.div>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.65, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
               className="font-sans text-sm sm:text-base md:text-lg text-white font-normal leading-relaxed max-w-xl drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]"
             >
               Architecture and visual studio creating photorealistic CGI and cinematic marketing films for unbuilt spaces.
@@ -114,9 +93,9 @@ export function SolumHero() {
           {/* Right Stage: Split Start a Project Button */}
           <div className="col-span-1 md:col-span-1 flex flex-col justify-end items-start md:items-end">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.6, delay: 0.32, ease: [0.22, 1, 0.36, 1] }}
             >
               <Link
                 to="/contact"

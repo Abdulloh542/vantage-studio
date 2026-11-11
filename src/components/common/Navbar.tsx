@@ -53,6 +53,7 @@ export function Navbar() {
     { label: 'About', href: '/about' },
     { label: 'Services', href: '/services' },
     { label: 'Projects', href: '/projects' },
+    { label: 'Pricing', href: '/pricing' },
     { label: 'Contact', href: '/contact' },
   ];
 
@@ -118,7 +119,7 @@ export function Navbar() {
                 to="/"
                 onClick={closeMenu}
                 aria-label="Atlas Studio Home"
-                className="text-[#321E13] hover:opacity-80 transition-opacity inline-flex items-center"
+                className="text-[#101010] hover:opacity-80 transition-opacity inline-flex items-center"
               >
                 <AtlasLogo variant="stacked" className="h-8 sm:h-9 md:h-10 w-auto" />
               </Link>

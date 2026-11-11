@@ -1,4 +1,3 @@
-import { motion, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { optimizeCloudinaryImage } from '../../utils/media';
@@ -76,24 +75,16 @@ const SERVICES: ServicePanel[] = [
 ];
 
 function ServiceCard({ service, index }: { service: ServicePanel; index: number }) {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <div
       style={{ zIndex: index + 1 }}
-      className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex flex-col md:flex-row bg-[#0d0d0d] overflow-hidden shadow-[0_-8px_20px_rgba(0,0,0,0.7)] md:shadow-[0_-24px_48px_rgba(0,0,0,0.95)] border-t border-white/10"
+      className="sticky top-0 w-full h-[100svh] min-h-[100svh] flex flex-col md:flex-row bg-[#0d0d0d] overflow-hidden border-t border-white/15"
     >
       {/* Editorial Content Column */}
       <div className="w-full md:w-1/2 flex-1 md:h-full flex flex-col justify-center px-6 sm:px-10 md:px-16 lg:px-24 py-6 sm:py-10 md:py-16 bg-[#0d0d0d] z-10 overflow-y-auto sm:overflow-visible">
         <div className="max-w-xl space-y-3 sm:space-y-4 md:space-y-5 my-auto">
           {/* Number & Phase Tag */}
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0.4, y: 10 }}
-            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="flex items-center gap-3"
-          >
+          <div className="flex items-center gap-3">
             <span className="font-sans text-base sm:text-lg text-white/40 block font-normal">
               {service.number}
             </span>
@@ -101,29 +92,17 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
             <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-white/60">
               Discipline 0{index + 1}
             </span>
-          </motion.div>
+          </div>
 
           {/* Title in Classic Refined Typography */}
-          <motion.h3
-            initial={shouldReduceMotion ? false : { opacity: 0.4, y: 12 }}
-            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.45, delay: 0.04, ease: [0.22, 1, 0.36, 1] }}
-            className="font-sans font-medium text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white tracking-tight leading-[1.15]"
-          >
+          <h3 className="font-sans font-medium text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white tracking-tight leading-[1.15]">
             {service.title}
-          </motion.h3>
+          </h3>
 
           {/* Description */}
-          <motion.p
-            initial={shouldReduceMotion ? false : { opacity: 0.4, y: 10 }}
-            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="font-sans text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed font-normal line-clamp-3 sm:line-clamp-none"
-          >
+          <p className="font-sans text-neutral-300 text-xs sm:text-sm md:text-base leading-relaxed font-normal line-clamp-3 sm:line-clamp-none">
             {service.description}
-          </motion.p>
+          </p>
 
           {/* 5 Bullet Items */}
           <ul className="space-y-1.5 sm:space-y-2 pt-3 sm:pt-4 border-t border-white/10">
@@ -153,9 +132,9 @@ function ServiceCard({ service, index }: { service: ServicePanel; index: number 
       {/* Media Field */}
       <div className="w-full md:w-1/2 h-[36svh] sm:h-[42svh] md:h-full relative overflow-hidden bg-black flex-shrink-0">
         <img
-          src={optimizeCloudinaryImage(service.image, 1400)}
+          src={optimizeCloudinaryImage(service.image, 1200)}
           alt={service.title}
-          loading={index === 0 ? 'eager' : 'lazy'}
+          loading="lazy"
           decoding="async"
           className="w-full h-full object-cover select-none"
         />

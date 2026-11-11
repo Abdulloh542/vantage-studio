@@ -4,6 +4,7 @@ import { SolumRecentProjects } from '../components/solum/SolumRecentProjects';
 import { SolumServices } from '../components/solum/SolumServices';
 import { SolumHowWeWork } from '../components/solum/SolumHowWeWork';
 import { SolumTransformationProof } from '../components/solum/SolumTransformationProof';
+import { SolumPricing } from '../components/solum/SolumPricing';
 import { SolumCallToAction } from '../components/solum/SolumCallToAction';
 
 export function HomePage() {
@@ -12,7 +13,7 @@ export function HomePage() {
       {/* 01: Signature Commercial Hero */}
       <SolumHero />
 
-      {/* 02: Studio Statement & What We Do (4 Core Disciplines) */}
+      {/* 02: Studio Statement & What We Do */}
       <SolumAboutStatement />
 
       {/* 03: Selected Projects Exhibition */}
@@ -21,13 +22,16 @@ export function HomePage() {
       {/* 04: What We Deliver (Sticky Scroll Stacking Cards) */}
       <SolumServices />
 
-      {/* 05: Structured Architectural Evolution (How We Work - 4 Phases) */}
+      {/* 05: Production Workflow (Genplan -> 3D -> Visualization -> 4K Film) */}
       <SolumHowWeWork />
 
-      {/* 06: Architectural Transformation & Spatial Decomposition (Unified Before/After + Branching Vignettes) */}
+      {/* 06: Architectural Transformation & Spatial Decomposition */}
       <SolumTransformationProof />
 
-      {/* 07: Initiate Collaboration (Minimalist Call To Action) */}
+      {/* 07: Transparent Packages & Pricing */}
+      <SolumPricing />
+
+      {/* 08: Initiate Collaboration (Minimalist Call To Action) */}
       <SolumCallToAction />
     </main>
   );

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { optimizeCloudinaryImage } from '../utils/media';
 
 interface ServiceItem {
   number: string;
@@ -14,26 +15,39 @@ interface ServiceItem {
 const SERVICES: ServiceItem[] = [
   {
     number: '01',
-    title: 'Visual Content',
-    tagline: 'CGI for real estate: photorealistic renders, animation and virtual tours that turn concepts into experiences that sell.',
-    pills: ['CGI Rendering', 'CGI Animations', 'Virtual Tours'],
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=85',
-  },
-  {
-    number: '02',
-    title: 'Sales Experiences',
-    tagline: 'Interactive platforms that turn browsers into buyers. Move beyond static renders. Give buyers the power to explore, customize, and commit before construction.',
-    pills: ['Interactive CRM', 'UX Research & Strategy', 'Analytics'],
-    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85',
+    title: 'Architectural Visualization',
+    tagline: 'From 2D Genplan and CAD drawings to 3D modeling and photorealistic 4K exterior & interior renders.',
+    pills: ['Genplan to 3D', '4K Exterior & Interior CGI', 'Daylight & Dusk Lighting'],
+    image: optimizeCloudinaryImage(
+      'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990146/projects/volga-park/Architectural_close_view_sunny_day_20260.jpg',
+      1400
+    ),
     hasDemo: true,
     demoUrl: '/projects/volga-park',
   },
   {
+    number: '02',
+    title: '4K Films & 9:16 Reels',
+    tagline: 'Cinematic architectural walkthroughs, drone fly-throughs, and vertical social reels engineered for pre-sales.',
+    pills: ['16:9 Cinema Films', '9:16 Vertical Reels', 'AI & Ray-Traced Motion'],
+    image: optimizeCloudinaryImage(
+      'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992590/projects/collective-dubai-hills/collective-dubai-hills_still_4.jpg',
+      1400
+    ),
+    hasDemo: true,
+    demoUrl: '/projects/collective-dubai-hills',
+  },
+  {
     number: '03',
-    title: 'Brand Identity',
-    tagline: 'Strategic design systems that define market presence. Great projects deserve great branding.',
-    pills: ['Visual Identity', 'Brand Storytelling', 'Web Design & Development'],
-    image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=2400&q=85',
+    title: 'Masterplan & Renovation Marketing',
+    tagline: 'End-to-end visual campaigns for residential quarters, shopping malls, 5-star hotels, and historic transformations.',
+    pills: ['Development Launches', 'Before / After Films', 'Investor Presentations'],
+    image: optimizeCloudinaryImage(
+      'https://res.cloudinary.com/mvmsbgon/image/upload/v1789992496/projects/lotus-mall/lotus-mall_still_2.jpg',
+      1400
+    ),
+    hasDemo: true,
+    demoUrl: '/projects/lotus-mall',
   },
 ];
 
@@ -153,12 +167,20 @@ export function ServicesPage() {
             </p>
           </div>
 
-          <Link
-            to="/contact"
-            className="px-7 py-3 rounded-full bg-white hover:bg-white/90 text-black font-sans text-xs sm:text-sm font-medium transition-all duration-200 self-start md:self-auto"
-          >
-            Start a project &rarr;
-          </Link>
+          <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
+            <Link
+              to="/pricing"
+              className="px-6 py-3 rounded-full border border-white/30 hover:border-white text-white font-sans text-xs sm:text-sm font-medium transition-all duration-200"
+            >
+              View Pricing
+            </Link>
+            <Link
+              to="/contact"
+              className="px-7 py-3 rounded-full bg-white hover:bg-white/90 text-black font-sans text-xs sm:text-sm font-medium transition-all duration-200"
+            >
+              Start a project &rarr;
+            </Link>
+          </div>
         </div>
       </div>
     </main>

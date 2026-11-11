@@ -1,92 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://vantage-studio.architecture/</loc>
+    <loc>https://vantage-studio-two.vercel.app/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://vantage-studio.architecture/work</loc>
+    <loc>https://vantage-studio-two.vercel.app/projects</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://vantage-studio.architecture/work/riviera-residence</loc>
+    <loc>https://vantage-studio-two.vercel.app/projects/volga-park</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://vantage-studio.architecture/work/bunker-37</loc>
+    <loc>https://vantage-studio-two.vercel.app/projects/bunker-37</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://vantage-studio.architecture/work/marlow-on-mill</loc>
+    <loc>https://vantage-studio-two.vercel.app/projects/architecture-insight</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://vantage-studio.architecture/work/freirodaer-weg</loc>
+    <loc>https://vantage-studio-two.vercel.app/projects/lotus-mall</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://vantage-studio.architecture/work/venetian-penthouse</loc>
+    <loc>https://vantage-studio-two.vercel.app/projects/collective-dubai-hills</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://vantage-studio.architecture/work/cascades-at-vista</loc>
+    <loc>https://vantage-studio-two.vercel.app/projects/navoi-plaza</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://vantage-studio.architecture/work/park-seefeld</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://vantage-studio.architecture/work/papes-residences</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://vantage-studio.architecture/services</loc>
+    <loc>https://vantage-studio-two.vercel.app/services</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://vantage-studio.architecture/services/architectural-visualization</loc>
+    <loc>https://vantage-studio-two.vercel.app/pricing</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://vantage-studio-two.vercel.app/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://vantage-studio.architecture/services/ai-films</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://vantage-studio.architecture/services/real-estate-marketing</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://vantage-studio.architecture/services/renovation</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://vantage-studio.architecture/process</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://vantage-studio.architecture/about</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://vantage-studio.architecture/contact</loc>
+    <loc>https://vantage-studio-two.vercel.app/contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>

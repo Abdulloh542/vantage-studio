@@ -1,14 +1,26 @@
 import { useState } from 'react';
 import { ArrowRight, CheckCircle2, ShieldCheck } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { optimizeCloudinaryImage } from '../utils/media';
+
+const PACKAGE_TO_SERVICE: Record<string, string> = {
+  stills: 'stills',
+  reel: 'reel',
+  launch: 'launch',
+  custom: 'masterplan',
+};
 
 export function ContactPage() {
+  const [searchParams] = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    service: '',
-    message: '',
+  const [formData, setFormData] = useState(() => {
+    const pkg = searchParams.get('package') || '';
+    return {
+      name: '',
+      email: '',
+      service: PACKAGE_TO_SERVICE[pkg] || '',
+      message: '',
+    };
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -19,39 +31,47 @@ export function ContactPage() {
   const requirements = [
     {
       step: '01',
-      title: '3D Model or 2D Plans',
+      title: 'Genplan or 2D CAD Plans',
       description:
-        'Revit, SketchUp, Rhino, or 2D CAD floor plans and elevations. No 3D model? We build it directly from your drawings.',
+        'Site masterplan (Genplan), AutoCAD DWG floor plans, elevations, Revit, or SketchUp. No 3D model? We build it from your drawings.',
       formats: '.DWG · .SKP · .RVT · .FBX · .PDF',
-      image:
-        'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=80',
+      image: optimizeCloudinaryImage(
+        'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990861/projects/effect-archi/make_plan_3d_realistic_2K_fb6c40.jpg',
+        800
+      ),
     },
     {
       step: '02',
       title: 'Materials & Finishes',
       description:
-        'Facade materials, wood veneers, concrete finishes, metal coatings, and paint codes (RAL / Pantone) or reference photos.',
+        'Facade stone, brickwork, wood veneers, concrete finishes, metal coatings, and RAL codes or reference photos.',
       formats: 'Material Board · Manufacturer Codes · Photos',
-      image:
-        'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1000&q=80',
+      image: optimizeCloudinaryImage(
+        'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990856/projects/effect-archi/Extract_and_upscale_from__c11a74.jpg',
+        800
+      ),
     },
     {
       step: '03',
       title: 'Atmosphere & Lighting',
       description:
-        'Target time-of-day: golden hour dusk, soft overcast daylight, twilight blue hour, or nocturnal interior illumination.',
+        'Target time-of-day: sunny daylight, golden hour dusk, twilight blue hour, or nocturnal architectural illumination.',
       formats: 'Moodboard · Reference Renders · Style Guide',
-      image:
-        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80',
+      image: optimizeCloudinaryImage(
+        'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990146/projects/volga-park/Architectural_close_view_sunny_day_20260.jpg',
+        800
+      ),
     },
     {
       step: '04',
-      title: 'Site Photos & Desired Angles',
+      title: 'Site Context & Camera Angles',
       description:
-        'Drone aerial plates, site photos for photorealistic composite matching, and preferred camera view directions.',
+        'Drone aerial plates, site photos for composite matching, and preferred exterior/interior camera directions.',
       formats: 'Drone 4K Stills · GPS Coordinates · Marked Plans',
-      image:
-        'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80',
+      image: optimizeCloudinaryImage(
+        'https://res.cloudinary.com/mvmsbgon/image/upload/v1789990222/projects/volga-park/aerial_overview_4k_202c48.jpg',
+        800
+      ),
     },
   ];
 
@@ -228,12 +248,12 @@ export function ContactPage() {
                         onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                         className="w-full bg-[#F9F9F8] border border-[#101010]/10 px-4 py-3 text-sm font-sans text-[#101010] focus:outline-none focus:border-[#101010] transition-colors rounded-none appearance-none cursor-pointer"
                       >
-                        <option value="">Select service</option>
-                        <option value="exterior">3D Architectural Visualization (Exteriors &amp; Stills)</option>
-                        <option value="interior">Interior CGI &amp; Spatial Lighting Staging</option>
-                        <option value="animation">4K Cinematic Animation &amp; Drone Motion</option>
-                        <option value="vr">Interactive 360 / VR Presentation</option>
-                        <option value="masterplan">Full-Scale Real Estate Marketing Package</option>
+                        <option value="">Select service or package</option>
+                        <option value="stills">01 // 3D Visualization Pack ($1,400 · 5 4K Views)</option>
+                        <option value="reel">02 // 9:16 Social Cinema Reel + Stills ($2,200)</option>
+                        <option value="launch">03 // Full 4K Walkthrough Launch Campaign ($3,900)</option>
+                        <option value="masterplan">04 // Custom Masterplan / Enterprise Commission</option>
+                        <option value="single">Single 4K Exterior / Interior View (from $350)</option>
                       </select>
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-xs text-[#757575]">
                         ▼

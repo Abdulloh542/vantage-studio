@@ -68,6 +68,13 @@ function resolveCurtainCopy(pathname: string): CurtainCopy {
     };
   }
 
+  if (cleanPath.startsWith('/pricing')) {
+    return {
+      primary: 'PRICING',
+      secondary: 'PACKAGES & RATES',
+    };
+  }
+
   if (cleanPath === '/contact') {
     return {
       primary: 'TALK TO US',
@@ -127,18 +134,18 @@ export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
       initial={{ y: '0%' }}
       animate={{ y: '-102%' }}
       transition={{
-        delay: 0.52,
-        duration: 0.72,
+        delay: 0.44,
+        duration: 0.62,
         ease: [0.76, 0, 0.24, 1],
       }}
       onAnimationStart={() => onSequenceStart?.()}
       onAnimationComplete={() => onComplete?.()}
       aria-hidden="true"
       style={{
-        backgroundColor: '#F5EDE2',
+        backgroundColor: '#FFFFFF',
         willChange: 'transform',
       }}
-      className="fixed inset-0 z-[99999] text-[#321E13] flex items-center justify-center pointer-events-none select-none overflow-hidden shadow-[0_24px_80px_rgba(26,20,16,0.16)]"
+      className="fixed inset-0 z-[99999] text-[#101010] flex items-center justify-center pointer-events-none select-none overflow-hidden border-b border-[#101010]/12 shadow-[0_18px_50px_rgba(16,16,16,0.10)]"
     >
       {/* Pure Centered Stage — Zero Top/Bottom Clutter */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
@@ -148,14 +155,14 @@ export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
               initial={{ y: '110%' }}
               animate={{ y: '0%' }}
               transition={{
-                duration: 0.46,
+                duration: 0.4,
                 ease: [0.16, 1, 0.3, 1],
               }}
               className="will-change-transform"
             >
               <AtlasLogo
                 variant="stacked"
-                className="h-20 sm:h-28 md:h-36 w-auto text-[#321E13]"
+                className="h-20 sm:h-28 md:h-36 w-auto text-[#101010]"
               />
             </motion.div>
           </div>
@@ -167,10 +174,10 @@ export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
                 initial={{ y: '115%' }}
                 animate={{ y: '0%' }}
                 transition={{
-                  duration: 0.45,
+                  duration: 0.4,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="font-logo text-[clamp(2.4rem,6.5vw,5.6rem)] font-normal uppercase tracking-[0.06em] leading-[0.96] text-[#321E13] will-change-transform"
+                className="font-logo text-[clamp(2.4rem,6.5vw,5.6rem)] font-normal uppercase tracking-[0.06em] leading-[0.96] text-[#101010] will-change-transform"
               >
                 {copy.primary}
               </motion.div>
@@ -182,11 +189,11 @@ export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
                 initial={{ y: '115%' }}
                 animate={{ y: '0%' }}
                 transition={{
-                  duration: 0.45,
-                  delay: 0.06,
+                  duration: 0.4,
+                  delay: 0.05,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="font-sans text-[11px] sm:text-xs md:text-sm font-medium uppercase tracking-[0.38em] text-[#321E13]/80 will-change-transform"
+                className="font-sans text-[11px] sm:text-xs md:text-sm font-medium uppercase tracking-[0.38em] text-[#101010]/65 will-change-transform"
               >
                 {copy.secondary}
               </motion.div>
@@ -199,12 +206,12 @@ export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{
-            duration: 0.48,
-            delay: 0.06,
+            duration: 0.42,
+            delay: 0.05,
             ease: [0.16, 1, 0.3, 1],
           }}
           style={{ transformOrigin: 'center' }}
-          className="mt-5 h-[1px] w-[min(360px,68vw)] bg-[#321E13]/30 will-change-transform"
+          className="mt-5 h-[1px] w-[min(360px,68vw)] bg-[#101010]/20 will-change-transform"
         />
       </div>
     </motion.div>

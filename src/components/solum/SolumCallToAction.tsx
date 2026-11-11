@@ -7,10 +7,13 @@ export function SolumCallToAction() {
 
   return (
     <section className="relative w-full bg-[#0A0A0A] text-white py-24 sm:py-32 px-6 sm:px-10 md:px-16 lg:px-24 border-b border-white/10 select-none overflow-hidden">
-      {/* Ambient background architectural glow */}
-      <div 
-        className="absolute -top-32 left-1/2 -translate-x-1/2 w-[720px] h-[340px] bg-gradient-to-b from-[#2563EB]/15 via-transparent to-transparent rounded-full blur-[130px] pointer-events-none"
-        aria-hidden="true" 
+      {/* Zero-cost radial gradient glow (replaces heavy GPU blur surface) */}
+      <div
+        style={{
+          background: 'radial-gradient(ellipse at 50% 0%, rgba(37, 99, 235, 0.14) 0%, transparent 70%)',
+        }}
+        className="absolute inset-x-0 top-0 h-[320px] pointer-events-none"
+        aria-hidden="true"
       />
 
       <div className="max-w-[1200px] mx-auto relative z-10 text-center flex flex-col items-center">
@@ -81,7 +84,7 @@ export function SolumCallToAction() {
             href="https://www.instagram.com/atlasstudio.uz/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 border border-white/20 text-white font-mono text-xs uppercase tracking-wider hover:border-[#F5EDE2] hover:bg-[#F5EDE2] hover:text-[#321E13] transition-all duration-200"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 border border-white/20 text-white font-mono text-xs uppercase tracking-wider hover:border-white hover:bg-white hover:text-[#101010] transition-all duration-200"
           >
             <span>@atlasstudio.uz</span>
             <ArrowUpRight className="w-3.5 h-3.5" />

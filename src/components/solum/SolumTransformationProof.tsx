@@ -171,9 +171,6 @@ export function SolumTransformationProof() {
             style={{ width: containerSize.width, height: containerSize.height }}
           >
             <defs>
-              <filter id="branch-glow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#000000" floodOpacity="0.9" />
-              </filter>
               <marker
                 id="branch-arrow"
                 viewBox="0 0 10 10"
@@ -205,7 +202,7 @@ export function SolumTransformationProof() {
               const isHovered = activeHoveredId === VIGNETTE_DETAILS[idx]?.id;
 
               return (
-                <g key={idx} filter="url(#branch-glow)">
+                <g key={idx}>
                   {/* Curved Rope / Branch Line */}
                   <motion.path
                     d={pathD}

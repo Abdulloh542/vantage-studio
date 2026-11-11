@@ -39,7 +39,7 @@ export function Footer() {
                 href="https://www.instagram.com/atlasstudio.uz/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-white/[0.06] hover:bg-[#F5EDE2] text-white hover:text-[#321E13] border border-white/15 transition-all duration-200 text-xs font-mono tracking-wider group"
+                className="inline-flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-white/[0.06] hover:bg-white text-white hover:text-[#101010] border border-white/15 transition-all duration-200 text-xs font-mono tracking-wider group"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -128,6 +128,11 @@ export function Footer() {
           {/* Column 3: Navigation 2 */}
           <div className="col-span-1 md:col-span-2">
             <ul className="space-y-3 font-sans text-xs sm:text-sm font-semibold tracking-wider uppercase text-white/90">
+              <li>
+                <Link to="/pricing" className="hover:text-neutral-400 transition-colors">
+                  PRICING
+                </Link>
+              </li>
               <li>
                 <Link to="/contact" className="hover:text-neutral-400 transition-colors">
                   CONTACT
