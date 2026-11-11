@@ -129,6 +129,60 @@
   animation-play-state: paused;
 }
 
+/* GPU-Composited Zero-Flash Page Curtain Animations */
+@keyframes atlas-curtain-lift {
+  0%, 38% {
+    transform: translate3d(0, 0%, 0);
+  }
+  100% {
+    transform: translate3d(0, -103%, 0);
+  }
+}
+
+@keyframes atlas-curtain-text {
+  0% {
+    transform: translate3d(0, 112%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0%, 0);
+  }
+}
+
+@keyframes atlas-curtain-rule {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.atlas-curtain {
+  transform: translate3d(0, 0%, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+  animation: atlas-curtain-lift 1.05s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.atlas-curtain-text {
+  transform: translate3d(0, 112%, 0);
+  will-change: transform;
+  animation: atlas-curtain-text 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.atlas-curtain-sub {
+  transform: translate3d(0, 112%, 0);
+  will-change: transform;
+  animation: atlas-curtain-text 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.04s forwards;
+}
+
+.atlas-curtain-rule {
+  transform: scaleX(0);
+  transform-origin: center;
+  will-change: transform;
+  animation: atlas-curtain-rule 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.04s forwards;
+}
+
 /* Fullscreen video styling: strictly preserve original aspect ratio (9:16 portrait or 16:9 widescreen) without zoom cropping */
 video:fullscreen {
   object-fit: contain !important;

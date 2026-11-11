@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from 'framer-motion';
 import { getProjectBySlug } from '../../data/projects';
 import { AtlasLogo } from './AtlasLogo';
 
@@ -104,10 +104,10 @@ function resolveCurtainCopy(pathname: string): CurtainCopy {
 }
 
 /**
- * Atlas Studio Minimalist Curtain Transition
- * - Pure centered typography in the exact Atlas Studio logo font style (`Cormorant Garamond` + wide-tracked `STUDIO` sans).
- * - Zero top/bottom clutter.
- * - Triggers on initial load, every route change, AND whenever the user clicks the top-left Atlas Studio logo.
+ * Atlas Studio Zero-Flash GPU Curtain Transition
+ * - Uses native CSS `@keyframes` (`atlas-curtain`) so `translate3d(0, 0%, 0)` is locked
+ *   synchronously at frame 0 before a single pixel of the new route is painted.
+ * - Pure white background (#FFFFFF) with crisp dark ink (#101010) in the Atlas Studio logo font.
  */
 export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
   const location = useLocation();
@@ -129,91 +129,53 @@ export function Preloader({ onSequenceStart, onComplete }: PreloaderProps) {
   }
 
   return (
-    <motion.div
+    <div
       key={`${location.pathname}-${replayCount}`}
-      initial={{ y: '0%' }}
-      animate={{ y: '-102%' }}
-      transition={{
-        delay: 0.44,
-        duration: 0.62,
-        ease: [0.76, 0, 0.24, 1],
+      onAnimationStart={(e) => {
+        if (e.target === e.currentTarget) {
+          onSequenceStart?.();
+        }
       }}
-      onAnimationStart={() => onSequenceStart?.()}
-      onAnimationComplete={() => onComplete?.()}
+      onAnimationEnd={(e) => {
+        if (e.target === e.currentTarget) {
+          onComplete?.();
+        }
+      }}
       aria-hidden="true"
-      style={{
-        backgroundColor: '#FFFFFF',
-        willChange: 'transform',
-      }}
-      className="fixed inset-0 z-[99999] text-[#101010] flex items-center justify-center pointer-events-none select-none overflow-hidden border-b border-[#101010]/12 shadow-[0_18px_50px_rgba(16,16,16,0.10)]"
+      className="atlas-curtain fixed inset-0 z-[99999] bg-white text-[#101010] flex items-center justify-center pointer-events-none select-none overflow-hidden border-b border-[#101010]/12 shadow-[0_18px_50px_rgba(16,16,16,0.10)]"
     >
       {/* Pure Centered Stage — Zero Top/Bottom Clutter */}
       <div className="relative z-10 flex flex-col items-center justify-center px-6 text-center">
         {copy.isHomeLogo ? (
           <div className="overflow-hidden py-3">
-            <motion.div
-              initial={{ y: '110%' }}
-              animate={{ y: '0%' }}
-              transition={{
-                duration: 0.4,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="will-change-transform"
-            >
+            <div className="atlas-curtain-text">
               <AtlasLogo
                 variant="stacked"
                 className="h-20 sm:h-28 md:h-36 w-auto text-[#101010]"
               />
-            </motion.div>
+            </div>
           </div>
         ) : (
           <div className="flex flex-col items-center">
             {/* Primary Line in Exact ATLAS High-Contrast Serif Font */}
             <div className="overflow-hidden py-1.5">
-              <motion.div
-                initial={{ y: '115%' }}
-                animate={{ y: '0%' }}
-                transition={{
-                  duration: 0.4,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="font-logo text-[clamp(2.4rem,6.5vw,5.6rem)] font-normal uppercase tracking-[0.06em] leading-[0.96] text-[#101010] will-change-transform"
-              >
+              <div className="atlas-curtain-text font-logo text-[clamp(2.4rem,6.5vw,5.6rem)] font-normal uppercase tracking-[0.06em] leading-[0.96] text-[#101010]">
                 {copy.primary}
-              </motion.div>
+              </div>
             </div>
 
             {/* Secondary Line in Exact STUDIO Wide-Tracked Sans Font */}
             <div className="overflow-hidden pt-2 pb-1">
-              <motion.div
-                initial={{ y: '115%' }}
-                animate={{ y: '0%' }}
-                transition={{
-                  duration: 0.4,
-                  delay: 0.05,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="font-sans text-[11px] sm:text-xs md:text-sm font-medium uppercase tracking-[0.38em] text-[#101010]/65 will-change-transform"
-              >
+              <div className="atlas-curtain-sub font-sans text-[11px] sm:text-xs md:text-sm font-medium uppercase tracking-[0.38em] text-[#101010]/65">
                 {copy.secondary}
-              </motion.div>
+              </div>
             </div>
           </div>
         )}
 
         {/* Minimalist Architectural Horizontal Rule */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{
-            duration: 0.42,
-            delay: 0.05,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          style={{ transformOrigin: 'center' }}
-          className="mt-5 h-[1px] w-[min(360px,68vw)] bg-[#101010]/20 will-change-transform"
-        />
+        <div className="atlas-curtain-rule mt-5 h-[1px] w-[min(360px,68vw)] bg-[#101010]/20" />
       </div>
-    </motion.div>
+    </div>
   );
 }
