@@ -4,7 +4,6 @@ import { SolumRecentProjects } from '../components/solum/SolumRecentProjects';
 import { SolumServices } from '../components/solum/SolumServices';
 import { SolumHowWeWork } from '../components/solum/SolumHowWeWork';
 import { SolumTransformationProof } from '../components/solum/SolumTransformationProof';
-import { SolumPricing } from '../components/solum/SolumPricing';
 import { SolumCallToAction } from '../components/solum/SolumCallToAction';
 
 export function HomePage() {
@@ -28,10 +27,7 @@ export function HomePage() {
       {/* 06: Architectural Transformation & Spatial Decomposition */}
       <SolumTransformationProof />
 
-      {/* 07: Transparent Packages & Pricing */}
-      <SolumPricing />
-
-      {/* 08: Initiate Collaboration (Minimalist Call To Action) */}
+      {/* 07: Initiate Collaboration (Minimalist Call To Action) */}
       <SolumCallToAction />
     </main>
   );

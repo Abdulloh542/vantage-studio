@@ -4,10 +4,28 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { optimizeCloudinaryImage } from '../utils/media';
 
 const PACKAGE_TO_SERVICE: Record<string, string> = {
-  stills: 'stills',
-  reel: 'reel',
-  launch: 'launch',
-  custom: 'masterplan',
+  'films-by-seconds': 'film-60s',
+  'film-30s': 'film-30s',
+  'film-60s': 'film-60s',
+  'film-90-120s': 'film-90-120s',
+  'film-150s': 'film-150s',
+  'archviz-video-types': 'video-property-tour',
+  'video-reel-9x16': 'video-reel-9x16',
+  'video-genplan-3d': 'video-genplan-3d',
+  'video-property-tour': 'video-property-tour',
+  'video-before-after': 'video-before-after',
+  'video-drone-match': 'video-drone-match',
+  'video-day-night': 'video-day-night',
+  'launch-packages': 'pkg-signature',
+  'pkg-essential': 'pkg-essential',
+  'pkg-signature': 'pkg-signature',
+  'pkg-flagship': 'pkg-flagship',
+  'still-images': 'img-10',
+  'img-1': 'img-1',
+  'img-5': 'img-5',
+  'img-10': 'img-10',
+  'img-20': 'img-20',
+  'img-monthly': 'img-monthly',
 };
 
 export function ContactPage() {
@@ -248,12 +266,33 @@ export function ContactPage() {
                         onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                         className="w-full bg-[#F9F9F8] border border-[#101010]/10 px-4 py-3 text-sm font-sans text-[#101010] focus:outline-none focus:border-[#101010] transition-colors rounded-none appearance-none cursor-pointer"
                       >
-                        <option value="">Select service or package</option>
-                        <option value="stills">01 // 3D Visualization Pack ($1,400 · 5 4K Views)</option>
-                        <option value="reel">02 // 9:16 Social Cinema Reel + Stills ($2,200)</option>
-                        <option value="launch">03 // Full 4K Walkthrough Launch Campaign ($3,900)</option>
-                        <option value="masterplan">04 // Custom Masterplan / Enterprise Commission</option>
-                        <option value="single">Single 4K Exterior / Interior View (from $350)</option>
+                        <option value="">Select service or rate</option>
+                        <optgroup label="Films by Duration">
+                          <option value="film-30s">15–30s Architectural Film ($690)</option>
+                          <option value="film-60s">60s Architectural Walkthrough Film ($1,290)</option>
+                          <option value="film-90-120s">90–120s Masterplan Cinema Film ($2,190)</option>
+                          <option value="film-150s">150s+ Extended Documentary Film ($2,950)</option>
+                        </optgroup>
+                        <optgroup label="ArchViz &amp; Real Estate Video Formats">
+                          <option value="video-reel-9x16">9:16 Vertical Social Reel ($890)</option>
+                          <option value="video-genplan-3d">Genplan → 3D Growth Film ($1,350)</option>
+                          <option value="video-property-tour">Real Estate Property Presentation ($1,650)</option>
+                          <option value="video-before-after">Before / After Renovation Film ($1,450)</option>
+                          <option value="video-drone-match">Drone Aerial 3D Composite ($1,100)</option>
+                          <option value="video-day-night">Day-to-Night Lighting Study ($650)</option>
+                        </optgroup>
+                        <optgroup label="Launch Packages (Images + Film)">
+                          <option value="pkg-essential">Essential Launch — 5 Views + 30s Reel ($1,490)</option>
+                          <option value="pkg-signature">Signature Launch — 10 Views + 60s Film ($2,490)</option>
+                          <option value="pkg-flagship">Flagship Launch — 20 Views + 90–120s Film ($3,900)</option>
+                        </optgroup>
+                        <optgroup label="3D Still Images (from Genplan)">
+                          <option value="img-1">1 × 4K View ($250)</option>
+                          <option value="img-5">5 × 4K Views ($950)</option>
+                          <option value="img-10">10 × 4K Views ($1,600)</option>
+                          <option value="img-20">20 × 4K Views ($2,600)</option>
+                          <option value="img-monthly">Monthly Partner — 12 Views/mo ($1,800/mo)</option>
+                        </optgroup>
                       </select>
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-xs text-[#757575]">
                         ▼
